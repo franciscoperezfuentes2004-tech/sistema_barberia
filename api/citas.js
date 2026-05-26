@@ -1,5 +1,5 @@
-const { db } = require('./_config/db.js');
-const { verifyToken, sanitize } = require('./_config/helpers.js');
+const { db } = require('./config/db.js');
+const { verifyToken, sanitize } = require('./config/helpers.js');
 
 module.exports = async function handler(req, res) {
   const method = req.method;
@@ -62,27 +62,51 @@ module.exports = async function handler(req, res) {
     }
 
     try {
-      // 1. Obtener detalles del cliente si se proporciona cliente_id, o usar los campos directos del body
-      let clientName = '';
-      let clientPhone = '';
-      let clientEmail = '';
-      
+      // 1. Obtener o crear/buscar cliente por su teléfono
+      let finalClienteId = cliente_id || null;
+      let finalNombre = sanitize(req.body.cliente_nombre);
+      let finalTelefono = req.body.cliente_telefono ? sanitize(req.body.cliente_telefono).replace(/\D/g, '') : '';
+      let finalEmail = sanitize(req.body.cliente_email) || null;
+
       if (cliente_id) {
         const clientDoc = await db.collection('clientes').doc(cliente_id).get();
         if (clientDoc.exists) {
           const clientData = clientDoc.data();
-          clientName = clientData.nombre;
-          clientPhone = clientData.telefono;
-          clientEmail = clientData.email || '';
+          finalNombre = clientData.nombre;
+          finalTelefono = clientData.telefono;
+          finalEmail = clientData.email || '';
         }
       }
 
-      const finalNombre = clientName || sanitize(req.body.cliente_nombre);
-      const finalTelefono = clientPhone || sanitize(req.body.cliente_telefono);
-      const finalEmail = clientEmail || sanitize(req.body.cliente_email);
-
       if (!finalNombre || !finalTelefono) {
         return res.status(400).json({ error: 'Es necesario proporcionar el nombre y teléfono del cliente' });
+      }
+
+      // Si no tenemos un cliente_id previo, buscar o registrar al cliente en la colección 'clientes'
+      if (!finalClienteId) {
+        try {
+          const clientesRef = db.collection('clientes');
+          const clientQuery = await clientesRef.where('telefono', '==', finalTelefono).limit(1).get();
+          
+          const newClientData = {
+            nombre: finalNombre,
+            telefono: finalTelefono,
+            email: finalEmail,
+            actualizado_en: new Date().toISOString()
+          };
+
+          if (!clientQuery.empty) {
+            const doc = clientQuery.docs[0];
+            finalClienteId = doc.id;
+            await clientesRef.doc(finalClienteId).update(newClientData);
+          } else {
+            newClientData.creado_en = new Date().toISOString();
+            const docRef = await clientesRef.add(newClientData);
+            finalClienteId = docRef.id;
+          }
+        } catch (errCl) {
+          console.error('Error procesando cliente interno:', errCl);
+        }
       }
 
       // 2. Extraer información de los servicios seleccionados (Soporta arreglo o id único para retrocompatibilidad)
@@ -126,7 +150,7 @@ module.exports = async function handler(req, res) {
 
       // 5. Crear documento de la cita
       const nuevaCita = {
-        cliente_id: cliente_id || null,
+        cliente_id: finalClienteId,
         barbero_id,
         servicios: serviceIds,
         servicios_detalle: serviciosDetalle,

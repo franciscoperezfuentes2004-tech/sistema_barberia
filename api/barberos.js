@@ -1,6 +1,6 @@
-const { db } = require('./_config/db.js');
+const { db } = require('./config/db.js');
 const bcrypt = require('bcryptjs');
-const { verifyToken, sanitize } = require('./_config/helpers.js');
+const { verifyToken, sanitize } = require('./config/helpers.js');
 
 module.exports = async function handler(req, res) {
   const usuariosRef = db.collection('usuarios');
@@ -18,12 +18,7 @@ module.exports = async function handler(req, res) {
     }
 
     try {
-      let query = usuariosRef.where('rol', '==', 'barbero');
-
-      if (!showAll) {
-        query = query.where('activo', '==', true);
-      }
-
+      const query = usuariosRef.where('rol', '==', 'barbero');
       const snapshot = await query.get();
       
       // Obtener todos los horarios para calcular disponible_hoy
@@ -39,6 +34,13 @@ module.exports = async function handler(req, res) {
 
       for (const doc of snapshot.docs) {
         const data = doc.data();
+        
+        // Filtrar en memoria para soportar activo como boolean true, número 1 o string "1"
+        const isActivo = data.activo === true || data.activo === 1 || data.activo === '1';
+        if (!showAll && !isActivo) {
+          continue;
+        }
+
         delete data.password_hash;
 
         // Determinar disponible_hoy basado en su horario
