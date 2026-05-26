@@ -309,9 +309,10 @@
     let BARBERO_DATA = null;
     let selectedDate  = null;
     let citasDelDia   = [];
+    let horariosMap   = null;
 
-    const HORA_INICIO = 9;   // 09:00
-    const HORA_FIN    = 20;  // 20:00
+    let HORA_INICIO = 9;   // 09:00
+    let HORA_FIN    = 20;  // 20:00
 
     const STATUS_LABELS = {
       pendiente:  'Pendiente',
@@ -341,12 +342,52 @@
         document.getElementById('hdr-avatar').querySelector('img').src = '../' + user.barbero_foto;
       }
 
+      await loadHorarios();
       initDates();
       
       // Auto-refresh silent cada 30 seg
       setInterval(() => {
         if (selectedDate) loadCitas(true);
       }, 30000);
+    }
+
+    /* ——— Load Horarios ——— */
+    async function loadHorarios() {
+      try {
+        const res = await fetch(`${API}/horarios?barbero_id=${BARBERO_ID}`);
+        const json = await res.json();
+        if (json.success && json.data) {
+          horariosMap = json.data;
+        }
+      } catch (e) {
+        console.error('Error loading schedule', e);
+      }
+    }
+    
+    function updateScheduleForDate(isoDate) {
+      const d = new Date(isoDate + 'T12:00:00');
+      const diaSemana = d.getDay();
+      
+      let scheduleForDay = null;
+      if (Array.isArray(horariosMap)) {
+        scheduleForDay = horariosMap.find(s => s.dia_semana === diaSemana);
+      }
+      
+      if (scheduleForDay) {
+        if (scheduleForDay.activo === 0 || scheduleForDay.activo === false) {
+           HORA_INICIO = null;
+           HORA_FIN = null;
+        } else {
+           HORA_INICIO = parseInt(scheduleForDay.hora_inicio.substring(0,2), 10);
+           HORA_FIN = parseInt(scheduleForDay.hora_fin.substring(0,2), 10);
+           if (scheduleForDay.hora_fin.substring(3,5) !== '00') {
+             HORA_FIN += 1;
+           }
+        }
+      } else {
+        HORA_INICIO = 10;
+        HORA_FIN = 20;
+      }
     }
 
     /* ——— Auth Check ——— */
@@ -423,6 +464,7 @@
       document.querySelectorAll('.d-card').forEach(c => c.classList.remove('selected'));
       el.classList.add('selected');
       selectedDate = iso;
+      updateScheduleForDate(iso);
       await loadCitas();
     }
 
@@ -505,6 +547,16 @@
     /* ——— Render Timeline ——— */
     function renderTimeline(silent = false) {
       const container = document.getElementById('timeline-container');
+
+      if (HORA_INICIO === null) {
+        container.innerHTML = `
+          <div class="empty-day">
+            <div class="empty-icon">☕</div>
+            <p class="empty-title">Día Inactivo</p>
+            <p class="empty-sub">Hoy no tienes horario laboral configurado.</p>
+          </div>`;
+        return;
+      }
 
       // Build slot map (30-min blocks)
       const slots = [];
