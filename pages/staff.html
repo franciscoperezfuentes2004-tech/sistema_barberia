@@ -694,11 +694,11 @@
 
       if (realSt === 'pendiente' || realSt === 'confirmada') {
         actionsHTML = `
-          <button class="act-btn act-start" onclick="app.changeState(${cita.id},'en_silla')">
+          <button class="act-btn act-start" onclick="app.changeState('${cita.id}','en_silla')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polygon points="10,8 16,12 10,16"/></svg>
             En silla
           </button>
-          <button class="act-btn act-noshow" onclick="app.changeState(${cita.id},'no_asistio')">
+          <button class="act-btn act-noshow" onclick="app.changeState('${cita.id}','no_asistio')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>
             No asistió
           </button>
@@ -707,7 +707,7 @@
           </a>`;
       } else if (realSt === 'en_silla') {
         actionsHTML = `
-          <button class="act-btn act-finish" onclick="app.changeState(${cita.id},'completada')">
+          <button class="act-btn act-finish" onclick="app.changeState('${cita.id}','completada')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
             Finalizar
           </button>
@@ -744,10 +744,10 @@
     /* ——— Change State ——— */
     async function changeState(citaId, nuevoEstado) {
       try {
-        const res = await fetch(`${API}/citas?id=${citaId}`, {
+        const res = await fetch(`${API}/citas`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ estado: nuevoEstado }),
+          body: JSON.stringify({ id: citaId, estado: nuevoEstado }),
         });
         const json = await res.json();
 
