@@ -1,4 +1,4 @@
-const { db } = require('./config/db.js');
+const { db, bucket } = require('./config/db.js');
 const { verifyToken, sanitize } = require('./config/helpers.js');
 
 module.exports = async function handler(req, res) {
@@ -40,6 +40,49 @@ module.exports = async function handler(req, res) {
         dataToSave[key] = typeof value === 'string' ? sanitize(value) : value;
       }
     }
+
+    // Subir logo a Firebase Storage si se envía base64
+    if (req.body.logo_b64 && req.body.logo_b64.startsWith('data:')) {
+      try {
+        const mimeType = req.body.logo_b64.match(/data:(.*?);base64/)[1];
+        const extension = mimeType.split('/')[1] || 'png';
+        const base64Data = req.body.logo_b64.replace(/^data:image\/\w+;base64,/, '');
+        const buffer = Buffer.from(base64Data, 'base64');
+        const uniqueFileName = `logo_${Date.now()}.${extension}`;
+        const filePath = `barberia-media/${uniqueFileName}`;
+        const file = bucket.file(filePath);
+        await file.save(buffer, {
+          metadata: { contentType: mimeType },
+          public: true
+        });
+        dataToSave.site_logo = `https://storage.googleapis.com/${bucket.name}/${filePath}`;
+        delete dataToSave.logo_b64;
+      } catch (uploadErr) {
+        console.error('Error al subir logo:', uploadErr);
+      }
+    }
+
+    // Subir hero background a Firebase Storage si se envía base64
+    if (req.body.hero_b64 && req.body.hero_b64.startsWith('data:')) {
+      try {
+        const mimeType = req.body.hero_b64.match(/data:(.*?);base64/)[1];
+        const extension = mimeType.split('/')[1] || 'jpg';
+        const base64Data = req.body.hero_b64.replace(/^data:image\/\w+;base64,/, '');
+        const buffer = Buffer.from(base64Data, 'base64');
+        const uniqueFileName = `hero_${Date.now()}.${extension}`;
+        const filePath = `barberia-media/${uniqueFileName}`;
+        const file = bucket.file(filePath);
+        await file.save(buffer, {
+          metadata: { contentType: mimeType },
+          public: true
+        });
+        dataToSave.site_hero_bg = `https://storage.googleapis.com/${bucket.name}/${filePath}`;
+        delete dataToSave.hero_b64;
+      } catch (uploadErr) {
+        console.error('Error al subir hero background:', uploadErr);
+      }
+    }
+
     dataToSave.actualizado_en = new Date().toISOString();
 
     try {

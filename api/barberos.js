@@ -52,57 +52,70 @@ module.exports = async function handler(req, res) {
         let slots_disponibles = 0;
         if (fecha && duracion) {
           const duracionDeseada = parseInt(duracion, 10) || 30;
-          const apertura = '10:00:00';
-          const cierre = '20:00:00';
+          
+          // Obtener horario del barbero para el día solicitado
+          const fechaDate = new Date(fecha + 'T12:00:00Z');
+          const diaSemana = fechaDate.getUTCDay();
+          
+          const barberoSchedule = horariosMap[doc.id] || globalSchedule;
+          const diaConfig = barberoSchedule.find(s => s.dia_semana === diaSemana);
+          
+          let apertura = '10:00:00';
+          let cierre = '20:00:00';
+          let diaActivo = true;
+          
+          if (diaConfig) {
+            diaActivo = diaConfig.activo === 1 || diaConfig.activo === true;
+            if (diaConfig.hora_inicio) apertura = diaConfig.hora_inicio.length === 5 ? diaConfig.hora_inicio + ':00' : diaConfig.hora_inicio;
+            if (diaConfig.hora_fin) cierre = diaConfig.hora_fin.length === 5 ? diaConfig.hora_fin + ':00' : diaConfig.hora_fin;
+          }
+          
+          if (!diaActivo) {
+            slots_disponibles = 0;
+          } else {
+            // Obtener citas del barbero para la fecha
+            const citasSnapshot = await db.collection('citas')
+              .where('barbero_id', '==', doc.id)
+              .where('fecha', '==', fecha)
+              .get();
 
-          // Obtener citas del barbero para la fecha
-          const citasSnapshot = await db.collection('citas')
-            .where('barbero_id', '==', doc.id)
-            .where('fecha', '==', fecha)
-            .get();
+            const citas = [];
+            citasSnapshot.forEach(c => {
+              const cData = c.data();
+              if (cData.estado !== 'cancelada' && cData.estado !== 'no_asistio') {
+                citas.push(cData);
+              }
+            });
 
-          const citas = [];
-          citasSnapshot.forEach(c => {
-            const cData = c.data();
-            if (cData.estado !== 'cancelada' && cData.estado !== 'no_asistio') {
-              citas.push(cData);
-            }
-          });
+            // Calcular bloques disponibles
+            let horaActual = new Date(`1970-01-01T${apertura}Z`);
+            const horaCierre = new Date(`1970-01-01T${cierre}Z`);
 
-          // Calcular bloques disponibles
-          let horaActual = new Date(`1970-01-01T${apertura}Z`);
-          const horaCierre = new Date(`1970-01-01T${cierre}Z`);
+            while (horaActual < horaCierre) {
+              const bloqueInicioMs = horaActual.getTime();
+              const bloqueFinMs = bloqueInicioMs + (duracionDeseada * 60000);
+              const finDelDiaMs = horaCierre.getTime();
 
-          while (horaActual < horaCierre) {
-            const bloqueInicioMs = horaActual.getTime();
-            const bloqueFinMs = bloqueInicioMs + (duracionDeseada * 60000);
-            const finDelDiaMs = horaCierre.getTime();
+              if (bloqueFinMs > finDelDiaMs) break;
 
-            if (bloqueFinMs > finDelDiaMs) break;
+              let bloqueOcupado = false;
+              for (const cita of citas) {
+                const citaInicio = cita.hora_inicio.length === 5 ? cita.hora_inicio + ':00' : cita.hora_inicio;
+                const citaFin = cita.hora_fin.length === 5 ? cita.hora_fin + ':00' : cita.hora_fin;
+                const citaInicioMs = new Date(`1970-01-01T${citaInicio}Z`).getTime();
+                const citaFinMs = new Date(`1970-01-01T${citaFin}Z`).getTime();
 
-            let bloqueOcupado = false;
-            for (const cita of citas) {
-              const citaInicioMs = new Date(`1970-01-01T${cita.hora_inicio}Z`).getTime();
-              const citaFinMs = new Date(`1970-01-01T${cita.hora_fin}Z`).getTime();
-
-              if (bloqueInicioMs < citaFinMs && bloqueFinMs > citaInicioMs) {
-                const traslapeFin = Math.min(bloqueFinMs, citaFinMs);
-                const traslapeInicio = Math.max(bloqueInicioMs, citaInicioMs);
-                const minutosInvasion = (traslapeFin - traslapeInicio) / 60000;
-
-                if (minutosInvasion <= 12) {
-                  continue;
-                } else {
+                if (bloqueInicioMs < citaFinMs && bloqueFinMs > citaInicioMs) {
                   bloqueOcupado = true;
                   break;
                 }
               }
-            }
 
-            if (!bloqueOcupado) {
-              slots_disponibles++;
+              if (!bloqueOcupado) {
+                slots_disponibles++;
+              }
+              horaActual = new Date(horaActual.getTime() + (30 * 60000));
             }
-            horaActual = new Date(horaActual.getTime() + (30 * 60000));
           }
         } else {
           // Si no se especifica fecha, se asume que para efectos de la vista de agendar 

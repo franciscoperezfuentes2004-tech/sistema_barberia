@@ -253,6 +253,12 @@
       }
     }
 
+    function decodeHtml(html) {
+      const txt = document.createElement('textarea');
+      txt.innerHTML = html;
+      return txt.value;
+    }
+
     function renderBarberos(barberos) {
       const grid = document.getElementById('barbers-grid');
       grid.innerHTML = '';
@@ -266,20 +272,31 @@
         const badge = hasSlots 
           ? `<span class="barber-badge ok">${b.slots_disponibles} espacios</span>`
           : `<span class="barber-badge sold-out">Agotado</span>`;
+        
+        // Manejar URLs absolutas y relativas de fotos
+        let fotoSrc = 'https://via.placeholder.com/150';
+        if (b.foto) {
+          fotoSrc = (b.foto.startsWith('http') || b.foto.startsWith('data:')) ? b.foto : '../' + b.foto;
+        } else if (b.imagen_url) {
+          fotoSrc = (b.imagen_url.startsWith('http') || b.imagen_url.startsWith('data:')) ? b.imagen_url : '../' + b.imagen_url;
+        }
+        
+        // Decodificar especialidad para evitar doble escape HTML
+        const especialidad = decodeHtml(b.especialidad || 'Barbero');
           
         card.innerHTML = `
           <div class="barber-photo-wrap">
-            <img src="${b.foto ? '../'+b.foto : 'https://via.placeholder.com/150'}" class="barber-photo" alt="${b.nombre}">
+            <img src="${fotoSrc}" class="barber-photo" alt="${b.nombre}">
           </div>
           <div class="barber-info">
-            <div class="barber-name">${b.nombre} ${b.apellido}</div>
-            <div class="barber-spec">${b.especialidad || 'Barbero'}</div>
+            <div class="barber-name">${decodeHtml(b.nombre)} ${decodeHtml(b.apellido)}</div>
+            <div class="barber-spec">${especialidad}</div>
             ${badge}
           </div>
         `;
         
         if(hasSlots) {
-          card.onclick = () => selectBarber(card, b.id, `${b.nombre} ${b.apellido}`);
+          card.onclick = () => selectBarber(card, b.id, `${decodeHtml(b.nombre)} ${decodeHtml(b.apellido)}`);
         }
         grid.appendChild(card);
       });
@@ -312,7 +329,10 @@
     function renderHorarios(slots) {
       const grid = document.getElementById('times-grid');
       grid.innerHTML = '';
-      if(slots.length === 0) {
+      
+      // Filtrar: si no hay slots con disponible=true, mostrar mensaje
+      const hayDisponibles = slots.some(s => s.disponible);
+      if(slots.length === 0 || !hayDisponibles) {
         grid.innerHTML = '<div style="color:var(--muted);font-size:.85rem;grid-column:1/-1">No hay horarios que acomoden tu servicio este día.</div>';
         return;
       }
@@ -325,10 +345,11 @@
           el.onclick = () => {
             document.querySelectorAll('.time-slot').forEach(c => c.classList.remove('selected', 'covered'));
             
-            const slotsNecesarios = Math.max(1, Math.ceil((state.duracion - 12) / 30));
+            // Calcular cuántos bloques de 30 min ocupa el servicio
+            const slotsNecesarios = Math.max(1, Math.ceil(state.duracion / 30));
             for(let i = 0; i < slotsNecesarios; i++) {
               const sibling = grid.children[idx + i];
-              if(sibling) {
+              if(sibling && !sibling.classList.contains('disabled')) {
                 if(i === 0) sibling.classList.add('selected');
                 else sibling.classList.add('covered');
               }
@@ -342,6 +363,13 @@
         }
         grid.appendChild(el);
       });
+      
+      // Mostrar indicador de duración
+      const durBadge = document.getElementById('dur-badge');
+      if (durBadge) {
+        const slotsNecesarios = Math.max(1, Math.ceil(state.duracion / 30));
+        durBadge.textContent = `Requiere ${state.duracion} min (${slotsNecesarios} bloque${slotsNecesarios > 1 ? 's' : ''} de 30 min)`;
+      }
     }
 
     function updateCTA() {

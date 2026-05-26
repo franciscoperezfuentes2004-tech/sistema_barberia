@@ -16,10 +16,40 @@ module.exports = async function handler(req, res) {
       const duracionDeseada = parseInt(duracion, 10);
 
       try {
-        const apertura = '10:00:00';
-        const cierre = '20:00:00';
+        // Obtener horario del barbero o global para el día solicitado
+        const fechaDate = new Date(fecha + 'T12:00:00Z');
+        const diaSemana = fechaDate.getUTCDay();
 
-        // 2. OBTENER LAS CITAS EXISTENTES DEL BARBERO EN ESE DÍA
+        let schedule = null;
+        const barberoHorarioDoc = await db.collection('horarios').doc(barbero_id).get();
+        if (barberoHorarioDoc.exists && barberoHorarioDoc.data().schedule) {
+          schedule = barberoHorarioDoc.data().schedule;
+        } else {
+          const globalHorarioDoc = await db.collection('horarios').doc('global').get();
+          if (globalHorarioDoc.exists && globalHorarioDoc.data().schedule) {
+            schedule = globalHorarioDoc.data().schedule;
+          }
+        }
+
+        // Determinar horario de apertura y cierre del día
+        let apertura = '10:00:00';
+        let cierre = '20:00:00';
+        let diaActivo = true;
+
+        if (schedule && Array.isArray(schedule)) {
+          const diaConfig = schedule.find(s => s.dia_semana === diaSemana);
+          if (diaConfig) {
+            diaActivo = diaConfig.activo === 1 || diaConfig.activo === true;
+            if (diaConfig.hora_inicio) apertura = diaConfig.hora_inicio.length === 5 ? diaConfig.hora_inicio + ':00' : diaConfig.hora_inicio;
+            if (diaConfig.hora_fin) cierre = diaConfig.hora_fin.length === 5 ? diaConfig.hora_fin + ':00' : diaConfig.hora_fin;
+          }
+        }
+
+        if (!diaActivo) {
+          return res.status(200).json({ success: true, data: { slots: [] } });
+        }
+
+        // Obtener citas existentes del barbero en ese día
         const citasRef = db.collection('citas');
         const snapshot = await citasRef
           .where('barbero_id', '==', barbero_id)
@@ -29,17 +59,14 @@ module.exports = async function handler(req, res) {
         const citas = [];
         snapshot.forEach(doc => {
           const data = doc.data();
-          // Ignorar canceladas o inasistencias filtrándolas en memoria
           if (data.estado !== 'cancelada' && data.estado !== 'no_asistio') {
             citas.push(data);
           }
         });
-
-        // Ordenamos manualmente por hora de inicio
         citas.sort((a, b) => a.hora_inicio.localeCompare(b.hora_inicio));
 
-        // 3. GENERAR BLOQUES DE 30 MINUTOS Y EVALUAR DISPONIBILIDAD
-        const bloquesDisponibles = [];
+        // Generar TODOS los bloques de 30 minutos y marcar disponibilidad
+        const allSlots = [];
         let horaActual = new Date(`1970-01-01T${apertura}Z`);
         const horaCierre = new Date(`1970-01-01T${cierre}Z`);
 
@@ -47,40 +74,35 @@ module.exports = async function handler(req, res) {
           const bloqueInicioMs = horaActual.getTime();
           const bloqueFinMs = bloqueInicioMs + (duracionDeseada * 60000);
           const finDelDiaMs = horaCierre.getTime();
+          const horaFormato = horaActual.toISOString().substring(11, 16);
 
-          const horaFormato = horaActual.toISOString().substring(11, 16); // Ej: "10:30"
-
-          if (bloqueFinMs > finDelDiaMs) break; 
+          // Si el servicio no cabe antes del cierre, marcar como no disponible
+          if (bloqueFinMs > finDelDiaMs) {
+            allSlots.push({ hora_inicio: horaFormato, disponible: false });
+            horaActual = new Date(horaActual.getTime() + (30 * 60000));
+            continue;
+          }
 
           let bloqueOcupado = false;
 
-          // 4. ALGORITMO DE COLISIONES CON REGLA DE "12 MINUTOS DE TOLERANCIA"
           for (const cita of citas) {
-            const citaInicioMs = new Date(`1970-01-01T${cita.hora_inicio}Z`).getTime();
-            const citaFinMs = new Date(`1970-01-01T${cita.hora_fin}Z`).getTime();
+            const citaInicio = cita.hora_inicio.length === 5 ? cita.hora_inicio + ':00' : cita.hora_inicio;
+            const citaFin = cita.hora_fin.length === 5 ? cita.hora_fin + ':00' : cita.hora_fin;
+            const citaInicioMs = new Date(`1970-01-01T${citaInicio}Z`).getTime();
+            const citaFinMs = new Date(`1970-01-01T${citaFin}Z`).getTime();
 
+            // Verificar si el bloque completo del servicio colisiona con esta cita
             if (bloqueInicioMs < citaFinMs && bloqueFinMs > citaInicioMs) {
-              const traslapeFin = Math.min(bloqueFinMs, citaFinMs);
-              const traslapeInicio = Math.max(bloqueInicioMs, citaInicioMs);
-              const minutosInvasion = (traslapeFin - traslapeInicio) / 60000;
-
-              if (minutosInvasion <= 12) {
-                continue;
-              } else {
-                bloqueOcupado = true;
-                break;
-              }
+              bloqueOcupado = true;
+              break;
             }
           }
 
-          if (!bloqueOcupado) {
-            bloquesDisponibles.push({ hora: horaFormato });
-          }
-
+          allSlots.push({ hora_inicio: horaFormato, disponible: !bloqueOcupado });
           horaActual = new Date(horaActual.getTime() + (30 * 60000));
         }
 
-        return res.status(200).json({ success: true, data: bloquesDisponibles });
+        return res.status(200).json({ success: true, data: { slots: allSlots } });
 
       } catch (error) {
         console.error('Error calculando disponibilidad:', error);
