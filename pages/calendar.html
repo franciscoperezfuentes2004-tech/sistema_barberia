@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="theme-color" content="#0F0F0F"/>
+  <title>Paso 2 — Fecha y Barbero · Barbería</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --gold:#C9A84C;--gold-l:#E8C97A;--gold-d:#9A7B32;
+      --bg:#0F0F0F;--s1:#181818;--s2:#222;--border:#333;
+      --muted:#888;--base:#D4D4D4;--bright:#F5F0E8;
+      --green:#27AE60;--red:#E74C3C;
+      --serif:'Playfair Display',serif;--sans:'Inter',system-ui,sans-serif;
+      --tr:all .22s cubic-bezier(.4,0,.2,1);
+      --gutter: clamp(12px, 3vw, 80px);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:var(--sans);background:var(--bg);color:var(--base);min-height:100dvh}
+    
+    .app-header{
+      position:sticky;top:0;z-index:50;
+      background:rgba(15,15,15,.96);backdrop-filter:blur(18px);
+    }
+    .hdr-inner{padding:14px var(--gutter);}
+    .hdr-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:0px}
+    .logo{display:flex;align-items:center;gap:8px;text-decoration:none}
+    .logo-mark{width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,var(--gold-d),var(--gold));display:flex;align-items:center;justify-content:center;font-size:.95rem}
+    .logo-name{font-family:var(--serif);font-size:1rem;font-weight:700;color:var(--gold)}
+    
+    .steps{display:flex;align-items:center;gap:0;margin-bottom:32px}
+    .step-item{display:flex;align-items:center;gap:6px;flex-shrink:0}
+    .step-dot{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;border:2px solid var(--border);color:var(--muted);transition:var(--tr)}
+    .step-dot.active{background:var(--gold);border-color:var(--gold);color:#0F0F0F}
+    .step-dot.done{background:transparent;border-color:var(--green);color:var(--green)}
+    .step-label{font-size:.72rem;font-weight:500;color:var(--muted);transition:var(--tr)}
+    .step-label.active{color:var(--gold)}
+    .step-label.done{color:var(--green)}
+    .step-line{flex:1;height:1px;background:var(--border);margin:0 8px;min-width:20px}
+    .step-line.done{background:var(--green)}
+
+    main{max-width:1400px;margin:0 auto;padding:28px var(--gutter) 200px}
+    .sec-title-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+    .sec-title{font-family:var(--serif);font-size:1.3rem;font-weight:600;color:var(--gold-l);letter-spacing:0.02em}
+    .divider-line{display:flex;align-items:center;gap:10px;margin-bottom:18px;color:var(--muted);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase}
+    .divider-line::before,.divider-line::after{content:'';flex:1;height:1px;background:var(--border)}
+
+    /* Dates */
+    .dates-scroll{display:flex;gap:10px;justify-content:flex-start;flex-wrap:wrap;padding-bottom:8px}
+    .date-card{
+      background:var(--bg);border:1px solid var(--border);border-radius:16px;
+      min-width:76px;padding:14px 10px;text-align:center;cursor:pointer;transition:var(--tr);
+      flex-shrink:0;user-select:none;
+    }
+    .date-card:hover:not(.selected){border-color:rgba(201,168,76,.4)}
+    .date-card.selected{border-color:var(--gold);background:linear-gradient(145deg, rgba(201,168,76,.1), transparent);box-shadow:0 8px 25px rgba(0,0,0,.5)}
+    .date-day{font-size:.68rem;text-transform:uppercase;color:var(--muted);margin-bottom:4px;font-weight:600}
+    .date-num{font-family:var(--serif);font-size:1.4rem;font-weight:700;color:var(--bright)}
+    .date-month{font-size:.65rem;color:var(--muted);margin-top:2px}
+    .date-card.selected .date-day,.date-card.selected .date-num{color:var(--gold)}
+
+    /* Barbers */
+    #barbers-grid{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:14px;}
+    .barber-card{
+      width: 170px;
+      background:linear-gradient(to bottom, var(--s1), var(--bg));border:1px solid var(--border);border-radius:16px;
+      overflow:hidden;cursor:pointer;transition:var(--tr);text-align:center;
+      opacity: 0.5; pointer-events: none;
+    }
+    .barber-card.available { opacity: 1; pointer-events: auto; }
+    .barber-card:hover:not(.selected){border-color:rgba(201,168,76,.4)}
+    .barber-card.selected{border-color:var(--gold);background:linear-gradient(to bottom, rgba(201,168,76,.1), var(--bg));box-shadow:0 8px 30px rgba(0,0,0,.5)}
+    .barber-photo-wrap{padding:18px 16px 6px;display:flex;justify-content:center}
+    .barber-photo{width:90px;height:90px;border-radius:50%;object-fit:cover;border:2px solid var(--border);filter:grayscale(40%);transition:var(--tr);box-shadow:0 4px 15px rgba(0,0,0,.5)}
+    .barber-card.selected .barber-photo{filter:grayscale(0);border-color:var(--gold);box-shadow:0 0 20px rgba(201,168,76,.3)}
+    .barber-info{padding:6px 10px 16px}
+    .barber-name{font-family:var(--serif);font-size:.9rem;font-weight:600;color:var(--bright);margin-bottom:2px}
+    .barber-spec{font-size:.7rem;color:var(--muted);margin-bottom:6px}
+    .barber-badge{
+      display:inline-block;font-size:.65rem;padding:3px 8px;border-radius:99px;
+      background:rgba(255,255,255,.05);color:var(--muted);border:1px solid var(--border);
+    }
+    .barber-badge.ok{background:rgba(39,174,96,.1);color:var(--green);border-color:rgba(39,174,96,.3)}
+    .barber-badge.sold-out{background:rgba(231,76,60,.1);color:var(--red);border-color:rgba(231,76,60,.3)}
+    
+    /* Timeslots */
+    #times-grid{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:10px}
+    .time-slot{
+      width: 95px;
+      background:var(--bg);border:1px solid var(--border);border-radius:12px;
+      padding:12px 0;text-align:center;cursor:pointer;transition:var(--tr);
+      font-size:.9rem;font-weight:600;color:var(--base);
+    }
+    .time-slot:hover:not(.disabled){border-color:var(--gold);color:var(--gold)}
+    .time-slot.selected{background:var(--gold);border-color:var(--gold);color:#0F0F0F}
+    .time-slot.covered{background:rgba(201,168,76,.15);border-color:rgba(201,168,76,.4);color:var(--gold)}
+    .time-slot.disabled{opacity:0.35;text-decoration:line-through;cursor:not-allowed;background:transparent;border-color:transparent;color:var(--muted)}
+    .time-slot.disabled:hover{border-color:transparent}
+
+    /* Summary & CTA */
+    .bottom-cta{
+      position:fixed;bottom:0;left:0;right:0;z-index:40;
+      padding:16px var(--gutter);padding-bottom:max(16px,env(safe-area-inset-bottom));
+      background:linear-gradient(to top,rgba(15,15,15,1) 80%,transparent);
+    }
+    .bottom-inner{max-width:1400px;margin:0 auto}
+    .cta-btn{
+      width:100%;max-width:400px;margin:0 auto;padding:16px 24px;border-radius:12px;border:none;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;gap:10px;
+      font-family:var(--sans);font-size:1rem;font-weight:700;
+      background:linear-gradient(135deg,var(--gold-d),var(--gold),var(--gold-l));
+      color:#0F0F0F;transition:var(--tr);
+    }
+    .cta-btn:disabled{background:var(--s2);color:var(--muted);cursor:not-allowed}
+  </style>
+</head>
+<body>
+
+  <header class="app-header">
+    <div class="hdr-inner">
+      <div class="hdr-top">
+        <a href="../index.html" class="logo">
+          <div class="logo-mark">✂️</div>
+          <span class="logo-name">Barbería</span>
+        </a>
+        <a href="booking.html" style="font-size:.78rem;color:var(--muted);text-decoration:none">â† Volver</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+      <nav class="steps">
+        <div class="step-item">
+          <div class="step-dot done">âœ“</div>
+          <span class="step-label done">Servicios</span>
+        </div>
+        <div class="step-line done"></div>
+        <div class="step-item">
+          <div class="step-dot active">2</div>
+          <span class="step-label active">Fecha &amp; Barbero</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step-item">
+          <div class="step-dot">3</div>
+          <span class="step-label">Confirmar</span>
+        </div>
+      </nav>
+
+    <!-- 1. Fechas -->
+    <section style="margin-bottom:32px">
+      <h2 class="sec-title" style="margin-bottom:12px">1. Elige una fecha</h2>
+      <div id="dates-container" class="dates-scroll">
+        <!-- JS generates dates here -->
+      </div>
+    </section>
+
+    <!-- 2. Barberos (oculto hasta elegir fecha) -->
+    <section id="sec-barberos" style="margin-bottom:32px; display:none; opacity:0; transition:opacity .3s">
+      <h2 class="sec-title" style="margin-bottom:12px">2. Elige tu barbero</h2>
+      <div id="barbers-grid">
+        <!-- JS generates barbers here -->
+      </div>
+    </section>
+
+    <!-- 3. Horarios (oculto hasta elegir barbero) -->
+    <section id="sec-horarios" style="margin-bottom:32px; display:none; opacity:0; transition:opacity .3s">
+      <div class="sec-title-row">
+        <h2 class="sec-title">3. Horarios disponibles</h2>
+        <span id="dur-badge" style="font-size:.7rem;color:var(--muted)"></span>
+      </div>
+      <div id="times-grid">
+        <!-- JS generates timeslots here -->
+      </div>
+    </section>
+  </main>
+
+  <div class="bottom-cta">
+    <div class="bottom-inner">
+      <button id="btn-continuar" class="cta-btn" disabled onclick="goToStep3()">
+        Continuar al resumen â†’
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const API = '../api';
+
+    // 1. Validar state del paso 1
+    const step1 = JSON.parse(sessionStorage.getItem('bb_step1') || 'null');
+    if(!step1 || !step1.servicios || step1.servicios.length === 0) {
+      window.location.href = 'booking.html';
+    }
+
+    const state = {
+      fecha: null,
+      barberoId: null,
+      barberoNombre: null,
+      horaInicio: null,
+      duracion: step1.totalDur || 30
+    };
+
+    document.getElementById('dur-badge').textContent = `Requiere ${state.duracion} min`;
+
+    // 2. Generar Fechas (próximos 14 días)
+    function initDates() {
+      const container = document.getElementById('dates-container');
+      const dias = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+      const meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+      
+      let hoy = new Date();
+      for(let i=0; i<7; i++) {
+        let d = new Date(hoy);
+        d.setDate(d.getDate() + i);
+        
+        let isodate = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+        let card = document.createElement('div');
+        card.className = 'date-card';
+        card.innerHTML = `
+          <div class="date-day">${i===0?'Hoy':dias[d.getDay()]}</div>
+          <div class="date-num">${d.getDate()}</div>
+          <div class="date-month">${meses[d.getMonth()]}</div>
+        `;
+        card.onclick = () => selectDate(card, isodate);
+        container.appendChild(card);
+      }
+    }
+
+    async function selectDate(cardEl, isodate) {
+      document.querySelectorAll('.date-card').forEach(c => c.classList.remove('selected'));
+      cardEl.classList.add('selected');
+      state.fecha = isodate;
+      state.barberoId = null;
+      state.horaInicio = null;
+      updateCTA();
+      
+      // Ocultar horarios, mostrar barberos cargando
+      document.getElementById('sec-horarios').style.display = 'none';
+      const secB = document.getElementById('sec-barberos');
+      secB.style.display = 'block';
+      setTimeout(()=> secB.style.opacity = '1', 10);
+      
+      const grid = document.getElementById('barbers-grid');
+      grid.innerHTML = '<div style="color:var(--muted);font-size:.85rem">Buscando barberos disponibles...</div>';
+      
+      try {
+        const res = await fetch(`${API}/barberos?fecha=${isodate}&duracion=${state.duracion}`, { cache: 'no-store' });
+        const json = await res.json();
+        renderBarberos(json.data || []);
+      } catch(e) {
+        grid.innerHTML = `<div style="color:var(--red)">Error al cargar barberos</div>`;
+      }
+    }
+
+    function renderBarberos(barberos) {
+      const grid = document.getElementById('barbers-grid');
+      grid.innerHTML = '';
+      
+      barberos.forEach(b => {
+        let card = document.createElement('div');
+        const hasSlots = b.slots_disponibles > 0;
+        card.className = `barber-card ${hasSlots ? 'available' : ''}`;
+        card.id = `bar-${b.id}`;
+        
+        const badge = hasSlots 
+          ? `<span class="barber-badge ok">${b.slots_disponibles} espacios</span>`
+          : `<span class="barber-badge sold-out">Agotado</span>`;
+          
+        card.innerHTML = `
+          <div class="barber-photo-wrap">
+            <img src="${b.foto ? '../'+b.foto : 'https://via.placeholder.com/150'}" class="barber-photo" alt="${b.nombre}">
+          </div>
+          <div class="barber-info">
+            <div class="barber-name">${b.nombre} ${b.apellido}</div>
+            <div class="barber-spec">${b.especialidad || 'Barbero'}</div>
+            ${badge}
+          </div>
+        `;
+        
+        if(hasSlots) {
+          card.onclick = () => selectBarber(card, b.id, `${b.nombre} ${b.apellido}`);
+        }
+        grid.appendChild(card);
+      });
+    }
+
+    async function selectBarber(cardEl, barberoId, nombre) {
+      document.querySelectorAll('.barber-card').forEach(c => c.classList.remove('selected'));
+      cardEl.classList.add('selected');
+      state.barberoId = barberoId;
+      state.barberoNombre = nombre;
+      state.horaInicio = null;
+      updateCTA();
+      
+      const secH = document.getElementById('sec-horarios');
+      secH.style.display = 'block';
+      setTimeout(()=> secH.style.opacity = '1', 10);
+      
+      const grid = document.getElementById('times-grid');
+      grid.innerHTML = '<div style="color:var(--muted);font-size:.85rem;grid-column:1/-1">Cargando horarios...</div>';
+      
+      try {
+        const res = await fetch(`${API}/disponibilidad?barbero_id=${barberoId}&fecha=${state.fecha}&duracion=${state.duracion}`, { cache: 'no-store' });
+        const json = await res.json();
+        renderHorarios(json.data?.slots || []);
+      } catch(e) {
+        grid.innerHTML = `<div style="color:var(--red);grid-column:1/-1">Error al cargar horarios</div>`;
+      }
+    }
+
+    function renderHorarios(slots) {
+      const grid = document.getElementById('times-grid');
+      grid.innerHTML = '';
+      if(slots.length === 0) {
+        grid.innerHTML = '<div style="color:var(--muted);font-size:.85rem;grid-column:1/-1">No hay horarios que acomoden tu servicio este día.</div>';
+        return;
+      }
+      
+      slots.forEach((s, idx) => {
+        let el = document.createElement('button');
+        el.className = `time-slot ${!s.disponible ? 'disabled' : ''}`;
+        el.textContent = s.hora_inicio;
+        if(s.disponible) {
+          el.onclick = () => {
+            document.querySelectorAll('.time-slot').forEach(c => c.classList.remove('selected', 'covered'));
+            
+            const slotsNecesarios = Math.max(1, Math.ceil((state.duracion - 12) / 30));
+            for(let i = 0; i < slotsNecesarios; i++) {
+              const sibling = grid.children[idx + i];
+              if(sibling) {
+                if(i === 0) sibling.classList.add('selected');
+                else sibling.classList.add('covered');
+              }
+            }
+            
+            state.horaInicio = s.hora_inicio;
+            updateCTA();
+          };
+        } else {
+          el.disabled = true;
+        }
+        grid.appendChild(el);
+      });
+    }
+
+    function updateCTA() {
+      const btn = document.getElementById('btn-continuar');
+      if(state.fecha && state.barberoId && state.horaInicio) {
+        btn.disabled = false;
+        btn.textContent = `Confirmar para las ${state.horaInicio} â†’`;
+      } else {
+        btn.disabled = true;
+        btn.textContent = 'Completa tu selección';
+      }
+    }
+
+    function goToStep3() {
+      if(!state.fecha || !state.barberoId || !state.horaInicio) return;
+      sessionStorage.setItem('bb_step2', JSON.stringify({
+        fecha: state.fecha,
+        barberoId: state.barberoId,
+        barberoNombre: state.barberoNombre,
+        horaInicio: state.horaInicio
+      }));
+      window.location.href = 'confirm.html';
+    }
+
+    // Inicializar
+    initDates();
+  </script>
+</body>
+</html>
+
