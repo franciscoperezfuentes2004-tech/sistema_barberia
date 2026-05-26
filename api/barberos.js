@@ -6,7 +6,7 @@ module.exports = async function handler(req, res) {
   const usuariosRef = db.collection('usuarios');
 
   if (req.method === 'GET') {
-    const { all, fecha, duracion } = req.query;
+    const { all, fecha, duracion, hora_actual } = req.query;
     const showAll = all === 'true' || all === '1';
     
     // 🛡️ PROTECCIÓN: Si se solicitan 'todos' los barberos, requiere ser Admin
@@ -95,8 +95,15 @@ module.exports = async function handler(req, res) {
               const bloqueInicioMs = horaActual.getTime();
               const bloqueFinMs = bloqueInicioMs + (duracionDeseada * 60000);
               const finDelDiaMs = horaCierre.getTime();
+              const horaFormato = horaActual.toISOString().substring(11, 16);
 
               if (bloqueFinMs > finDelDiaMs) break;
+
+              // Si se proporcionó hora_actual y este slot ya pasó, saltarlo
+              if (hora_actual && horaFormato <= hora_actual) {
+                horaActual = new Date(horaActual.getTime() + (30 * 60000));
+                continue;
+              }
 
               let bloqueOcupado = false;
               for (const cita of citas) {

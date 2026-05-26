@@ -245,7 +245,15 @@
       grid.innerHTML = '<div style="color:var(--muted);font-size:.85rem">Buscando barberos disponibles...</div>';
       
       try {
-        const res = await fetch(`${API}/barberos?fecha=${isodate}&duracion=${state.duracion}`, { cache: 'no-store' });
+        let url = `${API}/barberos?fecha=${isodate}&duracion=${state.duracion}`;
+        const ahora = new Date();
+        const hoy = ahora.getFullYear() + '-' + String(ahora.getMonth()+1).padStart(2,'0') + '-' + String(ahora.getDate()).padStart(2,'0');
+        if (isodate === hoy) {
+          const horaActual = String(ahora.getHours()).padStart(2,'0') + ':' + String(ahora.getMinutes()).padStart(2,'0');
+          url += `&hora_actual=${horaActual}`;
+        }
+        
+        const res = await fetch(url, { cache: 'no-store' });
         const json = await res.json();
         renderBarberos(json.data || []);
       } catch(e) {
