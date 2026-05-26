@@ -67,14 +67,14 @@
     .hdr-pills{display:flex;gap:8px;flex-wrap:wrap}
     .pill{
       display:inline-flex;align-items:center;gap:5px;
-      padding:5px 12px;border-radius:999px;font-size:.72rem;font-weight:600;
+      padding:8px 16px;border-radius:999px;font-size:.9rem;font-weight:600;
       border:1px solid var(--border);background:var(--s2);
     }
     .pill-gold{border-color:var(--gold-border);color:var(--gold);background:var(--gold-bg)}
     .pill-green{border-color:var(--green-border);color:var(--green);background:var(--green-bg)}
     .pill-blue{border-color:var(--blue-border);color:var(--blue);background:var(--blue-bg)}
 
-    /* â•â•â•â•â•â•â•â•â•â•â• DATE SELECTOR â•â•â•â•â•â•â•â•â•â•â• */
+    /* ——————————— DATE SELECTOR ——————————— */
     .dates-bar{
       background:var(--s1);border-bottom:1px solid var(--border);
       padding:12px var(--gutter);
@@ -97,7 +97,7 @@
     .d-card.selected .d-num,
     .d-card.selected .d-month{color:#0F0F0F}
 
-    /* â•â•â•â•â•â•â•â•â•â•â• TIMELINE â•â•â•â•â•â•â•â•â•â•â• */
+    /* ——————————— TIMELINE ——————————— */
     .timeline-section{padding:12px var(--gutter) 100px; max-width:900px; margin:0 auto;}
     .tl-label{
       font-size:.68rem;color:var(--muted);text-transform:uppercase;
@@ -144,7 +144,7 @@
       font-style:italic;
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â• APPOINTMENT CARD â•â•â•â•â•â•â•â•â•â•â• */
+    /* ——————————— APPOINTMENT CARD ——————————— */
     .appt-card{
       margin:4px 0 4px 0;padding:14px;border-radius:14px;
       background:var(--s2);border:1px solid var(--border);
@@ -211,7 +211,7 @@
     }
     .act-wa:hover{background:#1ebe5d}
 
-    /* â•â•â•â•â•â•â•â•â•â•â• EMPTY STATE â•â•â•â•â•â•â•â•â•â•â• */
+    /* ——————————— EMPTY STATE ——————————— */
     .empty-day{
       text-align:center;padding:60px 20px;
     }
@@ -219,7 +219,7 @@
     .empty-title{font-family:var(--serif);font-size:1.1rem;color:var(--bright);margin-bottom:6px}
     .empty-sub{font-size:.8rem;color:var(--muted);line-height:1.5}
 
-    /* â•â•â•â•â•â•â•â•â•â•â• LOADING â•â•â•â•â•â•â•â•â•â•â• */
+    /* ——————————— LOADING ——————————— */
     .loading-spinner{
       display:flex;align-items:center;justify-content:center;padding:60px 0;
     }
@@ -230,7 +230,7 @@
     }
     @keyframes spin{to{transform:rotate(360deg)}}
 
-    /* â•â•â•â•â•â•â•â•â•â•â• TOAST â•â•â•â•â•â•â•â•â•â•â• */
+    /* ——————————— TOAST ——————————— */
     .toast{
       position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);
       background:var(--s2);border:1px solid var(--border);color:var(--bright);
@@ -245,7 +245,7 @@
 </head>
 <body>
 
-  <!-- â•â•â•â•â•â•â•â• HEADER â•â•â•â•â•â•â•â• -->
+  <!-- ————————— HEADER ————————— -->
   <header class="staff-header">
     <div class="hdr-row">
       <div>
@@ -262,15 +262,15 @@
       </div>
     </div>
     <div class="hdr-pills" id="hdr-pills">
-      <span class="pill pill-gold" id="pill-citas">ðŸ“… — citas hoy</span>
-      <span class="pill pill-green" id="pill-next">â³ Cargando...</span>
+      <span class="pill pill-gold" id="pill-citas">📅 — citas hoy</span>
+      <span class="pill pill-green" id="pill-next">⏳ Cargando...</span>
     </div>
   </header>
 
-  <!-- â•â•â•â•â•â•â•â• DATE SELECTOR â•â•â•â•â•â•â•â• -->
+  <!-- ————————— DATE SELECTOR ————————— -->
   <div class="dates-bar" id="dates-bar"></div>
 
-  <!-- â•â•â•â•â•â•â•â• TIMELINE â•â•â•â•â•â•â•â• -->
+  <!-- ————————— TIMELINE ————————— -->
   <section class="timeline-section">
     <div class="tl-label" id="tl-label">Agenda del día</div>
     <div id="timeline-container">
@@ -278,7 +278,7 @@
     </div>
   </section>
 
-  <!-- â•â•â•â•â•â•â•â• TOAST â•â•â•â•â•â•â•â• -->
+  <!-- ————————— TOAST ————————— -->
   <div class="toast" id="toast">
     <span class="toast-icon"></span>
     <span class="toast-msg"></span>
@@ -286,7 +286,7 @@
 
   <script>
   (() => {
-    /* â”€â”€â”€ Config â”€â”€â”€ */
+    /* ——— Config ——— */
     const API = '../api';
 
     // 🛡️ Interceptor Global de Fetch para Inyectar JWT
@@ -321,7 +321,7 @@
       no_asistio: 'No asistió',
     };
 
-    /* â”€â”€â”€ Init â”€â”€â”€ */
+    /* ——— Init ——— */
     async function init() {
       // Tab-isolation check
       if (!sessionStorage.getItem('tab_auth')) {
@@ -349,7 +349,7 @@
       }, 30000);
     }
 
-    /* â”€â”€â”€ Auth Check â”€â”€â”€ */
+    /* ——— Auth Check ——— */
     async function checkAuth() {
       try {
         const token = localStorage.getItem('mi_token_jwt');
@@ -392,7 +392,7 @@
       else el.textContent = 'Buenas noches';
     }
 
-    /* â”€â”€â”€ Date Selector â”€â”€â”€ */
+    /* ——— Date Selector ——— */
     function initDates() {
       const bar = document.getElementById('dates-bar');
       const dias = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
@@ -426,7 +426,7 @@
       await loadCitas();
     }
 
-    /* â”€â”€â”€ Load Citas â”€â”€â”€ */
+    /* ——— Load Citas ——— */
     async function loadCitas(silent = false) {
       const container = document.getElementById('timeline-container');
       if (!silent) {
@@ -446,13 +446,13 @@
       }
     }
 
-    /* â”€â”€â”€ Update Pills â”€â”€â”€ */
+    /* ——— Update Pills ——— */
     function updatePills() {
       const total = citasDelDia.length;
       const pillCitas = document.getElementById('pill-citas');
       const pillNext  = document.getElementById('pill-next');
 
-      pillCitas.textContent = `ðŸ“… ${total} cita${total!==1?'s':''} hoy`;
+      pillCitas.textContent = `📅 ${total} cita${total!==1?'s':''} hoy`;
 
       // Find next pending appointment
       const ahora = new Date();
@@ -460,7 +460,7 @@
       const hoyISO = ahora.getFullYear()+'-'+String(ahora.getMonth()+1).padStart(2,'0')+'-'+String(ahora.getDate()).padStart(2,'0');
 
       if (selectedDate !== hoyISO) {
-        pillNext.textContent = 'ðŸ“‹ ' + formatDateLabel(selectedDate);
+        pillNext.textContent = '📋 ' + formatDateLabel(selectedDate);
         pillNext.className = 'pill pill-blue';
         return;
       }
@@ -473,18 +473,18 @@
       if (proxima) {
         const diffMin = diffMinutes(ahoraStr, proxima.hora_inicio.substring(0,5));
         if (diffMin <= 60) {
-          pillNext.textContent = `â³ Próxima en ${diffMin} min`;
+          pillNext.textContent = `⏳ Próxima en ${diffMin} min`;
         } else {
-          pillNext.textContent = `â³ Próxima a las ${proxima.hora_inicio.substring(0,5)}`;
+          pillNext.textContent = `⏳ Próxima a las ${proxima.hora_inicio.substring(0,5)}`;
         }
         pillNext.className = 'pill pill-green';
       } else {
         const enSilla = citasDelDia.find(c => c.estado === 'en_silla');
         if (enSilla) {
-          pillNext.textContent = 'ðŸ’ˆ En silla ahora';
+          pillNext.textContent = '💈 En silla ahora';
           pillNext.className = 'pill pill-blue';
         } else {
-          pillNext.textContent = 'âœ… Día libre';
+          pillNext.textContent = '✅ Día libre';
           pillNext.className = 'pill pill-green';
         }
       }
@@ -502,7 +502,7 @@
       return dias[d.getDay()] + ' ' + d.getDate();
     }
 
-    /* â”€â”€â”€ Render Timeline â”€â”€â”€ */
+    /* ——— Render Timeline ——— */
     function renderTimeline(silent = false) {
       const container = document.getElementById('timeline-container');
 
@@ -596,7 +596,7 @@
       if (citasDelDia.length === 0) {
         html = `
           <div class="empty-day">
-            <div class="empty-icon">â˜•</div>
+            <div class="empty-icon">☕</div>
             <p class="empty-title">Sin citas agendadas</p>
             <p class="empty-sub">Disfruta tu tiempo libre o espera que alguien reserve contigo.</p>
           </div>`;
@@ -664,14 +664,14 @@
             <span class="appt-status st-${st}">${STATUS_LABELS[st] || st}</span>
           </div>
           <div class="appt-services">
-            <span class="appt-svc-chip">ðŸ’ˆ ${serviciosStr}</span>
-            <span class="appt-dur">â± ${durMin} min</span>
+            <span class="appt-svc-chip">💈 ${serviciosStr}</span>
+            <span class="appt-dur">⏱️ ${durMin} min</span>
           </div>
           <div class="appt-actions">${actionsHTML}</div>
         </div>`;
     }
 
-    /* â”€â”€â”€ Change State â”€â”€â”€ */
+    /* ——— Change State ——— */
     async function changeState(citaId, nuevoEstado) {
       try {
         const res = await fetch(`${API}/citas?id=${citaId}`, {
@@ -690,11 +690,11 @@
           updatePills();
 
           const msgs = {
-            en_silla:   ['ðŸ’ˆ','Cliente en silla — ¡a trabajar!'],
-            completada: ['âœ…','Servicio finalizado — ¡buen trabajo!'],
-            no_asistio: ['âŒ','Marcado como no asistió'],
+            en_silla:   ['💈','Cliente en silla — ¡a trabajar!'],
+            completada: ['✅','Servicio finalizado — ¡buen trabajo!'],
+            no_asistio: ['❌','Marcado como no asistió'],
           };
-          const [icon, msg] = msgs[nuevoEstado] || ['â„¹ï¸','Estado actualizado'];
+          const [icon, msg] = msgs[nuevoEstado] || ['ℹ️','Estado actualizado'];
           showToast(icon, msg);
         } else {
           showToast('âš ï¸', json.message || 'Error al actualizar');
