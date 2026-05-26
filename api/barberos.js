@@ -6,10 +6,11 @@ module.exports = async function handler(req, res) {
   const usuariosRef = db.collection('usuarios');
 
   if (req.method === 'GET') {
-    const { all } = req.query;
+    const { all, fecha, duracion } = req.query;
+    const showAll = all === 'true' || all === '1';
     
     // 🛡️ PROTECCIÓN: Si se solicitan 'todos' los barberos, requiere ser Admin
-    if (all) {
+    if (showAll) {
       const auth = verifyToken(req, ['admin']);
       if (auth.error) {
         return res.status(403).json({ error: auth.error });
@@ -19,27 +20,104 @@ module.exports = async function handler(req, res) {
     try {
       let query = usuariosRef.where('rol', '==', 'barbero');
 
-      if (!all) {
+      if (!showAll) {
         query = query.where('activo', '==', true);
       }
 
       const snapshot = await query.get();
       
+      // Obtener todos los horarios para calcular disponible_hoy
+      const horariosSnapshot = await db.collection('horarios').get();
+      const horariosMap = {};
+      horariosSnapshot.forEach(doc => {
+        horariosMap[doc.id] = doc.data().schedule;
+      });
+      const globalSchedule = horariosMap['global'] || [];
+
       let barberos = [];
-      snapshot.forEach(doc => {
+      const todayDay = new Date().getDay();
+
+      for (const doc of snapshot.docs) {
         const data = doc.data();
-        // Excluimos el password_hash de la respuesta por seguridad
         delete data.password_hash;
+
+        // Determinar disponible_hoy basado en su horario
+        const schedule = horariosMap[doc.id] || globalSchedule;
+        const todaySchedule = schedule.find(s => s.dia_semana === todayDay);
+        const disponible_hoy = todaySchedule ? todaySchedule.activo === 1 || todaySchedule.activo === true : true;
+
+        // Calcular slots_disponibles si se solicitó fecha y duración (para la página de agendar cita)
+        let slots_disponibles = 0;
+        if (fecha && duracion) {
+          const duracionDeseada = parseInt(duracion, 10) || 30;
+          const apertura = '10:00:00';
+          const cierre = '20:00:00';
+
+          // Obtener citas del barbero para la fecha
+          const citasSnapshot = await db.collection('citas')
+            .where('barbero_id', '==', doc.id)
+            .where('fecha', '==', fecha)
+            .get();
+
+          const citas = [];
+          citasSnapshot.forEach(c => {
+            const cData = c.data();
+            if (cData.estado !== 'cancelada' && cData.estado !== 'no_asistio') {
+              citas.push(cData);
+            }
+          });
+
+          // Calcular bloques disponibles
+          let horaActual = new Date(`1970-01-01T${apertura}Z`);
+          const horaCierre = new Date(`1970-01-01T${cierre}Z`);
+
+          while (horaActual < horaCierre) {
+            const bloqueInicioMs = horaActual.getTime();
+            const bloqueFinMs = bloqueInicioMs + (duracionDeseada * 60000);
+            const finDelDiaMs = horaCierre.getTime();
+
+            if (bloqueFinMs > finDelDiaMs) break;
+
+            let bloqueOcupado = false;
+            for (const cita of citas) {
+              const citaInicioMs = new Date(`1970-01-01T${cita.hora_inicio}Z`).getTime();
+              const citaFinMs = new Date(`1970-01-01T${cita.hora_fin}Z`).getTime();
+
+              if (bloqueInicioMs < citaFinMs && bloqueFinMs > citaInicioMs) {
+                const traslapeFin = Math.min(bloqueFinMs, citaFinMs);
+                const traslapeInicio = Math.max(bloqueInicioMs, citaInicioMs);
+                const minutosInvasion = (traslapeFin - traslapeInicio) / 60000;
+
+                if (minutosInvasion <= 12) {
+                  continue;
+                } else {
+                  bloqueOcupado = true;
+                  break;
+                }
+              }
+            }
+
+            if (!bloqueOcupado) {
+              slots_disponibles++;
+            }
+            horaActual = new Date(horaActual.getTime() + (30 * 60000));
+          }
+        } else {
+          // Si no se especifica fecha, se asume que para efectos de la vista de agendar 
+          // tiene espacios disponibles si el barbero está activo y disponible hoy
+          slots_disponibles = disponible_hoy ? 10 : 0;
+        }
+
         barberos.push({ 
           id: doc.id, 
           foto: data.imagen_url || '', 
+          disponible_hoy,
+          slots_disponibles,
           ...data 
         });
-      });
+      }
 
-      // Ordenar alfabéticamente en memoria (ya que Firestore requiere índices compuestos si mezclamos where y orderBy)
       barberos.sort((a, b) => a.nombre.localeCompare(b.nombre));
-
       return res.status(200).json({ success: true, data: barberos });
     } catch (error) {
       console.error('Error obteniendo la lista de barberos:', error);

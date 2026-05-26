@@ -122,9 +122,9 @@
 
   <main>
       <nav class="steps">
-        <div class="step-item"><div class="step-dot done">âœ“</div></div>
+        <div class="step-item"><div class="step-dot done">✓</div></div>
         <div class="step-line done"></div>
-        <div class="step-item"><div class="step-dot done">âœ“</div></div>
+        <div class="step-item"><div class="step-dot done">✓</div></div>
         <div class="step-line done"></div>
         <div class="step-item">
           <div class="step-dot active">3</div>
@@ -158,7 +158,7 @@
     <form id="booking-form" onsubmit="event.preventDefault(); submitBooking();">
       <div class="form-group">
         <label class="form-label">Nombre Completo *</label>
-        <input type="text" id="inp-nombre" class="form-input" required placeholder="Ej. Juan Pérez" oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÃ“ÃšñÃ‘\s]/g, '')">
+        <input type="text" id="inp-nombre" class="form-input" required placeholder="Ej. Juan Pérez" oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')">
       </div>
       <div class="form-group">
         <label class="form-label">Teléfono (10 dígitos) *</label>
@@ -179,7 +179,7 @@
   <!-- Success Modal -->
   <div id="success-modal">
     <div class="modal-content">
-      <div class="check-circle">âœ“</div>
+      <div class="check-circle">✓</div>
       <h2 class="modal-title">¡Reserva Confirmada!</h2>
       <p class="modal-desc">
         Tu lugar está asegurado. Te esperamos el <br>

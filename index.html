@@ -35,7 +35,7 @@
       --ease: all 0.25s cubic-bezier(.4,0,.2,1);
       --r: 16px;
 
-      /* â”€â”€ CLAVE: padding que escala con la pantalla â”€â”€
+      /* ── CLAVE: padding que escala con la pantalla ──
          móvil 20px | tablet 40px | desktop ~6% del ancho */
       --gutter: clamp(20px, 6vw, 100px);
     }
@@ -226,7 +226,7 @@
     }
     /* Links del menú — sólo visibles en pantallas â‰¥1024px */
     .nav-menu {
-      display: none; /* MÃ“VIL: oculto */
+      display: none; /* MÓVIL: oculto */
       list-style: none; gap: 28px; align-items: center;
       flex: 1; justify-content: center;
     }
@@ -285,7 +285,7 @@
       }
     }
 
-    /* Contenido del hero: padding lateral = var(--gutter) â†’ igual que el resto */
+    /* Contenido del hero: padding lateral = var(--gutter) → igual que el resto */
     .hero-body {
       position: relative; z-index:2; width:100%;
       padding: 110px var(--gutter) 52px;
@@ -340,7 +340,7 @@
     .stat-l { font-size:.64rem; color:var(--muted); text-transform:uppercase; letter-spacing:.12em; margin-top:5px; }
 
     /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-       SECCIÃ“N GENÉRICA — padding que usa el mismo gutter
+       SECCIÓN GENÉRICA — padding que usa el mismo gutter
     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     .sec {
       padding: clamp(52px,8vw,100px) var(--gutter);
@@ -435,7 +435,7 @@
        móvil: scroll horizontal | tablet+: grid
     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     .team-wrap {
-      /* MÃ“VIL: flex con scroll */
+      /* MÓVIL: flex con scroll */
       display: flex; gap: clamp(12px,2vw,20px);
       overflow-x: auto; scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
@@ -482,7 +482,7 @@
     }
 
     /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-       RESEÃ‘AS — igual que equipo: scroll móvil, grid desktop
+       RESEÑAS — igual que equipo: scroll móvil, grid desktop
     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     .rev-wrap {
       display: flex; gap: clamp(12px,2vw,20px);
@@ -573,7 +573,7 @@
     }
 
     /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-       MODAL DE RESEÃ‘AS
+       MODAL DE RESEÑAS
     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     .modal {
       display: none; position: fixed; inset: 0; z-index: 1000;
@@ -814,7 +814,7 @@
   </section>
 
   <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-       RESEÃ‘AS
+       RESEÑAS
   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
   <section id="resenas" class="sec sec-alt" aria-labelledby="rev-h">
 
@@ -901,7 +901,7 @@
   </div>
 
   <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-       MODAL RESEÃ‘AS
+       MODAL RESEÑAS
   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
   <div id="reviewModal" class="modal">
     <div class="modal-content">
@@ -911,11 +911,11 @@
       
       <form id="formResena" onsubmit="submitReview(event)">
         <div class="star-rating">
-          <input type="radio" id="star5" name="estrellas" value="5" checked /><label for="star5" title="5 estrellas">â˜…</label>
-          <input type="radio" id="star4" name="estrellas" value="4" /><label for="star4" title="4 estrellas">â˜…</label>
-          <input type="radio" id="star3" name="estrellas" value="3" /><label for="star3" title="3 estrellas">â˜…</label>
-          <input type="radio" id="star2" name="estrellas" value="2" /><label for="star2" title="2 estrellas">â˜…</label>
-          <input type="radio" id="star1" name="estrellas" value="1" /><label for="star1" title="1 estrella">â˜…</label>
+          <input type="radio" id="star5" name="estrellas" value="5" checked /><label for="star5" title="5 estrellas">★</label>
+          <input type="radio" id="star4" name="estrellas" value="4" /><label for="star4" title="4 estrellas">★</label>
+          <input type="radio" id="star3" name="estrellas" value="3" /><label for="star3" title="3 estrellas">★</label>
+          <input type="radio" id="star2" name="estrellas" value="2" /><label for="star2" title="2 estrellas">★</label>
+          <input type="radio" id="star1" name="estrellas" value="1" /><label for="star1" title="1 estrella">★</label>
         </div>
         
         <input type="text" id="revName" class="modal-input" placeholder="Tu Nombre" required />
@@ -963,7 +963,7 @@
         <ul class="ft-links" role="list">
           <li><a href="tel:+521234567890" id="footer-phone-link">ðŸ“ž <span class="cms-site-phone">+52 123 456 7890</span></a></li>
           <li><a href="mailto:contacto@barberia.com" id="footer-email-link">âœ‰ï¸ <span id="footer-email-text">contacto@barberia.com</span></a></li>
-          <li style="color:var(--muted);font-size:.84rem;margin-top:4px;display:flex;gap:6px"><span>ðŸ•</span><span id="footer-horario-text">Lunâ€“Vie: 9â€“20h · Sáb: 9â€“18h</span></li>
+          <li style="color:var(--muted);font-size:.84rem;margin-top:4px;display:flex;gap:6px"><span>ðŸ•</span><span id="footer-horario-text">Lun–Vie: 9–20h · Sáb: 9–18h</span></li>
         </ul>
       </div>
 
@@ -1199,7 +1199,7 @@
           
         }
         
-        // â”€â”€ SERVICIOS â”€â”€
+        // ── SERVICIOS ──
         const resSvc = await fetch('api/servicios');
         const jsonSvc = await resSvc.json();
         if (jsonSvc.success && jsonSvc.data) {
@@ -1234,7 +1234,7 @@
           }
         }
         
-        // â”€â”€ EQUIPO â”€â”€
+        // ── EQUIPO ──
         const resTeam = await fetch('api/barberos?all=0');
         const jsonTeam = await resTeam.json();
         if (jsonTeam.success && jsonTeam.data) {
@@ -1270,7 +1270,7 @@
           }
         }
         
-        // â”€â”€ GALERIA â”€â”€
+        // ── GALERIA ──
         const resGal = await fetch('api/galeria');
         const jsonGal = await resGal.json();
         if (jsonGal.success && jsonGal.data) {
@@ -1294,10 +1294,10 @@
           }
         }
 
-        // â”€â”€ RESEÃ‘AS â”€â”€
+        // ── RESEÑAS ──
         loadReviews();
 
-        // â”€â”€ HORARIOS â”€â”€
+        // ── HORARIOS ──
         loadHorarios();
 
       } catch(e) { console.error('Error fetching CMS settings:', e); }
@@ -1308,6 +1308,18 @@
         const res = await fetch('api/resenas');
         const json = await res.json();
         if (json.success && json.data) {
+          // Calcular rating promedio dinámicamente
+          const statRating = document.getElementById('stat-rating');
+          if (statRating) {
+            if (json.data.length > 0) {
+              const totalEstrellas = json.data.reduce((sum, rev) => sum + (parseInt(rev.estrellas) || 5), 0);
+              const promedio = (totalEstrellas / json.data.length).toFixed(1);
+              statRating.textContent = promedio + '★';
+            } else {
+              statRating.textContent = '5.0★';
+            }
+          }
+
           const revContainer = document.getElementById('public-reviews');
           if (revContainer) {
             revContainer.innerHTML = '';
@@ -1322,7 +1334,7 @@
               el.setAttribute('role', 'listitem');
               el.style.transitionDelay = `${delay}s`;
               
-              const stars = 'â˜…'.repeat(rev.estrellas) + 'â˜†'.repeat(5 - rev.estrellas);
+              const stars = '★'.repeat(rev.estrellas) + '☆'.repeat(5 - rev.estrellas);
               
               const parts = rev.nombre ? rev.nombre.trim().split(/\s+/) : ['U'];
               const initial = (parts[0].charAt(0) + (parts.length > 1 ? parts[parts.length - 1].charAt(0) : '')).toUpperCase();
@@ -1410,8 +1422,8 @@
           const footerHorario = document.getElementById('footer-horario-text');
           if (footerHorario && groups.length > 0) {
             const parts = groups.map(g => {
-              const range = g.startName === g.endName ? g.startName : g.startName + 'â€“' + g.endName;
-              return range + ': ' + g.hIn + 'â€“' + g.hOut;
+              const range = g.startName === g.endName ? g.startName : g.startName + '–' + g.endName;
+              return range + ': ' + g.hIn + '–' + g.hOut;
             });
             footerHorario.textContent = parts.join(' · ');
           }
@@ -1464,17 +1476,14 @@
         if (jsonAjustes.success && jsonAjustes.data) {
           const d = jsonAjustes.data;
           if (d.stat_exp) document.getElementById('stat-exp').textContent = d.stat_exp;
-            if (d.stat_clientes) document.getElementById('stat-clientes').textContent = d.stat_clientes;
-            if (d.stat_rating) document.getElementById('stat-rating').textContent = d.stat_rating.includes('★') ? d.stat_rating : d.stat_rating + '★';
+          if (d.stat_clientes) document.getElementById('stat-clientes').textContent = d.stat_clientes;
         }
 
-        const resBarberos = await fetch('api/barberos?all=1');
+        const resBarberos = await fetch('api/barberos?all=0');
         const jsonBarberos = await resBarberos.json();
-        if (jsonBarberos.data && jsonBarberos.data.length > 0) {
-          const activos = jsonBarberos.data.filter(b => b.activo === 1 || b.activo === '1').length;
-          const total = activos > 0 ? activos : jsonBarberos.data.length;
+        if (jsonBarberos.success && jsonBarberos.data && jsonBarberos.data.length > 0) {
           const statBarberos = document.getElementById('stat-barberos');
-          if (statBarberos) statBarberos.textContent = total;
+          if (statBarberos) statBarberos.textContent = jsonBarberos.data.length;
         }
       } catch (e) {
         console.error("Error al cargar estadísticas:", e);

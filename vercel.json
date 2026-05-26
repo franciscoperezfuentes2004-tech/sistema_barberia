@@ -2,10 +2,7 @@
   "version": 2,
   "cleanUrls": true,
   "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/$1"
-    }
+    { "source": "/api/disponibilidad", "destination": "/api/horarios" }
   ],
   "headers": [
     {

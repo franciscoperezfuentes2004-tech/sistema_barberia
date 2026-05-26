@@ -674,12 +674,8 @@
                   <small style="color:var(--muted); display:block; margin-bottom:4px;">Clientes</small>
                   <input type="text" id="cms-stat-clientes" placeholder="+8K">
                 </div>
-                <div style="flex:1;">
-                  <small style="color:var(--muted); display:block; margin-bottom:4px;">Rating</small>
-                  <input type="text" id="cms-stat-rating" placeholder="4.9â˜…">
-                </div>
               </div>
-              <small style="color:var(--muted); font-size:0.75rem;">(Los Maestros Barberos se calculan automáticamente)</small>
+              <small style="color:var(--muted); font-size:0.75rem;">(El Rating y los Maestros Barberos se calculan automáticamente)</small>
             </div>
             
             <div class="form-group" style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border);">
@@ -925,6 +921,8 @@
             document.getElementById('cms-tiktok').value = data.site_tiktok || '';
             document.getElementById('cms-slogan').value = data.site_slogan || '';
             document.getElementById('cms-hero-desc').value = data.site_hero_desc || '';
+            document.getElementById('cms-stat-exp').value = data.stat_exp || '';
+            document.getElementById('cms-stat-clientes').value = data.stat_clientes || '';
             
             if (data.site_logo) document.getElementById('cms-logo-preview').src = '../' + data.site_logo;
             if (data.site_hero_bg) document.getElementById('cms-hero-preview').src = '../' + data.site_hero_bg;
@@ -1021,8 +1019,7 @@
           site_slogan: document.getElementById('cms-slogan').value,
           site_hero_desc: document.getElementById('cms-hero-desc').value,
           stat_exp: document.getElementById('cms-stat-exp').value,
-          stat_clientes: document.getElementById('cms-stat-clientes').value,
-          stat_rating: document.getElementById('cms-stat-rating').value
+          stat_clientes: document.getElementById('cms-stat-clientes').value
         };
 
         const logoInput = document.getElementById('cms-logo');

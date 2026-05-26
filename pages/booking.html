@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <style>
-    /* â”€â”€â”€ TOKENS â”€â”€â”€ */
+    /* ─── TOKENS ─── */
     :root{
       --gold:#C9A84C;--gold-l:#E8C97A;--gold-d:#9A7B32;
       --bg:#0F0F0F;--s1:#181818;--s2:#222;--border:#333;
@@ -25,7 +25,7 @@
          -webkit-font-smoothing:antialiased;min-height:100dvh}
     img{display:block;max-width:100%}
 
-    /* â”€â”€â”€ HEADER â”€â”€â”€ */
+    /* ─── HEADER ─── */
     .app-header{
       position:sticky;top:0;z-index:50;
       background:rgba(15,15,15,.96);backdrop-filter:blur(18px);
@@ -42,7 +42,7 @@
       background:linear-gradient(135deg,var(--gold-l),var(--gold));
       -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 
-    /* â”€â”€â”€ STEPS BAR â”€â”€â”€ */
+    /* ─── STEPS BAR ─── */
     .steps{display:flex;align-items:center;gap:0;margin-bottom:32px}
     .step-item{display:flex;align-items:center;gap:6px;flex-shrink:0}
     .step-dot{
@@ -60,10 +60,10 @@
     .step-line{flex:1;height:1px;background:var(--border);margin:0 8px;min-width:20px}
     .step-line.done{background:var(--green)}
 
-    /* â”€â”€â”€ MAIN â”€â”€â”€ */
+    /* ─── MAIN ─── */
     main{max-width:1400px;margin:0 auto;padding:28px var(--gutter) 200px}
 
-    /* â”€â”€â”€ SECTION TITLE â”€â”€â”€ */
+    /* ─── SECTION TITLE ─── */
     .sec-title-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
     .sec-title{font-family:var(--serif);font-size:1.15rem;font-weight:600;color:var(--bright)}
     .badge-multi{font-size:.68rem;background:var(--s2);border:1px solid var(--border);
@@ -76,7 +76,7 @@
       content:'';flex:1;height:1px;background:var(--border)
     }
 
-    /* â”€â”€â”€ SERVICE GRID â”€â”€â”€ */
+    /* ─── SERVICE GRID ─── */
     #services-grid{
       display:grid;
       grid-template-columns:1fr;
@@ -85,7 +85,7 @@
     @media(min-width:768px){#services-grid{grid-template-columns:repeat(2,1fr)}}
     @media(min-width:1024px){#services-grid{grid-template-columns:repeat(3,1fr)}}
 
-    /* â”€â”€â”€ SERVICE CARD â”€â”€â”€ */
+    /* ─── SERVICE CARD ─── */
     .svc-card{
       background:var(--s2);border:1.5px solid var(--border);
       border-radius:14px;padding:16px;padding-right:48px;
@@ -128,12 +128,12 @@
       border-color:var(--gold);background:var(--gold);color:#0F0F0F
     }
 
-    /* â”€â”€â”€ SKELETON â”€â”€â”€ */
+    /* ─── SKELETON ─── */
     .skeleton{background:linear-gradient(90deg,var(--s2) 25%,var(--s3) 50%,var(--s2) 75%);
       background-size:200%;animation:sk 1.4s infinite;border-radius:14px}
     @keyframes sk{0%{background-position:200% 0}100%{background-position:-200% 0}}
 
-    /* â”€â”€â”€ BOTTOM BAR â”€â”€â”€ */
+    /* ─── BOTTOM BAR ─── */
     .bottom-fade{
       position:fixed;bottom:0;left:0;right:0;height:160px;
       background:linear-gradient(to top,rgba(15,15,15,1) 50%,transparent);
@@ -193,7 +193,7 @@
         </a>
         <a href="../index.html" style="font-size:.78rem;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:4px;transition:color .2s"
            onmouseenter="this.style.color='var(--gold)'" onmouseleave="this.style.color='var(--muted)'">
-          âœ• Cancelar
+          ✖ Cancelar
         </a>
       </div>
     </div>
@@ -220,7 +220,7 @@
 
     <!-- Greeting -->
     <section style="margin-bottom:28px">
-      <p id="greeting-time" style="font-size:.75rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px">Buenos días ðŸ‘‹</p>
+      <p id="greeting-time" style="font-size:.75rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px">Buenos días 👋</p>
       <h1 id="main-h" style="font-family:var(--serif);font-size:1.7rem;font-weight:700;color:var(--bright);line-height:1.2;margin-bottom:5px">
         ¿Qué te hacemos
         <span style="background:linear-gradient(135deg,var(--gold-l),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">hoy?</span>
@@ -255,9 +255,9 @@
   <div class="bottom-cta" role="complementary" aria-label="Resumen y continuar">
     <div class="bottom-inner">
       <div class="pills" role="status" aria-live="polite">
-        <div class="pill">ðŸ›Ž <strong id="pill-count">—</strong></div>
+        <div class="pill">🛍️ <strong id="pill-count">—</strong></div>
         <div class="pill">â± <strong id="pill-dur">0 min</strong></div>
-        <div class="pill">ðŸ’° <strong id="pill-price">$0 MXN</strong></div>
+        <div class="pill">💰 <strong id="pill-price">$0 MXN</strong></div>
       </div>
       <button id="btn-continuar" class="cta-btn" onclick="goToStep2()"
               disabled aria-disabled="true" aria-label="Continuar al paso 2">
@@ -277,7 +277,7 @@
   // Saludo
   const h = new Date().getHours();
   const grEl = document.getElementById('greeting-time');
-  if(grEl) grEl.textContent = h<12?'Buenos días ðŸ‘‹':h<19?'Buenas tardes ðŸ‘‹':'Buenas noches ðŸ‘‹';
+  if(grEl) grEl.textContent = h<12?'Buenos días 👋':h<19?'Buenas tardes 👋':'Buenas noches 👋';
 
   // Cargar servicios
   async function loadServicios() {
@@ -317,7 +317,7 @@
           <p class="svc-desc">${svc.descripcion||''}</p>
           <span class="svc-dur">â± ${svc.duracion_min} min</span>
         </div>
-        <div class="svc-check" aria-hidden="true">âœ“</div>`;
+        <div class="svc-check" aria-hidden="true">✓</div>`;
       const toggle = () => toggleSvc(card, svc);
       card.addEventListener('click', toggle);
       card.addEventListener('keydown', e => { if(e.key===' '||e.key==='Enter'){e.preventDefault();toggle();} });

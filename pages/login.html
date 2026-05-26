@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    /* â”€â”€ Reset & Base â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ── Reset & Base ──────────────────────────────── */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
@@ -47,7 +47,7 @@
       overflow-x: hidden;
     }
 
-    /* â”€â”€ Noise Texture Overlay â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ── Noise Texture Overlay ─────────────────────── */
     body::before {
       content: '';
       position: fixed;
@@ -60,7 +60,7 @@
       background-size: 200px 200px;
     }
 
-    /* â”€â”€ Ambient Glow â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ── Ambient Glow ──────────────────────────────── */
     body::after {
       content: '';
       position: fixed;
@@ -74,7 +74,7 @@
       z-index: 0;
     }
 
-    /* â”€â”€ Fade-in Animations â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ── Fade-in Animations ────────────────────────── */
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(24px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -85,7 +85,7 @@
       to   { opacity: 1; }
     }
 
-    /* â”€â”€ Main Container â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ── Main Container ────────────────────────────── */
     .login-container {
       position: relative;
       z-index: 1;
@@ -98,7 +98,7 @@
       animation: fadeIn 0.8s ease-out;
     }
 
-    /* â”€â”€ Barber Pole â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ── Barber Pole ───────────────────────────────── */
     .barber-pole-wrapper {
       width: 28px;
       height: 90px;
@@ -183,7 +183,7 @@
       to   { transform: translateY(32px); }
     }
 
-    /* â”€â”€ Logo â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ── Logo ──────────────────────────────────────── */
     .logo {
       width: 72px;
       height: 72px;
@@ -209,7 +209,7 @@
       50%      { background-position: 100% 50%; }
     }
 
-    /* â”€â”€ Title & Subtitle â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ── Title & Subtitle ──────────────────────────── */
     .title {
       font-family: var(--serif);
       font-size: 2rem;
@@ -235,7 +235,7 @@
       animation-delay: 0.4s;
     }
 
-    /* â”€â”€ Form â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ── Form ──────────────────────────────────────── */
     .login-form {
       width: 100%;
       display: flex;
@@ -245,7 +245,7 @@
       animation-delay: 0.5s;
     }
 
-    /* â”€â”€ Input Group â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ── Input Group ───────────────────────────────── */
     .input-group {
       position: relative;
       width: 100%;
@@ -292,7 +292,7 @@
       color: var(--gold);
     }
 
-    /* â”€â”€ Password Toggle â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ── Password Toggle ───────────────────────────── */
     .toggle-password {
       position: absolute;
       right: 14px;
@@ -323,7 +323,7 @@
     .toggle-password.active .eye-on { display: none; }
     .toggle-password.active .eye-off { display: block; }
 
-    /* â”€â”€ Submit Button â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ── Submit Button ─────────────────────────────── */
     .btn-submit {
       width: 100%;
       padding: 16px;
@@ -412,7 +412,7 @@
       to { transform: translate(-50%, -50%) rotate(360deg); }
     }
 
-    /* â”€â”€ Error Message â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ── Error Message ─────────────────────────────── */
     .error-message {
       width: 100%;
       padding: 14px 16px;
@@ -442,7 +442,7 @@
       100% { transform: translateX(0); }
     }
 
-    /* â”€â”€ Divider â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ── Divider ───────────────────────────────────── */
     .divider {
       width: 40px;
       height: 1.5px;
@@ -453,7 +453,7 @@
       animation-delay: 0.6s;
     }
 
-    /* â”€â”€ Footer â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ── Footer ────────────────────────────────────── */
     .footer {
       font-size: 0.7rem;
       color: var(--muted);
@@ -464,7 +464,7 @@
       animation-delay: 0.7s;
     }
 
-    /* â”€â”€ Responsive â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ── Responsive ────────────────────────────────── */
     @media (max-width: 480px) {
       .login-container {
         padding: 32px 20px;
@@ -481,13 +481,13 @@
       }
     }
 
-    /* â”€â”€ Selection Color â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ── Selection Color ───────────────────────────── */
     ::selection {
       background: rgba(201,168,76,0.3);
       color: var(--bright);
     }
 
-    /* â”€â”€ Autofill Styles â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ── Autofill Styles ───────────────────────────── */
     input:-webkit-autofill,
     input:-webkit-autofill:hover,
     input:-webkit-autofill:focus {
@@ -581,10 +581,10 @@
 
   <script>
     (() => {
-      // â”€â”€ ðŸ“¡ API Base URL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+      // ── ðŸ“¡ API Base URL ───────────────────────────
       const API = '../api';
 
-      // â”€â”€ DOM Elements â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+      // ── DOM Elements ──────────────────────────────
       const form         = document.getElementById('loginForm');
       const usernameInput = document.getElementById('username');
       const passwordInput = document.getElementById('password');
@@ -592,7 +592,7 @@
       const errorMessage  = document.getElementById('errorMessage');
       const toggleBtn     = document.getElementById('togglePassword');
 
-      // â”€â”€ Password Toggle â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+      // ── Password Toggle ───────────────────────────
       toggleBtn.addEventListener('click', () => {
         const isPassword = passwordInput.type === 'password';
         passwordInput.type = isPassword ? 'text' : 'password';
@@ -600,7 +600,7 @@
         toggleBtn.setAttribute('aria-label', isPassword ? 'Ocultar contraseña' : 'Mostrar contraseña');
       });
 
-      // â”€â”€ Show Error â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+      // ── Show Error ────────────────────────────────
       function showError(message) {
         errorMessage.textContent = message;
         errorMessage.classList.remove('visible');
@@ -613,7 +613,7 @@
         errorMessage.classList.remove('visible');
       }
 
-      // â”€â”€ Set Loading State â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+      // ── Set Loading State ─────────────────────────
       function setLoading(loading) {
         if (loading) {
           btnSubmit.classList.add('loading');
@@ -624,7 +624,7 @@
         }
       }
 
-      // â”€â”€ Form Submit â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+      // ── Form Submit ───────────────────────────────
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
         hideError();
@@ -676,7 +676,7 @@
         }
       });
 
-      // â”€â”€ Focus first input on load â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+      // ── Focus first input on load ─────────────────
       window.addEventListener('DOMContentLoaded', () => {
         usernameInput.focus();
       });

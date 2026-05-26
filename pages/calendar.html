@@ -133,7 +133,7 @@
   <main>
       <nav class="steps">
         <div class="step-item">
-          <div class="step-dot done">âœ“</div>
+          <div class="step-dot done">✓</div>
           <span class="step-label done">Servicios</span>
         </div>
         <div class="step-line done"></div>
@@ -179,7 +179,7 @@
   <div class="bottom-cta">
     <div class="bottom-inner">
       <button id="btn-continuar" class="cta-btn" disabled onclick="goToStep3()">
-        Continuar al resumen â†’
+        Continuar al resumen →
       </button>
     </div>
   </div>
@@ -348,7 +348,7 @@
       const btn = document.getElementById('btn-continuar');
       if(state.fecha && state.barberoId && state.horaInicio) {
         btn.disabled = false;
-        btn.textContent = `Confirmar para las ${state.horaInicio} â†’`;
+        btn.textContent = `Confirmar para las ${state.horaInicio} →`;
       } else {
         btn.disabled = true;
         btn.textContent = 'Completa tu selección';

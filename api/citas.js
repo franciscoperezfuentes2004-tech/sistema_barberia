@@ -55,54 +55,93 @@ module.exports = async function handler(req, res) {
   // POST: Agendar nueva cita
   else if (method === 'POST') {
     // Endpoint PÚBLICO para clientes
-    const { cliente_nombre, cliente_telefono, cliente_email, barbero_id, servicio_id, fecha, hora_inicio, notas } = req.body;
+    const { cliente_id, barbero_id, servicios, servicio_id, fecha, hora_inicio, notas } = req.body;
 
-    if (!cliente_nombre || !cliente_telefono || !barbero_id || !servicio_id || !fecha || !hora_inicio) {
-      return res.status(400).json({ error: 'Faltan campos obligatorios para asegurar la cita' });
+    if (!barbero_id || !fecha || !hora_inicio) {
+      return res.status(400).json({ error: 'Faltan campos obligatorios para asegurar la cita (barbero, fecha, hora)' });
     }
 
-    // 🛡️ SANITIZACIÓN CONTRA XSS
-    const safeNombre = sanitize(cliente_nombre);
-    const safeTelefono = sanitize(cliente_telefono);
-    const safeEmail = sanitize(cliente_email);
-    const safeNotas = sanitize(notas);
-
     try {
-      // 1. Extraer la información del servicio para la duración (Desnormalización)
-      const servicioDoc = await db.collection('servicios').doc(servicio_id).get();
-      if (!servicioDoc.exists) {
-        return res.status(404).json({ error: 'El servicio solicitado no existe' });
+      // 1. Obtener detalles del cliente si se proporciona cliente_id, o usar los campos directos del body
+      let clientName = '';
+      let clientPhone = '';
+      let clientEmail = '';
+      
+      if (cliente_id) {
+        const clientDoc = await db.collection('clientes').doc(cliente_id).get();
+        if (clientDoc.exists) {
+          const clientData = clientDoc.data();
+          clientName = clientData.nombre;
+          clientPhone = clientData.telefono;
+          clientEmail = clientData.email || '';
+        }
       }
-      const servicioData = servicioDoc.data();
-      const duracionMin = Number(servicioData.duracion_min);
 
-      // 2. Extraer información del barbero (Desnormalización)
+      const finalNombre = clientName || sanitize(req.body.cliente_nombre);
+      const finalTelefono = clientPhone || sanitize(req.body.cliente_telefono);
+      const finalEmail = clientEmail || sanitize(req.body.cliente_email);
+
+      if (!finalNombre || !finalTelefono) {
+        return res.status(400).json({ error: 'Es necesario proporcionar el nombre y teléfono del cliente' });
+      }
+
+      // 2. Extraer información de los servicios seleccionados (Soporta arreglo o id único para retrocompatibilidad)
+      const serviceIds = Array.isArray(servicios) ? servicios : (servicio_id ? [servicio_id] : []);
+      if (serviceIds.length === 0) {
+        return res.status(400).json({ error: 'Es necesario seleccionar al menos un servicio para la reserva' });
+      }
+
+      let totalPrecio = 0;
+      let totalDuracion = 0;
+      const serviciosDetalle = [];
+      const nombresServicios = [];
+
+      for (const sId of serviceIds) {
+        const svcDoc = await db.collection('servicios').doc(sId).get();
+        if (svcDoc.exists) {
+          const svcData = svcDoc.data();
+          totalPrecio += parseFloat(svcData.precio) || 0;
+          totalDuracion += parseInt(svcData.duracion_min) || 30;
+          serviciosDetalle.push({
+            id: sId,
+            nombre: svcData.nombre,
+            precio: svcData.precio,
+            duracion_min: svcData.duracion_min
+          });
+          nombresServicios.push(svcData.nombre);
+        }
+      }
+
+      // 3. Extraer información del barbero (Desnormalización)
       const barberoDoc = await db.collection('usuarios').doc(barbero_id).get();
       if (!barberoDoc.exists) {
         return res.status(404).json({ error: 'El barbero seleccionado no existe' });
       }
       const barberoData = barberoDoc.data();
 
-      // 3. Calcular hora_fin
+      // 4. Calcular hora_fin
       const inicioDate = new Date(`1970-01-01T${hora_inicio}Z`);
-      const finDate = new Date(inicioDate.getTime() + (duracionMin * 60000));
+      const finDate = new Date(inicioDate.getTime() + (totalDuracion * 60000));
       const hora_fin = finDate.toISOString().substring(11, 19);
 
-      // 4. Crear documento
+      // 5. Crear documento de la cita
       const nuevaCita = {
+        cliente_id: cliente_id || null,
         barbero_id,
-        servicio_id,
-        cliente_nombre: safeNombre,
-        cliente_telefono: safeTelefono,
-        cliente_email: safeEmail || null,
+        servicios: serviceIds,
+        servicios_detalle: serviciosDetalle,
+        cliente_nombre: finalNombre,
+        cliente_telefono: finalTelefono,
+        cliente_email: finalEmail || null,
         fecha,
         hora_inicio,
         hora_fin,
-        notas: safeNotas || null,
+        notas: sanitize(notas) || null,
         estado: 'pendiente',
-        // Datos desnormalizados para evitar JOINs
-        servicio_nombre: servicioData.nombre,
-        duracion_min: duracionMin,
+        // Datos desnormalizados para evitar JOINs y mantener compatibilidad
+        servicio_nombre: nombresServicios.join(', '),
+        duracion_min: totalDuracion,
+        precio_total: totalPrecio,
         barbero_nombre: barberoData.nombre,
         barbero_apellido: barberoData.apellido,
         creado_en: new Date().toISOString()
