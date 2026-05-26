@@ -188,7 +188,7 @@
       <!-- Top row -->
       <div class="hdr-top">
         <a href="../index.html" class="logo" aria-label="Barbería — Inicio">
-          <div class="logo-mark" aria-hidden="true">✂️</div>
+          <div class="logo-mark" aria-hidden="true">✂️</div>
           <span class="logo-name">Barbería</span>
         </a>
         <a href="../index.html" style="font-size:.78rem;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:4px;transition:color .2s"
@@ -256,7 +256,7 @@
     <div class="bottom-inner">
       <div class="pills" role="status" aria-live="polite">
         <div class="pill">🛍️ <strong id="pill-count">—</strong></div>
-        <div class="pill">â± <strong id="pill-dur">0 min</strong></div>
+        <div class="pill">⏱️ <strong id="pill-dur">0 min</strong></div>
         <div class="pill">💰 <strong id="pill-price">$0 MXN</strong></div>
       </div>
       <button id="btn-continuar" class="cta-btn" onclick="goToStep2()"
@@ -289,7 +289,7 @@
       renderServicios(grid);
     } catch(e) {
       grid.innerHTML = `<div style="padding:24px;text-align:center;color:var(--muted);grid-column:1/-1">
-        <p style="font-size:2rem;margin-bottom:8px">âš ï¸</p>
+        <p style="font-size:2rem;margin-bottom:8px">⚠️</p>
         <p>No se pudieron cargar los servicios</p>
         <p style="font-size:.75rem;margin-top:4px;color:#555">${e.message}</p>
         <button onclick="loadServicios()" style="margin-top:14px;padding:8px 20px;background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:8px;cursor:pointer;font-family:var(--sans)">Reintentar</button>
@@ -308,14 +308,14 @@
       card.setAttribute('tabindex','0');
       card.setAttribute('aria-label',`${svc.nombre}, $${svc.precio} MXN, ${svc.duracion_min} minutos`);
       card.innerHTML = `
-        <div class="svc-icon" aria-hidden="true">${svc.icono||'✂️'}</div>
+        <div class="svc-icon" aria-hidden="true">${svc.icono||'✂️'}</div>
         <div class="svc-info">
           <div class="svc-head">
             <span class="svc-name">${svc.nombre}</span>
             <span class="svc-price">$${parseFloat(svc.precio).toLocaleString('es-MX')} MXN</span>
           </div>
           <p class="svc-desc">${svc.descripcion||''}</p>
-          <span class="svc-dur">â± ${svc.duracion_min} min</span>
+          <span class="svc-dur">⏱️ ${svc.duracion_min} min</span>
         </div>
         <div class="svc-check" aria-hidden="true">✓</div>`;
       const toggle = () => toggleSvc(card, svc);
