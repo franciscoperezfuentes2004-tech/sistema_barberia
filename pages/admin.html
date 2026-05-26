@@ -1267,7 +1267,10 @@
                       <span>${cita.hora_inicio.substring(0,5)} — ${cita.hora_fin.substring(0,5)}</span>
                       <span style="text-transform:uppercase;font-size:.6rem;color:${borderColor};font-weight:600">${displaySt}</span>
                     </div>
-                    <div class="mock-appt-client">${cita.cliente_nombre}</div>
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                      <div class="mock-appt-client">${cita.cliente_nombre}</div>
+                      <div style="font-size:.75rem; color:var(--bright); font-weight:600;">$${cita.precio_total || 0}</div>
+                    </div>
                     <div style="font-size:.7rem;color:var(--muted);margin-top:4px">${serviciosStr}</div>
                   </div>
                 `;
