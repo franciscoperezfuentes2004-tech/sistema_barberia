@@ -163,6 +163,8 @@
     .appt-card.st-completada::before{background:var(--green)}
     .appt-card.st-no_asistio{border-color:var(--red-border);background:var(--red-bg);opacity:.6}
     .appt-card.st-no_asistio::before{background:var(--red)}
+    .appt-card.st-no_catalogada{border-color:var(--border);background:var(--s1);opacity:.6}
+    .appt-card.st-no_catalogada::before{background:var(--muted)}
 
     .appt-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:8px}
     .appt-client{font-weight:700;font-size:.88rem;color:var(--bright);line-height:1.2}
@@ -175,6 +177,7 @@
     .appt-status.st-en_silla{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-border)}
     .appt-status.st-completada{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)}
     .appt-status.st-no_asistio{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border)}
+    .appt-status.st-no_catalogada{background:rgba(255,255,255,.05);color:var(--muted);border:1px solid var(--border)}
 
     .appt-services{
       display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px;
@@ -666,7 +669,22 @@
     }
 
     function renderAppointmentCard(cita) {
-      const st = cita.estado;
+      const realSt = cita.estado;
+      let st = realSt;
+      let displayStatus = STATUS_LABELS[realSt] || realSt;
+
+      const ahora = new Date();
+      const ahoraStr = String(ahora.getHours()).padStart(2,'0') + ':' + String(ahora.getMinutes()).padStart(2,'0');
+      const hoyISO = ahora.getFullYear()+'-'+String(ahora.getMonth()+1).padStart(2,'0')+'-'+String(ahora.getDate()).padStart(2,'0');
+      
+      const isPast = selectedDate === hoyISO && cita.hora_fin.substring(0,5) <= ahoraStr;
+      const isPastDay = selectedDate < hoyISO;
+
+      if ((realSt === 'pendiente' || realSt === 'confirmada' || realSt === 'en_silla') && (isPast || isPastDay)) {
+        st = 'no_catalogada';
+        displayStatus = 'No catalogada';
+      }
+
       const serviciosStr = (cita.servicios || []).map(s => s.nombre).join(' + ') || 'Servicio';
       const durMin = diffMinutes(cita.hora_inicio.substring(0,5), cita.hora_fin.substring(0,5));
       const tel = cita.cliente_tel || '';
@@ -674,7 +692,7 @@
 
       let actionsHTML = '';
 
-      if (st === 'pendiente' || st === 'confirmada') {
+      if (realSt === 'pendiente' || realSt === 'confirmada') {
         actionsHTML = `
           <button class="act-btn act-start" onclick="app.changeState(${cita.id},'en_silla')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polygon points="10,8 16,12 10,16"/></svg>
@@ -687,7 +705,7 @@
           <a href="${waLink}" target="_blank" class="act-wa" title="WhatsApp">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
           </a>`;
-      } else if (st === 'en_silla') {
+      } else if (realSt === 'en_silla') {
         actionsHTML = `
           <button class="act-btn act-finish" onclick="app.changeState(${cita.id},'completada')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
@@ -696,11 +714,11 @@
           <a href="${waLink}" target="_blank" class="act-wa" title="WhatsApp">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
           </a>`;
-      } else if (st === 'completada') {
+      } else if (realSt === 'completada') {
         actionsHTML = `<span style="font-size:.7rem;color:var(--green);display:flex;align-items:center;gap:4px">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-          Servicio completado · $${cita.total} MXN</span>`;
-      } else if (st === 'no_asistio') {
+          Servicio completado · $${cita.total || 0} MXN</span>`;
+      } else if (realSt === 'no_asistio') {
         actionsHTML = `<span style="font-size:.7rem;color:var(--red);display:flex;align-items:center;gap:4px">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>
           Cliente no asistió</span>`;
@@ -713,7 +731,7 @@
               <div class="appt-client">${cita.cliente_nombre}</div>
               <div class="appt-time">${cita.hora_inicio.substring(0,5)} — ${cita.hora_fin.substring(0,5)}</div>
             </div>
-            <span class="appt-status st-${st}">${STATUS_LABELS[st] || st}</span>
+            <span class="appt-status st-${st}">${displayStatus}</span>
           </div>
           <div class="appt-services">
             <span class="appt-svc-chip">💈 ${serviciosStr}</span>

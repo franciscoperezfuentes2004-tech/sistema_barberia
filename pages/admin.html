@@ -1219,7 +1219,7 @@
                 isOcupado = true;
               }
 
-              if (cita.estado === 'completada' || cita.estado === 'no_asistio' || cita.estado === 'cancelada' || (cita.estado !== 'en_silla' && end <= ahoraStr)) {
+              if (cita.estado === 'completada' || cita.estado === 'no_asistio' || cita.estado === 'cancelada' || end <= ahoraStr) {
                 pasadas.push(cita);
               } else {
                 activas.push(cita);
@@ -1250,17 +1250,22 @@
                 
                 let borderColor = 'var(--gold)';
                 let opacity = '1';
+                let displaySt = st.replace('_',' ');
                 
-                if (st === 'en_silla') borderColor = 'var(--blue)';
+                if (pasadas.includes(cita)) { 
+                  borderColor = 'var(--muted)'; 
+                  opacity = '0.5'; 
+                  displaySt = 'no catalogada'; 
+                }
+                else if (st === 'en_silla') borderColor = 'var(--blue)';
                 else if (st === 'completada') { borderColor = 'var(--green)'; opacity = '0.5'; }
                 else if (st === 'no_asistio' || st === 'cancelada') { borderColor = 'var(--red)'; opacity = '0.5'; }
-                else if (pasadas.includes(cita)) { borderColor = 'var(--muted)'; opacity = '0.5'; } // Pasada pero pendiente/confirmada
 
                 citasHtml += `
                   <div class="mock-appt" style="border-left-color:${borderColor}; opacity:${opacity}; transition:all 0.3s ease;">
                     <div class="mock-appt-time" style="display:flex;justify-content:space-between">
                       <span>${cita.hora_inicio.substring(0,5)} — ${cita.hora_fin.substring(0,5)}</span>
-                      <span style="text-transform:uppercase;font-size:.6rem;color:${borderColor};font-weight:600">${st.replace('_',' ')}</span>
+                      <span style="text-transform:uppercase;font-size:.6rem;color:${borderColor};font-weight:600">${displaySt}</span>
                     </div>
                     <div class="mock-appt-client">${cita.cliente_nombre}</div>
                     <div style="font-size:.7rem;color:var(--muted);margin-top:4px">${serviciosStr}</div>
