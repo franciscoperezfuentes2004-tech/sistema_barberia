@@ -717,7 +717,7 @@
       } else if (realSt === 'completada') {
         actionsHTML = `<span style="font-size:.7rem;color:var(--green);display:flex;align-items:center;gap:4px">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-          Servicio completado · $${cita.total || 0} MXN</span>`;
+          Servicio completado · $${cita.precio_total || 0} MXN</span>`;
       } else if (realSt === 'no_asistio') {
         actionsHTML = `<span style="font-size:.7rem;color:var(--red);display:flex;align-items:center;gap:4px">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>

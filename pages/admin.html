@@ -1252,14 +1252,14 @@
                 let opacity = '1';
                 let displaySt = st.replace('_',' ');
                 
-                if (pasadas.includes(cita)) { 
+                if (st === 'completada') { borderColor = 'var(--green)'; opacity = '0.5'; }
+                else if (st === 'no_asistio' || st === 'cancelada') { borderColor = 'var(--red)'; opacity = '0.5'; }
+                else if (pasadas.includes(cita)) { 
                   borderColor = 'var(--muted)'; 
                   opacity = '0.5'; 
                   displaySt = 'no catalogada'; 
                 }
                 else if (st === 'en_silla') borderColor = 'var(--blue)';
-                else if (st === 'completada') { borderColor = 'var(--green)'; opacity = '0.5'; }
-                else if (st === 'no_asistio' || st === 'cancelada') { borderColor = 'var(--red)'; opacity = '0.5'; }
 
                 citasHtml += `
                   <div class="mock-appt" style="border-left-color:${borderColor}; opacity:${opacity}; transition:all 0.3s ease;">
