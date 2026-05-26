@@ -330,6 +330,18 @@
       const grid = document.getElementById('times-grid');
       grid.innerHTML = '';
       
+      // Si la fecha seleccionada es HOY, deshabilitar horarios que ya pasaron
+      const ahora = new Date();
+      const hoy = ahora.getFullYear() + '-' + String(ahora.getMonth()+1).padStart(2,'0') + '-' + String(ahora.getDate()).padStart(2,'0');
+      if (state.fecha === hoy) {
+        const horaActual = String(ahora.getHours()).padStart(2,'0') + ':' + String(ahora.getMinutes()).padStart(2,'0');
+        slots.forEach(s => {
+          if (s.hora_inicio <= horaActual) {
+            s.disponible = false;
+          }
+        });
+      }
+      
       // Filtrar: si no hay slots con disponible=true, mostrar mensaje
       const hayDisponibles = slots.some(s => s.disponible);
       if(slots.length === 0 || !hayDisponibles) {
