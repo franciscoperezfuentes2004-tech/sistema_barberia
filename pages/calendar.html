@@ -115,22 +115,65 @@
     }
     .cta-btn:disabled{background:var(--s2);color:var(--muted);cursor:not-allowed}
 
-    /* Calendar Grid UI */
+    /* Premium Calendar Grid UI */
     .cal-day {
-      width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
-      border-radius: 50%; font-size: 0.9rem; margin: 0 auto; cursor: pointer; transition: all 0.2s;
+      width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;
+      border-radius: 12px; font-size: 0.95rem; margin: 0 auto; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      font-weight: 500;
     }
     .cal-day.empty { background: transparent; cursor: default; }
-    .cal-day.hoy { background: var(--gold); border: 2px solid var(--gold); color: #0F0F0F; font-weight: 700; }
-    .cal-day.disponible { border: 2px solid #27ae60; color: var(--bright); background: transparent; }
-    .cal-day.disponible:hover { background: rgba(39, 174, 96, 0.15); }
-    .cal-day.lleno { border: 2px solid #e74c3c; color: var(--bright); background: transparent; }
-    .cal-day.lleno:hover { background: rgba(231, 76, 60, 0.15); }
-    .cal-day.pasado { border: 2px solid #444; color: #555; background: transparent; cursor: not-allowed; }
-    .cal-day.cerrado { border: 2px solid #444; color: #555; background: transparent; cursor: not-allowed; }
+    .cal-day.hoy { 
+      background: var(--gradient-gold); 
+      color: #111; 
+      font-weight: 800; 
+      box-shadow: 0 4px 15px rgba(225, 178, 74, 0.4);
+      border: none;
+    }
+    .cal-day.disponible { 
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.1); 
+      color: var(--bright); 
+    }
+    .cal-day.disponible:hover { 
+      background: rgba(39, 174, 96, 0.2); 
+      border-color: #27ae60;
+      transform: translateY(-2px);
+    }
+    .cal-day.lleno { 
+      background: rgba(231, 76, 60, 0.05);
+      border: 1px dashed rgba(231, 76, 60, 0.4); 
+      color: #e74c3c; 
+    }
+    .cal-day.pasado { 
+      border: 1px solid transparent; 
+      color: #444; 
+      background: transparent; 
+      cursor: not-allowed; 
+      opacity: 0.5;
+    }
+    .cal-day.cerrado { 
+      border: 1px solid transparent; 
+      color: #555; 
+      background: rgba(255,255,255,0.01); 
+      cursor: not-allowed; 
+      text-decoration: line-through;
+    }
     
     .cal-day.selected {
-      box-shadow: 0 0 15px var(--gold); transform: scale(1.1);
+      background: var(--gradient-gold);
+      color: #111;
+      font-weight: 800;
+      box-shadow: 0 0 20px rgba(225, 178, 74, 0.6); 
+      transform: scale(1.15) translateY(-2px);
+      border: none;
+    }
+    
+    .modal-glass {
+      background: rgba(20, 20, 22, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
     }
 
     
@@ -140,6 +183,14 @@
         justify-content: center;
       }
     }
+  </style>
+
+  <style>
+    @keyframes fadeIn { from { opacity: 0; backdrop-filter: blur(0px); } to { opacity: 1; backdrop-filter: blur(8px); } }
+    .barber-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    .barber-card:hover { transform: translateY(-4px); box-shadow: var(--glass-shadow); border-color: rgba(225,178,74,0.4); }
+    .cta-btn { background: var(--gradient-gold); border: none; color: #111; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; transition: transform 0.2s, box-shadow 0.2s; }
+    .cta-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(225,178,74,0.4); }
   </style>
 </head>
 <body>
@@ -214,26 +265,38 @@
   </div>
 
 
-  <!-- Calendar Modal -->
-  <div id="calendar-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:100; align-items:center; justify-content:center; padding:20px; backdrop-filter:blur(4px);">
-    <div class="modal-content" style="background:var(--bg); border:1px solid var(--border); border-radius:20px; width:100%; max-width:380px; padding:24px; position:relative; box-shadow:0 15px 40px rgba(0,0,0,0.5);">
-      <button onclick="closeCalendarModal()" style="position:absolute; top:12px; right:16px; background:none; border:none; color:var(--muted); font-size:1.8rem; cursor:pointer;">&times;</button>
+  <!-- Premium Calendar Modal -->
+  <div id="calendar-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:100; align-items:center; justify-content:center; padding:20px; backdrop-filter:blur(8px); animation: fadeIn 0.3s ease;">
+    <div class="modal-content modal-glass" style="border-radius:24px; width:100%; max-width:400px; padding:28px; position:relative;">
+      <button onclick="closeCalendarModal()" style="position:absolute; top:16px; right:20px; background:rgba(255,255,255,0.1); border:none; color:var(--bright); width:32px; height:32px; border-radius:50%; font-size:1.2rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background 0.2s;">&times;</button>
       
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; margin-top:8px;">
-        <button id="cal-prev" onclick="changeMonth(-1)" style="background:transparent; border:1px solid var(--border); color:var(--bright); border-radius:10px; padding:6px 14px; cursor:pointer; transition:all 0.2s;">&lt;</button>
-        <h3 id="cal-month-year" style="margin:0; color:var(--gold); font-family:var(--serif); font-size:1.3rem;">Mayo 2026</h3>
-        <button id="cal-next" onclick="changeMonth(1)" style="background:transparent; border:1px solid var(--border); color:var(--bright); border-radius:10px; padding:6px 14px; cursor:pointer; transition:all 0.2s;">&gt;</button>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:28px; margin-top:4px;">
+        <button id="cal-prev" onclick="changeMonth(-1)" style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:var(--bright); border-radius:12px; width:40px; height:40px; cursor:pointer; transition:all 0.2s; font-size:1.1rem; display:flex; align-items:center; justify-content:center;">&lt;</button>
+        <h3 id="cal-month-year" style="margin:0; background:var(--gradient-gold); -webkit-background-clip:text; -webkit-text-fill-color:transparent; font-family:var(--serif); font-size:1.6rem; font-weight:800; letter-spacing:0.5px;">Mayo 2026</h3>
+        <button id="cal-next" onclick="changeMonth(1)" style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:var(--bright); border-radius:12px; width:40px; height:40px; cursor:pointer; transition:all 0.2s; font-size:1.1rem; display:flex; align-items:center; justify-content:center;">&gt;</button>
       </div>
 
-      <div style="display:grid; grid-template-columns:repeat(7, 1fr); gap:8px; text-align:center; margin-bottom:12px;">
-        <div style="color:var(--muted); font-size:0.75rem; font-weight:700; text-transform:uppercase;">Do</div>
-        <div style="color:var(--muted); font-size:0.75rem; font-weight:700; text-transform:uppercase;">Lu</div>
-        <div style="color:var(--muted); font-size:0.75rem; font-weight:700; text-transform:uppercase;">Ma</div>
-        <div style="color:var(--muted); font-size:0.75rem; font-weight:700; text-transform:uppercase;">Mi</div>
-        <div style="color:var(--muted); font-size:0.75rem; font-weight:700; text-transform:uppercase;">Ju</div>
-        <div style="color:var(--muted); font-size:0.75rem; font-weight:700; text-transform:uppercase;">Vi</div>
-        <div style="color:var(--muted); font-size:0.75rem; font-weight:700; text-transform:uppercase;">Sa</div>
+      <div style="display:grid; grid-template-columns:repeat(7, 1fr); gap:8px; text-align:center; margin-bottom:16px;">
+        <div style="color:var(--muted); font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:1px;">Do</div>
+        <div style="color:var(--muted); font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:1px;">Lu</div>
+        <div style="color:var(--muted); font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:1px;">Ma</div>
+        <div style="color:var(--muted); font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:1px;">Mi</div>
+        <div style="color:var(--muted); font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:1px;">Ju</div>
+        <div style="color:var(--muted); font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:1px;">Vi</div>
+        <div style="color:var(--muted); font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:1px;">Sa</div>
       </div>
+
+      <div id="cal-days-grid" style="display:grid; grid-template-columns:repeat(7, 1fr); gap:10px 8px;">
+        <!-- JS fills this -->
+      </div>
+
+      <div style="margin-top:28px; padding-top:20px; border-top:1px solid rgba(255,255,255,0.08); display:flex; flex-wrap:wrap; gap:16px; font-size:0.8rem; font-weight:500; color:var(--muted); justify-content:center;">
+        <div style="display:flex; align-items:center; gap:8px;"><span style="display:inline-block; width:14px; height:14px; border-radius:4px; background:var(--gradient-gold); box-shadow:0 2px 8px rgba(225,178,74,0.3);"></span> Hoy</div>
+        <div style="display:flex; align-items:center; gap:8px;"><span style="display:inline-block; width:14px; height:14px; border-radius:4px; border:1px solid #27ae60; background:rgba(39,174,96,0.1);"></span> Disp.</div>
+        <div style="display:flex; align-items:center; gap:8px;"><span style="display:inline-block; width:14px; height:14px; border-radius:4px; border:1px dashed #e74c3c;"></span> Lleno</div>
+      </div>
+    </div>
+  </div>
 
       <div id="cal-days-grid" style="display:grid; grid-template-columns:repeat(7, 1fr); gap:8px 6px;">
         <!-- JS fills this -->
@@ -366,6 +429,19 @@
       const txt = document.createElement('textarea');
       txt.innerHTML = html;
       return txt.value;
+    }
+
+    
+    async function loadBarberos() {
+      const grid = document.getElementById('barbers-grid');
+      grid.innerHTML = '<div style="color:var(--muted);font-size:.85rem">Cargando barberos...</div>';
+      try {
+        const res = await fetch(`${API}/crud/barberos?all=0&fecha=${state.fecha}&duracion=${state.duracion}`);
+        const json = await res.json();
+        renderBarberos(json.data || []);
+      } catch(e) {
+        grid.innerHTML = '<div style="color:var(--red)">Error cargando barberos</div>';
+      }
     }
 
     function renderBarberos(barberos) {
