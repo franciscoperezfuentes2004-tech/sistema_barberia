@@ -1,5 +1,5 @@
-const { bucket } = require('./config/db.js');
-const { verifyToken, sanitize } = require('./config/helpers.js');
+const { bucket } = require('./_config/db.js');
+const { verifyToken, sanitize } = require('./_config/helpers.js');
 
 // Aumentamos el límite de tamaño de payload a 10MB en Vercel Serverless.
 const config = {

@@ -102,7 +102,7 @@ module.exports = async function handler(req, res) {
 
       for (const barbero of barberos) {
         const schedule = horariosMap[barbero.id] || globalSchedule;
-        const diaConfig = schedule.find(s => s.dia_semana === diaSemana);
+        const diaConfig = schedule?.find(s => s.dia_semana === diaSemana);
         
         if (!diaConfig) continue;
         const diaActivo = diaConfig.activo === 1 || diaConfig.activo === true;

@@ -1,6 +1,6 @@
-const { db, bucket } = require('./config/db.js');
+const { db, bucket } = require('./_config/db.js');
 const bcrypt = require('bcryptjs');
-const { verifyToken, sanitize } = require('./config/helpers.js');
+const { verifyToken, sanitize } = require('./_config/helpers.js');
 
 module.exports = async function handler(req, res) {
   const usuariosRef = db.collection('usuarios');
@@ -58,7 +58,7 @@ module.exports = async function handler(req, res) {
           const diaSemana = fechaDate.getUTCDay();
           
           const barberoSchedule = horariosMap[doc.id] || globalSchedule;
-          const diaConfig = barberoSchedule.find(s => s.dia_semana === diaSemana);
+          const diaConfig = barberoSchedule?.find(s => s.dia_semana === diaSemana);
           
           let apertura = '10:00:00';
           let cierre = '20:00:00';
