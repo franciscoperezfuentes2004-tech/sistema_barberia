@@ -1184,12 +1184,12 @@
           }
           
           // Logo Fallback
-          const logoSrc = (d.site_logo && !d.site_logo.includes('hero-bg')) ? d.site_logo : 'assets/img/hero-bg.png';
+          const logoSrc = d.site_logo || 'assets/img/logo.png';
           const cNav = document.getElementById('nav-custom-logo');
           const dNav = document.getElementById('nav-default-icon');
           if (cNav && dNav) {
             cNav.src = logoSrc;
-            cNav.onerror = function() { this.src='assets/img/hero-bg.png'; };
+            cNav.onerror = function() { this.src='assets/img/logo.png'; };
             cNav.style.display = 'block';
             dNav.style.display = 'none';
           }
@@ -1197,7 +1197,7 @@
           const dFoot = document.getElementById('footer-default-icon');
           if (cFoot && dFoot) {
             cFoot.src = logoSrc;
-            cFoot.onerror = function() { this.src='assets/img/hero-bg.png'; };
+            cFoot.onerror = function() { this.src='assets/img/logo.png'; };
             cFoot.style.display = 'block';
             dFoot.style.display = 'none';
           }
