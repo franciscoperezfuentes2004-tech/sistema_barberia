@@ -245,15 +245,19 @@
       }
       .content-area {
         padding: 10px;
+        padding-bottom: 150px !important; /* Huge padding to ensure nothing is hidden by mobile toolbars */
         overflow-x: hidden;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch; /* Fix iOS sticky scroll */
       }
       .section {
         max-width: 100%;
         overflow-x: hidden;
+        overflow-y: visible !important;
       }
       .card {
         max-width: 100%;
-        overflow: hidden;
+        overflow: visible !important;
         word-break: break-word;
       }
       .form-group input,
