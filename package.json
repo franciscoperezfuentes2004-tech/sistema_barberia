@@ -1,0 +1,11 @@
+{
+  "name": "sistema-de-agendar-citas-para-barberia",
+  "version": "1.0.0",
+  "description": "Sistema para agendar citas para una barbería con Firebase",
+  "main": "api/auth.js",
+  "dependencies": {
+    "firebase-admin": "^12.1.0",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2"
+  }
+}
