@@ -976,16 +976,18 @@
             document.getElementById('cms-stat-exp').value = data.stat_exp || '';
             document.getElementById('cms-stat-clientes').value = data.stat_clientes || '';
             if (data.site_logo) {
-              const src = (data.site_logo.startsWith('http') || data.site_logo.startsWith('data:')) 
-                ? data.site_logo 
-                : '../' + data.site_logo;
-              document.getElementById('cms-logo-preview').src = src;
-              
+              const src = data.site_logo || '../assets/img/hero-bg.png';
+              const logoPrev = document.getElementById('cms-logo-preview');
+              if (logoPrev) {
+                logoPrev.src = src;
+                logoPrev.onerror = function() { this.src='../assets/img/hero-bg.png'; };
+              }
               // Actualizar logo en el sidebar
               const cAdmin = document.getElementById('admin-custom-logo');
               const dAdmin = document.getElementById('admin-default-icon');
               if (cAdmin && dAdmin) {
                 cAdmin.src = src;
+                cAdmin.onerror = function() { this.src='../assets/img/hero-bg.png'; };
                 cAdmin.style.display = 'block';
                 dAdmin.style.display = 'none';
               }

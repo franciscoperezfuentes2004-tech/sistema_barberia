@@ -601,10 +601,8 @@
             if (data.site_logo) {
               const logoContainer = document.querySelector('.logo');
               if (logoContainer) {
-                const src = (data.site_logo.startsWith('http') || data.site_logo.startsWith('data:')) 
-                  ? data.site_logo 
-                  : '../' + data.site_logo;
-                logoContainer.innerHTML = `<img src="${src}" alt="Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;">`;
+                const src = data.site_logo || '../assets/img/hero-bg.png';
+                logoContainer.innerHTML = `<img src="${src}" alt="Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;" onerror="this.src='../assets/img/hero-bg.png'">`;
                 logoContainer.style.background = 'transparent';
               }
             }
