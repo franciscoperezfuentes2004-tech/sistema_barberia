@@ -1,4 +1,4 @@
-const { db } = require('./config/db.js');
+const { db, bucket } = require('./config/db.js');
 const { verifyToken, sanitize } = require('./config/helpers.js');
 
 module.exports = async function handler(req, res) {
@@ -37,7 +37,7 @@ module.exports = async function handler(req, res) {
       return res.status(403).json({ error: auth.error });
     }
     
-    const { nombre, descripcion, precio, duracion_min, imagen_url } = req.body;
+    const { nombre, descripcion, precio, duracion_min, imagen_url, imagen_b64 } = req.body;
 
     if (!nombre || !precio || !duracion_min) {
       return res.status(400).json({ error: 'Faltan campos obligatorios: nombre, precio, duracion_min' });
@@ -47,13 +47,35 @@ module.exports = async function handler(req, res) {
     const safeNombre = sanitize(nombre);
     const safeDescripcion = sanitize(descripcion);
 
+    let finalImageUrl = imagen_url || null;
+
+    if (imagen_b64 && imagen_b64.startsWith('data:')) {
+      try {
+        const mimeType = imagen_b64.match(/data:(.*?);base64/)[1];
+        const ext = mimeType.split('/')[1] || 'jpg';
+        const base64Data = imagen_b64.replace(/^data:image\/\w+;base64,/, '');
+        const buffer = Buffer.from(base64Data, 'base64');
+        const fileName = `servicio_${Date.now()}.${ext}`;
+        const filePath = `uploads/${fileName}`;
+        const file = bucket.file(filePath);
+        
+        await file.save(buffer, {
+          metadata: { contentType: mimeType },
+          public: true
+        });
+        finalImageUrl = `https://storage.googleapis.com/${bucket.name}/${filePath}`;
+      } catch (err) {
+        console.error('Error subiendo imagen de servicio:', err);
+      }
+    }
+
     try {
       const nuevoServicio = {
         nombre: safeNombre,
         descripcion: safeDescripcion || null,
         precio: Number(precio),
         duracion_min: Number(duracion_min),
-        imagen_url: imagen_url || null,
+        imagen_url: finalImageUrl,
         activo: true,
         creado_en: new Date().toISOString()
       };
@@ -76,8 +98,28 @@ module.exports = async function handler(req, res) {
 
     const dataToUpdate = {};
     for (const [key, value] of Object.entries(req.body)) {
-      if (value !== undefined && key !== 'id') {
+      if (value !== undefined && key !== 'id' && key !== 'imagen_b64') {
         dataToUpdate[key] = typeof value === 'string' ? sanitize(value) : value;
+      }
+    }
+
+    if (req.body.imagen_b64 && req.body.imagen_b64.startsWith('data:')) {
+      try {
+        const mimeType = req.body.imagen_b64.match(/data:(.*?);base64/)[1];
+        const ext = mimeType.split('/')[1] || 'jpg';
+        const base64Data = req.body.imagen_b64.replace(/^data:image\/\w+;base64,/, '');
+        const buffer = Buffer.from(base64Data, 'base64');
+        const fileName = `servicio_${Date.now()}.${ext}`;
+        const filePath = `uploads/${fileName}`;
+        const file = bucket.file(filePath);
+        
+        await file.save(buffer, {
+          metadata: { contentType: mimeType },
+          public: true
+        });
+        dataToUpdate.imagen_url = `https://storage.googleapis.com/${bucket.name}/${filePath}`;
+      } catch (err) {
+        console.error('Error subiendo imagen de servicio:', err);
       }
     }
 

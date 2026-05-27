@@ -681,7 +681,7 @@
             <div class="form-group" style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border);">
               <label>Logo del Sitio Web</label>
               <div class="preview-row" style="display:flex; align-items:center; gap:16px; margin-bottom: 12px;">
-                <img id="cms-logo-preview" src="../assets/img/hero-bg.jpg" style="width: 80px; height: 80px; min-width: 80px; object-fit: cover; background: #fff; border-radius: 12px; border: 1px solid var(--border);" alt="Logo">
+                <img id="cms-logo-preview" src="../assets/img/hero-bg.png" style="width: 80px; height: 80px; min-width: 80px; object-fit: cover; background: #fff; border-radius: 12px; border: 1px solid var(--border);" alt="Logo">
                 <div>
                   <input type="file" id="cms-logo" accept="image/png, image/jpeg, image/webp" style="padding: 8px; background: transparent; border: none; width: 100%;">
                   <div style="font-size:0.7rem; color:var(--muted); margin-top: 4px;">Se recomienda PNG transparente o imagen cuadrada.</div>
@@ -706,7 +706,7 @@
             <div class="form-group" style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border);">
               <label>Imagen de Fondo de Portada</label>
               <div class="preview-row" style="display:flex; align-items:center; gap:16px; margin-bottom: 12px;">
-                <img id="cms-hero-preview" src="../assets/img/hero-bg.jpg" style="width: 140px; height: 80px; min-width: 140px; object-fit: cover; background: #000; border-radius: 8px; border: 1px solid var(--border);" alt="Portada">
+                <img id="cms-hero-preview" src="../assets/img/hero-bg.png" style="width: 140px; height: 80px; min-width: 140px; object-fit: cover; background: #000; border-radius: 8px; border: 1px solid var(--border);" alt="Portada">
                 <div>
                   <input type="file" id="cms-hero-bg" accept="image/png, image/jpeg, image/webp" style="padding: 8px; background: transparent; border: none; width: 100%;">
                   <div style="font-size:0.7rem; color:var(--muted); margin-top: 4px;">Se recomienda imagen oscura y horizontal (ej. 1920x1080).</div>
@@ -845,7 +845,7 @@
     </div>
   </div>
 
-  <div class="toast" id="toast">âœ… Cambios guardados correctamente</div>
+  <div class="toast" id="toast">✅ Cambios guardados correctamente</div>
 
   <script>
     (() => {
@@ -866,7 +866,7 @@
         return originalFetch(resource, config);
       };
 
-      // â”€â”€â”€ AUTH CHECK â”€â”€â”€
+      // ⎯⎯⎯ AUTH CHECK ⎯⎯⎯
       async function init() {
         const token = localStorage.getItem('mi_token_jwt');
         if (!token) {
@@ -902,7 +902,7 @@
         if (window.populateBarberSelect) window.populateBarberSelect();
       }
 
-      // â”€â”€â”€ CMS AJUSTES GLOBALES â”€â”€â”€
+      // ⎯⎯⎯ CMS AJUSTES GLOBALES ⎯⎯⎯
       async function loadCMS() {
         try {
           const res = await fetch(`${API}/ajustes`);
@@ -1056,7 +1056,7 @@
           });
           const json = await res.json();
           if (json.success) {
-            showToast('ðŸŒ Ajustes de la página web actualizados');
+            showToast('🌱 Ajustes de la página web actualizados');
             loadCMS(); // Reload to get new logo path
           } else {
             alert(json.message);
@@ -1066,7 +1066,7 @@
         }
       };
 
-      // â”€â”€â”€ GALERIA â”€â”€â”€
+      // ⎯⎯⎯ GALERIA ⎯⎯⎯
       window.loadGallery = async () => {
         try {
           const res = await fetch(`${API}/galeria`);
@@ -1131,7 +1131,7 @@
           const res = await fetch(`${API}/galeria?id=${id}`, { method: 'DELETE' });
           const json = await res.json();
           if (json.success) {
-            showToast('âœ… Imagen eliminada');
+            showToast('✅ Imagen eliminada');
             loadGallery();
           } else {
             alert(json.message);
@@ -1167,7 +1167,7 @@
           });
           const json = await res.json();
           if (json.success) {
-            showToast('ðŸ“¸ Imagen añadida a la galería');
+            showToast('📸 Imagen añadida a la galería');
             fileInput.value = '';
             titleInput.value = '';
             loadGallery();
@@ -1179,7 +1179,7 @@
         }
       };
 
-      // â”€â”€â”€ AGENDA GLOBAL â”€â”€â”€
+      // ⎯⎯⎯ AGENDA GLOBAL ⎯⎯⎯
       async function loadAgenda() {
         const grid = document.getElementById('agenda-grid');
         
@@ -1299,7 +1299,7 @@
         }
       }
 
-      // â”€â”€â”€ EQUIPO (PERSONAL) â”€â”€â”€
+      // ⎯⎯⎯ EQUIPO (PERSONAL) ⎯⎯⎯
       let barberosList = [];
       
       async function loadEquipo() {
@@ -1427,7 +1427,7 @@
           const json = await res.json();
           if (json.success) {
             closeModal();
-            showToast(id ? 'âœ… Barbero actualizado' : `ðŸŽ‰ Barbero creado. Su usuario es: ${json.data?.username || ''}`);
+            showToast(id ? '✅ Barbero actualizado' : `🎉 Barbero creado. Su usuario es: ${json.data?.username || ''}`);
             loadEquipo(); // recargar tabla
             loadAgenda(); // recargar agenda para que aparezca la columna
           } else {
@@ -1439,14 +1439,14 @@
       };
 
       window.deleteBarber = async (id, nombre) => {
-        if (!confirm(`âš ï¸ CUIDADO: ¿Estás seguro que deseas ELIMINAR permanentemente a ${nombre}?\n\nEsto borrará también todas sus citas del historial y no se puede deshacer.`)) {
+        if (!confirm(`⚠️ CUIDADO: ¿Estás seguro que deseas ELIMINAR permanentemente a ${nombre}?\n\nEsto borrará también todas sus citas del historial y no se puede deshacer.`)) {
           return;
         }
         try {
           const res = await fetch(`${API}/barberos?id=${id}`, { method: 'DELETE' });
           const json = await res.json();
           if (json.success) {
-            showToast('ðŸ—‘ï¸ Barbero eliminado permanentemente');
+            showToast('🗑️ Barbero eliminado permanentemente');
             loadEquipo();
             loadAgenda();
           } else {
@@ -1475,12 +1475,12 @@
 
           let html = '';
           serviciosList.forEach(s => {
-            const imgSrc = s.imagen ? `../${s.imagen}` : 'data:image/svg+xml,%3Csvg xmlns=\\\'http://www.w3.org/2000/svg\\\' viewBox=\\\'0 0 100 100\\\'%3E%3Crect width=\\\'100\\\' height=\\\'100\\\' fill=\\\'%23181818\\\'/%3E%3C/svg%3E';
+            const imgSrc = s.imagen_url || (s.imagen ? `../${s.imagen}` : '../assets/img/hero-bg.png');
             const estadoHtml = s.activo ? '<span style="color:var(--green)">Activo</span>' : '<span style="color:var(--muted)">Inactivo</span>';
             
             html += `
               <tr style="opacity: ${s.activo ? 1 : 0.5}">
-                <td><img src="${imgSrc}" style="width:40px;height:40px;object-fit:cover;border-radius:8px"></td>
+                <td><img src="${imgSrc}" style="width:40px;height:40px;object-fit:cover;border-radius:8px" onerror="this.src='../assets/img/hero-bg.png'"></td>
                 <td>
                   <div style="font-weight:600;color:var(--bright)">${s.nombre}</div>
                   <div class="service-desc" style="font-size:0.8rem;color:var(--muted)">${s.descripcion || ''}</div>

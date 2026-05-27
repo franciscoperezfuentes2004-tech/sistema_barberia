@@ -1215,10 +1215,10 @@
               el.style.transitionDelay = `${delay}s`;
               el.onclick = () => window.location.href = 'pages/booking.html'; // Redirigir a reserva
               
-              const imgSrc = svc.imagen ? svc.imagen : 'data:image/svg+xml,%3Csvg xmlns=\\\'http://www.w3.org/2000/svg\\\' viewBox=\\\'0 0 100 100\\\'%3E%3Crect width=\\\'100\\\' height=\\\'100\\\' fill=\\\'%23181818\\\'/%3E%3C/svg%3E';
+              const imgSrc = svc.imagen_url || svc.imagen || 'assets/img/hero-bg.png';
               
               el.innerHTML = `
-                <div class="svc-img"><img src="${imgSrc}" alt="${svc.nombre}" loading="lazy"/></div>
+                <div class="svc-img"><img src="${imgSrc}" alt="${svc.nombre}" loading="lazy" onerror="this.src='assets/img/hero-bg.png'"/></div>
                 <span class="svc-price">$${parseFloat(svc.precio).toFixed(2)} MXN</span>
                 <div class="svc-body">
                   <div style="display:flex;align-items:center;justify-content:space-between">
