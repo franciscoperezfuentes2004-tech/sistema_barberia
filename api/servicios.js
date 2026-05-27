@@ -8,15 +8,16 @@ module.exports = async function handler(req, res) {
     // PÚBLICO: Cualquiera puede ver los servicios
     try {
       // Remover .orderBy('nombre', 'asc') para evitar el error de índice compuesto faltante en Firebase (Error 500)
-      const snapshot = await serviciosRef.where('activo', '==', true).get();
+      const snapshot = await serviciosRef.get();
       
       const servicios = [];
       snapshot.forEach(doc => {
         const data = doc.data();
+        if (data.activo === false || data.activo === 0 || data.activo === '0' || data.activo === 'false') return;
         servicios.push({ 
           id: doc.id, 
           ...data,
-          activo: data.activo ? 1 : 0 
+          activo: 1 
         });
       });
 
