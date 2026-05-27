@@ -57,8 +57,7 @@ module.exports = async function handler(req, res) {
         const filePath = `barberia-media/${uniqueFileName}`;
         const file = bucket.file(filePath);
         await file.save(buffer, {
-          metadata: { contentType: mimeType },
-          public: true
+          metadata: { contentType: mimeType }
         });
         dataToSave.site_logo = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(filePath)}?alt=media`;
       } catch (uploadErr) {
@@ -78,8 +77,7 @@ module.exports = async function handler(req, res) {
         const filePath = `barberia-media/${uniqueFileName}`;
         const file = bucket.file(filePath);
         await file.save(buffer, {
-          metadata: { contentType: mimeType },
-          public: true
+          metadata: { contentType: mimeType }
         });
         dataToSave.site_hero_bg = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(filePath)}?alt=media`;
       } catch (uploadErr) {

@@ -178,8 +178,7 @@ module.exports = async function handler(req, res) {
         const file = bucket.file(filePath);
         
         await file.save(buffer, {
-          metadata: { contentType: mimeType },
-          public: true
+          metadata: { contentType: mimeType }
         });
         finalImageUrl = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(filePath)}?alt=media`;
       } catch (err) {
@@ -250,8 +249,7 @@ module.exports = async function handler(req, res) {
         const file = bucket.file(filePath);
         
         await file.save(buffer, {
-          metadata: { contentType: mimeType },
-          public: true
+          metadata: { contentType: mimeType }
         });
         dataToUpdate.imagen_url = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(filePath)}?alt=media`;
       } catch (err) {

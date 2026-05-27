@@ -40,21 +40,9 @@ function verifyToken(req, rolesPermitidos = []) {
  */
 function sanitize(str) {
   if (!str) return str;
-  // Primero decodificamos lo que ya estaba codificado para evitar acumulación
-  let decoded = String(str)
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&#x27;/g, "'");
-    
-  // Luego codificamos todo limpiamente
-  return decoded
-    .replace(/&/g, '&amp;')
+  return String(str)
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#x27;')
     .trim();
 }
 

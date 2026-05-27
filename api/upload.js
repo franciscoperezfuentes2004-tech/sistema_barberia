@@ -44,8 +44,7 @@ async function handler(req, res) {
     await file.save(buffer, {
       metadata: {
         contentType: mimeType,
-      },
-      public: true // Hace que el archivo sea accesible públicamente por defecto (requiere que el bucket lo permita)
+      }
     });
 
     // La URL de lectura de Firebase es así:

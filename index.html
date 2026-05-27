@@ -1080,9 +1080,13 @@
             const heroSub = document.getElementById('hero-sub');
             if (heroSub) heroSub.textContent = d.site_hero_desc;
           }
-          if (d.site_hero_bg) {
-            const heroBg = document.getElementById('hero-bg');
-            if (heroBg) heroBg.style.backgroundImage = `url('${d.site_hero_bg}')`;
+          const heroBgStr = d.site_hero_bg || 'assets/img/hero-bg.png';
+          const heroBg = document.getElementById('hero-bg');
+          if (heroBg) {
+             const img = new Image();
+             img.onload = () => heroBg.style.backgroundImage = `url('${heroBgStr}')`;
+             img.onerror = () => heroBg.style.backgroundImage = `url('assets/img/hero-bg.png')`;
+             img.src = heroBgStr;
           }
 
           // Address + Map
@@ -1179,22 +1183,23 @@
             else { linkTt.style.display = 'none'; }
           }
           
-          // Logo
-          if (d.site_logo && !d.site_logo.includes('hero-bg')) {
-            const cNav = document.getElementById('nav-custom-logo');
-            const dNav = document.getElementById('nav-default-icon');
-            if (cNav && dNav) {
-              cNav.src = d.site_logo;
-              cNav.style.display = 'block';
-              dNav.style.display = 'none';
-            }
-            const cFoot = document.getElementById('footer-custom-logo');
-            const dFoot = document.getElementById('footer-default-icon');
-            if (cFoot && dFoot) {
-              cFoot.src = d.site_logo;
-              cFoot.style.display = 'block';
-              dFoot.style.display = 'none';
-            }
+          // Logo Fallback
+          const logoSrc = (d.site_logo && !d.site_logo.includes('hero-bg')) ? d.site_logo : 'assets/img/hero-bg.png';
+          const cNav = document.getElementById('nav-custom-logo');
+          const dNav = document.getElementById('nav-default-icon');
+          if (cNav && dNav) {
+            cNav.src = logoSrc;
+            cNav.onerror = function() { this.src='assets/img/hero-bg.png'; };
+            cNav.style.display = 'block';
+            dNav.style.display = 'none';
+          }
+          const cFoot = document.getElementById('footer-custom-logo');
+          const dFoot = document.getElementById('footer-default-icon');
+          if (cFoot && dFoot) {
+            cFoot.src = logoSrc;
+            cFoot.onerror = function() { this.src='assets/img/hero-bg.png'; };
+            cFoot.style.display = 'block';
+            dFoot.style.display = 'none';
           }
           
         }
@@ -1215,10 +1220,10 @@
               el.style.transitionDelay = `${delay}s`;
               el.onclick = () => window.location.href = 'pages/booking.html'; // Redirigir a reserva
               
-              const imgSrc = svc.imagen_b64 || svc.imagen_url || svc.imagen || 'assets/img/hero-bg.png';
+              const imgSrc = svc.imagen_b64 || svc.imagen_url || svc.imagen || 'assets/img/services/fade.png';
               
               el.innerHTML = `
-                <div class="svc-img"><img src="${imgSrc}" alt="${svc.nombre}" loading="lazy" onerror="this.src='assets/img/hero-bg.png'"/></div>
+                <div class="svc-img"><img src="${imgSrc}" alt="${svc.nombre}" loading="lazy" onerror="this.src='assets/img/services/fade.png'"/></div>
                 <span class="svc-price">$${parseFloat(svc.precio).toFixed(2)} MXN</span>
                 <div class="svc-body">
                   <div style="display:flex;align-items:center;justify-content:space-between">
@@ -1256,7 +1261,7 @@
               const imgSrc = barber.foto || barber.imagen_url || 'assets/img/barbers/carlos.png';
               
               el.innerHTML = `
-                <div style="overflow:hidden"><img class="t-img" src="${imgSrc}" alt="${barber.nombre} ${barber.apellido}" loading="lazy" onerror="this.src='assets/img/hero-bg.png'"/></div>
+                <div style="overflow:hidden"><img class="t-img" src="${imgSrc}" alt="${barber.nombre} ${barber.apellido}" loading="lazy" onerror="this.src='assets/img/barbers/carlos.png'"/></div>
                 <div class="t-body">
                   <p class="t-name">${barber.nombre} ${barber.apellido.charAt(0)}.</p>
                   <p class="t-role">${barber.especialidad || 'Barbero'}</p>
@@ -1282,8 +1287,10 @@
               const el = document.createElement('div');
               el.className = 'gi rv';
               el.style.transitionDelay = `${delay}s`;
+              
+              const imgSrc = img.imagen || 'assets/img/hero-bg.png';
               el.innerHTML = `
-                <img src="${img.imagen}" alt="${img.titulo || 'Servicio'}" loading="lazy"/>
+                <img src="${imgSrc}" alt="${img.titulo || 'Galería'}" loading="lazy" onerror="this.src='assets/img/hero-bg.png'"/>
                 ${img.titulo ? `<div class="gi-lbl">${img.titulo}</div>` : ''}
               `;
               galContainer.appendChild(el);

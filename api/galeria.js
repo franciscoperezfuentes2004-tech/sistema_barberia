@@ -37,8 +37,7 @@ module.exports = async function handler(req, res) {
         const file = bucket.file(filePath);
         
         await file.save(buffer, {
-          metadata: { contentType: mimeType },
-          public: true
+          metadata: { contentType: mimeType }
         });
         imagen = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(filePath)}?alt=media`;
       } catch (err) {
@@ -46,9 +45,7 @@ module.exports = async function handler(req, res) {
       }
     }
 
-    if (!imagen || imagen.startsWith('data:')) {
-      return res.status(400).json({ error: 'Se requiere una imagen (base64 o URL)' });
-    }
+
 
     try {
       const nuevaImagen = {

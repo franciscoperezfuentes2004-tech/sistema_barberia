@@ -1099,10 +1099,11 @@
             delete window.b64Files['cms-hero-bg'];
             loadCMS();
           } else {
-            alert(json.message);
+            alert(json.error || json.message || 'Error al guardar');
           }
         } catch(e) {
-          alert('Error guardando ajustes');
+          console.error(e);
+          alert('Error de conexión guardando ajustes');
         }
       };
 
@@ -1186,10 +1187,7 @@
         const titleInput = document.getElementById('new-gal-title');
 
         let b64 = window.b64Files['new-gal-file'];
-        if (!b64) {
-          alert('Debes seleccionar una imagen primero.');
-          return;
-        }
+
 
         // Comprimir imagen para no exceder el límite de Vercel (4.5MB)
         try { b64 = await compressImage(b64, 1200, 0.8); } catch(e) { /* usar original */ }
