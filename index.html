@@ -1253,10 +1253,10 @@
                 ? '<span class="badge"><span class="dot"></span> Disponible hoy</span>'
                 : '<span class="badge" style="color:var(--muted);border-color:var(--border);background:transparent">Sin turno hoy</span>';
                 
-              const imgSrc = barber.foto || 'assets/img/barbers/carlos.png';
+              const imgSrc = barber.foto || barber.imagen_url || 'assets/img/barbers/carlos.png';
               
               el.innerHTML = `
-                <div style="overflow:hidden"><img class="t-img" src="${imgSrc}" alt="${barber.nombre} ${barber.apellido}" loading="lazy"/></div>
+                <div style="overflow:hidden"><img class="t-img" src="${imgSrc}" alt="${barber.nombre} ${barber.apellido}" loading="lazy" onerror="this.src='assets/img/hero-bg.png'"/></div>
                 <div class="t-body">
                   <p class="t-name">${barber.nombre} ${barber.apellido.charAt(0)}.</p>
                   <p class="t-role">${barber.especialidad || 'Barbero'}</p>

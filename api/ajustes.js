@@ -37,7 +37,12 @@ module.exports = async function handler(req, res) {
     const dataToSave = {};
     for (const [key, value] of Object.entries(req.body)) {
       if (value !== undefined) {
-        dataToSave[key] = typeof value === 'string' ? sanitize(value) : value;
+        // No sanitizar campos base64 — contienen datos binarios
+        if (key.endsWith('_b64')) {
+          dataToSave[key] = value;
+        } else {
+          dataToSave[key] = typeof value === 'string' ? sanitize(value) : value;
+        }
       }
     }
 
