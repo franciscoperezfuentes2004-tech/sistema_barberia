@@ -1,5 +1,5 @@
-const { db } = require('./_config/db.js');
-const { sanitize } = require('./_config/helpers.js');
+const { db } = require('./config/db.js');
+const { sanitize } = require('./config/helpers.js');
 
 module.exports = async function handler(req, res) {
   const resenasRef = db.collection('resenas');
