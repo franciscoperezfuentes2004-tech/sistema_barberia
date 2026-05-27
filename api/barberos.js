@@ -182,7 +182,7 @@ module.exports = async function handler(req, res) {
           metadata: { contentType: mimeType },
           public: true
         });
-        finalImageUrl = `https://storage.googleapis.com/${bucket.name}/${filePath}`;
+        finalImageUrl = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(filePath)}?alt=media`;
       } catch (err) {
         console.error('Error subiendo foto de barbero:', err);
       }
@@ -250,7 +250,7 @@ module.exports = async function handler(req, res) {
           metadata: { contentType: mimeType },
           public: true
         });
-        dataToUpdate.imagen_url = `https://storage.googleapis.com/${bucket.name}/${filePath}`;
+        dataToUpdate.imagen_url = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(filePath)}?alt=media`;
       } catch (err) {
         console.error('Error subiendo foto de barbero:', err);
       }

@@ -60,10 +60,11 @@ module.exports = async function handler(req, res) {
           metadata: { contentType: mimeType },
           public: true
         });
-        dataToSave.site_logo = `https://storage.googleapis.com/${bucket.name}/${filePath}`;
+        dataToSave.site_logo = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(filePath)}?alt=media`;
         delete dataToSave.logo_b64;
       } catch (uploadErr) {
         console.error('Error al subir logo:', uploadErr);
+        return res.status(500).json({ error: 'No se pudo guardar la imagen del logo en Storage' });
       }
     }
 
@@ -81,10 +82,11 @@ module.exports = async function handler(req, res) {
           metadata: { contentType: mimeType },
           public: true
         });
-        dataToSave.site_hero_bg = `https://storage.googleapis.com/${bucket.name}/${filePath}`;
+        dataToSave.site_hero_bg = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(filePath)}?alt=media`;
         delete dataToSave.hero_b64;
       } catch (uploadErr) {
         console.error('Error al subir hero background:', uploadErr);
+        return res.status(500).json({ error: 'No se pudo guardar la imagen de portada en Storage' });
       }
     }
 

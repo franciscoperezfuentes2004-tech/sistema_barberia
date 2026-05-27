@@ -48,9 +48,8 @@ async function handler(req, res) {
       public: true // Hace que el archivo sea accesible públicamente por defecto (requiere que el bucket lo permita)
     });
 
-    // Obtener la URL pública. Como hicimos el archivo público, podemos construir la URL
-    // Otra opción es file.getSignedUrl() pero caduca. Construiremos la URL de Google Cloud Storage
-    const publicUrl = `https://storage.googleapis.com/${bucket.name}/${filePath}`;
+    // La URL de lectura de Firebase es así:
+    const publicUrl = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(filePath)}?alt=media`;
 
     return res.status(200).json({ 
       success: true, 
