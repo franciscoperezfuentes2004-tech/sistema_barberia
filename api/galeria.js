@@ -1,5 +1,5 @@
-const { db, bucket } = require('./config/db.js');
-const { verifyToken, sanitize } = require('./config/helpers.js');
+const { db, bucket } = require('./_config/db.js');
+const { verifyToken, sanitize } = require('./_config/helpers.js');
 
 module.exports = async function handler(req, res) {
   const galeriaRef = db.collection('galeria');

@@ -1,5 +1,5 @@
-const { db } = require('./config/db.js');
-const { verifyToken } = require('./config/helpers.js');
+const { db } = require('./_config/db.js');
+const { verifyToken } = require('./_config/helpers.js');
 
 module.exports = async function handler(req, res) {
   const horariosRef = db.collection('horarios');

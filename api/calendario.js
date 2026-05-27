@@ -1,4 +1,4 @@
-const { db } = require('./config/db.js');
+const { db } = require('./_config/db.js');
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'GET') {

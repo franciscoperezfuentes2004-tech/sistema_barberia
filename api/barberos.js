@@ -1,6 +1,6 @@
-const { db, bucket } = require('./config/db.js');
+const { db, bucket } = require('./_config/db.js');
 const bcrypt = require('bcryptjs');
-const { verifyToken, sanitize } = require('./config/helpers.js');
+const { verifyToken, sanitize } = require('./_config/helpers.js');
 
 module.exports = async function handler(req, res) {
   const usuariosRef = db.collection('usuarios');
