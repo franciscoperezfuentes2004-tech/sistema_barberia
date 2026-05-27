@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <style>
     :root{
+      --gradient-green: linear-gradient(135deg, #2ecc71, #27ae60);
       --gradient-gold: linear-gradient(135deg, #F3A183, #E1B24A);
       --gold:#C9A84C;--gold-l:#E8C97A;--gold-d:#9A7B32;
       --bg:#0F0F0F;--s1:#181818;--s2:#222;--s3:#333;--border:#333;
@@ -131,14 +132,15 @@
       border: none;
     }
     .cal-day.disponible { 
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.1); 
-      color: var(--bright); 
+      background: var(--gradient-green); 
+      color: #111; 
+      font-weight: 800; 
+      box-shadow: 0 4px 15px rgba(39, 174, 96, 0.4);
+      border: none; 
     }
     .cal-day.disponible:hover { 
-      background: rgba(39, 174, 96, 0.2); 
-      border-color: #27ae60;
-      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(39, 174, 96, 0.6);
+      transform: translateY(-2px) scale(1.05);
     }
     .cal-day.lleno { 
       background: rgba(231, 76, 60, 0.05);
@@ -293,7 +295,7 @@
 
       <div style="margin-top:28px; padding-top:20px; border-top:1px solid rgba(255,255,255,0.08); display:flex; flex-wrap:wrap; gap:16px; font-size:0.8rem; font-weight:500; color:var(--muted); justify-content:center;">
         <div style="display:flex; align-items:center; gap:8px;"><span style="display:inline-block; width:18px; height:18px; border-radius:4px; background:var(--gradient-gold); box-shadow:0 2px 8px rgba(225,178,74,0.3);"></span> Hoy</div>
-        <div style="display:flex; align-items:center; gap:8px;"><span style="display:inline-block; width:18px; height:18px; border-radius:4px; border:1px solid #27ae60; background:rgba(39,174,96,0.1);"></span> Disp.</div>
+        <div style="display:flex; align-items:center; gap:8px;"><span style="display:inline-block; width:18px; height:18px; border-radius:4px; background:var(--gradient-green); box-shadow:0 2px 8px rgba(39,174,96,0.4);"></span> Disp.</div>
         <div style="display:flex; align-items:center; gap:8px;"><span style="display:inline-block; width:18px; height:18px; border-radius:4px; border:1px dashed #e74c3c;"></span> Lleno</div>
       </div>
     </div>
