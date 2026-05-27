@@ -104,8 +104,21 @@ module.exports = async function handler(req, res) {
 
               if (bloqueFinMs > finDelDiaMs) break;
 
-              // Si se proporcionó hora_actual y este slot ya pasó, saltarlo
-              if (hora_actual && horaFormato <= hora_actual) {
+              // Calcular hora límite real
+              let horaLimite = null;
+              if (hora_actual) {
+                horaLimite = hora_actual;
+              } else {
+                const tzOffset = -6 * 60; 
+                const now = new Date();
+                const localNow = new Date(now.getTime() + (now.getTimezoneOffset() + tzOffset) * 60000);
+                const strHoy = localNow.getFullYear() + '-' + String(localNow.getMonth() + 1).padStart(2,'0') + '-' + String(localNow.getDate()).padStart(2,'0');
+                if (fecha === strHoy) {
+                  horaLimite = String(localNow.getHours()).padStart(2,'0') + ':' + String(localNow.getMinutes()).padStart(2,'0');
+                }
+              }
+
+              if (horaLimite && horaFormato <= horaLimite) {
                 horaActual = new Date(horaActual.getTime() + (30 * 60000));
                 continue;
               }
