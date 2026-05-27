@@ -1,4 +1,4 @@
-const { db } = require('./config/db.js');
+const { db, bucket } = require('./config/db.js');
 const bcrypt = require('bcryptjs');
 const { verifyToken, sanitize } = require('./config/helpers.js');
 
@@ -154,7 +154,7 @@ module.exports = async function handler(req, res) {
       return res.status(403).json({ error: auth.error });
     }
     
-    const { username, password, nombre, apellido, especialidad, imagen_url, activo } = req.body;
+    const { username, password, nombre, apellido, especialidad, imagen_url, foto_b64, activo } = req.body;
 
     if (!username || !nombre || !apellido) {
       return res.status(400).json({ error: 'Faltan campos obligatorios: username, nombre, apellido' });
@@ -165,6 +165,28 @@ module.exports = async function handler(req, res) {
     const safeNombre = sanitize(nombre);
     const safeApellido = sanitize(apellido);
     const safeEspecialidad = sanitize(especialidad);
+
+    let finalImageUrl = imagen_url || null;
+
+    if (foto_b64 && foto_b64.startsWith('data:')) {
+      try {
+        const mimeType = foto_b64.match(/data:(.*?);base64/)[1];
+        const ext = mimeType.split('/')[1] || 'jpg';
+        const base64Data = foto_b64.replace(/^data:image\/\w+;base64,/, '');
+        const buffer = Buffer.from(base64Data, 'base64');
+        const fileName = `barbero_${Date.now()}.${ext}`;
+        const filePath = `uploads/${fileName}`;
+        const file = bucket.file(filePath);
+        
+        await file.save(buffer, {
+          metadata: { contentType: mimeType },
+          public: true
+        });
+        finalImageUrl = `https://storage.googleapis.com/${bucket.name}/${filePath}`;
+      } catch (err) {
+        console.error('Error subiendo foto de barbero:', err);
+      }
+    }
 
     try {
       // Validar que el username no exista ya
@@ -183,7 +205,7 @@ module.exports = async function handler(req, res) {
         apellido: safeApellido,
         rol: 'barbero',
         especialidad: safeEspecialidad || null,
-        imagen_url: imagen_url || null,
+        imagen_url: finalImageUrl,
         activo: activo !== undefined ? activo : true,
         creado_en: new Date().toISOString()
       };
@@ -209,8 +231,28 @@ module.exports = async function handler(req, res) {
 
     const dataToUpdate = {};
     for (const [key, value] of Object.entries(req.body)) {
-      if (value !== undefined && key !== 'id') {
+      if (value !== undefined && key !== 'id' && key !== 'foto_b64') {
         dataToUpdate[key] = typeof value === 'string' ? sanitize(value) : value;
+      }
+    }
+
+    if (req.body.foto_b64 && req.body.foto_b64.startsWith('data:')) {
+      try {
+        const mimeType = req.body.foto_b64.match(/data:(.*?);base64/)[1];
+        const ext = mimeType.split('/')[1] || 'jpg';
+        const base64Data = req.body.foto_b64.replace(/^data:image\/\w+;base64,/, '');
+        const buffer = Buffer.from(base64Data, 'base64');
+        const fileName = `barbero_${Date.now()}.${ext}`;
+        const filePath = `uploads/${fileName}`;
+        const file = bucket.file(filePath);
+        
+        await file.save(buffer, {
+          metadata: { contentType: mimeType },
+          public: true
+        });
+        dataToUpdate.imagen_url = `https://storage.googleapis.com/${bucket.name}/${filePath}`;
+      } catch (err) {
+        console.error('Error subiendo foto de barbero:', err);
       }
     }
 

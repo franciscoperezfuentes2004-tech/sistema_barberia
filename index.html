@@ -1215,7 +1215,7 @@
               el.style.transitionDelay = `${delay}s`;
               el.onclick = () => window.location.href = 'pages/booking.html'; // Redirigir a reserva
               
-              const imgSrc = svc.imagen_url || svc.imagen || 'assets/img/hero-bg.png';
+              const imgSrc = svc.imagen_b64 || svc.imagen_url || svc.imagen || 'assets/img/hero-bg.png';
               
               el.innerHTML = `
                 <div class="svc-img"><img src="${imgSrc}" alt="${svc.nombre}" loading="lazy" onerror="this.src='assets/img/hero-bg.png'"/></div>
