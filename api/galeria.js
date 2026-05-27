@@ -1,4 +1,4 @@
-const { db } = require('./config/db.js');
+const { db, bucket } = require('./config/db.js');
 const { verifyToken, sanitize } = require('./config/helpers.js');
 
 module.exports = async function handler(req, res) {
@@ -24,14 +24,37 @@ module.exports = async function handler(req, res) {
       return res.status(403).json({ error: auth.error });
     }
 
-    const { imagen, titulo } = req.body;
-    if (!imagen) {
-      return res.status(400).json({ error: 'Se requiere la URL de la imagen' });
+    const { imagen, titulo, imagen_b64 } = req.body;
+
+    let finalImageUrl = imagen || null;
+
+    if (imagen_b64 && imagen_b64.startsWith('data:')) {
+      try {
+        const mimeType = imagen_b64.match(/data:(.*?);base64/)[1];
+        const ext = mimeType.split('/')[1] || 'jpg';
+        const base64Data = imagen_b64.replace(/^data:image\/\w+;base64,/, '');
+        const buffer = Buffer.from(base64Data, 'base64');
+        const fileName = `galeria_${Date.now()}.${ext}`;
+        const filePath = `uploads/${fileName}`;
+        const file = bucket.file(filePath);
+        
+        await file.save(buffer, {
+          metadata: { contentType: mimeType },
+          public: true
+        });
+        finalImageUrl = `https://storage.googleapis.com/${bucket.name}/${filePath}`;
+      } catch (err) {
+        console.error('Error subiendo foto de galería:', err);
+      }
+    }
+
+    if (!finalImageUrl) {
+      return res.status(400).json({ error: 'Se requiere una imagen (base64 o URL)' });
     }
 
     try {
       const nuevaImagen = {
-        imagen: imagen, // Ya viene generada desde Firebase Storage (upload.js) o es una URL directa
+        imagen: finalImageUrl,
         titulo: sanitize(titulo) || '',
         creado_en: new Date().toISOString()
       };

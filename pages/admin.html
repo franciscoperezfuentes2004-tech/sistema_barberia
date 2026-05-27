@@ -867,6 +867,32 @@
       };
 
       // ⎯⎯⎯ AUTH CHECK ⎯⎯⎯
+      window.b64Files = {};
+      
+      function attachFileListeners() {
+        const ids = ['cms-logo', 'cms-hero-bg', 'new-gal-file', 'b-foto', 's-imagen'];
+        ids.forEach(id => {
+          const el = document.getElementById(id);
+          if (el) {
+            el.addEventListener('change', function(e) {
+              const file = e.target.files[0];
+              if (!file) {
+                delete window.b64Files[id];
+                return;
+              }
+              const reader = new FileReader();
+              reader.onloadend = function() {
+                window.b64Files[id] = reader.result;
+                console.log(`Imagen ${id} conectada y convertida con éxito`);
+                if (id === 'cms-logo') document.getElementById('cms-logo-preview').src = reader.result;
+                if (id === 'cms-hero-bg') document.getElementById('cms-hero-preview').src = reader.result;
+              };
+              reader.readAsDataURL(file);
+            });
+          }
+        });
+      }
+
       async function init() {
         const token = localStorage.getItem('mi_token_jwt');
         if (!token) {
@@ -900,6 +926,7 @@
         if (window.loadServicios) window.loadServicios();
         if (window.loadGlobalSchedule) window.loadGlobalSchedule();
         if (window.populateBarberSelect) window.populateBarberSelect();
+        attachFileListeners();
       }
 
       // ⎯⎯⎯ CMS AJUSTES GLOBALES ⎯⎯⎯
@@ -1007,7 +1034,6 @@
 
       window.saveCMS = async () => {
         let addr = document.getElementById('cms-address').value.trim();
-        // Si es texto puro, usar directamente. Si es enlace/iframe, intentar extraer dirección legible.
         let displayAddress = addr;
         if (addr.includes('http') || addr.includes('<iframe')) {
           displayAddress = extractAddressFromMap(addr);
@@ -1028,24 +1054,11 @@
           stat_clientes: document.getElementById('cms-stat-clientes').value
         };
 
-        const logoInput = document.getElementById('cms-logo');
-        if (logoInput.files.length > 0) {
-          const file = logoInput.files[0];
-          payload.logo_b64 = await new Promise((resolve) => {
-            const reader = new FileReader();
-            reader.onload = e => resolve(e.target.result);
-            reader.readAsDataURL(file);
-          });
+        if (window.b64Files['cms-logo']) {
+          payload.logo_b64 = window.b64Files['cms-logo'];
         }
-
-        const heroInput = document.getElementById('cms-hero-bg');
-        if (heroInput.files.length > 0) {
-          const file = heroInput.files[0];
-          payload.hero_b64 = await new Promise((resolve) => {
-            const reader = new FileReader();
-            reader.onload = e => resolve(e.target.result);
-            reader.readAsDataURL(file);
-          });
+        if (window.b64Files['cms-hero-bg']) {
+          payload.hero_b64 = window.b64Files['cms-hero-bg'];
         }
 
         try {
@@ -1057,7 +1070,9 @@
           const json = await res.json();
           if (json.success) {
             showToast('🌱 Ajustes de la página web actualizados');
-            loadCMS(); // Reload to get new logo path
+            delete window.b64Files['cms-logo'];
+            delete window.b64Files['cms-hero-bg'];
+            loadCMS();
           } else {
             alert(json.message);
           }
@@ -1169,6 +1184,7 @@
           if (json.success) {
             showToast('📸 Imagen añadida a la galería');
             fileInput.value = '';
+            delete window.b64Files['new-gal-file'];
             titleInput.value = '';
             loadGallery();
           } else {
@@ -1355,6 +1371,7 @@
           document.getElementById('b-nombre').value = b.nombre;
           document.getElementById('b-apellido').value = b.apellido;
           document.getElementById('b-foto').value = '';
+          delete window.b64Files['b-foto'];
           document.getElementById('b-esp').value = b.especialidad || '';
           document.getElementById('b-username').value = b.username || '';
           document.getElementById('help-username').style.display = 'none';
@@ -1367,6 +1384,7 @@
           title.textContent = 'Nuevo Barbero';
           document.getElementById('b-id').value = '';
           document.getElementById('b-foto').value = '';
+          delete window.b64Files['b-foto'];
           document.getElementById('b-username').value = '';
           document.getElementById('help-username').style.display = 'block';
           document.getElementById('b-password').value = '';
@@ -1391,14 +1409,8 @@
           especialidad: document.getElementById('b-esp').value,
         };
         
-        const fotoInput = document.getElementById('b-foto');
-        if (fotoInput.files.length > 0) {
-          const file = fotoInput.files[0];
-          payload.foto_b64 = await new Promise((resolve) => {
-            const reader = new FileReader();
-            reader.onload = e => resolve(e.target.result);
-            reader.readAsDataURL(file);
-          });
+        if (window.b64Files['b-foto']) {
+          payload.foto_b64 = window.b64Files['b-foto'];
         }
 
         const userVal = document.getElementById('b-username').value.trim();
@@ -1504,6 +1516,7 @@
       window.openServiceModal = () => {
         document.getElementById('s-id').value = '';
         document.getElementById('service-form').reset();
+        delete window.b64Files['s-imagen'];
         document.getElementById('s-modal-title').textContent = 'Nuevo Servicio';
         document.getElementById('service-modal').classList.add('show');
       };
@@ -1521,6 +1534,7 @@
         document.getElementById('s-precio').value = s.precio;
         document.getElementById('s-duracion').value = s.duracion_min;
         document.getElementById('s-imagen').value = ''; // Reset file
+        delete window.b64Files['s-imagen'];
         document.getElementById('s-modal-title').textContent = 'Editar Servicio';
         document.getElementById('service-modal').classList.add('show');
       };
@@ -1539,13 +1553,8 @@
           duracion_min: document.getElementById('s-duracion').value
         };
 
-        const fileInput = document.getElementById('s-imagen');
-        if (fileInput.files.length > 0) {
-          payload.imagen_b64 = await new Promise((resolve) => {
-            const reader = new FileReader();
-            reader.onload = ev => resolve(ev.target.result);
-            reader.readAsDataURL(fileInput.files[0]);
-          });
+        if (window.b64Files['s-imagen']) {
+          payload.imagen_b64 = window.b64Files['s-imagen'];
         }
 
         const url = id ? `${API}/servicios?id=${id}` : `${API}/servicios`;
