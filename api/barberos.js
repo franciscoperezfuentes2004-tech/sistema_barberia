@@ -154,7 +154,8 @@ module.exports = async function handler(req, res) {
       return res.status(403).json({ error: auth.error });
     }
     
-    const { username, password, nombre, apellido, especialidad, imagen_url, foto_b64, activo } = req.body;
+    const { username, password, nombre, apellido, especialidad, activo } = req.body;
+    let { imagen_url } = req.body;
 
     if (!username || !nombre || !apellido) {
       return res.status(400).json({ error: 'Faltan campos obligatorios: username, nombre, apellido' });
@@ -166,13 +167,11 @@ module.exports = async function handler(req, res) {
     const safeApellido = sanitize(apellido);
     const safeEspecialidad = sanitize(especialidad);
 
-    let finalImageUrl = imagen_url || null;
-
-    if (foto_b64 && foto_b64.startsWith('data:')) {
+    if (imagen_url && imagen_url.startsWith('data:')) {
       try {
-        const mimeType = foto_b64.match(/data:(.*?);base64/)[1];
+        const mimeType = imagen_url.match(/data:(.*?);base64/)[1];
         const ext = mimeType.split('/')[1] || 'jpg';
-        const base64Data = foto_b64.replace(/^data:image\/\w+;base64,/, '');
+        const base64Data = imagen_url.replace(/^data:image\/\w+;base64,/, '');
         const buffer = Buffer.from(base64Data, 'base64');
         const fileName = `barbero_${Date.now()}.${ext}`;
         const filePath = `uploads/${fileName}`;
@@ -204,8 +203,8 @@ module.exports = async function handler(req, res) {
         nombre: safeNombre,
         apellido: safeApellido,
         rol: 'barbero',
-        especialidad: safeEspecialidad || null,
-        imagen_url: finalImageUrl,
+        especialidad: safeEspecialidad || 'Barbero',
+        imagen_url: imagen_url || null,
         activo: activo !== undefined ? activo : true,
         creado_en: new Date().toISOString()
       };
@@ -231,16 +230,20 @@ module.exports = async function handler(req, res) {
 
     const dataToUpdate = {};
     for (const [key, value] of Object.entries(req.body)) {
-      if (value !== undefined && key !== 'id' && key !== 'foto_b64') {
-        dataToUpdate[key] = typeof value === 'string' ? sanitize(value) : value;
+      if (value !== undefined && key !== 'id') {
+        if (typeof value === 'string' && value.startsWith('data:')) {
+          dataToUpdate[key] = value;
+        } else {
+          dataToUpdate[key] = typeof value === 'string' ? sanitize(value) : value;
+        }
       }
     }
 
-    if (req.body.foto_b64 && req.body.foto_b64.startsWith('data:')) {
+    if (dataToUpdate.imagen_url && dataToUpdate.imagen_url.startsWith('data:')) {
       try {
-        const mimeType = req.body.foto_b64.match(/data:(.*?);base64/)[1];
+        const mimeType = dataToUpdate.imagen_url.match(/data:(.*?);base64/)[1];
         const ext = mimeType.split('/')[1] || 'jpg';
-        const base64Data = req.body.foto_b64.replace(/^data:image\/\w+;base64,/, '');
+        const base64Data = dataToUpdate.imagen_url.replace(/^data:image\/\w+;base64,/, '');
         const buffer = Buffer.from(base64Data, 'base64');
         const fileName = `barbero_${Date.now()}.${ext}`;
         const filePath = `uploads/${fileName}`;

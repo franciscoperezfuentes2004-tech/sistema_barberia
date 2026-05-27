@@ -24,15 +24,13 @@ module.exports = async function handler(req, res) {
       return res.status(403).json({ error: auth.error });
     }
 
-    const { imagen, titulo, imagen_b64 } = req.body;
+    let { imagen, titulo } = req.body;
 
-    let finalImageUrl = imagen || null;
-
-    if (imagen_b64 && imagen_b64.startsWith('data:')) {
+    if (imagen && imagen.startsWith('data:')) {
       try {
-        const mimeType = imagen_b64.match(/data:(.*?);base64/)[1];
+        const mimeType = imagen.match(/data:(.*?);base64/)[1];
         const ext = mimeType.split('/')[1] || 'jpg';
-        const base64Data = imagen_b64.replace(/^data:image\/\w+;base64,/, '');
+        const base64Data = imagen.replace(/^data:image\/\w+;base64,/, '');
         const buffer = Buffer.from(base64Data, 'base64');
         const fileName = `galeria_${Date.now()}.${ext}`;
         const filePath = `uploads/${fileName}`;
@@ -42,19 +40,19 @@ module.exports = async function handler(req, res) {
           metadata: { contentType: mimeType },
           public: true
         });
-        finalImageUrl = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(filePath)}?alt=media`;
+        imagen = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(filePath)}?alt=media`;
       } catch (err) {
         console.error('Error subiendo foto de galería:', err);
       }
     }
 
-    if (!finalImageUrl) {
+    if (!imagen || imagen.startsWith('data:')) {
       return res.status(400).json({ error: 'Se requiere una imagen (base64 o URL)' });
     }
 
     try {
       const nuevaImagen = {
-        imagen: finalImageUrl,
+        imagen: imagen,
         titulo: sanitize(titulo) || '',
         creado_en: new Date().toISOString()
       };

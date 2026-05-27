@@ -37,8 +37,8 @@ module.exports = async function handler(req, res) {
     const dataToSave = {};
     for (const [key, value] of Object.entries(req.body)) {
       if (value !== undefined) {
-        // No sanitizar campos base64 — contienen datos binarios
-        if (key.endsWith('_b64')) {
+        // No sanitizar si contiene datos base64
+        if (typeof value === 'string' && value.startsWith('data:')) {
           dataToSave[key] = value;
         } else {
           dataToSave[key] = typeof value === 'string' ? sanitize(value) : value;
@@ -47,11 +47,11 @@ module.exports = async function handler(req, res) {
     }
 
     // Subir logo a Firebase Storage si se envía base64
-    if (req.body.logo_b64 && req.body.logo_b64.startsWith('data:')) {
+    if (dataToSave.site_logo && dataToSave.site_logo.startsWith('data:')) {
       try {
-        const mimeType = req.body.logo_b64.match(/data:(.*?);base64/)[1];
+        const mimeType = dataToSave.site_logo.match(/data:(.*?);base64/)[1];
         const extension = mimeType.split('/')[1] || 'png';
-        const base64Data = req.body.logo_b64.replace(/^data:image\/\w+;base64,/, '');
+        const base64Data = dataToSave.site_logo.replace(/^data:image\/\w+;base64,/, '');
         const buffer = Buffer.from(base64Data, 'base64');
         const uniqueFileName = `logo_${Date.now()}.${extension}`;
         const filePath = `barberia-media/${uniqueFileName}`;
@@ -61,7 +61,6 @@ module.exports = async function handler(req, res) {
           public: true
         });
         dataToSave.site_logo = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(filePath)}?alt=media`;
-        delete dataToSave.logo_b64;
       } catch (uploadErr) {
         console.error('Error al subir logo:', uploadErr);
         return res.status(500).json({ error: 'No se pudo guardar la imagen del logo en Storage' });
@@ -69,11 +68,11 @@ module.exports = async function handler(req, res) {
     }
 
     // Subir hero background a Firebase Storage si se envía base64
-    if (req.body.hero_b64 && req.body.hero_b64.startsWith('data:')) {
+    if (dataToSave.site_hero_bg && dataToSave.site_hero_bg.startsWith('data:')) {
       try {
-        const mimeType = req.body.hero_b64.match(/data:(.*?);base64/)[1];
+        const mimeType = dataToSave.site_hero_bg.match(/data:(.*?);base64/)[1];
         const extension = mimeType.split('/')[1] || 'jpg';
-        const base64Data = req.body.hero_b64.replace(/^data:image\/\w+;base64,/, '');
+        const base64Data = dataToSave.site_hero_bg.replace(/^data:image\/\w+;base64,/, '');
         const buffer = Buffer.from(base64Data, 'base64');
         const uniqueFileName = `hero_${Date.now()}.${extension}`;
         const filePath = `barberia-media/${uniqueFileName}`;
@@ -83,7 +82,6 @@ module.exports = async function handler(req, res) {
           public: true
         });
         dataToSave.site_hero_bg = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(filePath)}?alt=media`;
-        delete dataToSave.hero_b64;
       } catch (uploadErr) {
         console.error('Error al subir hero background:', uploadErr);
         return res.status(500).json({ error: 'No se pudo guardar la imagen de portada en Storage' });

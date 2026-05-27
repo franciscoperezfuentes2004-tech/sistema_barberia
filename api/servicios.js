@@ -37,7 +37,8 @@ module.exports = async function handler(req, res) {
       return res.status(403).json({ error: auth.error });
     }
     
-    const { nombre, descripcion, precio, duracion_min, imagen_url, imagen_b64 } = req.body;
+    const { nombre, descripcion, precio, duracion_min } = req.body;
+    let { imagen_url } = req.body;
 
     if (!nombre || !precio || !duracion_min) {
       return res.status(400).json({ error: 'Faltan campos obligatorios: nombre, precio, duracion_min' });
@@ -47,13 +48,11 @@ module.exports = async function handler(req, res) {
     const safeNombre = sanitize(nombre);
     const safeDescripcion = sanitize(descripcion);
 
-    let finalImageUrl = imagen_url || null;
-
-    if (imagen_b64 && imagen_b64.startsWith('data:')) {
+    if (imagen_url && imagen_url.startsWith('data:')) {
       try {
-        const mimeType = imagen_b64.match(/data:(.*?);base64/)[1];
+        const mimeType = imagen_url.match(/data:(.*?);base64/)[1];
         const ext = mimeType.split('/')[1] || 'jpg';
-        const base64Data = imagen_b64.replace(/^data:image\/\w+;base64,/, '');
+        const base64Data = imagen_url.replace(/^data:image\/\w+;base64,/, '');
         const buffer = Buffer.from(base64Data, 'base64');
         const fileName = `servicio_${Date.now()}.${ext}`;
         const filePath = `uploads/${fileName}`;
@@ -75,7 +74,7 @@ module.exports = async function handler(req, res) {
         descripcion: safeDescripcion || null,
         precio: Number(precio),
         duracion_min: Number(duracion_min),
-        imagen_url: finalImageUrl,
+        imagen_url: imagen_url || null,
         activo: true,
         creado_en: new Date().toISOString()
       };
@@ -98,16 +97,20 @@ module.exports = async function handler(req, res) {
 
     const dataToUpdate = {};
     for (const [key, value] of Object.entries(req.body)) {
-      if (value !== undefined && key !== 'id' && key !== 'imagen_b64') {
-        dataToUpdate[key] = typeof value === 'string' ? sanitize(value) : value;
+      if (value !== undefined && key !== 'id') {
+        if (typeof value === 'string' && value.startsWith('data:')) {
+          dataToUpdate[key] = value;
+        } else {
+          dataToUpdate[key] = typeof value === 'string' ? sanitize(value) : value;
+        }
       }
     }
 
-    if (req.body.imagen_b64 && req.body.imagen_b64.startsWith('data:')) {
+    if (dataToUpdate.imagen_url && dataToUpdate.imagen_url.startsWith('data:')) {
       try {
-        const mimeType = req.body.imagen_b64.match(/data:(.*?);base64/)[1];
+        const mimeType = dataToUpdate.imagen_url.match(/data:(.*?);base64/)[1];
         const ext = mimeType.split('/')[1] || 'jpg';
-        const base64Data = req.body.imagen_b64.replace(/^data:image\/\w+;base64,/, '');
+        const base64Data = dataToUpdate.imagen_url.replace(/^data:image\/\w+;base64,/, '');
         const buffer = Buffer.from(base64Data, 'base64');
         const fileName = `servicio_${Date.now()}.${ext}`;
         const filePath = `uploads/${fileName}`;
