@@ -115,6 +115,24 @@
     }
     .cta-btn:disabled{background:var(--s2);color:var(--muted);cursor:not-allowed}
     
+    /* Calendar Grid UI */
+    .cal-day {
+      width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+      border-radius: 50%; font-size: 0.9rem; margin: 0 auto; cursor: pointer; transition: all 0.2s;
+    }
+    .cal-day.empty { background: transparent; cursor: default; }
+    .cal-day.hoy { background: var(--gold); border: 2px solid var(--gold); color: #0F0F0F; font-weight: 700; }
+    .cal-day.disponible { border: 2px solid #27ae60; color: var(--bright); background: transparent; }
+    .cal-day.disponible:hover { background: rgba(39, 174, 96, 0.15); }
+    .cal-day.lleno { border: 2px solid #e74c3c; color: var(--bright); background: transparent; }
+    .cal-day.lleno:hover { background: rgba(231, 76, 60, 0.15); }
+    .cal-day.pasado { border: 2px solid #444; color: #555; background: transparent; cursor: not-allowed; }
+    .cal-day.cerrado { border: 2px solid #444; color: #555; background: transparent; cursor: not-allowed; }
+    
+    .cal-day.selected {
+      box-shadow: 0 0 15px var(--gold); transform: scale(1.1);
+    }
+    
     /* Responsive Alignment for Mobile */
     @media (max-width: 768px) {
       .dates-scroll, #barbers-grid, #times-grid {
@@ -158,8 +176,11 @@
     <!-- 1. Fechas -->
     <section style="margin-bottom:32px">
       <h2 class="sec-title" style="margin-bottom:12px">1. Elige una fecha</h2>
-      <div id="dates-container" class="dates-scroll">
-        <!-- JS generates dates here -->
+      <button id="btn-open-calendar" class="cta-btn" style="width:100%; max-width:300px; margin:0; background:var(--s1); border:1px solid var(--border); color:var(--bright); font-weight:600;" onclick="openCalendarModal()">
+        🗓️ Escoger el día
+      </button>
+      <div id="selected-date-display" style="margin-top:16px; font-size:1.1rem; color:var(--gold); font-weight:700; display:none; align-items:center; gap:8px;">
+        <!-- JS fills this -->
       </div>
     </section>
 
@@ -191,6 +212,40 @@
     </div>
   </div>
 
+  <!-- Calendar Modal -->
+  <div id="calendar-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:100; align-items:center; justify-content:center; padding:20px; backdrop-filter:blur(4px);">
+    <div class="modal-content" style="background:var(--bg); border:1px solid var(--border); border-radius:20px; width:100%; max-width:380px; padding:24px; position:relative; box-shadow:0 15px 40px rgba(0,0,0,0.5);">
+      <button onclick="closeCalendarModal()" style="position:absolute; top:12px; right:16px; background:none; border:none; color:var(--muted); font-size:1.8rem; cursor:pointer;">&times;</button>
+      
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; margin-top:8px;">
+        <button id="cal-prev" onclick="changeMonth(-1)" style="background:transparent; border:1px solid var(--border); color:var(--bright); border-radius:10px; padding:6px 14px; cursor:pointer; transition:all 0.2s;">&lt;</button>
+        <h3 id="cal-month-year" style="margin:0; color:var(--gold); font-family:var(--serif); font-size:1.3rem;">Mayo 2026</h3>
+        <button id="cal-next" onclick="changeMonth(1)" style="background:transparent; border:1px solid var(--border); color:var(--bright); border-radius:10px; padding:6px 14px; cursor:pointer; transition:all 0.2s;">&gt;</button>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(7, 1fr); gap:8px; text-align:center; margin-bottom:12px;">
+        <div style="color:var(--muted); font-size:0.75rem; font-weight:700; text-transform:uppercase;">Do</div>
+        <div style="color:var(--muted); font-size:0.75rem; font-weight:700; text-transform:uppercase;">Lu</div>
+        <div style="color:var(--muted); font-size:0.75rem; font-weight:700; text-transform:uppercase;">Ma</div>
+        <div style="color:var(--muted); font-size:0.75rem; font-weight:700; text-transform:uppercase;">Mi</div>
+        <div style="color:var(--muted); font-size:0.75rem; font-weight:700; text-transform:uppercase;">Ju</div>
+        <div style="color:var(--muted); font-size:0.75rem; font-weight:700; text-transform:uppercase;">Vi</div>
+        <div style="color:var(--muted); font-size:0.75rem; font-weight:700; text-transform:uppercase;">Sa</div>
+      </div>
+
+      <div id="cal-days-grid" style="display:grid; grid-template-columns:repeat(7, 1fr); gap:8px 6px;">
+        <!-- JS fills this -->
+      </div>
+
+      <div style="margin-top:24px; padding-top:16px; border-top:1px solid var(--border); display:flex; flex-wrap:wrap; gap:12px; font-size:0.75rem; color:var(--muted); justify-content:center;">
+        <div style="display:flex; align-items:center; gap:6px;"><span style="display:inline-block; width:12px; height:12px; border-radius:50%; background:var(--gold); border:2px solid var(--gold);"></span> Hoy</div>
+        <div style="display:flex; align-items:center; gap:6px;"><span style="display:inline-block; width:12px; height:12px; border-radius:50%; border:2px solid #27ae60;"></span> Disponible</div>
+        <div style="display:flex; align-items:center; gap:6px;"><span style="display:inline-block; width:12px; height:12px; border-radius:50%; border:2px solid #e74c3c;"></span> Lleno</div>
+        <div style="display:flex; align-items:center; gap:6px;"><span style="display:inline-block; width:12px; height:12px; border-radius:50%; border:2px solid #444;"></span> Pasado/Cerrado</div>
+      </div>
+    </div>
+  </div>
+
   <script>
     const API = '../api';
 
@@ -210,37 +265,87 @@
 
     document.getElementById('dur-badge').textContent = `Requiere ${state.duracion} min`;
 
-    // 2. Generar Fechas (próximos 14 días)
-    function initDates() {
-      const container = document.getElementById('dates-container');
-      const dias = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
-      const meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+    let currentCalMonth = new Date().getMonth() + 1;
+    let currentCalYear = new Date().getFullYear();
+
+    async function openCalendarModal() {
+      document.getElementById('calendar-modal').style.display = 'flex';
+      await loadCalendarMonth(currentCalMonth, currentCalYear);
+    }
+
+    function closeCalendarModal() {
+      document.getElementById('calendar-modal').style.display = 'none';
+    }
+
+    async function changeMonth(delta) {
+      currentCalMonth += delta;
+      if (currentCalMonth > 12) {
+        currentCalMonth = 1;
+        currentCalYear++;
+      } else if (currentCalMonth < 1) {
+        currentCalMonth = 12;
+        currentCalYear--;
+      }
+      await loadCalendarMonth(currentCalMonth, currentCalYear);
+    }
+
+    async function loadCalendarMonth(m, a) {
+      const grid = document.getElementById('cal-days-grid');
+      const title = document.getElementById('cal-month-year');
+      const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
       
-      let hoy = new Date();
-      for(let i=0; i<7; i++) {
-        let d = new Date(hoy);
-        d.setDate(d.getDate() + i);
+      title.textContent = `${meses[m-1]} ${a}`;
+      grid.innerHTML = '<div style="grid-column:1/-1; padding:20px; color:var(--muted);">Cargando...</div>';
+
+      try {
+        const res = await fetch(`${API}/calendario?mes=${m}&anio=${a}&duracion=${state.duracion}`);
+        const json = await res.json();
         
-        let isodate = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
-        let card = document.createElement('div');
-        card.className = 'date-card';
-        card.innerHTML = `
-          <div class="date-day">${i===0?'Hoy':dias[d.getDay()]}</div>
-          <div class="date-num">${d.getDate()}</div>
-          <div class="date-month">${meses[d.getMonth()]}</div>
-        `;
-        card.onclick = () => selectDate(card, isodate);
-        container.appendChild(card);
+        if (!json.success) throw new Error('Error de API');
+        
+        grid.innerHTML = '';
+        
+        // Blank spaces for first day of month
+        const firstDay = new Date(`${a}-${String(m).padStart(2,'0')}-01T12:00:00Z`).getUTCDay();
+        for (let i = 0; i < firstDay; i++) {
+          grid.innerHTML += `<div class="cal-day empty"></div>`;
+        }
+
+        json.data.forEach(dia => {
+          const d = new Date(dia.fecha + 'T12:00:00Z').getUTCDate();
+          let cls = 'cal-day ' + dia.estado;
+          
+          let onclick = '';
+          if (dia.estado === 'hoy' || dia.estado === 'disponible') {
+            onclick = `onclick="selectDate('${dia.fecha}')"`;
+          }
+
+          if (state.fecha === dia.fecha) cls += ' selected';
+
+          grid.innerHTML += `<div class="${cls}" ${onclick}>${d}</div>`;
+        });
+      } catch(e) {
+        grid.innerHTML = '<div style="grid-column:1/-1; color:var(--red);">Error cargando fechas</div>';
       }
     }
 
-    async function selectDate(cardEl, isodate) {
-      document.querySelectorAll('.date-card').forEach(c => c.classList.remove('selected'));
-      cardEl.classList.add('selected');
+    async function selectDate(isodate) {
+      closeCalendarModal();
       state.fecha = isodate;
       state.barberoId = null;
       state.horaInicio = null;
       updateCTA();
+
+      // Formatear la fecha para mostrarla amigable
+      const parts = isodate.split('-');
+      const d = new Date(isodate + 'T12:00:00Z');
+      const dias = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+      const meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+      const text = `${dias[d.getUTCDay()]} ${parts[2]} de ${meses[parseInt(parts[1])-1]}`;
+      
+      const display = document.getElementById('selected-date-display');
+      display.innerHTML = `<span>📅</span> ${text}`;
+      display.style.display = 'flex';
       
       // Ocultar horarios, mostrar barberos cargando
       document.getElementById('sec-horarios').style.display = 'none';
@@ -447,7 +552,7 @@
 
     // Inicializar
     loadBranding();
-    initDates();
+    openCalendarModal();
   </script>
 </body>
 </html>
