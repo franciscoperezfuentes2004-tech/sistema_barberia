@@ -676,21 +676,27 @@
 
           const json = await response.json();
 
-          if (json.success === true) {
-            // Guardar el Token de Seguridad
-            localStorage.setItem('mi_token_jwt', json.token);
-            
-            // Successful login — redirect based on role
+          if (json.status === 'success' || json.success === true) {
+            // Mostrar mensaje de éxito visualmente en el botón
+            btnSubmit.classList.remove('loading');
+            btnSubmit.innerHTML = `<span class="btn-text">${json.message || '¡Bienvenido!'}</span>`;
+            btnSubmit.style.background = 'var(--green)';
+
+            // Guardar sesión
             sessionStorage.setItem('tab_auth', 'true');
-            const rol = json.user?.rol;
-            if (rol === 'barbero') {
-              window.location.href = 'staff.html';
-            } else if (rol === 'admin') {
-              window.location.href = 'admin.html';
-            } else {
-              // Fallback redirect
-              window.location.href = 'staff.html';
-            }
+            if (json.token) localStorage.setItem('mi_token_jwt', json.token);
+
+            // Retardo de 1 segundo y redirección fluida
+            setTimeout(() => {
+              const rol = json.rol || json.user?.rol || 'admin';
+              if (rol === 'barbero') {
+                window.location.href = 'staff.html';
+              } else {
+                // Redirigir a la raíz donde está admin.html
+                window.location.href = '../admin.html';
+              }
+            }, 1000);
+
           } else {
             // API returned an error
             const msg = json.message || json.error || 'Credenciales incorrectas. Intenta de nuevo.';
