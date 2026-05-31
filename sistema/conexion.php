@@ -72,33 +72,14 @@ if (!mysqli_query($conexion, $query_usuarios)) {
 }
 
 // ─── 5. INYECTOR INTELIGENTE DE ADMINISTRADOR POR DEFECTO ─────────
-$res_conteo = mysqli_query($conexion, "SELECT COUNT(*) AS total FROM `usuarios`");
-if ($res_conteo) {
-    $fila = mysqli_fetch_assoc($res_conteo);
-    
-    // Si la tabla de usuarios está vacía, inyectamos al administrador maestro
-    if ($fila['total'] == 0) {
-        $usuario_admin = 'admin';
-        $hash_admin = password_hash('1234', PASSWORD_BCRYPT);
-        
-        $sql_admin = "INSERT INTO `usuarios` (`usuario`, `password`, `rol`) VALUES (?, ?, 'admin')";
-        $stmt_admin = mysqli_prepare($conexion, $sql_admin);
-        
-        if ($stmt_admin) {
-            mysqli_stmt_bind_param($stmt_admin, "ss", $usuario_admin, $hash_admin);
-            if (!mysqli_stmt_execute($stmt_admin)) {
-                error_log("Fallo al inyectar admin: " . mysqli_stmt_error($stmt_admin));
-            } else {
-                error_log("Admin por defecto inyectado exitosamente.");
-            }
-            mysqli_stmt_close($stmt_admin);
-        } else {
-            error_log("Fallo al preparar la inyección de admin: " . mysqli_error($conexion));
-        }
+// Verificar de forma limpia si la tabla usuarios no tiene registros
+$verificar = mysqli_query($conexion, "SELECT COUNT(*) as total FROM `usuarios`");
+if ($verificar) {
+    $fila = mysqli_fetch_assoc($verificar);
+    if ((int)$fila['total'] === 0) {
+        $pass_hash = password_hash("1234", PASSWORD_BCRYPT);
+        // Consulta limpia de inserción directa sin Prepared Statement complejo para evitar fallos de bindings
+        $insert_sql = "INSERT INTO `usuarios` (`usuario`, `password`, `rol`) VALUES ('admin', '$pass_hash', 'admin')";
+        mysqli_query($conexion, $insert_sql);
     }
-} else {
-    error_log("Fallo al verificar el conteo de la tabla 'usuarios': " . mysqli_error($conexion));
 }
-
-// Omitimos la etiqueta de cierre PHP (?>) intencionalmente para evitar 
-// espacios o saltos de línea ocultos al final del archivo que rompan el JSON.

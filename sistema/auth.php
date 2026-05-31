@@ -1,11 +1,15 @@
 <?php
-// Garantizamos que la respuesta siempre será interpretada como JSON desde el primer byte
+// Usamos el buffer de salida para evitar que cualquier advertencia (Warning) 
+// o espacio en blanco en otros archivos rompa nuestra respuesta JSON.
+ob_start();
+
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 
 if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
+    ob_clean(); // Limpiamos la basura antes de responder
     http_response_code(200);
     exit;
 }
@@ -34,6 +38,7 @@ if (is_array($json_data) && isset($json_data['usuario']) && isset($json_data['pa
 // Si llegan vacíos, abortamos de inmediato con un JSON válido
 if (empty($usuario) || empty($password)) {
     http_response_code(400);
+    ob_clean(); // Limpiamos la basura antes de responder
     echo json_encode(["status" => "error", "message" => "Usuario y contraseña son requeridos"]);
     exit;
 }
@@ -45,6 +50,7 @@ $stmt = mysqli_prepare($conexion, $sql);
 if (!$stmt) {
     error_log("Error al preparar la consulta de auth: " . mysqli_error($conexion));
     http_response_code(500);
+    ob_clean(); // Limpiamos la basura antes de responder
     echo json_encode(["status" => "error", "message" => "Error interno al consultar la base de datos"]);
     exit;
 }
@@ -65,21 +71,21 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
         $_SESSION['logged_in']   = true;
 
         http_response_code(200);
+        ob_clean(); // Limpiamos la basura antes de responder
         echo json_encode(["status" => "success", "message" => "¡Bienvenido!"]);
         
     } else {
         // Falló password_verify
         http_response_code(401);
+        ob_clean(); // Limpiamos la basura antes de responder
         echo json_encode(["status" => "error", "message" => "Credenciales incorrectas"]);
     }
 } else {
     // Usuario no existe
     http_response_code(401);
+    ob_clean(); // Limpiamos la basura antes de responder
     echo json_encode(["status" => "error", "message" => "Credenciales incorrectas"]);
 }
 
 mysqli_stmt_close($stmt);
 mysqli_close($conexion);
-
-// Omitimos la etiqueta de cierre PHP (?>) intencionalmente para evitar 
-// espacios o saltos de línea ocultos al final del archivo que rompan el JSON.
