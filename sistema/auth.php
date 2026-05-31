@@ -1,90 +1,86 @@
 <?php
-// Usamos el buffer de salida para evitar que cualquier advertencia (Warning) 
-// o espacio en blanco en otros archivos rompa nuestra respuesta JSON.
+// Control del buffer para evitar que basuras (warnings o espacios) rompan la salida
 ob_start();
 
+// Configuración obligatoria para responder JSON limpio
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 
 if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
-    ob_clean(); // Limpiamos la basura antes de responder
+    ob_clean();
     http_response_code(200);
     exit;
 }
 
-// Activamos la sesión
-session_start();
-
-// ─── 1. INCLUIR CONEXIÓN (DISPARA EL MOTOR DE TABLAS) ──────────────
+// Incluimos la conexión, que activa el motor inteligente
 require_once __DIR__ . "/conexion.php";
 
-// ─── 2. OBTENER DATOS POST Y VALIDARLOS ────────────────────────────
-$usuario  = "";
-$password = "";
+// LECTURA HÍBRIDA (Capturamos JSON crudo de fetch o $_POST tradicional)
+$data_json = json_decode(file_get_contents("php://input"), true);
 
-$raw_input = file_get_contents("php://input");
-$json_data = json_decode($raw_input, true);
-
-if (is_array($json_data) && isset($json_data['usuario']) && isset($json_data['password'])) {
-    $usuario  = trim($json_data['usuario']);
-    $password = trim($json_data['password']);
-} elseif (isset($_POST['usuario']) && isset($_POST['password'])) {
-    $usuario  = trim($_POST['usuario']);
-    $password = trim($_POST['password']);
+// Evaluar variable usuario
+$user_input = "";
+if (isset($_POST['usuario']) && trim($_POST['usuario']) !== "") {
+    $user_input = trim($_POST['usuario']);
+} elseif (is_array($data_json) && isset($data_json['usuario']) && trim($data_json['usuario']) !== "") {
+    $user_input = trim($data_json['usuario']);
 }
 
-// Si llegan vacíos, abortamos de inmediato con un JSON válido
-if (empty($usuario) || empty($password)) {
+// Evaluar variable password
+$pass_input = "";
+if (isset($_POST['password']) && trim($_POST['password']) !== "") {
+    $pass_input = trim($_POST['password']);
+} elseif (is_array($data_json) && isset($data_json['password']) && trim($data_json['password']) !== "") {
+    $pass_input = trim($data_json['password']);
+}
+
+// Verificamos si quedaron vacíos
+if (empty($user_input) || empty($pass_input)) {
+    ob_clean();
     http_response_code(400);
-    ob_clean(); // Limpiamos la basura antes de responder
-    echo json_encode(["status" => "error", "message" => "Usuario y contraseña son requeridos"]);
+    echo json_encode(["status" => "error", "message" => "Usuario y contraseña son requeridos."]);
     exit;
 }
 
-// ─── 3. BÚSQUEDA DEL USUARIO USANDO PREPARED STATEMENTS ────────────
+// Búsqueda del usuario de forma segura
 $sql = "SELECT id, usuario, password, rol FROM `usuarios` WHERE usuario = ? LIMIT 1";
 $stmt = mysqli_prepare($conexion, $sql);
 
 if (!$stmt) {
-    error_log("Error al preparar la consulta de auth: " . mysqli_error($conexion));
+    error_log("Error al preparar auth: " . mysqli_error($conexion));
+    ob_clean();
     http_response_code(500);
-    ob_clean(); // Limpiamos la basura antes de responder
-    echo json_encode(["status" => "error", "message" => "Error interno al consultar la base de datos"]);
+    echo json_encode(["status" => "error", "message" => "Error interno en servidor."]);
     exit;
 }
 
-mysqli_stmt_bind_param($stmt, "s", $usuario);
+mysqli_stmt_bind_param($stmt, "s", $user_input);
 mysqli_stmt_execute($stmt);
 $resultado = mysqli_stmt_get_result($stmt);
 
-// ─── 4. VERIFICAR CONTRASEÑA ───────────────────────────────────────
 if ($fila = mysqli_fetch_assoc($resultado)) {
-    // Si la contraseña coincide con el hash en la BD
-    if (password_verify($password, $fila['password'])) {
-        
-        // Configuramos la sesión del usuario
+    // Verificar si el password ingresado coincide con el hash en BCRYPT
+    if (password_verify($pass_input, $fila['password'])) {
+        session_start();
         $_SESSION['usuario_id']  = $fila['id'];
         $_SESSION['usuario']     = $fila['usuario'];
         $_SESSION['rol']         = $fila['rol'];
         $_SESSION['logged_in']   = true;
 
+        ob_clean();
         http_response_code(200);
-        ob_clean(); // Limpiamos la basura antes de responder
         echo json_encode(["status" => "success", "message" => "¡Bienvenido!"]);
-        
     } else {
-        // Falló password_verify
+        ob_clean();
         http_response_code(401);
-        ob_clean(); // Limpiamos la basura antes de responder
-        echo json_encode(["status" => "error", "message" => "Credenciales incorrectas"]);
+        echo json_encode(["status" => "error", "message" => "Credenciales incorrectas."]);
     }
 } else {
-    // Usuario no existe
+    ob_clean();
     http_response_code(401);
-    ob_clean(); // Limpiamos la basura antes de responder
-    echo json_encode(["status" => "error", "message" => "Credenciales incorrectas"]);
+    echo json_encode(["status" => "error", "message" => "Credenciales incorrectas."]);
 }
 
 mysqli_stmt_close($stmt);

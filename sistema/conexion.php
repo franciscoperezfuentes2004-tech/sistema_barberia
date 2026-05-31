@@ -83,3 +83,4 @@ if ($verificar) {
         mysqli_query($conexion, $insert_sql);
     }
 }
+// Sin espacios ni cierres de PHP para evitar romper JSON.
