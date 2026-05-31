@@ -71,14 +71,36 @@ if (!mysqli_query($conexion, $query_usuarios)) {
     error_log("Auto-Migración Fallida en 'usuarios': " . mysqli_error($conexion));
 }
 
-// ─── 5. INYECTOR INTELIGENTE DE ADMINISTRADOR POR DEFECTO ─────────
-$verificar = mysqli_query($conexion, "SELECT COUNT(*) as total FROM `usuarios`");
-if ($verificar) {
-    $fila = mysqli_fetch_assoc($verificar);
+$query_ajustes = "CREATE TABLE IF NOT EXISTS `ajustes` (
+    `id` INT AUTO_INCREMENT,
+    `nombre_empresa` VARCHAR(100) DEFAULT 'Barbería',
+    `logo` VARCHAR(255) NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
+
+if (!mysqli_query($conexion, $query_ajustes)) {
+    error_log("Auto-Migración Fallida en 'ajustes': " . mysqli_error($conexion));
+}
+
+// ─── 5. INYECTORES INTELIGENTES POR DEFECTO ─────────
+
+// Inyector de Administrador
+$verificar_usuarios = mysqli_query($conexion, "SELECT COUNT(*) as total FROM `usuarios`");
+if ($verificar_usuarios) {
+    $fila = mysqli_fetch_assoc($verificar_usuarios);
     if ((int)$fila['total'] === 0) {
         $pass_hash = password_hash("1234", PASSWORD_BCRYPT);
-        // Consulta limpia de inserción directa sin Prepared Statement complejo para evitar fallos de bindings
-        $insert_sql = "INSERT INTO `usuarios` (`usuario`, `password`, `rol`) VALUES ('admin', '$pass_hash', 'admin')";
-        mysqli_query($conexion, $insert_sql);
+        $insert_admin = "INSERT INTO `usuarios` (`usuario`, `password`, `rol`) VALUES ('admin', '$pass_hash', 'admin')";
+        mysqli_query($conexion, $insert_admin);
+    }
+}
+
+// Inyector de Ajustes Globales
+$verificar_ajustes = mysqli_query($conexion, "SELECT COUNT(*) as total FROM `ajustes`");
+if ($verificar_ajustes) {
+    $fila = mysqli_fetch_assoc($verificar_ajustes);
+    if ((int)$fila['total'] === 0) {
+        $insert_ajustes = "INSERT INTO `ajustes` (`nombre_empresa`, `logo`) VALUES ('Barbería Premium', NULL)";
+        mysqli_query($conexion, $insert_ajustes);
     }
 }

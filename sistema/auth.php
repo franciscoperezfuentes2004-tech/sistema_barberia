@@ -1,5 +1,5 @@
 <?php
-// Control del buffer para evitar que advertencias rompan el JSON
+// Usamos el buffer de salida para evitar que advertencias rompan el JSON
 ob_start();
 
 header("Content-Type: application/json; charset=UTF-8");
@@ -16,12 +16,12 @@ if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
 // Incluimos la conexión que detona la instalación si no existe
 require_once __DIR__ . "/conexion.php";
 
-// LECTURA HÍBRIDA (Capturamos JSON crudo de fetch o $_POST tradicional)
+// LECTURA HÍBRIDA MULTI-LLAVE (God-Mode)
 $data_json = json_decode(file_get_contents("php://input"), true);
 
-// Operadores ternarios para priorizar $_POST sobre el JSON crudo
-$user_input = !empty($_POST['usuario']) ? trim($_POST['usuario']) : (isset($data_json['usuario']) ? trim($data_json['usuario']) : "");
-$pass_input = !empty($_POST['password']) ? trim($_POST['password']) : (isset($data_json['password']) ? trim($data_json['password']) : "");
+// Evaluamos todas las posibles llaves usando el operador de coalescencia nula (??)
+$user_input = trim($_POST['usuario'] ?? $_POST['username'] ?? $_POST['user'] ?? $data_json['usuario'] ?? $data_json['username'] ?? $data_json['user'] ?? '');
+$pass_input = trim($_POST['password'] ?? $_POST['pass'] ?? $_POST['clave'] ?? $data_json['password'] ?? $data_json['pass'] ?? $data_json['clave'] ?? '');
 
 // Verificación estricta de variables vacías
 if (empty($user_input) || empty($pass_input)) {
