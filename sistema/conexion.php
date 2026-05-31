@@ -3,20 +3,25 @@
  * ═══════════════════════════════════════════════════════════════════
  *  CONEXIÓN Y AUTO-INSTALADOR MULTI-TABLA — Barbería Premium
  * ═══════════════════════════════════════════════════════════════════
+ *
+ *  Establece la conexión a la base de datos MySQL en producción (Railway)
+ *  usando las credenciales internas reales y verifica/construye la 
+ *  estructura completa de tablas automáticamente.
+ * ═══════════════════════════════════════════════════════════════════
  */
 
-// ─── 1. CREDENCIALES DE PRODUCCIÓN (RAILWAY) ──────────────────────
-$db_host = "mysql.railway.internal";
-$db_user = "root";
-// Coloca la contraseña proporcionada por Railway aquí:
-$db_password = "CFbVHwFQTWoAQWguiIHmPjRxmzwiLENb"; 
-$db_name = "railway";
-$db_port = "3306";
+// ─── 1. CREDENCIALES EXACTAS DE PRODUCCIÓN (RAILWAY) ──────────────
+$db_host     = "mysql.railway.internal";
+$db_user     = "root";
+$db_password = "CFbVHwFQTWoAQWguiIHmPjRxmzwiLENb";
+$db_name     = "railway";
+$db_port     = "3306";
 
 // ─── 2. ESTABLECER LA CONEXIÓN ────────────────────────────────────
 $conexion = mysqli_connect($db_host, $db_user, $db_password, $db_name, $db_port);
 
 if (!$conexion) {
+    // Si falla la conexión, registramos silenciosamente en los logs
     error_log("Error crítico de conexión a la BD: " . mysqli_connect_error());
     http_response_code(500);
     echo json_encode(["status" => "error", "message" => "Error interno de servidor al conectar a BD."]);
@@ -66,11 +71,12 @@ if (!mysqli_query($conexion, $sql_usuarios)) {
 }
 
 // ─── 5. INYECTOR INTELIGENTE DE ADMINISTRADOR POR DEFECTO ─────────
+// Verificamos si la tabla de usuarios está vacía
 $res_conteo = mysqli_query($conexion, "SELECT COUNT(*) AS total FROM `usuarios`");
 if ($res_conteo) {
     $fila = mysqli_fetch_assoc($res_conteo);
     
-    // Si la tabla está vacía, insertamos al admin
+    // Si el conteo es 0, inyectamos al usuario 'admin' automáticamente
     if ($fila['total'] == 0) {
         $hash_admin = password_hash('1234', PASSWORD_BCRYPT);
         
@@ -86,4 +92,6 @@ if ($res_conteo) {
 } else {
     error_log("Fallo al verificar el conteo de la tabla 'usuarios': " . mysqli_error($conexion));
 }
+
+// La conexión queda lista para ser utilizada por el archivo que la incluyó.
 ?>
