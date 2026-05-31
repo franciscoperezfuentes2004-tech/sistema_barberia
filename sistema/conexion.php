@@ -1,7 +1,7 @@
 <?php
 /**
  * ═══════════════════════════════════════════════════════════════════
- *  CONEXIÓN Y AUTO-INSTALADOR MULTI-TABLA — Barbería Premium
+ *  CONEXIÓN Y AUTO-INSTALADOR MULTI-TABLA (CON SEEDERS)
  * ═══════════════════════════════════════════════════════════════════
  */
 
@@ -116,7 +116,7 @@ $query_citas = "CREATE TABLE IF NOT EXISTS `citas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
 if (!mysqli_query($conexion, $query_citas)) error_log("Auto-Migración Fallida en 'citas': " . mysqli_error($conexion));
 
-// ─── 5. INYECTORES INTELIGENTES POR DEFECTO ─────────
+// ─── 5. INYECTORES INTELIGENTES POR DEFECTO (SEEDERS) ─────────
 
 // Inyector de Administrador
 $verificar_usuarios = mysqli_query($conexion, "SELECT COUNT(*) as total FROM `usuarios`");
@@ -129,12 +129,29 @@ if ($verificar_usuarios) {
     }
 }
 
-// Inyector de Ajustes Globales
+// Inyector de Ajustes Globales (Nombre y Logo)
 $verificar_ajustes = mysqli_query($conexion, "SELECT COUNT(*) as total FROM `ajustes`");
 if ($verificar_ajustes) {
     $fila = mysqli_fetch_assoc($verificar_ajustes);
     if ((int)$fila['total'] === 0) {
-        $insert_ajustes = "INSERT INTO `ajustes` (`nombre_empresa`, `logo`) VALUES ('Barbería Premium', NULL)";
+        // Sembrar con la ruta hacia un logo físico estándar de nuestro frontend
+        $insert_ajustes = "INSERT INTO `ajustes` (`nombre_empresa`, `logo`) VALUES ('Barbería Premium', '../assets/img/logo.png')";
         mysqli_query($conexion, $insert_ajustes);
+    }
+}
+
+// Inyector de Servicios Semilla
+$verificar_servicios = mysqli_query($conexion, "SELECT COUNT(*) as total FROM `servicios`");
+if ($verificar_servicios) {
+    $fila = mysqli_fetch_assoc($verificar_servicios);
+    if ((int)$fila['total'] === 0) {
+        $insert_servicio_1 = "INSERT INTO `servicios` (`nombre`, `descripcion`, `precio`, `duracion_min`, `imagen`) VALUES ('Corte Clásico', 'Corte de cabello estilizado para hombre', 150.00, 30, '../assets/img/corte.png')";
+        mysqli_query($conexion, $insert_servicio_1);
+        
+        $insert_servicio_2 = "INSERT INTO `servicios` (`nombre`, `descripcion`, `precio`, `duracion_min`, `imagen`) VALUES ('Afeitado Premium', 'Afeitado relajante con toalla caliente', 100.00, 20, '../assets/img/afeitado.png')";
+        mysqli_query($conexion, $insert_servicio_2);
+        
+        $insert_servicio_3 = "INSERT INTO `servicios` (`nombre`, `descripcion`, `precio`, `duracion_min`, `imagen`) VALUES ('Corte + Barba', 'Servicio completo VIP', 220.00, 50, '../assets/img/completo.png')";
+        mysqli_query($conexion, $insert_servicio_3);
     }
 }
