@@ -439,7 +439,7 @@
       const grid = document.getElementById('barbers-grid');
       grid.innerHTML = '<div style="color:var(--muted);font-size:.85rem">Cargando barberos...</div>';
       try {
-        const res = await fetch(`${API}/obtener_datos.php?tabla=usuarios&activos=1&fecha=${state.fecha}&duracion=${state.duracion}`);
+        const res = await fetch(`${API}/obtener_datos.php?tabla=barberos&activos=1&fecha=${state.fecha}&duracion=${state.duracion}`);
         const json = await res.json();
         renderBarberos(json.data || []);
       } catch(e) {

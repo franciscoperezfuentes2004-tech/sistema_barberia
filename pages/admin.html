@@ -1235,7 +1235,7 @@
         
         try {
           // 1. Fetch barberos
-          const resB = await fetch(`${API}/obtener_datos.php?tabla=usuarios`);
+          const resB = await fetch(`${API}/obtener_datos.php?tabla=barberos`);
           const jsonB = await resB.json();
           const barberos = jsonB.data || [];
           
@@ -1355,7 +1355,7 @@
       async function loadEquipo() {
         const tbody = document.getElementById('team-tbody');
         try {
-          const res = await fetch(`${API}/obtener_datos.php?tabla=usuarios`);
+          const res = await fetch(`${API}/obtener_datos.php?tabla=barberos`);
           const json = await res.json();
           barberosList = json.data || [];
           
@@ -1489,7 +1489,7 @@
           return;
         }
         try {
-          const res = await fetch(`${API}/eliminar.php?tabla=usuarios&id=${id}`, { method: 'DELETE' });
+          const res = await fetch(`${API}/eliminar.php?tabla=barberos&id=${id}`, { method: 'DELETE' });
           const json = await res.json();
           if (json.success) {
             showToast('🗑️ Barbero eliminado permanentemente');
@@ -1751,7 +1751,7 @@
 
       window.populateBarberSelect = async () => {
         try {
-          const res = await fetch(`${API}/obtener_datos.php?tabla=usuarios`);
+          const res = await fetch(`${API}/obtener_datos.php?tabla=barberos`);
           const json = await res.json();
           const select = document.getElementById('horario-barbero-select');
           if (!select) return;

@@ -1240,7 +1240,7 @@
         }
         
         // ── EQUIPO ──
-        const resTeam = await fetch('sistema/obtener_datos.php?tabla=usuarios&activos=1');
+        const resTeam = await fetch('sistema/obtener_datos.php?tabla=barberos&activos=1');
         const jsonTeam = await resTeam.json();
         if (jsonTeam.success && jsonTeam.data) {
           const teamContainer = document.querySelector('.team-wrap');
@@ -1486,7 +1486,7 @@
           if (d.stat_clientes) document.getElementById('stat-clientes').textContent = d.stat_clientes;
         }
 
-        const resBarberos = await fetch('sistema/obtener_datos.php?tabla=usuarios&activos=1');
+        const resBarberos = await fetch('sistema/obtener_datos.php?tabla=barberos&activos=1');
         const jsonBarberos = await resBarberos.json();
         if (jsonBarberos.success && jsonBarberos.data && jsonBarberos.data.length > 0) {
           const statBarberos = document.getElementById('stat-barberos');

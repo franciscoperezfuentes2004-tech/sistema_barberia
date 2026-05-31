@@ -69,7 +69,19 @@ if (!mysqli_query($conexion, $query_usuarios)) error_log("Auto-Migración Fallid
 $query_ajustes = "CREATE TABLE IF NOT EXISTS `ajustes` (
     `id` INT AUTO_INCREMENT,
     `nombre_empresa` VARCHAR(100) DEFAULT 'Barbería',
-    `logo` VARCHAR(255) NULL,
+    `logo` LONGTEXT NULL,
+    `site_phone` VARCHAR(20) NULL,
+    `site_email` VARCHAR(100) NULL,
+    `site_address` VARCHAR(255) NULL,
+    `site_map` TEXT NULL,
+    `site_instagram` VARCHAR(150) NULL,
+    `site_facebook` VARCHAR(150) NULL,
+    `site_tiktok` VARCHAR(150) NULL,
+    `site_slogan` VARCHAR(150) NULL,
+    `site_hero_desc` TEXT NULL,
+    `stat_exp` INT DEFAULT 5,
+    `stat_clientes` VARCHAR(50) DEFAULT '+1000',
+    `site_hero_bg` LONGTEXT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
 if (!mysqli_query($conexion, $query_ajustes)) error_log("Auto-Migración Fallida en 'ajustes': " . mysqli_error($conexion));
@@ -140,13 +152,19 @@ if ($verificar_usuarios) {
     }
 }
 
-// Inyector de Ajustes Globales (Nombre y Logo)
+// Inyector de Ajustes Globales (Todos los campos)
 $verificar_ajustes = mysqli_query($conexion, "SELECT COUNT(*) as total FROM `ajustes`");
 if ($verificar_ajustes) {
     $fila = mysqli_fetch_assoc($verificar_ajustes);
     if ((int)$fila['total'] === 0) {
-        // Sembrar con la ruta hacia un logo físico estándar de nuestro frontend
-        $insert_ajustes = "INSERT INTO `ajustes` (`nombre_empresa`, `logo`) VALUES ('Barbería Premium', '../assets/img/logo.png')";
+        $insert_ajustes = "INSERT INTO `ajustes` (
+            `nombre_empresa`, `logo`, `site_phone`, `site_email`, `site_address`, 
+            `site_slogan`, `site_hero_desc`, `stat_exp`, `stat_clientes`
+        ) VALUES (
+            'Barbería Premium', '../assets/img/logo.png', '+52 123 456 7890', 'contacto@barberiapremium.com', 
+            'Av. Principal 123, Ciudad', 'Estilo que habla por ti', 
+            'Experimenta el arte del cuidado masculino. Tradición y vanguardia.', 10, '+2000'
+        )";
         mysqli_query($conexion, $insert_ajustes);
     }
 }
