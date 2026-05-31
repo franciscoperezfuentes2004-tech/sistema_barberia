@@ -1,17 +1,17 @@
 <?php
 /**
  * ═══════════════════════════════════════════════════════════════════
- *  CONEXIÓN A BASE DE DATOS Y AUTO-INSTALADOR — Barbería Premium
+ *  CONEXIÓN Y AUTO-INSTALADOR MULTI-TABLA — Barbería Premium
  * ═══════════════════════════════════════════════════════════════════
  *
- *  Este script establece la conexión con la base de datos de producción
- *  en Railway. Además, incluye un motor de auto-migración que verifica
- *  y crea las tablas necesarias (como 'servicios') automáticamente.
+ *  Establece la conexión a la base de datos MySQL en producción (Railway)
+ *  y verifica/construye de forma silenciosa e inteligente la estructura 
+ *  completa de tablas, incluyendo la inyección del primer administrador.
  * ═══════════════════════════════════════════════════════════════════
  */
 
 // ─── 1. CREDENCIALES DE PRODUCCIÓN (RAILWAY) ──────────────────────
-$db_host = "junction.proxy.rlwy.net";
+$db_host = "mysql.railway.internal";
 $db_user = "root";
 // Coloca la contraseña proporcionada por Railway aquí:
 $db_password = "CFbVHwFQTWoAQWguiIHmPjRxmzwiLENb"; 
@@ -19,47 +19,92 @@ $db_name = "railway";
 $db_port = "3306";
 
 // ─── 2. ESTABLECER LA CONEXIÓN ────────────────────────────────────
-// mysqli_connect requiere el host, usuario, contraseña, base de datos y puerto
 $conexion = mysqli_connect($db_host, $db_user, $db_password, $db_name, $db_port);
 
-// Verificar si hubo un error crítico al conectar
 if (!$conexion) {
-    // Registramos el error en el log interno del servidor
+    // Si la conexión falla, se registra en el log sin mostrar errores feos en pantalla
     error_log("Error crítico de conexión a la BD: " . mysqli_connect_error());
-    // Terminamos la ejecución enviando un JSON para no romper el frontend
     http_response_code(500);
-    echo json_encode(["success" => false, "error" => "Error interno del servidor al conectar con la base de datos."]);
+    echo json_encode(["success" => false, "error" => "Error interno de servidor al conectar a BD."]);
     exit;
 }
 
 // ─── 3. CONFIGURAR EL CHARSET ─────────────────────────────────────
-// Asegura que las consultas manejen correctamente acentos, eñes y emojis
+// Fundamental para soportar acentos, eñes y emojis en toda la aplicación
 mysqli_set_charset($conexion, "utf8mb4");
 
-// ─── 4. MOTOR INTELIGENTE DE AUTO-CREACIÓN (AUTO-MIGRACIÓN) ───────
-// Esta consulta estructurada creará la tabla 'servicios' solo si no existe.
-$sql_crear_servicios = "
-    CREATE TABLE IF NOT EXISTS `servicios` (
-        `id` INT AUTO_INCREMENT PRIMARY KEY,
-        `nombre` VARCHAR(100) NOT NULL,
-        `descripcion` TEXT DEFAULT NULL,
-        `precio` DECIMAL(10,2) NOT NULL,
-        `duracion_min` INT NOT NULL,
-        `imagen` VARCHAR(255) DEFAULT NULL,
-        `activo` TINYINT(1) NOT NULL DEFAULT 1,
-        `creado_en` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-";
+// ─── 4. MOTOR MULTI-TABLA (AUTO-MIGRACIÓN SILENCIOSA) ─────────────
+// Ejecutamos las creaciones de forma individual para aislar posibles errores
 
-// Ejecutamos la consulta silenciosamente
-$resultado_creacion = mysqli_query($conexion, $sql_crear_servicios);
+// A) Tabla 'servicios'
+$sql_servicios = "CREATE TABLE IF NOT EXISTS `servicios` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `nombre` VARCHAR(150) NOT NULL,
+    `descripcion` TEXT DEFAULT NULL,
+    `precio` DECIMAL(10,2) NOT NULL,
+    `duracion_min` INT NOT NULL,
+    `imagen` VARCHAR(255) DEFAULT NULL,
+    `activo` TINYINT(1) DEFAULT 1,
+    `creado_en` DATETIME DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
 
-// Si falla la creación, no interrumpimos al usuario, pero lo registramos en el log
-if (!$resultado_creacion) {
-    // Usamos error_log() para que los desarrolladores puedan depurar problemas de permisos o sintaxis
-    error_log("Auto-Migración Fallida en la tabla 'servicios': " . mysqli_error($conexion));
+if (!mysqli_query($conexion, $sql_servicios)) {
+    error_log("Auto-Migración Fallida en 'servicios': " . mysqli_error($conexion));
 }
 
-// Opcionalmente, puedes añadir más tablas aquí siguiendo el mismo patrón de CREATE TABLE IF NOT EXISTS.
-// La conexión ($conexion) ya queda lista y disponible para los demás scripts que incluyan este archivo.
+// B) Tabla 'galeria'
+$sql_galeria = "CREATE TABLE IF NOT EXISTS `galeria` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `ruta_imagen` VARCHAR(255) NOT NULL,
+    `titulo` VARCHAR(100) DEFAULT NULL,
+    `creado_en` DATETIME DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
+
+if (!mysqli_query($conexion, $sql_galeria)) {
+    error_log("Auto-Migración Fallida en 'galeria': " . mysqli_error($conexion));
+}
+
+// C) Tabla 'usuarios' (Para panel de control y administradores)
+$sql_usuarios = "CREATE TABLE IF NOT EXISTS `usuarios` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `usuario` VARCHAR(50) UNIQUE NOT NULL,
+    `password` VARCHAR(255) NOT NULL,
+    `rol` VARCHAR(20) DEFAULT 'admin',
+    `creado_en` DATETIME DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
+
+if (!mysqli_query($conexion, $sql_usuarios)) {
+    error_log("Auto-Migración Fallida en 'usuarios': " . mysqli_error($conexion));
+}
+
+// ─── 5. INYECTOR INTELIGENTE DE ADMINISTRADOR POR DEFECTO ─────────
+// Una vez creada la tabla de usuarios, verificamos si está vacía.
+// Esto permite crear un admin inicial para que el comprador pueda entrar al sistema inmediatamente.
+
+$res_conteo = mysqli_query($conexion, "SELECT COUNT(*) AS total FROM `usuarios`");
+if ($res_conteo) {
+    $fila = mysqli_fetch_assoc($res_conteo);
+    
+    // Si el total de usuarios es 0 (la tabla acaba de crearse limpia)
+    if ($fila['total'] == 0) {
+        
+        // Generamos un hash ultra-seguro usando el estándar de PHP BCRYPT
+        // La contraseña por defecto será "1234"
+        $hash_admin = password_hash('1234', PASSWORD_BCRYPT);
+        
+        $sql_admin = "INSERT INTO `usuarios` (`usuario`, `password`, `rol`) 
+                      VALUES ('admin', '$hash_admin', 'admin')";
+                      
+        if (!mysqli_query($conexion, $sql_admin)) {
+            error_log("Fallo al inyectar el administrador por defecto: " . mysqli_error($conexion));
+        } else {
+            // (Opcional) Registrar que la semilla inicial se plantó correctamente
+            error_log("Admin por defecto (usuario: admin, pass: 1234) inyectado exitosamente.");
+        }
+    }
+} else {
+    error_log("Fallo al verificar el conteo de la tabla 'usuarios': " . mysqli_error($conexion));
+}
+
+// Fin del archivo. La conexión queda abierta y lista para ser usada por otros scripts.
 ?>
