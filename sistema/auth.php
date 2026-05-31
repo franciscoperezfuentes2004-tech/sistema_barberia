@@ -1,8 +1,7 @@
 <?php
-// Control del buffer para evitar que basuras (warnings o espacios) rompan la salida
+// Control del buffer para evitar que advertencias rompan el JSON
 ob_start();
 
-// Configuración obligatoria para responder JSON limpio
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
@@ -14,29 +13,17 @@ if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
     exit;
 }
 
-// Incluimos la conexión, que activa el motor inteligente
+// Incluimos la conexión que detona la instalación si no existe
 require_once __DIR__ . "/conexion.php";
 
 // LECTURA HÍBRIDA (Capturamos JSON crudo de fetch o $_POST tradicional)
 $data_json = json_decode(file_get_contents("php://input"), true);
 
-// Evaluar variable usuario
-$user_input = "";
-if (isset($_POST['usuario']) && trim($_POST['usuario']) !== "") {
-    $user_input = trim($_POST['usuario']);
-} elseif (is_array($data_json) && isset($data_json['usuario']) && trim($data_json['usuario']) !== "") {
-    $user_input = trim($data_json['usuario']);
-}
+// Operadores ternarios para priorizar $_POST sobre el JSON crudo
+$user_input = !empty($_POST['usuario']) ? trim($_POST['usuario']) : (isset($data_json['usuario']) ? trim($data_json['usuario']) : "");
+$pass_input = !empty($_POST['password']) ? trim($_POST['password']) : (isset($data_json['password']) ? trim($data_json['password']) : "");
 
-// Evaluar variable password
-$pass_input = "";
-if (isset($_POST['password']) && trim($_POST['password']) !== "") {
-    $pass_input = trim($_POST['password']);
-} elseif (is_array($data_json) && isset($data_json['password']) && trim($data_json['password']) !== "") {
-    $pass_input = trim($data_json['password']);
-}
-
-// Verificamos si quedaron vacíos
+// Verificación estricta de variables vacías
 if (empty($user_input) || empty($pass_input)) {
     ob_clean();
     http_response_code(400);
@@ -61,7 +48,7 @@ mysqli_stmt_execute($stmt);
 $resultado = mysqli_stmt_get_result($stmt);
 
 if ($fila = mysqli_fetch_assoc($resultado)) {
-    // Verificar si el password ingresado coincide con el hash en BCRYPT
+    // Verificamos el hash con password_verify
     if (password_verify($pass_input, $fila['password'])) {
         session_start();
         $_SESSION['usuario_id']  = $fila['id'];

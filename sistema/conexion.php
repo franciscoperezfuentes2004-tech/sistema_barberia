@@ -72,7 +72,6 @@ if (!mysqli_query($conexion, $query_usuarios)) {
 }
 
 // ─── 5. INYECTOR INTELIGENTE DE ADMINISTRADOR POR DEFECTO ─────────
-// Verificar de forma limpia si la tabla usuarios no tiene registros
 $verificar = mysqli_query($conexion, "SELECT COUNT(*) as total FROM `usuarios`");
 if ($verificar) {
     $fila = mysqli_fetch_assoc($verificar);
@@ -83,4 +82,3 @@ if ($verificar) {
         mysqli_query($conexion, $insert_sql);
     }
 }
-// Sin espacios ni cierres de PHP para evitar romper JSON.
