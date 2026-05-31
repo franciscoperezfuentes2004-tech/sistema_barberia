@@ -1785,7 +1785,15 @@
           const res = await fetch(`${API}/obtener_datos.php?tabla=horarios&barbero_id=${barberoId}`);
           const json = await res.json();
           if (json.success) {
-            renderScheduleEditor('barber-schedule-container', json.data, 'brb');
+            let scheduleData = json.data;
+            if (!scheduleData || scheduleData.length === 0) {
+              const resGlob = await fetch(`${API}/obtener_datos.php?tabla=horarios&global=1`);
+              const jsonGlob = await resGlob.json();
+              if (jsonGlob.success && jsonGlob.data && jsonGlob.data.length > 0) {
+                scheduleData = jsonGlob.data;
+              }
+            }
+            renderScheduleEditor('barber-schedule-container', scheduleData, 'brb');
             containerWrapper.style.display = 'block';
             
             // Re-añadir el botón de guardado que fue sobreescrito por renderScheduleEditor
