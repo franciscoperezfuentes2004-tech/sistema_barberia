@@ -1212,7 +1212,7 @@
           if (svcContainer) {
             svcContainer.innerHTML = '';
             // Solo mostrar activos
-            const activos = jsonSvc.data.filter(s => s.activo === 1);
+            const activos = jsonSvc.data.filter(s => s.activo == 1);
             activos.forEach((svc, idx) => {
               const delay = 0.05 * (idx + 1);
               const el = document.createElement('article');
@@ -1389,7 +1389,7 @@
             const isToday = dia.dia_semana === hoy;
             let statusHtml = '';
             
-            if (dia.activo === 1) {
+            if (dia.activo == 1) {
               const hIn = dia.hora_inicio.substring(0, 5);
               const hOut = dia.hora_fin.substring(0, 5);
               statusHtml = `

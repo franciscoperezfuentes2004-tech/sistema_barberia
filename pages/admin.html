@@ -1361,17 +1361,18 @@
           
           let html = '';
           barberosList.forEach(b => {
-            const statusClass = b.activo === 1 ? 'status-active' : 'status-inactive';
-            const statusText = b.activo === 1 ? 'Activo' : 'Inactivo';
+            const statusClass = b.activo == 1 ? 'status-active' : 'status-inactive';
+            const statusText = b.activo == 1 ? 'Activo' : 'Inactivo';
+            const fotoSrc = b.foto && b.foto.startsWith('data:') ? b.foto : (b.foto ? '../' + b.foto : '');
             
             html += `
               <tr>
                 <td>
                   <div class="user-cell">
-                    <img src="../${b.foto}" class="col-avatar" style="border-radius:50%" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' viewBox=\\'0 0 100 100\\'%3E%3Crect width=\\'100\\' height=\\'100\\' fill=\\'%23181818\\'/%3E%3C/svg%3E'">
+                    <img src="${fotoSrc}" class="col-avatar" style="border-radius:50%" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' viewBox=\\'0 0 100 100\\'%3E%3Crect width=\\'100\\' height=\\'100\\' fill=\\'%23181818\\'/%3E%3C/svg%3E'">
                     <div>
                       <div style="font-weight:600;color:var(--bright)">${b.nombre} ${b.apellido}</div>
-                      <div style="font-size:.75rem;color:var(--muted)">Usuario: ${b.username || 'N/A'}</div>
+                      <div style="font-size:.75rem;color:var(--muted)">Usuario: ${b.usuario || 'N/A'}</div>
                     </div>
                   </div>
                 </td>
@@ -1400,20 +1401,20 @@
 
         if (id) {
           title.textContent = 'Editar Barbero';
-          const b = barberosList.find(x => x.id === id);
+          const b = barberosList.find(x => x.id == id);
           document.getElementById('b-id').value = b.id;
           document.getElementById('b-nombre').value = b.nombre;
           document.getElementById('b-apellido').value = b.apellido;
           document.getElementById('b-foto').value = '';
           delete window.b64Files['b-foto'];
           document.getElementById('b-esp').value = b.especialidad || '';
-          document.getElementById('b-username').value = b.username || '';
+          document.getElementById('b-username').value = b.usuario || '';
           document.getElementById('help-username').style.display = 'none';
           document.getElementById('b-password').value = '';
           document.getElementById('b-password').required = false;
           document.getElementById('help-password').style.display = 'block';
           document.getElementById('group-activo').style.display = 'flex';
-          document.getElementById('b-activo').checked = (b.activo === 1);
+          document.getElementById('b-activo').checked = (b.activo == 1);
         } else {
           title.textContent = 'Nuevo Barbero';
           document.getElementById('b-id').value = '';
@@ -1521,7 +1522,7 @@
 
           let html = '';
           serviciosList.forEach(s => {
-            const imgSrc = s.imagen_url || (s.imagen ? `../${s.imagen}` : '../assets/img/hero-bg.png');
+            const imgSrc = s.imagen_b64 || s.imagen_url || (s.imagen ? `../${s.imagen}` : '../assets/img/hero-bg.png');
             const estadoHtml = s.activo ? '<span style="color:var(--green)">Activo</span>' : '<span style="color:var(--muted)">Inactivo</span>';
             
             html += `

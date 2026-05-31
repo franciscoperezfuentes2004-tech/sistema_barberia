@@ -86,6 +86,31 @@ $query_ajustes = "CREATE TABLE IF NOT EXISTS `ajustes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
 if (!mysqli_query($conexion, $query_ajustes)) error_log("Auto-Migración Fallida en 'ajustes': " . mysqli_error($conexion));
 
+// Auto-migración de columnas faltantes en 'ajustes' (para tablas creadas en versiones anteriores)
+$columnas_ajustes = [
+    "ADD COLUMN `site_phone` VARCHAR(20) NULL",
+    "ADD COLUMN `site_email` VARCHAR(100) NULL",
+    "ADD COLUMN `site_address` VARCHAR(255) NULL",
+    "ADD COLUMN `site_map` TEXT NULL",
+    "ADD COLUMN `site_instagram` VARCHAR(150) NULL",
+    "ADD COLUMN `site_facebook` VARCHAR(150) NULL",
+    "ADD COLUMN `site_tiktok` VARCHAR(150) NULL",
+    "ADD COLUMN `site_slogan` VARCHAR(150) NULL",
+    "ADD COLUMN `site_hero_desc` TEXT NULL",
+    "ADD COLUMN `stat_exp` INT DEFAULT 5",
+    "ADD COLUMN `stat_clientes` VARCHAR(50) DEFAULT '+1000'",
+    "ADD COLUMN `site_hero_bg` LONGTEXT NULL",
+    "MODIFY COLUMN `logo` LONGTEXT NULL"
+];
+foreach ($columnas_ajustes as $alter) {
+    @mysqli_query($conexion, "ALTER TABLE `ajustes` $alter");
+}
+
+// Auto-migración de columna 'activo' en 'servicios' (para tablas creadas sin ella)
+@mysqli_query($conexion, "ALTER TABLE `servicios` ADD COLUMN `activo` TINYINT(1) DEFAULT 1");
+// Cambiar campo imagen de servicios a LONGTEXT para soportar Base64
+@mysqli_query($conexion, "ALTER TABLE `servicios` MODIFY COLUMN `imagen` LONGTEXT NULL");
+
 // Tabla Barberos
 $query_barberos = "CREATE TABLE IF NOT EXISTS `barberos` (
     `id` INT AUTO_INCREMENT,

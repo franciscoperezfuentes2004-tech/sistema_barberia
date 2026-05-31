@@ -81,8 +81,43 @@ mysqli_close($conexion);
 // 3. Vaciado del buffer final
 ob_clean();
 
-// 4. Retornamos el array envuelto en success y data para que el Frontend pueda desenvolverlo correctamente
+// 4. Formateo especial según la tabla
+$output = $datos;
+
+// Para 'ajustes': el frontend espera un objeto plano (no array) con aliases
+if ($tabla === 'ajustes' && count($datos) > 0) {
+    $row = $datos[0];
+    $output = [
+        'site_name'      => $row['nombre_empresa'] ?? '',
+        'site_logo'      => $row['logo'] ?? '',
+        'site_phone'     => $row['site_phone'] ?? '',
+        'site_email'     => $row['site_email'] ?? '',
+        'site_address'   => $row['site_address'] ?? '',
+        'site_map'       => $row['site_map'] ?? '',
+        'site_instagram' => $row['site_instagram'] ?? '',
+        'site_facebook'  => $row['site_facebook'] ?? '',
+        'site_tiktok'    => $row['site_tiktok'] ?? '',
+        'site_slogan'    => $row['site_slogan'] ?? '',
+        'site_hero_desc' => $row['site_hero_desc'] ?? '',
+        'stat_exp'       => $row['stat_exp'] ?? '',
+        'stat_clientes'  => $row['stat_clientes'] ?? '',
+        'site_hero_bg'   => $row['site_hero_bg'] ?? ''
+    ];
+}
+
+// Para 'servicios': aliasear el campo imagen para que el frontend lo encuentre
+if ($tabla === 'servicios') {
+    foreach ($output as &$svc) {
+        if (!empty($svc['imagen']) && strpos($svc['imagen'], 'data:') === 0) {
+            $svc['imagen_b64'] = $svc['imagen'];
+        } else {
+            $svc['imagen_url'] = $svc['imagen'] ?? '';
+        }
+    }
+    unset($svc);
+}
+
 echo json_encode([
     "success" => true,
-    "data"    => $datos
+    "data"    => $output
 ], JSON_UNESCAPED_UNICODE);
