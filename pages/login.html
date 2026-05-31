@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0F0F0F">
+  <title>Iniciar Sesión — Barbería Premium</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ── Reset & Base ──────────────────────────────── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --gold: #C9A84C;
+      --gold-l: #E8C97A;
+      --gold-d: #9A7B32;
+      --bg: #0F0F0F;
+      --s1: #181818;
+      --s2: #222;
+      --s3: #2A2A2A;
+      --border: #333;
+      --muted: #888;
+      --base: #D4D4D4;
+      --bright: #F5F0E8;
+      --green: #27AE60;
+      --red: #E74C3C;
+      --serif: 'Playfair Display', serif;
+      --sans: 'Inter', system-ui, sans-serif;
+    }
+
+    html { height: 100%; }
+
+    body {
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+      font-family: var(--sans);
+      color: var(--base);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* ── Noise Texture Overlay ─────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      opacity: 0.035;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 200px 200px;
+    }
+
+    /* ── Ambient Glow ──────────────────────────────── */
+    body::after {
+      content: '';
+      position: fixed;
+      top: -40%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Fade-in Animations ────────────────────────── */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* ── Main Container ────────────────────────────── */
+    .login-container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 480px;
+      padding: 40px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    /* ── Barber Pole ───────────────────────────────── */
+    .barber-pole-wrapper {
+      width: 28px;
+      height: 90px;
+      margin-bottom: 28px;
+      position: relative;
+      animation: fadeInUp 0.7s ease-out both;
+      animation-delay: 0.1s;
+    }
+
+    .barber-pole {
+      width: 100%;
+      height: 100%;
+      border-radius: 14px;
+      overflow: hidden;
+      position: relative;
+      background: #E8E8E8;
+      box-shadow:
+        -3px 0 6px rgba(0,0,0,0.4),
+        3px 0 6px rgba(0,0,0,0.4),
+        inset -4px 0 6px rgba(0,0,0,0.15),
+        inset 4px 0 6px rgba(0,0,0,0.15),
+        0 0 20px rgba(201,168,76,0.15);
+    }
+
+    .barber-pole::before {
+      content: '';
+      position: absolute;
+      top: -100%;
+      left: -50%;
+      width: 200%;
+      height: 300%;
+      background: repeating-linear-gradient(
+        -45deg,
+        #C62828 0px,
+        #C62828 8px,
+        #E8E8E8 8px,
+        #E8E8E8 16px,
+        #1565C0 16px,
+        #1565C0 24px,
+        #E8E8E8 24px,
+        #E8E8E8 32px
+      );
+      animation: spinPole 2s linear infinite;
+    }
+
+    /* Cylindrical highlight */
+    .barber-pole::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 14px;
+      background: linear-gradient(
+        90deg,
+        rgba(0,0,0,0.2) 0%,
+        rgba(255,255,255,0.15) 35%,
+        rgba(255,255,255,0.25) 50%,
+        rgba(255,255,255,0.15) 65%,
+        rgba(0,0,0,0.2) 100%
+      );
+      pointer-events: none;
+    }
+
+    /* Top & bottom caps */
+    .barber-pole-wrapper::before,
+    .barber-pole-wrapper::after {
+      content: '';
+      position: absolute;
+      left: -3px;
+      width: calc(100% + 6px);
+      height: 10px;
+      border-radius: 4px;
+      background: linear-gradient(180deg, var(--gold-l), var(--gold), var(--gold-d));
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+      z-index: 2;
+    }
+
+    .barber-pole-wrapper::before { top: -2px; }
+    .barber-pole-wrapper::after  { bottom: -2px; }
+
+    @keyframes spinPole {
+      from { transform: translateY(0); }
+      to   { transform: translateY(45.25483px); }
+    }
+
+    /* ── Logo ──────────────────────────────────────── */
+    .logo {
+      width: 72px;
+      height: 72px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      background: linear-gradient(135deg, var(--gold-d), var(--gold), var(--gold-l), var(--gold));
+      background-size: 200% 200%;
+      animation: fadeInUp 0.7s ease-out both, shimmerLogo 4s ease-in-out infinite;
+      animation-delay: 0.2s, 0s;
+      box-shadow:
+        0 4px 24px rgba(201,168,76,0.25),
+        0 1px 3px rgba(0,0,0,0.4),
+        inset 0 1px 0 rgba(255,255,255,0.15);
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    @keyframes shimmerLogo {
+      0%, 100% { background-position: 0% 50%; }
+      50%      { background-position: 100% 50%; }
+    }
+
+    /* ── Title & Subtitle ──────────────────────────── */
+    .title {
+      font-family: var(--serif);
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--gold-l), var(--gold), var(--gold-d));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 6px;
+      animation: fadeInUp 0.7s ease-out both;
+      animation-delay: 0.3s;
+      letter-spacing: 0.5px;
+    }
+
+    .subtitle {
+      font-size: 0.8rem;
+      color: var(--muted);
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      font-weight: 400;
+      margin-bottom: 36px;
+      animation: fadeInUp 0.7s ease-out both;
+      animation-delay: 0.4s;
+    }
+
+    /* ── Form ──────────────────────────────────────── */
+    .login-form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      animation: fadeInUp 0.7s ease-out both;
+      animation-delay: 0.5s;
+    }
+
+    /* ── Input Group ───────────────────────────────── */
+    .input-group {
+      position: relative;
+      width: 100%;
+    }
+
+    .input-group .icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      color: var(--muted);
+      pointer-events: none;
+      transition: color 0.3s ease;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 16px 16px 16px 48px;
+      background: var(--s1);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      color: var(--bright);
+      font-family: var(--sans);
+      font-size: 0.95rem;
+      font-weight: 400;
+      outline: none;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    }
+
+    .input-group input::placeholder {
+      color: var(--muted);
+      font-weight: 300;
+    }
+
+    .input-group input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(201,168,76,0.12), 0 0 20px rgba(201,168,76,0.06);
+      background: #1a1a1a;
+    }
+
+    .input-group input:focus ~ .icon {
+      color: var(--gold);
+    }
+
+    /* ── Password Toggle ───────────────────────────── */
+    .toggle-password {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--muted);
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.3s ease;
+      border-radius: 6px;
+    }
+
+    .toggle-password:hover {
+      color: var(--gold);
+    }
+
+    .toggle-password svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .toggle-password .eye-off { display: none; }
+    .toggle-password.active .eye-on { display: none; }
+    .toggle-password.active .eye-off { display: block; }
+
+    /* ── Submit Button ─────────────────────────────── */
+    .btn-submit {
+      width: 100%;
+      padding: 16px;
+      margin-top: 8px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--gold-d), var(--gold), var(--gold-l));
+      background-size: 200% 200%;
+      color: #0F0F0F;
+      font-family: var(--sans);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background-position 0.4s ease;
+      box-shadow: 0 4px 20px rgba(201,168,76,0.25);
+      letter-spacing: 0.3px;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 28px rgba(201,168,76,0.35);
+      background-position: 100% 50%;
+    }
+
+    .btn-submit:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 12px rgba(201,168,76,0.2);
+    }
+
+    /* Shine sweep on hover */
+    .btn-submit::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,0.25),
+        transparent
+      );
+      transition: none;
+      pointer-events: none;
+    }
+
+    .btn-submit:hover::after {
+      animation: shineBtn 0.7s ease forwards;
+    }
+
+    @keyframes shineBtn {
+      from { left: -100%; }
+      to   { left: 150%; }
+    }
+
+    /* Loading State */
+    .btn-submit.loading {
+      pointer-events: none;
+      opacity: 0.85;
+    }
+
+    .btn-submit .btn-text { transition: opacity 0.2s ease; }
+    .btn-submit.loading .btn-text { opacity: 0; }
+
+    .btn-submit .spinner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 22px;
+      height: 22px;
+      border: 2.5px solid rgba(15,15,15,0.25);
+      border-top-color: #0F0F0F;
+      border-radius: 50%;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      animation: spin 0.7s linear infinite;
+    }
+
+    .btn-submit.loading .spinner { opacity: 1; }
+
+    @keyframes spin {
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    /* ── Error Message ─────────────────────────────── */
+    .error-message {
+      width: 100%;
+      padding: 14px 16px;
+      background: rgba(231,76,60,0.08);
+      border: 1.5px solid var(--red);
+      border-radius: 12px;
+      color: var(--red);
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-align: center;
+      display: none;
+      line-height: 1.4;
+    }
+
+    .error-message.visible {
+      display: block;
+      animation: shakeIn 0.5s ease-out;
+    }
+
+    @keyframes shakeIn {
+      0%   { opacity: 0; transform: translateX(0); }
+      15%  { opacity: 1; transform: translateX(-10px); }
+      30%  { transform: translateX(8px); }
+      45%  { transform: translateX(-6px); }
+      60%  { transform: translateX(4px); }
+      75%  { transform: translateX(-2px); }
+      100% { transform: translateX(0); }
+    }
+
+    /* ── Divider ───────────────────────────────────── */
+    .divider {
+      width: 40px;
+      height: 1.5px;
+      background: linear-gradient(90deg, transparent, var(--gold-d), transparent);
+      margin: 32px 0 20px;
+      border-radius: 1px;
+      animation: fadeInUp 0.7s ease-out both;
+      animation-delay: 0.6s;
+    }
+
+    /* ── Footer ────────────────────────────────────── */
+    .footer {
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+      opacity: 0.6;
+      text-align: center;
+      animation: fadeInUp 0.7s ease-out both;
+      animation-delay: 0.7s;
+    }
+
+    /* ── Responsive ────────────────────────────────── */
+    @media (max-width: 480px) {
+      .login-container {
+        padding: 32px 20px;
+      }
+
+      .title {
+        font-size: 1.75rem;
+      }
+    }
+
+    @media (min-height: 800px) {
+      body {
+        padding: 40px 0;
+      }
+    }
+
+    /* ── Selection Color ───────────────────────────── */
+    ::selection {
+      background: rgba(201,168,76,0.3);
+      color: var(--bright);
+    }
+
+    /* ── Autofill Styles ───────────────────────────── */
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus {
+      -webkit-box-shadow: 0 0 0 100px var(--s1) inset !important;
+      -webkit-text-fill-color: var(--bright) !important;
+      caret-color: var(--bright);
+      border-color: var(--border);
+      transition: background-color 5000s ease-in-out 0s;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-container">
+
+    <!-- Barber Pole -->
+    <div class="barber-pole-wrapper" aria-hidden="true">
+      <div class="barber-pole"></div>
+    </div>
+
+    <!-- Logo -->
+    <div class="logo" aria-hidden="true">✂️</div>
+
+    <!-- Title -->
+    <h1 class="title">Barbería</h1>
+    <p class="subtitle">Portal del Equipo</p>
+
+    <!-- Login Form -->
+    <form class="login-form" id="loginForm" autocomplete="on" novalidate>
+
+      <!-- Error Message -->
+      <div class="error-message" id="errorMessage" role="alert"></div>
+
+      <!-- Username -->
+      <div class="input-group">
+        <input
+          type="text"
+          id="username"
+          name="username"
+          placeholder="Usuario"
+          autocomplete="username"
+          required
+          spellcheck="false"
+        >
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+      </div>
+
+      <!-- Password -->
+      <div class="input-group">
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Contraseña"
+          autocomplete="current-password"
+          required
+        >
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+        <button type="button" class="toggle-password" id="togglePassword" aria-label="Mostrar contraseña" tabindex="-1">
+          <!-- Eye On -->
+          <svg class="eye-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+          <!-- Eye Off -->
+          <svg class="eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+            <line x1="1" y1="1" x2="23" y2="23"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="btn-submit" id="btnSubmit">
+        <span class="btn-text">Iniciar Sesión</span>
+        <span class="spinner"></span>
+      </button>
+    </form>
+
+    <!-- Divider & Footer -->
+    <div class="divider"></div>
+    <p class="footer">© 2026 Barbería Premium · Panel de Staff</p>
+
+  </div>
+
+  <script>
+    (() => {
+      // ── API Base URL ───────────────────────────
+      const API = '../sistema';
+
+      // ── Dynamic Branding ───────────────────────────
+      async function loadBranding() {
+        try {
+          const res = await fetch(`${API}/obtener_datos.php?tabla=ajustes`);
+          const json = await res.json();
+          if (json.success && json.data) {
+            const data = json.data;
+            if (data.site_name) {
+              document.title = `Iniciar Sesión — ${data.site_name}`;
+              const titleEl = document.querySelector('.title');
+              if (titleEl) titleEl.textContent = data.site_name;
+              const footerEl = document.querySelector('.footer');
+              if (footerEl) footerEl.textContent = `© ${new Date().getFullYear()} ${data.site_name} · Panel de Staff`;
+            }
+            const logoContainer = document.querySelector('.logo');
+            if (logoContainer) {
+              const src = data.site_logo || '../assets/img/logo.png';
+              logoContainer.innerHTML = `<img src="${src}" alt="Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;" onerror="this.src='../assets/img/logo.png'">`;
+              logoContainer.style.background = 'transparent';
+            }
+          }
+        } catch (e) {
+          console.error('Error loading branding', e);
+        }
+      }
+      loadBranding();
+
+      // ── DOM Elements ──────────────────────────────
+      const form         = document.getElementById('loginForm');
+      const usernameInput = document.getElementById('username');
+      const passwordInput = document.getElementById('password');
+      const btnSubmit     = document.getElementById('btnSubmit');
+      const errorMessage  = document.getElementById('errorMessage');
+      const toggleBtn     = document.getElementById('togglePassword');
+
+      // ── Password Toggle ───────────────────────────
+      toggleBtn.addEventListener('click', () => {
+        const isPassword = passwordInput.type === 'password';
+        passwordInput.type = isPassword ? 'text' : 'password';
+        toggleBtn.classList.toggle('active', isPassword);
+        toggleBtn.setAttribute('aria-label', isPassword ? 'Ocultar contraseña' : 'Mostrar contraseña');
+      });
+
+      // ── Show Error ────────────────────────────────
+      function showError(message) {
+        errorMessage.textContent = message;
+        errorMessage.classList.remove('visible');
+        // Force reflow to restart animation
+        void errorMessage.offsetWidth;
+        errorMessage.classList.add('visible');
+      }
+
+      function hideError() {
+        errorMessage.classList.remove('visible');
+      }
+
+      // ── Set Loading State ─────────────────────────
+      function setLoading(loading) {
+        if (loading) {
+          btnSubmit.classList.add('loading');
+          btnSubmit.disabled = true;
+        } else {
+          btnSubmit.classList.remove('loading');
+          btnSubmit.disabled = false;
+        }
+      }
+
+      // ── Form Submit ───────────────────────────────
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        hideError();
+
+        const username = usernameInput.value.trim();
+        const password = passwordInput.value;
+
+        // Basic validation
+        if (!username || !password) {
+          showError('Por favor, ingresa tu usuario y contraseña.');
+          return;
+        }
+
+        setLoading(true);
+
+        try {
+          const response = await fetch(`${API}/auth.php`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+          });
+
+          const json = await response.json();
+
+          if (json.success === true) {
+            // Guardar el Token de Seguridad
+            localStorage.setItem('mi_token_jwt', json.token);
+            
+            // Successful login — redirect based on role
+            sessionStorage.setItem('tab_auth', 'true');
+            const rol = json.user?.rol;
+            if (rol === 'barbero') {
+              window.location.href = 'staff.html';
+            } else if (rol === 'admin') {
+              window.location.href = 'admin.html';
+            } else {
+              // Fallback redirect
+              window.location.href = 'staff.html';
+            }
+          } else {
+            // API returned an error
+            const msg = json.message || json.error || 'Credenciales incorrectas. Intenta de nuevo.';
+            showError(msg);
+            setLoading(false);
+          }
+        } catch (err) {
+          showError('Error de conexión. Verifica tu red e intenta de nuevo.');
+          setLoading(false);
+        }
+      });
+
+      // ── Focus first input on load ─────────────────
+      window.addEventListener('DOMContentLoaded', () => {
+        usernameInput.focus();
+      });
+    })();
+  </script>
+
+</body>
+</html>
+
