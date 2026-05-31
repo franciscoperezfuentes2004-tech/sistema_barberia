@@ -81,5 +81,8 @@ mysqli_close($conexion);
 // 3. Vaciado del buffer final
 ob_clean();
 
-// 4. Retornamos estrictamente el array directo con json_encode
-echo json_encode($datos, JSON_UNESCAPED_UNICODE);
+// 4. Retornamos el array envuelto en success y data para que el Frontend pueda desenvolverlo correctamente
+echo json_encode([
+    "success" => true,
+    "data"    => $datos
+], JSON_UNESCAPED_UNICODE);

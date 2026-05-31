@@ -25,7 +25,7 @@ $hora_fin    = trim($_POST['hora_fin'] ?? $data_json['hora_fin'] ?? '');
 if ($barbero_id === '' || $dia_semana === '' || empty($hora_inicio) || empty($hora_fin)) {
     ob_clean();
     http_response_code(400);
-    echo json_encode(["status" => "error", "message" => "Todos los campos son requeridos para el horario."]);
+    echo json_encode(["success" => false, "message" => "Todos los campos son requeridos para el horario."]);
     exit;
 }
 
@@ -36,7 +36,7 @@ if (!$stmt) {
     error_log("Error al preparar guardar_horario: " . mysqli_error($conexion));
     ob_clean();
     http_response_code(500);
-    echo json_encode(["status" => "error", "message" => "Error interno al preparar la consulta."]);
+    echo json_encode(["success" => false, "message" => "Error interno al preparar la consulta."]);
     exit;
 }
 
@@ -45,12 +45,12 @@ mysqli_stmt_bind_param($stmt, "iiss", $barbero_id, $dia_semana, $hora_inicio, $h
 if (mysqli_stmt_execute($stmt)) {
     ob_clean();
     http_response_code(200);
-    echo json_encode(["status" => "success", "message" => "Horario guardado exitosamente."]);
+    echo json_encode(["success" => true, "message" => "Horario guardado exitosamente."]);
 } else {
     error_log("Error al ejecutar guardar_horario: " . mysqli_stmt_error($stmt));
     ob_clean();
     http_response_code(500);
-    echo json_encode(["status" => "error", "message" => "No se pudo guardar el horario."]);
+    echo json_encode(["success" => false, "message" => "No se pudo guardar el horario."]);
 }
 
 mysqli_stmt_close($stmt);

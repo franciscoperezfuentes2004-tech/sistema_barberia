@@ -26,7 +26,7 @@ $imagen       = trim($_POST['imagen'] ?? $data_json['imagen'] ?? '');
 if (empty($nombre) || empty($precio) || empty($duracion_min)) {
     ob_clean();
     http_response_code(400);
-    echo json_encode(["status" => "error", "message" => "Nombre, precio y duración son requeridos."]);
+    echo json_encode(["success" => false, "message" => "Nombre, precio y duración son requeridos."]);
     exit;
 }
 
@@ -37,7 +37,7 @@ if (!$stmt) {
     error_log("Error al preparar guardar_servicio: " . mysqli_error($conexion));
     ob_clean();
     http_response_code(500);
-    echo json_encode(["status" => "error", "message" => "Error interno al preparar la consulta."]);
+    echo json_encode(["success" => false, "message" => "Error interno al preparar la consulta."]);
     exit;
 }
 
@@ -46,12 +46,12 @@ mysqli_stmt_bind_param($stmt, "ssdis", $nombre, $descripcion, $precio, $duracion
 if (mysqli_stmt_execute($stmt)) {
     ob_clean();
     http_response_code(200);
-    echo json_encode(["status" => "success", "message" => "Servicio guardado exitosamente."]);
+    echo json_encode(["success" => true, "message" => "Servicio guardado exitosamente."]);
 } else {
     error_log("Error al ejecutar guardar_servicio: " . mysqli_stmt_error($stmt));
     ob_clean();
     http_response_code(500);
-    echo json_encode(["status" => "error", "message" => "No se pudo guardar el servicio."]);
+    echo json_encode(["success" => false, "message" => "No se pudo guardar el servicio."]);
 }
 
 mysqli_stmt_close($stmt);
