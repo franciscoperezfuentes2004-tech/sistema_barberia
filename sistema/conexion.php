@@ -5,12 +5,12 @@
  * ═══════════════════════════════════════════════════════════════════
  */
 
-// ─── 1. CREDENCIALES EXACTAS DE PRODUCCIÓN (RAILWAY) ──────────────
-$db_host     = "mysql.railway.internal";
+// ─── 1. CREDENCIALES EXACTAS DE PRODUCCIÓN PÚBLICA (RAILWAY) ──────
+$db_host     = "zephyr.proxy.rlwy.net";
 $db_user     = "root";
 $db_password = "CFbVHwFQTWoAQWguiIHmPjRxmzwiLENb";
 $db_name     = "railway";
-$db_port     = "3306";
+$db_port     = "56694";
 
 // ─── 2. ESTABLECER LA CONEXIÓN Y DESHABILITAR REPORTES EN PANTALLA ─
 // Prevenimos que cualquier warning interno de PHP escupa HTML y rompa el JSON
