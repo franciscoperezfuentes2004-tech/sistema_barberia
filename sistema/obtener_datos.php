@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "GET") {
 
 require_once __DIR__ . "/conexion.php";
 
-$tablas_permitidas = ['servicios', 'usuarios', 'citas', 'galeria', 'ajustes', 'barberos', 'horarios'];
+$tablas_permitidas = ['servicios', 'usuarios', 'citas', 'galeria', 'ajustes', 'barberos', 'horarios', 'resenas'];
 $tabla = $_GET["tabla"] ?? "";
 
 if (!in_array($tabla, $tablas_permitidas)) {

@@ -116,6 +116,17 @@ $query_citas = "CREATE TABLE IF NOT EXISTS `citas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
 if (!mysqli_query($conexion, $query_citas)) error_log("Auto-Migración Fallida en 'citas': " . mysqli_error($conexion));
 
+// Tabla Reseñas
+$query_resenas = "CREATE TABLE IF NOT EXISTS `resenas` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `cliente_nombre` VARCHAR(100),
+    `comentario` TEXT,
+    `calificacion` INT DEFAULT 5,
+    `activo` TINYINT(1) DEFAULT 1,
+    `creado_en` DATETIME DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
+if (!mysqli_query($conexion, $query_resenas)) error_log("Auto-Migración Fallida en 'resenas': " . mysqli_error($conexion));
+
 // ─── 5. INYECTORES INTELIGENTES POR DEFECTO (SEEDERS) ─────────
 
 // Inyector de Administrador
@@ -153,5 +164,18 @@ if ($verificar_servicios) {
         
         $insert_servicio_3 = "INSERT INTO `servicios` (`nombre`, `descripcion`, `precio`, `duracion_min`, `imagen`) VALUES ('Corte + Barba', 'Servicio completo VIP', 220.00, 50, '../assets/img/completo.png')";
         mysqli_query($conexion, $insert_servicio_3);
+    }
+}
+
+// Inyector de Reseñas Semilla
+$verificar_resenas = mysqli_query($conexion, "SELECT COUNT(*) as total FROM `resenas`");
+if ($verificar_resenas) {
+    $fila = mysqli_fetch_assoc($verificar_resenas);
+    if ((int)$fila['total'] === 0) {
+        $insert_resena_1 = "INSERT INTO `resenas` (`cliente_nombre`, `comentario`, `calificacion`) VALUES ('Juan Pérez', 'Excelente servicio', 5)";
+        mysqli_query($conexion, $insert_resena_1);
+        
+        $insert_resena_2 = "INSERT INTO `resenas` (`cliente_nombre`, `comentario`, `calificacion`) VALUES ('María López', 'Muy buena atención y ambiente', 5)";
+        mysqli_query($conexion, $insert_resena_2);
     }
 }
