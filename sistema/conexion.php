@@ -1,52 +1,65 @@
 <?php
 /**
  * ═══════════════════════════════════════════════════════════════════
- *  CONEXIÓN UNIVERSAL A MYSQL — Barbería Premium
+ *  CONEXIÓN A BASE DE DATOS Y AUTO-INSTALADOR — Barbería Premium
  * ═══════════════════════════════════════════════════════════════════
  *
- *  INSTRUCCIONES PARA EL COMPRADOR:
- *  ─────────────────────────────────
- *  1. Abre este archivo con cualquier editor de texto (Bloc de Notas, VS Code, etc.)
- *  2. Modifica ÚNICAMENTE las 4 variables de abajo con los datos de tu servidor:
- *     - $db_host     → Dirección del servidor MySQL (en XAMPP local es "localhost")
- *     - $db_user     → Tu usuario de MySQL (en XAMPP local es "root")
- *     - $db_password → Tu contraseña de MySQL (en XAMPP local suele estar vacía "")
- *     - $db_name     → El nombre de la base de datos que creaste en phpMyAdmin
- *  3. Guarda el archivo y listo. No toques nada más.
- *
- *  SEGURIDAD:
- *  ──────────
- *  - Usa contraseñas fuertes en producción.
- *  - NUNCA subas este archivo a un repositorio público con tus datos reales.
+ *  Este script establece la conexión con la base de datos de producción
+ *  en Railway. Además, incluye un motor de auto-migración que verifica
+ *  y crea las tablas necesarias (como 'servicios') automáticamente.
+ * ═══════════════════════════════════════════════════════════════════
  */
 
-// ┌─────────────────────────────────────────────────────────────────┐
-// │  DATOS DE CONEXIÓN — EDITAR AQUÍ                               │
-// └─────────────────────────────────────────────────────────────────┘
-$db_host     = "localhost";       // Dirección del servidor MySQL
-$db_user     = "root";            // Usuario de la base de datos
-$db_password = "";                // Contraseña del usuario
-$db_name     = "barberia_db";     // Nombre de la base de datos
+// ─── 1. CREDENCIALES DE PRODUCCIÓN (RAILWAY) ──────────────────────
+$db_host = "junction.proxy.rlwy.net";
+$db_user = "root";
+// Coloca la contraseña proporcionada por Railway aquí:
+$db_password = "CFbVHwFQTWoAQWguiIHmPjRxmzwiLENb"; 
+$db_name = "railway";
+$db_port = "3306";
 
-// ┌─────────────────────────────────────────────────────────────────┐
-// │  CONEXIÓN — NO MODIFICAR DESDE AQUÍ                            │
-// └─────────────────────────────────────────────────────────────────┘
+// ─── 2. ESTABLECER LA CONEXIÓN ────────────────────────────────────
+// mysqli_connect requiere el host, usuario, contraseña, base de datos y puerto
+$conexion = mysqli_connect($db_host, $db_user, $db_password, $db_name, $db_port);
 
-// Crear la conexión usando la extensión mysqli (la más compatible con XAMPP y hosting compartido)
-$conexion = mysqli_connect($db_host, $db_user, $db_password, $db_name);
-
-// Verificar si la conexión fue exitosa
+// Verificar si hubo un error crítico al conectar
 if (!$conexion) {
-    // Si falla, detener la ejecución y mostrar un mensaje descriptivo
-    die(json_encode([
-        "success" => false,
-        "error"   => "Error de conexión a la base de datos. Verifica los datos en conexion.php.",
-        "detalle" => "MySQL dice: " . mysqli_connect_error()
-    ]));
+    // Registramos el error en el log interno del servidor
+    error_log("Error crítico de conexión a la BD: " . mysqli_connect_error());
+    // Terminamos la ejecución enviando un JSON para no romper el frontend
+    http_response_code(500);
+    echo json_encode(["success" => false, "error" => "Error interno del servidor al conectar con la base de datos."]);
+    exit;
 }
 
-// Establecer el juego de caracteres a UTF-8 con soporte completo (emojis, acentos, ñ, etc.)
+// ─── 3. CONFIGURAR EL CHARSET ─────────────────────────────────────
+// Asegura que las consultas manejen correctamente acentos, eñes y emojis
 mysqli_set_charset($conexion, "utf8mb4");
 
-// (Opcional) Establecer la zona horaria de MySQL a la del servidor
-// mysqli_query($conexion, "SET time_zone = '-06:00'");
+// ─── 4. MOTOR INTELIGENTE DE AUTO-CREACIÓN (AUTO-MIGRACIÓN) ───────
+// Esta consulta estructurada creará la tabla 'servicios' solo si no existe.
+$sql_crear_servicios = "
+    CREATE TABLE IF NOT EXISTS `servicios` (
+        `id` INT AUTO_INCREMENT PRIMARY KEY,
+        `nombre` VARCHAR(100) NOT NULL,
+        `descripcion` TEXT DEFAULT NULL,
+        `precio` DECIMAL(10,2) NOT NULL,
+        `duracion_min` INT NOT NULL,
+        `imagen` VARCHAR(255) DEFAULT NULL,
+        `activo` TINYINT(1) NOT NULL DEFAULT 1,
+        `creado_en` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+";
+
+// Ejecutamos la consulta silenciosamente
+$resultado_creacion = mysqli_query($conexion, $sql_crear_servicios);
+
+// Si falla la creación, no interrumpimos al usuario, pero lo registramos en el log
+if (!$resultado_creacion) {
+    // Usamos error_log() para que los desarrolladores puedan depurar problemas de permisos o sintaxis
+    error_log("Auto-Migración Fallida en la tabla 'servicios': " . mysqli_error($conexion));
+}
+
+// Opcionalmente, puedes añadir más tablas aquí siguiendo el mismo patrón de CREATE TABLE IF NOT EXISTS.
+// La conexión ($conexion) ya queda lista y disponible para los demás scripts que incluyan este archivo.
+?>
