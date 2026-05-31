@@ -13,7 +13,6 @@ $db_name     = "railway";
 $db_port     = "56694";
 
 // ─── 2. ESTABLECER LA CONEXIÓN Y DESHABILITAR REPORTES EN PANTALLA ─
-// Prevenimos que cualquier warning interno de PHP escupa HTML y rompa el JSON
 mysqli_report(MYSQLI_REPORT_OFF);
 
 $conexion = @mysqli_connect($db_host, $db_user, $db_password, $db_name, $db_port);
@@ -30,41 +29,45 @@ mysqli_set_charset($conexion, "utf8mb4");
 
 // ─── 4. MOTOR MULTI-TABLA (AUTO-MIGRACIÓN SILENCIOSA) ─────────────
 
-$sql_servicios = "CREATE TABLE IF NOT EXISTS `servicios` (
-    `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `nombre` VARCHAR(150),
-    `descripcion` TEXT,
-    `precio` DECIMAL(10,2),
-    `duracion_min` INT,
-    `imagen` VARCHAR(255),
+$query_servicios = "CREATE TABLE IF NOT EXISTS `servicios` (
+    `id` INT AUTO_INCREMENT,
+    `nombre` VARCHAR(150) NOT NULL,
+    `descripcion` TEXT NULL,
+    `precio` DECIMAL(10,2) NOT NULL,
+    `duracion_min` INT NOT NULL,
+    `imagen` VARCHAR(255) NOT NULL,
     `activo` TINYINT(1) DEFAULT 1,
-    `creado_en` DATETIME DEFAULT CURRENT_TIMESTAMP
+    `creado_en` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
 
-if (!mysqli_query($conexion, $sql_servicios)) {
+if (!mysqli_query($conexion, $query_servicios)) {
     error_log("Auto-Migración Fallida en 'servicios': " . mysqli_error($conexion));
 }
 
-$sql_galeria = "CREATE TABLE IF NOT EXISTS `galeria` (
-    `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `ruta_imagen` VARCHAR(255),
-    `titulo` VARCHAR(100),
-    `creado_en` DATETIME DEFAULT CURRENT_TIMESTAMP
+$query_galeria = "CREATE TABLE IF NOT EXISTS `galeria` (
+    `id` INT AUTO_INCREMENT,
+    `ruta_imagen` VARCHAR(255) NOT NULL,
+    `titulo` VARCHAR(100) NULL,
+    `creado_en` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
 
-if (!mysqli_query($conexion, $sql_galeria)) {
+if (!mysqli_query($conexion, $query_galeria)) {
     error_log("Auto-Migración Fallida en 'galeria': " . mysqli_error($conexion));
 }
 
-$sql_usuarios = "CREATE TABLE IF NOT EXISTS `usuarios` (
-    `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `usuario` VARCHAR(50) NOT NULL UNIQUE,
+$query_usuarios = "CREATE TABLE IF NOT EXISTS `usuarios` (
+    `id` INT AUTO_INCREMENT,
+    `usuario` VARCHAR(50) NOT NULL,
     `password` VARCHAR(255) NOT NULL,
     `rol` VARCHAR(20) DEFAULT 'admin',
-    `creado_en` DATETIME DEFAULT CURRENT_TIMESTAMP
+    `creado_en` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `idx_usuario` (`usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
 
-if (!mysqli_query($conexion, $sql_usuarios)) {
+if (!mysqli_query($conexion, $query_usuarios)) {
     error_log("Auto-Migración Fallida en 'usuarios': " . mysqli_error($conexion));
 }
 
