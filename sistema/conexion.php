@@ -29,6 +29,7 @@ mysqli_set_charset($conexion, "utf8mb4");
 
 // ─── 4. MOTOR MULTI-TABLA (AUTO-MIGRACIÓN SILENCIOSA) ─────────────
 
+// Tabla Servicios
 $query_servicios = "CREATE TABLE IF NOT EXISTS `servicios` (
     `id` INT AUTO_INCREMENT,
     `nombre` VARCHAR(150) NOT NULL,
@@ -40,11 +41,9 @@ $query_servicios = "CREATE TABLE IF NOT EXISTS `servicios` (
     `creado_en` DATETIME DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
+if (!mysqli_query($conexion, $query_servicios)) error_log("Auto-Migración Fallida en 'servicios': " . mysqli_error($conexion));
 
-if (!mysqli_query($conexion, $query_servicios)) {
-    error_log("Auto-Migración Fallida en 'servicios': " . mysqli_error($conexion));
-}
-
+// Tabla Galeria
 $query_galeria = "CREATE TABLE IF NOT EXISTS `galeria` (
     `id` INT AUTO_INCREMENT,
     `ruta_imagen` VARCHAR(255) NOT NULL,
@@ -52,11 +51,9 @@ $query_galeria = "CREATE TABLE IF NOT EXISTS `galeria` (
     `creado_en` DATETIME DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
+if (!mysqli_query($conexion, $query_galeria)) error_log("Auto-Migración Fallida en 'galeria': " . mysqli_error($conexion));
 
-if (!mysqli_query($conexion, $query_galeria)) {
-    error_log("Auto-Migración Fallida en 'galeria': " . mysqli_error($conexion));
-}
-
+// Tabla Usuarios
 $query_usuarios = "CREATE TABLE IF NOT EXISTS `usuarios` (
     `id` INT AUTO_INCREMENT,
     `usuario` VARCHAR(50) NOT NULL,
@@ -66,21 +63,58 @@ $query_usuarios = "CREATE TABLE IF NOT EXISTS `usuarios` (
     PRIMARY KEY (`id`),
     UNIQUE KEY `idx_usuario` (`usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
+if (!mysqli_query($conexion, $query_usuarios)) error_log("Auto-Migración Fallida en 'usuarios': " . mysqli_error($conexion));
 
-if (!mysqli_query($conexion, $query_usuarios)) {
-    error_log("Auto-Migración Fallida en 'usuarios': " . mysqli_error($conexion));
-}
-
+// Tabla Ajustes
 $query_ajustes = "CREATE TABLE IF NOT EXISTS `ajustes` (
     `id` INT AUTO_INCREMENT,
     `nombre_empresa` VARCHAR(100) DEFAULT 'Barbería',
     `logo` VARCHAR(255) NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
+if (!mysqli_query($conexion, $query_ajustes)) error_log("Auto-Migración Fallida en 'ajustes': " . mysqli_error($conexion));
 
-if (!mysqli_query($conexion, $query_ajustes)) {
-    error_log("Auto-Migración Fallida en 'ajustes': " . mysqli_error($conexion));
-}
+// Tabla Barberos
+$query_barberos = "CREATE TABLE IF NOT EXISTS `barberos` (
+    `id` INT AUTO_INCREMENT,
+    `nombre` VARCHAR(100) NOT NULL,
+    `apellido` VARCHAR(100) NULL,
+    `foto` LONGTEXT NULL,
+    `especialidad` VARCHAR(150) NULL,
+    `usuario` VARCHAR(50) NULL,
+    `password` VARCHAR(255) NULL,
+    `activo` TINYINT(1) DEFAULT 1,
+    `creado_en` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `idx_usuario_barbero` (`usuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
+if (!mysqli_query($conexion, $query_barberos)) error_log("Auto-Migración Fallida en 'barberos': " . mysqli_error($conexion));
+
+// Tabla Horarios
+$query_horarios = "CREATE TABLE IF NOT EXISTS `horarios` (
+    `id` INT AUTO_INCREMENT,
+    `barbero_id` INT NOT NULL,
+    `dia_semana` INT NOT NULL,
+    `hora_inicio` TIME NOT NULL,
+    `hora_fin` TIME NOT NULL,
+    `activo` TINYINT(1) DEFAULT 1,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
+if (!mysqli_query($conexion, $query_horarios)) error_log("Auto-Migración Fallida en 'horarios': " . mysqli_error($conexion));
+
+// Tabla Citas
+$query_citas = "CREATE TABLE IF NOT EXISTS `citas` (
+    `id` INT AUTO_INCREMENT,
+    `cliente_nombre` VARCHAR(150) NOT NULL,
+    `cliente_telefono` VARCHAR(20) NULL,
+    `barbero_id` INT NOT NULL,
+    `servicio_id` INT NOT NULL,
+    `fecha_hora` DATETIME NOT NULL,
+    `estado` VARCHAR(50) DEFAULT 'pendiente',
+    `creado_en` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
+if (!mysqli_query($conexion, $query_citas)) error_log("Auto-Migración Fallida en 'citas': " . mysqli_error($conexion));
 
 // ─── 5. INYECTORES INTELIGENTES POR DEFECTO ─────────
 

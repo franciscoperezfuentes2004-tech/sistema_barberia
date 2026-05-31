@@ -22,8 +22,8 @@ if ($_SERVER["REQUEST_METHOD"] !== "GET") {
 
 require_once __DIR__ . "/conexion.php";
 
-// Validación de lista blanca para tablas permitidas
-$tabla_permitida = ['servicios', 'usuarios', 'citas', 'galeria', 'ajustes'];
+// Validación de lista blanca para tablas permitidas extendida
+$tabla_permitida = ['servicios', 'usuarios', 'citas', 'galeria', 'ajustes', 'barberos', 'horarios'];
 $tabla = $_GET["tabla"] ?? "servicios";
 
 if (!in_array($tabla, $tabla_permitida)) {
