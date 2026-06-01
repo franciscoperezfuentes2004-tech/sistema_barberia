@@ -15,7 +15,7 @@
       --green:#27AE60; --green-bg:rgba(39,174,96,.1); --green-border:rgba(39,174,96,.25);
       --red:#E74C3C; --red-bg:rgba(231,76,60,.1); --red-border:rgba(231,76,60,.25);
       --blue:#3498DB; --blue-bg:rgba(52,152,219,.1); --blue-border:rgba(52,152,219,.25);
-      --serif:'Cinzel',serif; --sans:'Inter',system-ui,sans-serif;
+      --serif:Arial, Helvetica, sans-serif; --sans:'Inter',system-ui,sans-serif;
       --tr:all .2s ease;
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -608,12 +608,14 @@
         </div>
       </section>
 
-      <!-- 2.6 RESEÑAS -->
       <section id="resenas" class="section">
         <div class="card">
           <div class="card-title" style="justify-content:space-between">
             <span>Control de Reseñas</span>
-            <button class="btn btn-primary" style="background:var(--red);color:#fff;" onclick="deleteSelectedResenas()">Eliminar Seleccionadas</button>
+            <div>
+              <button class="btn btn-secondary" style="color:var(--red);border-color:var(--red);margin-right:8px;" onclick="deleteAllResenas()">Eliminar Todas</button>
+              <button class="btn btn-primary" style="background:var(--red);color:#fff;" onclick="deleteSelectedResenas()">Eliminar Seleccionadas</button>
+            </div>
           </div>
           
           <div style="display:flex;gap:12px;margin-bottom:20px;align-items:center;">
@@ -1059,7 +1061,7 @@
         tbody.innerHTML = filtered.map(r => `
           <tr style="border-bottom:1px solid var(--border);">
             <td style="text-align:center;"><input type="checkbox" class="resena-chk" value="${r.id}"></td>
-            <td style="padding:12px;"><strong>${r.nombre_cliente}</strong></td>
+            <td style="padding:12px;"><strong>${r.cliente_nombre || 'Cliente Anónimo'}</strong></td>
             <td style="color:var(--gold);padding:12px;font-size:1.1rem;">${'★'.repeat(r.calificacion)}${'☆'.repeat(5-r.calificacion)}</td>
             <td style="font-size:0.85rem;color:var(--base);max-width:300px;white-space:normal;padding:12px;">${r.comentario}</td>
             <td style="font-size:0.8rem;color:var(--muted);padding:12px;">${new Date(r.creado_en).toLocaleDateString()}</td>
@@ -1088,6 +1090,24 @@
             alert(json.message || 'Error al eliminar reseñas');
           }
         } catch(e) { console.error('Error deleteSelectedResenas:', e); }
+      };
+
+      window.deleteAllResenas = async () => {
+        if(adminResenas.length === 0) return alert('No hay reseñas para eliminar.');
+        if(!confirm(`¿Seguro que deseas eliminar TODAS las reseñas de forma permanente?`)) return;
+        const allIds = adminResenas.map(r => r.id).join(',');
+        try {
+          const res = await fetch(`${API}/eliminar.php?tabla=resenas&ids=${allIds}`, { method: 'DELETE' });
+          const json = await res.json();
+          if(json.success) {
+            showToast('Todas las reseñas han sido eliminadas');
+            const selectAll = document.getElementById('resenas-select-all');
+            if(selectAll) selectAll.checked = false;
+            if (window.loadResenasAdmin) window.loadResenasAdmin();
+          } else {
+            alert(json.message || 'Error al eliminar reseñas');
+          }
+        } catch(e) { console.error('Error deleteAllResenas:', e); }
       };
 
       // ⎯⎯⎯ CMS AJUSTES GLOBALES ⎯⎯⎯
@@ -1962,7 +1982,10 @@
       const titles = {
         agenda: 'Control de Citas',
         equipo: 'Gestión de Personal',
-        cms: 'Personalización Web'
+        servicios: 'Catálogo de Servicios',
+        horarios: 'Configuración de Horarios',
+        cms: 'Personalización Web',
+        resenas: 'Control de Reseñas'
       };
 
       navItems.forEach(item => {
@@ -1974,7 +1997,7 @@
           sections.forEach(s => s.classList.remove('active'));
           document.getElementById(target).classList.add('active');
           
-          titleEl.textContent = titles[target];
+          titleEl.textContent = titles[target] || 'Admin Panel';
         });
       });
 
