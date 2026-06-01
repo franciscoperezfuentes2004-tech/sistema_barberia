@@ -1380,14 +1380,27 @@
                 </div>
               `;
 
-              // Siempre agregar al modal de TODAS las reseñas
+              // Diseño especial plano y moderno SOLO para la ventana emergente
+              const htmlContentModal = `
+                <div style="border-bottom: 1px solid var(--border); padding-bottom: 20px; margin-bottom: 5px;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                      <div class="t-stars" style="color:var(--gold); font-size: 1.1rem;">${stars}</div>
+                    </div>
+                    <div style="font-size: 0.75rem; color: var(--muted);">${date}</div>
+                  </div>
+                  <div style="font-size: 0.9rem; font-weight: 600; color: var(--bright); margin-bottom: 8px;">${nombre}</div>
+                  <p style="font-size: 0.95rem; line-height: 1.5; color: var(--bright); margin: 0;">${rev.comentario || 'Excelente servicio.'}</p>
+                </div>
+              `;
+
+              // Siempre agregar al modal de TODAS las reseñas (sin la clase r-card para quitar la caja)
               const modalEl = document.createElement('div');
-              modalEl.className = 'r-card'; // Quitamos 'rv' para que no empiece invisible
               modalEl.style.width = '100%';
-              modalEl.innerHTML = htmlContent;
+              modalEl.innerHTML = htmlContentModal;
               allRevContainer.appendChild(modalEl);
 
-              // Solo agregar al grid principal si no excede maxVisible
+              // Solo agregar al grid principal si no excede maxVisible (usando el diseño de tarjetas originales)
               if (idx < maxVisible) {
                 const el = document.createElement('blockquote');
                 el.className = 'r-card rv';
