@@ -1341,21 +1341,24 @@
               el.setAttribute('role', 'listitem');
               el.style.transitionDelay = `${delay}s`;
               
-              const stars = '★'.repeat(rev.estrellas) + '☆'.repeat(5 - rev.estrellas);
+              const calificacion = parseInt(rev.calificacion) || 5;
+              const stars = '★'.repeat(calificacion) + '☆'.repeat(5 - calificacion);
               
-              const parts = rev.nombre ? rev.nombre.trim().split(/\s+/) : ['U'];
+              const nombre = rev.cliente_nombre || 'Usuario';
+              const parts = nombre.trim().split(/\s+/);
               const initial = (parts[0].charAt(0) + (parts.length > 1 ? parts[parts.length - 1].charAt(0) : '')).toUpperCase();
               const colors = ['#9A7B32', '#1a5c3a', '#5c1a2e', '#1c3d5a', '#5a3d1c'];
               const color = colors[idx % colors.length];
-              const date = new Date(rev.created_at).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
+              const dateObj = new Date(rev.creado_en);
+              const date = isNaN(dateObj) ? '' : dateObj.toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
               
               el.innerHTML = `
-                <div class="t-stars" aria-label="${rev.estrellas} de 5 estrellas" style="color:var(--gold);margin-bottom:10px">${stars}</div>
+                <div class="t-stars" aria-label="${calificacion} de 5 estrellas" style="color:var(--gold);margin-bottom:10px">${stars}</div>
                 <p class="r-q">"${rev.comentario || 'Excelente servicio.'}"</p>
                 <div class="r-author">
                   <div class="r-av" style="background:${color};color:#fff" aria-hidden="true">${initial}</div>
                   <div>
-                    <p style="font-size:.84rem;font-weight:600;color:var(--bright)">${rev.nombre}</p>
+                    <p style="font-size:.84rem;font-weight:600;color:var(--bright)">${nombre}</p>
                     <p style="font-size:.7rem;color:var(--muted)">${date}</p>
                   </div>
                 </div>
