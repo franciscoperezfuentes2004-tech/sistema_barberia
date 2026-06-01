@@ -930,7 +930,7 @@
        MODAL TODAS LAS RESEÑAS
   ════════════════════════════════════════════ -->
   <div id="allReviewsModal" class="modal">
-    <div class="modal-content" style="max-width:600px; max-height:80vh; overflow-y:auto; padding-right:15px">
+    <div class="modal-content" style="max-width:600px; padding:30px;">
       <button class="modal-close" onclick="document.getElementById('allReviewsModal').classList.remove('active')">✖</button>
       
       <div style="text-align: center; margin-bottom: 25px;">
@@ -946,7 +946,7 @@
         <p id="all-reviews-subtitle" style="color:var(--muted);font-size:0.85rem;margin:0;">Cargando reseñas...</p>
       </div>
 
-      <div id="all-reviews-container" style="display:flex; flex-direction:column; gap:15px;">
+      <div id="all-reviews-container" style="display:flex; flex-direction:column; gap:15px; max-height:55vh; overflow-y:auto; padding-right:10px;">
         <!-- Llenado dinámicamente -->
       </div>
     </div>
@@ -1401,12 +1401,10 @@
               // Diseño especial plano y moderno SOLO para la ventana emergente
               const htmlContentModal = `
                 <div style="border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 22px; margin-bottom: 22px;">
-                  <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
-                    <div style="display: flex; flex-direction: column; gap: 4px;">
-                      <span style="font-size: 1.05rem; font-weight: 700; color: var(--bright);">${nombre}</span>
-                      <div class="t-stars" style="color:var(--gold); font-size: 0.95rem; letter-spacing: 1px;">${stars}</div>
-                    </div>
-                    <div style="font-size: 0.8rem; color: var(--muted); padding-top: 4px;">${date}</div>
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <span style="font-size: 1.05rem; font-weight: 700; color: var(--bright); white-space: nowrap;">${nombre}</span>
+                    <div class="t-stars" style="color:var(--gold); font-size: 0.95rem; letter-spacing: 1px; flex: 1; text-align: center; padding: 0 10px;">${stars}</div>
+                    <div style="font-size: 0.8rem; color: var(--muted); white-space: nowrap;">${date}</div>
                   </div>
                   <p style="font-size: 0.95rem; line-height: 1.6; color: var(--muted); margin: 0; text-align: justify;">"${rev.comentario || 'Excelente servicio.'}"</p>
                 </div>
