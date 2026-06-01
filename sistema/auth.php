@@ -35,12 +35,11 @@ if (empty($user_input) || empty($pass_input)) {
     exit;
 }
 
-// Búsqueda del usuario de forma segura
+// Búsqueda del usuario de forma segura en 'usuarios' (Admins)
 $sql = "SELECT id, usuario, password, rol FROM `usuarios` WHERE usuario = ? LIMIT 1";
 $stmt = mysqli_prepare($conexion, $sql);
 
 if (!$stmt) {
-    error_log("Error al preparar auth: " . mysqli_error($conexion));
     ob_clean();
     http_response_code(500);
     echo json_encode(["status" => "error", "message" => "Error interno en servidor."]);
@@ -51,43 +50,73 @@ mysqli_stmt_bind_param($stmt, "s", $user_input);
 mysqli_stmt_execute($stmt);
 $resultado = mysqli_stmt_get_result($stmt);
 
+$logged_in = false;
+$user_data = [];
+
 if ($fila = mysqli_fetch_assoc($resultado)) {
-    // Verificamos el hash con password_verify
     if (password_verify($pass_input, $fila['password'])) {
-        
-        // 1. Iniciamos sesión tradicional en el servidor por seguridad dual
-        session_start();
-        $_SESSION['usuario_id']  = $fila['id'];
-        $_SESSION['usuario']     = $fila['usuario'];
-        $_SESSION['rol']         = $fila['rol'];
-        $_SESSION['logged_in']   = true;
-
-        // 2. Generamos el JWT nativo para el frontend
-        $header = json_encode(['typ' => 'JWT', 'alg' => 'HS256']);
-        $payload = json_encode([
-            'id' => $fila['id'], 
-            'usuario' => $fila['usuario'], 
+        $logged_in = true;
+        $user_data = [
+            'id' => $fila['id'],
+            'usuario' => $fila['usuario'],
             'rol' => $fila['rol']
-        ]);
-        
-        $base64UrlHeader = base64UrlEncode($header);
-        $base64UrlPayload = base64UrlEncode($payload);
-        
-        // Creamos la firma con nuestra clave secreta
-        $signature = hash_hmac('sha256', $base64UrlHeader . "." . $base64UrlPayload, 'clave_secreta_barberia', true);
-        $base64UrlSignature = base64UrlEncode($signature);
-        
-        // Concatenamos el token completo
-        $jwt = $base64UrlHeader . "." . $base64UrlPayload . "." . $base64UrlSignature;
-
-        ob_clean();
-        http_response_code(200);
-        echo json_encode(["status" => "success", "message" => "¡Bienvenido!", "token" => $jwt]);
-    } else {
-        ob_clean();
-        http_response_code(401);
-        echo json_encode(["status" => "error", "message" => "Credenciales incorrectas."]);
+        ];
     }
+}
+
+mysqli_stmt_close($stmt);
+
+// Si no es admin, buscar en la tabla 'barberos'
+if (!$logged_in) {
+    $sql_b = "SELECT id, usuario, password, nombre FROM `barberos` WHERE usuario = ? LIMIT 1";
+    $stmt_b = mysqli_prepare($conexion, $sql_b);
+    if ($stmt_b) {
+        mysqli_stmt_bind_param($stmt_b, "s", $user_input);
+        mysqli_stmt_execute($stmt_b);
+        $res_b = mysqli_stmt_get_result($stmt_b);
+        if ($fila_b = mysqli_fetch_assoc($res_b)) {
+            if (password_verify($pass_input, $fila_b['password'])) {
+                $logged_in = true;
+                $user_data = [
+                    'id' => $fila_b['id'],
+                    'usuario' => $fila_b['usuario'],
+                    'rol' => 'barbero' // Forzar rol barbero
+                ];
+            }
+        }
+        mysqli_stmt_close($stmt_b);
+    }
+}
+
+if ($logged_in) {
+    // 1. Iniciamos sesión tradicional en el servidor por seguridad dual
+    session_start();
+    $_SESSION['usuario_id']  = $user_data['id'];
+    $_SESSION['usuario']     = $user_data['usuario'];
+    $_SESSION['rol']         = $user_data['rol'];
+    $_SESSION['logged_in']   = true;
+
+    // 2. Generamos el JWT nativo para el frontend
+    $header = json_encode(['typ' => 'JWT', 'alg' => 'HS256']);
+    $payload = json_encode([
+        'id' => $user_data['id'], 
+        'usuario' => $user_data['usuario'], 
+        'rol' => $user_data['rol']
+    ]);
+    
+    $base64UrlHeader = base64UrlEncode($header);
+    $base64UrlPayload = base64UrlEncode($payload);
+    
+    // Creamos la firma con nuestra clave secreta
+    $signature = hash_hmac('sha256', $base64UrlHeader . "." . $base64UrlPayload, 'clave_secreta_barberia', true);
+    $base64UrlSignature = base64UrlEncode($signature);
+    
+    // Concatenamos el token completo
+    $jwt = $base64UrlHeader . "." . $base64UrlPayload . "." . $base64UrlSignature;
+
+    ob_clean();
+    http_response_code(200);
+    echo json_encode(["status" => "success", "message" => "¡Bienvenido!", "token" => $jwt]);
 } else {
     ob_clean();
     http_response_code(401);

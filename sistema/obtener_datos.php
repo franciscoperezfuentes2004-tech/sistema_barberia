@@ -117,10 +117,17 @@ if ($resultado) {
                     
                     $disp = true;
                     foreach ($citas as $c) {
-                        $c_ini = substr($c['hora_inicio'], 0, 5);
-                        $c_fin = substr($c['hora_fin'], 0, 5);
-                        if ($hora_str >= $c_ini && $hora_str < $c_fin) { $disp = false; break; }
-                        if ($c_ini >= $hora_str && $c_ini < $hora_fin_str) { $disp = false; break; }
+                        $ts_ini = strtotime($f . ' ' . substr($c['hora_inicio'], 0, 5));
+                        $ts_fin = strtotime($f . ' ' . substr($c['hora_fin'], 0, 5));
+                        $ts_slot_ini = $t;
+                        $ts_slot_fin = $t + 30 * 60;
+                        
+                        if ($ts_ini < $ts_slot_fin && $ts_fin > $ts_slot_ini) {
+                            if (!($ts_ini <= $ts_slot_ini && $ts_fin <= $ts_slot_ini + 10 * 60)) {
+                                $disp = false;
+                                break;
+                            }
+                        }
                     }
                     if ($disp) $slots_disponibles++;
                 }
