@@ -29,6 +29,14 @@ if ($barbero_id === '' || $dia_semana === '' || empty($hora_inicio) || empty($ho
     exit;
 }
 
+$sql_delete = "DELETE FROM `horarios` WHERE `barbero_id` = ? AND `dia_semana` = ?";
+$stmt_del = mysqli_prepare($conexion, $sql_delete);
+if ($stmt_del) {
+    mysqli_stmt_bind_param($stmt_del, "ii", $barbero_id, $dia_semana);
+    mysqli_stmt_execute($stmt_del);
+    mysqli_stmt_close($stmt_del);
+}
+
 $sql = "INSERT INTO `horarios` (`barbero_id`, `dia_semana`, `hora_inicio`, `hora_fin`) VALUES (?, ?, ?, ?)";
 $stmt = mysqli_prepare($conexion, $sql);
 
