@@ -275,7 +275,12 @@
   </header>
 
   <!-- ————————— DATE SELECTOR ————————— -->
-  <div class="dates-bar" id="dates-bar"></div>
+  <div class="date-selector-wrap" style="padding: 12px var(--gutter); max-width: 900px; margin: 0 auto;">
+    <div style="background: var(--s2); border: 1px solid var(--border); border-radius: 12px; padding: 12px; display: flex; align-items: center; justify-content: space-between;">
+      <span style="font-size: 0.9rem; font-weight: 600; color: var(--bright);">Seleccionar Fecha</span>
+      <input type="date" id="date-picker" style="background: var(--bg); border: 1px solid var(--border); color: var(--bright); padding: 8px 12px; border-radius: 8px; font-family: inherit; font-size: 0.9rem; outline: none; cursor: pointer;">
+    </div>
+  </div>
 
   <!-- ————————— TIMELINE ————————— -->
   <section class="timeline-section">
@@ -466,37 +471,23 @@
 
     /* ——— Date Selector ——— */
     function initDates() {
-      const bar = document.getElementById('dates-bar');
-      const dias = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
-      const meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+      const picker = document.getElementById('date-picker');
       const hoy = new Date();
+      const hoyISO = hoy.getFullYear()+'-'+String(hoy.getMonth()+1).padStart(2,'0')+'-'+String(hoy.getDate()).padStart(2,'0');
+      
+      picker.value = hoyISO;
+      selectedDate = hoyISO;
+      
+      // Load initial
+      updateScheduleForDate(hoyISO);
+      loadCitas();
 
-      for (let i = 0; i < 7; i++) {
-        const d = new Date(hoy);
-        d.setDate(d.getDate() + i);
-        const iso = d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-
-        const card = document.createElement('div');
-        card.className = 'd-card';
-        card.innerHTML = `
-          <span class="d-day">${i===0?'Hoy':dias[d.getDay()]}</span>
-          <span class="d-num">${d.getDate()}</span>
-          <span class="d-month">${meses[d.getMonth()]}</span>
-        `;
-        card.onclick = () => selectDate(card, iso);
-        bar.appendChild(card);
-
-        // Auto-select today
-        if (i === 0) selectDate(card, iso);
-      }
-    }
-
-    async function selectDate(el, iso) {
-      document.querySelectorAll('.d-card').forEach(c => c.classList.remove('selected'));
-      el.classList.add('selected');
-      selectedDate = iso;
-      updateScheduleForDate(iso);
-      await loadCitas();
+      picker.addEventListener('change', async (e) => {
+        if (!e.target.value) return;
+        selectedDate = e.target.value;
+        updateScheduleForDate(selectedDate);
+        await loadCitas();
+      });
     }
 
     /* ——— Load Citas ——— */
