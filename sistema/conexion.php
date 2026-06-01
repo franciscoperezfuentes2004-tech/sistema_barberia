@@ -155,6 +155,7 @@ $query_citas = "CREATE TABLE IF NOT EXISTS `citas` (
     `hora_inicio` TIME NOT NULL,
     `hora_fin` TIME NOT NULL,
     `estado` VARCHAR(50) DEFAULT 'pendiente',
+    `precio_total` DECIMAL(10,2) NOT NULL DEFAULT 0.00,
     `creado_en` DATETIME DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
@@ -164,6 +165,7 @@ if (!mysqli_query($conexion, $query_citas)) error_log("Auto-Migración Fallida e
 @mysqli_query($conexion, "ALTER TABLE `citas` ADD COLUMN `hora_inicio` TIME NOT NULL DEFAULT '00:00:00'");
 @mysqli_query($conexion, "ALTER TABLE `citas` ADD COLUMN `hora_fin` TIME NOT NULL DEFAULT '00:00:00'");
 @mysqli_query($conexion, "ALTER TABLE `citas` ADD COLUMN `servicios_ids` VARCHAR(255) NOT NULL DEFAULT '[]'");
+@mysqli_query($conexion, "ALTER TABLE `citas` ADD COLUMN `precio_total` DECIMAL(10,2) NOT NULL DEFAULT 0.00");
 
 
 // Tabla Reseñas
@@ -184,7 +186,7 @@ $verificar_usuarios = mysqli_query($conexion, "SELECT COUNT(*) as total FROM `us
 if ($verificar_usuarios) {
     $fila = mysqli_fetch_assoc($verificar_usuarios);
     if ((int)$fila['total'] === 0) {
-        $pass_hash = password_hash("1234", PASSWORD_BCRYPT);
+        $pass_hash = password_hash("123456", PASSWORD_BCRYPT);
         $insert_admin = "INSERT INTO `usuarios` (`usuario`, `password`, `rol`) VALUES ('admin', '$pass_hash', 'admin')";
         mysqli_query($conexion, $insert_admin);
     }

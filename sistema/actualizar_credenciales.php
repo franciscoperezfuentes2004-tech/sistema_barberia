@@ -6,6 +6,7 @@
 header('Content-Type: application/json; charset=utf-8');
 
 require_once 'conexion.php';
+/** @var mysqli $conexion */
 
 // Validar método POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {

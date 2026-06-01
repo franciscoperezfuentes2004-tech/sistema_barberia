@@ -74,9 +74,9 @@ $resultado = mysqli_query($conexion, $sql);
 $datos = [];
 if ($resultado) {
     while ($fila = mysqli_fetch_assoc($resultado)) {
-        // Calcular slots si se pide barberos y fecha
-        if ($tabla === 'barberos' && isset($_GET['fecha'])) {
-            $f = mysqli_real_escape_string($conexion, trim($_GET['fecha']));
+        // Calcular slots si se pide barberos
+        if ($tabla === 'barberos') {
+            $f = isset($_GET['fecha']) && trim($_GET['fecha']) !== '' ? mysqli_real_escape_string($conexion, trim($_GET['fecha'])) : date('Y-m-d');
             $dia_sem = (int)date('w', strtotime($f));
             $b_id = (int)$fila['id'];
             

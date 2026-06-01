@@ -57,13 +57,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit;
     }
     
-    // Calcular duracion total de los servicios
+    // Calcular duracion y precio total de los servicios
     $duracion_total = 0;
+    $precio_total = 0;
     if (is_array($servicios) && count($servicios) > 0) {
         $ids = implode(',', array_map('intval', $servicios));
-        $resSvc = mysqli_query($conexion, "SELECT SUM(duracion) as total_min FROM servicios WHERE id IN ($ids)");
+        $resSvc = mysqli_query($conexion, "SELECT SUM(duracion_min) as total_min, SUM(precio) as total_precio FROM servicios WHERE id IN ($ids)");
         if ($resSvc && $rowSvc = mysqli_fetch_assoc($resSvc)) {
             $duracion_total = (int)$rowSvc['total_min'];
+            $precio_total = (float)$rowSvc['total_precio'];
         }
     }
     if ($duracion_total <= 0) $duracion_total = 30;
@@ -76,11 +78,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $telefono = mysqli_real_escape_string($conexion, $telefono);
     $fecha_hora = mysqli_real_escape_string($conexion, $fecha . ' ' . $hora_inicio);
     
-    $sql = "INSERT INTO citas (`cliente_nombre`, `cliente_telefono`, `barbero_id`, `servicios_ids`, `fecha_hora`, `hora_inicio`, `hora_fin`, `estado`) VALUES (?, ?, ?, ?, ?, ?, ?, 'pendiente')";
+    $sql = "INSERT INTO citas (`cliente_nombre`, `cliente_telefono`, `barbero_id`, `servicios_ids`, `fecha_hora`, `hora_inicio`, `hora_fin`, `estado`, `precio_total`) VALUES (?, ?, ?, ?, ?, ?, ?, 'pendiente', ?)";
     $stmt = mysqli_prepare($conexion, $sql);
     
     if ($stmt) {
-        mysqli_stmt_bind_param($stmt, "ssissss", $nombre, $telefono, $barbero_id, $servicios_json, $fecha_hora, $hora_inicio_format, $hora_fin_format);
+        mysqli_stmt_bind_param($stmt, "ssissssd", $nombre, $telefono, $barbero_id, $servicios_json, $fecha_hora, $hora_inicio_format, $hora_fin_format, $precio_total);
         if (mysqli_stmt_execute($stmt)) {
             ob_clean();
             http_response_code(200);
