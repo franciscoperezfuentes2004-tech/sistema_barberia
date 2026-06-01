@@ -685,6 +685,7 @@
             // Guardar sesión
             sessionStorage.setItem('tab_auth', 'true');
             if (json.token) localStorage.setItem('mi_token_jwt', json.token);
+            if (json.foto)  localStorage.setItem('mi_foto_perfil', json.foto);
 
             // Retardo de 1 segundo y redirección fluida
             setTimeout(() => {

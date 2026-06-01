@@ -98,13 +98,12 @@ if ($logged_in) {
     $_SESSION['rol']         = $user_data['rol'];
     $_SESSION['logged_in']   = true;
 
-    // 2. Generamos el JWT nativo para el frontend
+    // 2. Generamos el JWT nativo para el frontend (SOLO datos ligeros, NO fotos base64)
     $header = json_encode(['typ' => 'JWT', 'alg' => 'HS256']);
     $payload = json_encode([
         'id' => $user_data['id'], 
         'usuario' => $user_data['usuario'], 
         'rol' => $user_data['rol'],
-        'foto' => $user_data['foto'] ?? '',
         'nombre' => $user_data['nombre'] ?? ''
     ]);
     

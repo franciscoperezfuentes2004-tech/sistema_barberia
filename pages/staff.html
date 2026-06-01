@@ -427,7 +427,7 @@
             rol: payloadDecoded.rol,
             barbero_id: payloadDecoded.id,
             barbero_nombre: payloadDecoded.nombre || payloadDecoded.usuario,
-            barbero_foto: payloadDecoded.foto
+            barbero_foto: localStorage.getItem('mi_foto_perfil') || ''
           }
         };
 
