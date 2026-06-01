@@ -43,7 +43,10 @@ $sql = "SELECT * FROM `" . $tabla . "` WHERE 1=1";
 
 // 2. Lógica Condicional de Filtros (Seguros: por ID o Fecha)
 if ($tabla === 'horarios') {
-    if (isset($_GET['barbero_id']) && trim($_GET['barbero_id']) !== '') {
+    if (isset($_GET['global']) && $_GET['global'] == '1') {
+        // Página pública: solo horarios maestros (barbero_id = 0)
+        $sql .= " AND barbero_id = 0";
+    } elseif (isset($_GET['barbero_id']) && trim($_GET['barbero_id']) !== '') {
         $barbero_id = intval($_GET['barbero_id']);
         $sql .= " AND barbero_id = $barbero_id";
     }

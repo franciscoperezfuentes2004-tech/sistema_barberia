@@ -1386,7 +1386,7 @@
           let currentGroup = null;
 
           json.data.forEach(dia => {
-            const isToday = dia.dia_semana === hoy;
+            const isToday = Number(dia.dia_semana) === hoy;
             let statusHtml = '';
             
             if (dia.activo == 1) {
