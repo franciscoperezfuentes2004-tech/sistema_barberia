@@ -135,8 +135,8 @@ if ($resultado) {
                     if ($disp) $slots_disponibles++;
                 }
             }
-            
             $fila['slots_disponibles'] = $slots_disponibles;
+            $fila['disponible_hoy'] = $slots_disponibles > 0;
         }
         $datos[] = $fila;
     }
