@@ -1382,7 +1382,7 @@
 
               // Siempre agregar al modal de TODAS las reseñas
               const modalEl = document.createElement('div');
-              modalEl.className = 'r-card rv';
+              modalEl.className = 'r-card'; // Quitamos 'rv' para que no empiece invisible
               modalEl.style.width = '100%';
               modalEl.innerHTML = htmlContent;
               allRevContainer.appendChild(modalEl);
