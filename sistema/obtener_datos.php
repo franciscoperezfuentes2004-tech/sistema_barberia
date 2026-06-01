@@ -78,22 +78,55 @@ if ($resultado) {
             $b_id = (int)$fila['id'];
             
             // Ver si trabaja ese día
-            $qH = mysqli_query($conexion, "SELECT activo FROM horarios WHERE barbero_id=$b_id AND dia_semana=$dia_sem");
+            $qH = mysqli_query($conexion, "SELECT activo, hora_inicio, hora_fin FROM horarios WHERE barbero_id=$b_id AND dia_semana=$dia_sem");
             $trabaja = false;
             if ($qH && $rowH = mysqli_fetch_assoc($qH)) {
                 $trabaja = (int)$rowH['activo'] === 1;
             } else {
                 // Fallback global
-                $qG = mysqli_query($conexion, "SELECT activo FROM horarios WHERE barbero_id=0 AND dia_semana=$dia_sem");
+                $qG = mysqli_query($conexion, "SELECT activo, hora_inicio, hora_fin FROM horarios WHERE barbero_id=0 AND dia_semana=$dia_sem");
                 if ($qG && $rowG = mysqli_fetch_assoc($qG)) {
                     $trabaja = (int)$rowG['activo'] === 1;
                 } else {
                     $trabaja = true;
                 }
             }
+
+            $slots_disponibles = 0;
+            if ($trabaja) {
+                $h_ini = $rowH['hora_inicio'] ?? ($rowG['hora_inicio'] ?? '09:00:00');
+                $h_fin = $rowH['hora_fin'] ?? ($rowG['hora_fin'] ?? '20:00:00');
+                
+                $citas = [];
+                $qC = mysqli_query($conexion, "SELECT hora_inicio, hora_fin FROM citas WHERE barbero_id=$b_id AND DATE(fecha_hora)='$f' AND estado NOT IN ('cancelada', 'no_asistio')");
+                if ($qC) {
+                    while ($rC = mysqli_fetch_assoc($qC)) $citas[] = $rC;
+                }
+                
+                $inicio_ts = strtotime($f . ' ' . $h_ini);
+                $fin_ts = strtotime($f . ' ' . $h_fin);
+                $hoy_ymd = date('Y-m-d');
+                $ahora_hi = date('H:i');
+                
+                for ($t = $inicio_ts; $t < $fin_ts; $t += 30 * 60) {
+                    $hora_str = date('H:i', $t);
+                    $hora_fin_str = date('H:i', $t + 30 * 60);
+                    
+                    // Si es hoy, ignorar slots pasados
+                    if ($f === $hoy_ymd && $hora_str <= $ahora_hi) continue;
+                    
+                    $disp = true;
+                    foreach ($citas as $c) {
+                        $c_ini = substr($c['hora_inicio'], 0, 5);
+                        $c_fin = substr($c['hora_fin'], 0, 5);
+                        if ($hora_str >= $c_ini && $hora_str < $c_fin) { $disp = false; break; }
+                        if ($c_ini >= $hora_str && $c_ini < $hora_fin_str) { $disp = false; break; }
+                    }
+                    if ($disp) $slots_disponibles++;
+                }
+            }
             
-            // Asignar slots falsos > 0 si trabaja, sino 0. La validación real hora por hora se hace en disponibilidad.php
-            $fila['slots_disponibles'] = $trabaja ? 10 : 0;
+            $fila['slots_disponibles'] = $slots_disponibles;
         }
         $datos[] = $fila;
     }

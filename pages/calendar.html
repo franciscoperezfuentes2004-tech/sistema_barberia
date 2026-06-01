@@ -256,6 +256,7 @@
       <div id="times-grid">
         <!-- JS generates timeslots here -->
       </div>
+      <div id="delay-msg" style="display:none; margin-top:15px; padding:12px; border:1px solid var(--gold); background:rgba(201,168,76,.1); color:var(--gold); border-radius:8px; font-size:.9rem; line-height:1.4;"></div>
     </section>
   </main>
 
@@ -423,9 +424,16 @@
       
       const durBadge = document.getElementById('dur-badge');
       if (durBadge) {
-        const slotsNecesarios = Math.max(1, Math.ceil(state.duracion / 30));
+        const slotsNecesarios = calcSlots(state.duracion);
         durBadge.textContent = `Requiere ${state.duracion} min (${slotsNecesarios} bloque${slotsNecesarios > 1 ? 's' : ''} de 30 min)`;
       }
+    }
+
+    function calcSlots(duracion) {
+      let b = Math.floor(duracion / 30);
+      let rem = duracion % 30;
+      if (rem > 10 || b === 0) b++;
+      return b;
     }
 
     function decodeHtml(html) {
@@ -516,7 +524,9 @@
 
     function renderHorarios(slots) {
       const grid = document.getElementById('times-grid');
+      const delayMsg = document.getElementById('delay-msg');
       grid.innerHTML = '';
+      if (delayMsg) delayMsg.style.display = 'none';
       
       // Si la fecha seleccionada es HOY, deshabilitar horarios que ya pasaron
       const ahora = new Date();
@@ -546,7 +556,7 @@
             document.querySelectorAll('.time-slot').forEach(c => c.classList.remove('selected', 'covered'));
             
             // Calcular cuántos bloques de 30 min ocupa el servicio
-            const slotsNecesarios = Math.max(1, Math.ceil(state.duracion / 30));
+            const slotsNecesarios = calcSlots(state.duracion);
             for(let i = 0; i < slotsNecesarios; i++) {
               const sibling = grid.children[idx + i];
               if(sibling && !sibling.classList.contains('disabled')) {
@@ -556,6 +566,14 @@
             }
             
             state.horaInicio = s.hora_inicio;
+            
+            if (s.retraso_minutos > 0) {
+              delayMsg.style.display = 'block';
+              delayMsg.innerHTML = `⚠️ <b>Aviso:</b> El barbero podría terminar la cita anterior con un retraso de <b>aproximadamente ${Math.ceil(s.retraso_minutos)} minutos</b>. Tendría que esperar ese tiempo.`;
+            } else {
+              delayMsg.style.display = 'none';
+            }
+
             updateCTA();
           };
         } else {
@@ -567,7 +585,7 @@
       // Mostrar indicador de duración
       const durBadge = document.getElementById('dur-badge');
       if (durBadge) {
-        const slotsNecesarios = Math.max(1, Math.ceil(state.duracion / 30));
+        const slotsNecesarios = calcSlots(state.duracion);
         durBadge.textContent = `Requiere ${state.duracion} min (${slotsNecesarios} bloque${slotsNecesarios > 1 ? 's' : ''} de 30 min)`;
       }
     }

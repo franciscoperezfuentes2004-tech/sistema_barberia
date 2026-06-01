@@ -63,25 +63,34 @@ for ($t = $inicio_ts; $t < $fin_ts; $t += 30 * 60) {
     
     // Comprobar colisiones
     $disponible = true;
+    $retraso_minutos = 0;
+    
     foreach ($citas as $c) {
-        $c_ini = substr($c['hora_inicio'], 0, 5);
-        $c_fin = substr($c['hora_fin'], 0, 5);
+        $ts_ini = strtotime($fecha . ' ' . substr($c['hora_inicio'], 0, 5));
+        $ts_fin = strtotime($fecha . ' ' . substr($c['hora_fin'], 0, 5));
+        $ts_slot_ini = $t;
+        $ts_slot_fin = $t + 30 * 60;
         
-        // Si el slot se superpone con una cita
-        if ($hora_str >= $c_ini && $hora_str < $c_fin) {
-            $disponible = false;
-            break;
-        }
-        // Si el slot contiene una cita (ej. cita de 15 mins dentro del slot, raro pero posible)
-        if ($c_ini >= $hora_str && $c_ini < $hora_fin_str) {
-            $disponible = false;
-            break;
+        // Comprobar si hay superposición
+        if ($ts_ini < $ts_slot_fin && $ts_fin > $ts_slot_ini) {
+            $overlap_start = max($ts_ini, $ts_slot_ini);
+            $overlap_end = min($ts_fin, $ts_slot_fin);
+            $overlap_mins = ($overlap_end - $overlap_start) / 60;
+            
+            // Si la cita previa invade este slot por <= 10 mins
+            if ($ts_ini <= $ts_slot_ini && $ts_fin <= $ts_slot_ini + 10 * 60) {
+                $retraso_minutos = $overlap_mins;
+            } else {
+                $disponible = false;
+                break;
+            }
         }
     }
     
     $slots[] = [
         "hora_inicio" => $hora_str,
-        "disponible" => $disponible
+        "disponible" => $disponible,
+        "retraso_minutos" => $retraso_minutos
     ];
 }
 
