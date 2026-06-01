@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#0F0F0F"/>
   <title>Mi Agenda — Barbería Premium</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <style>
     /* â•â•â•â•â•â•â•â•â•â•â• TOKENS â•â•â•â•â•â•â•â•â•â•â• */
     :root {
@@ -17,7 +17,7 @@
       --red:#E74C3C; --red-bg:rgba(231,76,60,.1); --red-border:rgba(231,76,60,.25);
       --blue:#3498DB; --blue-bg:rgba(52,152,219,.1); --blue-border:rgba(52,152,219,.25);
       --gold-bg:rgba(201,168,76,.1); --gold-border:rgba(201,168,76,.25);
-      --serif:'Playfair Display',serif; --sans:'Inter',system-ui,sans-serif;
+      --serif:'Cinzel',serif; --sans:'Inter',system-ui,sans-serif;
       --tr:all .22s cubic-bezier(.4,0,.2,1);
       --gutter:16px;
     }
@@ -147,7 +147,11 @@
     /* ——————————— APPOINTMENT CARD ——————————— */
     .appt-card{
       margin:4px 0 4px 0;padding:14px;border-radius:14px;
-      background:var(--s2);border:1px solid var(--border);
+      background: linear-gradient(145deg, rgba(34,34,34,0.6), rgba(20,20,20,0.95));
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-top: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);
       transition:var(--tr);position:relative;overflow:hidden;
     }
     .appt-card::before{

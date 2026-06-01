@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Admin Dashboard — Barbería Premium</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     /* â•â•â•â•â•â•â•â•â•â•â• TOKENS â•â•â•â•â•â•â•â•â•â•â• */
     :root {
@@ -15,7 +15,7 @@
       --green:#27AE60; --green-bg:rgba(39,174,96,.1); --green-border:rgba(39,174,96,.25);
       --red:#E74C3C; --red-bg:rgba(231,76,60,.1); --red-border:rgba(231,76,60,.25);
       --blue:#3498DB; --blue-bg:rgba(52,152,219,.1); --blue-border:rgba(52,152,219,.25);
-      --serif:'Playfair Display',serif; --sans:'Inter',system-ui,sans-serif;
+      --serif:'Cinzel',serif; --sans:'Inter',system-ui,sans-serif;
       --tr:all .2s ease;
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -78,7 +78,14 @@
     @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
     /* â•â•â•â•â•â•â•â•â•â•â• COMPONENTS â•â•â•â•â•â•â•â•â•â•â• */
-    .card{background:var(--s1);border:1px solid var(--border);border-radius:16px;padding:24px}
+    .card {
+      background: linear-gradient(145deg, rgba(34,34,34,0.6), rgba(20,20,20,0.95));
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-top: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);
+      border-radius:24px;padding:24px;
+    }
     .card-title{font-size:1.1rem;font-weight:600;color:var(--bright);margin-bottom:16px;display:flex;align-items:center;gap:8px}
     
     .btn{
@@ -93,7 +100,14 @@
 
     /* â”€â”€ 1. AGENDA GLOBAL â”€â”€ */
     .agenda-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;min-width:900px}
-    .agenda-col{background:var(--s1);border:1px solid var(--border);border-radius:16px;display:flex;flex-direction:column;height:calc(100vh - 200px)}
+    .agenda-col{
+      background: linear-gradient(145deg, rgba(34,34,34,0.6), rgba(20,20,20,0.95));
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-top: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);
+      border-radius:24px;display:flex;flex-direction:column;height:calc(100vh - 200px);
+    }
     .col-header{
       padding:16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;
       background:rgba(255,255,255,.02);border-radius:16px 16px 0 0;
