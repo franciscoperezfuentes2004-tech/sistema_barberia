@@ -358,8 +358,7 @@
       }, 30000);
     }
 
-    let globalApertura = 9;
-    let globalCierre = 20;
+    let globalHorariosMap = null;
 
     /* ——— Load Horarios ——— */
     async function loadHorarios() {
@@ -370,12 +369,11 @@
           horariosMap = jsonH.data;
         }
         
-        // Fetch admin global settings (ajustes) para los horarios dinámicos
-        const resA = await fetch(`${API}/obtener_datos.php?tabla=ajustes`);
-        const jsonA = await resA.json();
-        if (jsonA.success && jsonA.data && jsonA.data.horario_apertura) {
-          globalApertura = parseInt(jsonA.data.horario_apertura.substring(0, 2), 10);
-          globalCierre = parseInt(jsonA.data.horario_cierre.substring(0, 2), 10);
+        // Fetch admin global settings (horarios generales con barbero_id=0)
+        const resG = await fetch(`${API}/obtener_datos.php?tabla=horarios&barbero_id=0`);
+        const jsonG = await resG.json();
+        if (jsonG.success && jsonG.data) {
+          globalHorariosMap = jsonG.data;
         }
       } catch (e) {
         console.error('Error loading schedule', e);
@@ -387,8 +385,13 @@
       const diaSemana = d.getDay();
       
       let scheduleForDay = null;
-      if (Array.isArray(horariosMap)) {
+      if (Array.isArray(horariosMap) && horariosMap.length > 0) {
         scheduleForDay = horariosMap.find(s => s.dia_semana === diaSemana);
+      }
+
+      // Si el barbero no tiene un horario personalizado ese día, usamos el global (barbero 0)
+      if (!scheduleForDay && Array.isArray(globalHorariosMap)) {
+        scheduleForDay = globalHorariosMap.find(s => s.dia_semana === diaSemana);
       }
       
       if (scheduleForDay) {
@@ -398,13 +401,14 @@
         } else {
            HORA_INICIO = parseInt(scheduleForDay.hora_inicio.substring(0,2), 10);
            HORA_FIN = parseInt(scheduleForDay.hora_fin.substring(0,2), 10);
+           // Si cierra a y media (ej. 19:30), sumamos 1 a HORA_FIN para que el bucle dibuje el slot
            if (scheduleForDay.hora_fin.substring(3,5) !== '00') {
              HORA_FIN += 1;
            }
         }
       } else {
-        HORA_INICIO = globalApertura; // Utiliza la configuración dinámica del admin
-        HORA_FIN = globalCierre;
+        HORA_INICIO = 9; 
+        HORA_FIN = 20;
       }
     }
 
