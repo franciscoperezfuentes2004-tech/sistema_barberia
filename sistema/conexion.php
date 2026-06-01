@@ -150,13 +150,21 @@ $query_citas = "CREATE TABLE IF NOT EXISTS `citas` (
     `cliente_nombre` VARCHAR(150) NOT NULL,
     `cliente_telefono` VARCHAR(20) NULL,
     `barbero_id` INT NOT NULL,
-    `servicio_id` INT NOT NULL,
+    `servicios_ids` VARCHAR(255) NOT NULL,
     `fecha_hora` DATETIME NOT NULL,
+    `hora_inicio` TIME NOT NULL,
+    `hora_fin` TIME NOT NULL,
     `estado` VARCHAR(50) DEFAULT 'pendiente',
     `creado_en` DATETIME DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
 if (!mysqli_query($conexion, $query_citas)) error_log("Auto-Migración Fallida en 'citas': " . mysqli_error($conexion));
+
+// Migrar columnas en caso de que ya exista la tabla vieja
+@mysqli_query($conexion, "ALTER TABLE `citas` ADD COLUMN `hora_inicio` TIME NOT NULL DEFAULT '00:00:00'");
+@mysqli_query($conexion, "ALTER TABLE `citas` ADD COLUMN `hora_fin` TIME NOT NULL DEFAULT '00:00:00'");
+@mysqli_query($conexion, "ALTER TABLE `citas` ADD COLUMN `servicios_ids` VARCHAR(255) NOT NULL DEFAULT '[]'");
+
 
 // Tabla Reseñas
 $query_resenas = "CREATE TABLE IF NOT EXISTS `resenas` (

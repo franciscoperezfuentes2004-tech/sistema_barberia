@@ -233,20 +233,10 @@
       }
 
       try {
-        // 1. Crear/Buscar Cliente
-        const resCl = await fetch(`${API}/guardar_cliente.php`, {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({ nombre, telefono, email: email || null })
-        });
-        const jsonCl = await resCl.json();
-        if(!resCl.ok) throw new Error(jsonCl.error || 'Error al guardar cliente');
-        
-        const clienteId = jsonCl.data.id;
-
-        // 2. Crear Cita
         const bodyCita = {
-          cliente_id: clienteId,
+          nombre: nombre,
+          telefono: telefono,
+          email: email,
           barbero_id: step2.barberoId,
           servicios: step1.serviciosIds,
           fecha: step2.fecha,
@@ -259,7 +249,7 @@
           body: JSON.stringify(bodyCita)
         });
         const jsonCita = await resCita.json();
-        if(!resCita.ok) throw new Error(jsonCita.error || 'Error al crear la cita');
+        if(!resCita.ok || !jsonCita.success) throw new Error(jsonCita.error || jsonCita.message || 'Error al crear la cita');
 
         // Éxito
         sessionStorage.removeItem('bb_step1');
