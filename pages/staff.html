@@ -382,20 +382,24 @@
     
     function updateScheduleForDate(isoDate) {
       const d = new Date(isoDate + 'T12:00:00');
-      const diaSemana = d.getDay();
+      const diaSemana = d.getDay(); // número: 0=Dom, 1=Lun, etc.
       
       let scheduleForDay = null;
+
+      // IMPORTANTE: MySQL devuelve dia_semana como STRING ("1"), getDay() es NUMBER (1).
+      // Usamos Number() para que la comparación funcione correctamente.
       if (Array.isArray(horariosMap) && horariosMap.length > 0) {
-        scheduleForDay = horariosMap.find(s => s.dia_semana === diaSemana);
+        scheduleForDay = horariosMap.find(s => Number(s.dia_semana) === diaSemana);
       }
 
       // Si el barbero no tiene un horario personalizado ese día, usamos el global (barbero 0)
       if (!scheduleForDay && Array.isArray(globalHorariosMap)) {
-        scheduleForDay = globalHorariosMap.find(s => s.dia_semana === diaSemana);
+        scheduleForDay = globalHorariosMap.find(s => Number(s.dia_semana) === diaSemana);
       }
       
       if (scheduleForDay) {
-        if (scheduleForDay.activo === 0 || scheduleForDay.activo === false) {
+        // activo también viene como string "0" o "1" desde MySQL
+        if (Number(scheduleForDay.activo) === 0) {
            HORA_INICIO = null;
            HORA_FIN = null;
         } else {
