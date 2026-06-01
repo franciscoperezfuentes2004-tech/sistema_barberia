@@ -10,7 +10,7 @@
   <style>
     /* â•â•â•â•â•â•â•â•â•â•â• TOKENS â•â•â•â•â•â•â•â•â•â•â• */
     :root {
-      --gold:#C9A84C; --gold-l:#E8C97A; --gold-d:#9A7B32;
+      --gold:#C9A84C; --gold-l:#E8C97A; --gold-d:#9A7B32; --gradient-gold: linear-gradient(135deg, var(--gold-d), var(--gold), var(--gold-l));
       --bg:#0F0F0F; --s1:#181818; --s2:#222; --s3:#2A2A2A; --border:#333;
       --muted:#888; --base:#D4D4D4; --bright:#F5F0E8;
       --green:#27AE60; --green-bg:rgba(39,174,96,.1); --green-border:rgba(39,174,96,.25);
@@ -309,9 +309,13 @@
       <button onclick="closeCalendarModal()" style="position:absolute; top:16px; right:20px; background:rgba(255,255,255,0.1); border:none; color:var(--bright); width:32px; height:32px; border-radius:50%; font-size:1.2rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background 0.2s;">&times;</button>
       
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:28px; margin-top:36px;">
-        <button id="cal-prev" onclick="changeMonth(-1)" style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:var(--bright); border-radius:12px; width:40px; height:40px; cursor:pointer; transition:all 0.2s; font-size:1.1rem; display:flex; align-items:center; justify-content:center;">&lt;</button>
-        <h3 id="cal-month-year" style="margin:0; background:var(--gradient-gold); -webkit-background-clip:text; -webkit-text-fill-color:transparent; font-family:var(--serif); font-size:1.6rem; font-weight:800; letter-spacing:0.5px;"></h3>
-        <button id="cal-next" onclick="changeMonth(1)" style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:var(--bright); border-radius:12px; width:40px; height:40px; cursor:pointer; transition:all 0.2s; font-size:1.1rem; display:flex; align-items:center; justify-content:center;">&gt;</button>
+        <button id="cal-prev" onclick="changeMonth(-1)" onmouseover="this.style.background='var(--s3)';this.style.borderColor='var(--gold)'" onmouseout="this.style.background='var(--s2)';this.style.borderColor='var(--border)'" style="background:var(--s2); border:1px solid var(--border); color:var(--gold); border-radius:50%; width:44px; height:44px; cursor:pointer; transition:var(--tr); display:flex; align-items:center; justify-content:center;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:22px;height:22px;"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <h3 id="cal-month-year" style="margin:0; color:var(--gold); font-family:var(--serif); font-size:1.5rem; font-weight:800; letter-spacing:0.5px; text-transform:capitalize;"></h3>
+        <button id="cal-next" onclick="changeMonth(1)" onmouseover="this.style.background='var(--s3)';this.style.borderColor='var(--gold)'" onmouseout="this.style.background='var(--s2)';this.style.borderColor='var(--border)'" style="background:var(--s2); border:1px solid var(--border); color:var(--gold); border-radius:50%; width:44px; height:44px; cursor:pointer; transition:var(--tr); display:flex; align-items:center; justify-content:center;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:22px;height:22px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
       </div>
 
       <div style="display:grid; grid-template-columns:repeat(7, 1fr); gap:8px; text-align:center; font-size:0.8rem; font-weight:700; color:var(--muted); margin-bottom:16px; text-transform:uppercase; letter-spacing:1px;">
