@@ -116,7 +116,7 @@ if ($logged_in) {
 
     ob_clean();
     http_response_code(200);
-    echo json_encode(["status" => "success", "message" => "¡Bienvenido!", "token" => $jwt]);
+    echo json_encode(["status" => "success", "message" => "¡Bienvenido!", "token" => $jwt, "rol" => $user_data['rol']]);
 } else {
     ob_clean();
     http_response_code(401);
