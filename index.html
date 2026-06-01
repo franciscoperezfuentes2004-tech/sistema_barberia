@@ -1401,10 +1401,10 @@
               // Diseño especial plano y moderno SOLO para la ventana emergente
               const htmlContentModal = `
                 <div style="border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 22px; margin-bottom: 22px;">
-                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 1.05rem; font-weight: 700; color: var(--bright); white-space: nowrap;">${nombre}</span>
-                    <div class="t-stars" style="color:var(--gold); font-size: 0.95rem; letter-spacing: 1px; flex: 1; text-align: center; padding: 0 10px;">${stars}</div>
-                    <div style="font-size: 0.8rem; color: var(--muted); white-space: nowrap;">${date}</div>
+                  <div style="display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; margin-bottom: 12px; gap: 10px;">
+                    <span style="font-size: 1.05rem; font-weight: 700; color: var(--bright); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${nombre}</span>
+                    <div class="t-stars" style="color:var(--gold); font-size: 0.95rem; letter-spacing: 1px; text-align: center;">${stars}</div>
+                    <div style="font-size: 0.8rem; color: var(--muted); white-space: nowrap; text-align: right;">${date}</div>
                   </div>
                   <p style="font-size: 0.95rem; line-height: 1.6; color: var(--muted); margin: 0; text-align: justify;">"${rev.comentario || 'Excelente servicio.'}"</p>
                 </div>
