@@ -499,6 +499,12 @@
       }
 
       try {
+        // Asegurarnos de que los horarios estén frescos antes de pintar
+        await loadHorarios();
+        if (selectedDate) {
+          updateScheduleForDate(selectedDate);
+        }
+
         const res = await fetch(`${API}/obtener_datos.php?tabla=citas&barbero_id=${BARBERO_ID}&fecha=${selectedDate}`, { cache: 'no-store' });
         const json = await res.json();
         citasDelDia = json.data || [];
