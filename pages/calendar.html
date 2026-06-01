@@ -228,36 +228,103 @@
         </div>
       </nav>
 
-    <!-- 1. Fechas -->
-    <section style="margin-bottom:32px">
-      <h2 class="sec-title" style="margin-bottom:12px">1. Elige una fecha</h2>
-      <button id="btn-open-calendar" class="cta-btn" style="width:100%; max-width:300px; margin:0; background:var(--s1); border:1px solid var(--border); color:var(--bright); font-weight:600;" onclick="openCalendarModal()">
-        🗓️ Escoger el día
-      </button>
-      <div id="selected-date-display" style="margin-top:16px; font-size:1.1rem; color:var(--gold); font-weight:700; display:none; align-items:center; gap:8px;">
-        <!-- JS fills this -->
-      </div>
-    </section>
+    <style>
+      .booking-layout {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      @media (min-width: 992px) {
+        .booking-layout {
+          grid-template-columns: 1fr 1fr;
+          gap: 32px;
+          align-items: start;
+        }
+      }
+      .panel-card {
+        background: var(--s2);
+        border: 1px solid rgba(255,255,255,0.05);
+        border-radius: 24px;
+        padding: 24px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      }
+      .panel-title {
+        font-family: var(--serif);
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--bright);
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .panel-title-num {
+        background: rgba(201,168,76,0.15);
+        color: var(--gold);
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-size: 0.9rem;
+        font-family: var(--sans);
+      }
+      .empty-state {
+        text-align: center;
+        padding: 40px 20px;
+        color: var(--muted);
+        border: 1px dashed rgba(255,255,255,0.1);
+        border-radius: 16px;
+        font-size: 0.9rem;
+      }
+    </style>
 
-    <!-- 2. Barberos (oculto hasta elegir fecha) -->
-    <section id="sec-barberos" style="margin-bottom:32px; display:none; opacity:0; transition:opacity .3s">
-      <h2 class="sec-title" style="margin-bottom:12px">2. Elige tu barbero</h2>
-      <div id="barbers-grid">
-        <!-- JS generates barbers here -->
-      </div>
-    </section>
+    <div class="booking-layout">
+      <!-- Columna Izquierda: Fecha y Barbero -->
+      <div style="display: flex; flex-direction: column; gap: 24px;">
+        
+        <!-- 1. Fechas -->
+        <div class="panel-card">
+          <h2 class="panel-title"><span class="panel-title-num">1</span> Elige tu día</h2>
+          <button id="btn-open-calendar" class="cta-btn" style="width:100%; margin:0; background:var(--s1); border:1px solid var(--border); color:var(--bright); font-weight:600; box-shadow:none;" onclick="openCalendarModal()">
+            🗓️ Abrir Calendario
+          </button>
+          <div id="selected-date-display" style="margin-top:16px; font-size:1.1rem; color:var(--gold); font-weight:700; display:none; align-items:center; gap:8px; justify-content:center; background:rgba(201,168,76,0.1); padding:12px; border-radius:12px;">
+            <!-- JS fills this -->
+          </div>
+        </div>
 
-    <!-- 3. Horarios (oculto hasta elegir barbero) -->
-    <section id="sec-horarios" style="margin-bottom:32px; display:none; opacity:0; transition:opacity .3s">
-      <div class="sec-title-row">
-        <h2 class="sec-title">3. Horarios disponibles</h2>
-        <span id="dur-badge" style="font-size:.7rem;color:var(--muted)"></span>
+        <!-- 2. Barberos -->
+        <div class="panel-card" id="sec-barberos" style="display:none; opacity:0; transition:opacity .3s">
+          <h2 class="panel-title"><span class="panel-title-num">2</span> Elige a tu barbero</h2>
+          <div id="barbers-grid">
+            <!-- JS generates barbers here -->
+          </div>
+        </div>
       </div>
-      <div id="times-grid">
-        <!-- JS generates timeslots here -->
+
+      <!-- Columna Derecha: Horarios -->
+      <div class="panel-card" style="min-height: 400px; display: flex; flex-direction: column;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+          <h2 class="panel-title" style="margin-bottom:0;"><span class="panel-title-num">3</span> Horarios disponibles</h2>
+          <span id="dur-badge" style="font-size:.7rem;color:var(--muted);background:var(--s1);padding:4px 10px;border-radius:99px;display:none;"></span>
+        </div>
+        
+        <div id="horarios-empty-state" class="empty-state" style="flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+          <div style="font-size: 2rem; margin-bottom: 12px; opacity: 0.5;">🕒</div>
+          <p>Selecciona una fecha y un barbero primero<br>para ver los horarios disponibles.</p>
+        </div>
+
+        <section id="sec-horarios" style="display:none; opacity:0; transition:opacity .3s">
+          <div id="times-grid">
+            <!-- JS generates timeslots here -->
+          </div>
+          <div id="delay-msg" style="display:none; margin-top:15px; padding:12px; border:1px solid var(--gold); background:rgba(201,168,76,.1); color:var(--gold); border-radius:8px; font-size:.9rem; line-height:1.4;"></div>
+        </section>
       </div>
-      <div id="delay-msg" style="display:none; margin-top:15px; padding:12px; border:1px solid var(--gold); background:rgba(201,168,76,.1); color:var(--gold); border-radius:8px; font-size:.9rem; line-height:1.4;"></div>
-    </section>
+
+    </div>
   </main>
 
   <div class="bottom-cta">
@@ -415,6 +482,8 @@
       display.style.display = 'flex';
       
       document.getElementById('sec-horarios').style.display = 'none';
+      const emptyState = document.getElementById('horarios-empty-state');
+      if(emptyState) emptyState.style.display = 'flex';
       document.getElementById('times-grid').innerHTML = '';
       
       document.getElementById('sec-barberos').style.display = 'block';
@@ -505,6 +574,9 @@
       state.barberoNombre = nombre;
       state.horaInicio = null;
       updateCTA();
+      
+      const emptyState = document.getElementById('horarios-empty-state');
+      if(emptyState) emptyState.style.display = 'none';
       
       const secH = document.getElementById('sec-horarios');
       secH.style.display = 'block';
