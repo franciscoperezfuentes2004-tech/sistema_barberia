@@ -1137,9 +1137,10 @@
             
             // Llenar modal completo
             json.data.forEach(img => {
+              const imgSrc = img.ruta_imagen && img.ruta_imagen.startsWith('data:') ? img.ruta_imagen : '../' + (img.ruta_imagen || img.imagen);
               fullGrid.innerHTML += `
                 <div class="gallery-item">
-                  <img src="../${img.imagen}" alt="${img.titulo || 'Galeria'}" loading="lazy">
+                  <img src="${imgSrc}" alt="${img.titulo || 'Galeria'}" loading="lazy">
                   <div class="gallery-overlay">
                     <button class="btn btn-primary" style="background:var(--red); padding:8px; border:none;" onclick="deleteGalleryImage('${img.id}')" title="Eliminar">
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
@@ -1152,9 +1153,10 @@
             // Llenar grid limitado en la tarjeta
             const displayData = total > 10 ? json.data.slice(0, maxItems) : json.data;
             displayData.forEach(img => {
+              const imgSrc = img.ruta_imagen && img.ruta_imagen.startsWith('data:') ? img.ruta_imagen : '../' + (img.ruta_imagen || img.imagen);
               grid.innerHTML += `
                 <div class="gallery-item">
-                  <img src="../${img.imagen}" alt="${img.titulo || 'Galeria'}" loading="lazy">
+                  <img src="${imgSrc}" alt="${img.titulo || 'Galeria'}" loading="lazy">
                   <div class="gallery-overlay">
                     <button class="btn btn-primary" style="background:var(--red); padding:8px; border:none;" onclick="deleteGalleryImage('${img.id}')" title="Eliminar">
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>

@@ -71,6 +71,30 @@ $resultado = mysqli_query($conexion, $sql);
 $datos = [];
 if ($resultado) {
     while ($fila = mysqli_fetch_assoc($resultado)) {
+        // Calcular slots si se pide barberos y fecha
+        if ($tabla === 'barberos' && isset($_GET['fecha'])) {
+            $f = mysqli_real_escape_string($conexion, trim($_GET['fecha']));
+            $dia_sem = (int)date('w', strtotime($f));
+            $b_id = (int)$fila['id'];
+            
+            // Ver si trabaja ese día
+            $qH = mysqli_query($conexion, "SELECT activo FROM horarios WHERE barbero_id=$b_id AND dia_semana=$dia_sem");
+            $trabaja = false;
+            if ($qH && $rowH = mysqli_fetch_assoc($qH)) {
+                $trabaja = (int)$rowH['activo'] === 1;
+            } else {
+                // Fallback global
+                $qG = mysqli_query($conexion, "SELECT activo FROM horarios WHERE barbero_id=0 AND dia_semana=$dia_sem");
+                if ($qG && $rowG = mysqli_fetch_assoc($qG)) {
+                    $trabaja = (int)$rowG['activo'] === 1;
+                } else {
+                    $trabaja = true;
+                }
+            }
+            
+            // Asignar slots falsos > 0 si trabaja, sino 0. La validación real hora por hora se hace en disponibilidad.php
+            $fila['slots_disponibles'] = $trabaja ? 10 : 0;
+        }
         $datos[] = $fila;
     }
     mysqli_free_result($resultado);

@@ -1288,7 +1288,7 @@
               el.className = 'gi rv';
               el.style.transitionDelay = `${delay}s`;
               
-              const imgSrc = img.imagen || 'assets/img/hero-bg.png';
+              const imgSrc = img.ruta_imagen && img.ruta_imagen.startsWith('data:') ? img.ruta_imagen : (img.ruta_imagen || img.imagen || 'assets/img/hero-bg.png');
               el.innerHTML = `
                 <img src="${imgSrc}" alt="${img.titulo || 'Galería'}" loading="lazy" onerror="this.src='assets/img/hero-bg.png'"/>
                 ${img.titulo ? `<div class="gi-lbl">${img.titulo}</div>` : ''}
