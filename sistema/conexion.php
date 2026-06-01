@@ -8,14 +8,16 @@
 // ─── 1. CREDENCIALES EXACTAS DE PRODUCCIÓN PÚBLICA (RAILWAY) ──────
 $db_host     = "zephyr.proxy.rlwy.net";
 $db_user     = "root";
-$db_password = "CFbVHwFQTWoAQWguiIHmPjRxmzwiLENb";
-$db_name     = "railway";
-$db_port     = "56694";
+$db_password = "CFbVHwFQTWoAQWguiIHmPjRxmzwiLENb"; // Modificar con credenciales reales
+$db_name     = "railway";                 // Modificar
+$db_port     = "56694"; 
 
-// ─── 2. ESTABLECER LA CONEXIÓN Y DESHABILITAR REPORTES EN PANTALLA ─
+// Configurar zona horaria local para evitar saltos de fecha UTC
+date_default_timezone_set('America/Mexico_City');
+
 mysqli_report(MYSQLI_REPORT_OFF);
 
-$conexion = @mysqli_connect($db_host, $db_user, $db_password, $db_name, $db_port);
+$conexion = mysqli_connect($db_host, $db_user, $db_password, $db_name, $db_port);
 
 if (!$conexion) {
     error_log("Error crítico de conexión a la BD: " . mysqli_connect_error());
@@ -110,6 +112,9 @@ foreach ($columnas_ajustes as $alter) {
 @mysqli_query($conexion, "ALTER TABLE `servicios` ADD COLUMN `activo` TINYINT(1) DEFAULT 1");
 // Cambiar campo imagen de servicios a LONGTEXT para soportar Base64
 @mysqli_query($conexion, "ALTER TABLE `servicios` MODIFY COLUMN `imagen` LONGTEXT NULL");
+
+// Auto-migración de 'ruta_imagen' en 'galeria' a LONGTEXT para soportar Base64
+@mysqli_query($conexion, "ALTER TABLE `galeria` MODIFY COLUMN `ruta_imagen` LONGTEXT NOT NULL");
 
 // Tabla Barberos
 $query_barberos = "CREATE TABLE IF NOT EXISTS `barberos` (
