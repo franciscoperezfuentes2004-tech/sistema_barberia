@@ -1319,7 +1319,7 @@
           const statRating = document.getElementById('stat-rating');
           if (statRating) {
             if (json.data.length > 0) {
-              const totalEstrellas = json.data.reduce((sum, rev) => sum + (parseInt(rev.estrellas) || 5), 0);
+              const totalEstrellas = json.data.reduce((sum, rev) => sum + (parseInt(rev.calificacion) || 5), 0);
               const promedio = (totalEstrellas / json.data.length).toFixed(1);
               statRating.textContent = promedio + '★';
             } else {
