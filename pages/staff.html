@@ -373,9 +373,9 @@
         // Fetch admin global settings (ajustes) para los horarios dinámicos
         const resA = await fetch(`${API}/obtener_datos.php?tabla=ajustes`);
         const jsonA = await resA.json();
-        if (jsonA && jsonA.horario_apertura) {
-          globalApertura = parseInt(jsonA.horario_apertura.substring(0, 2), 10);
-          globalCierre = parseInt(jsonA.horario_cierre.substring(0, 2), 10);
+        if (jsonA.success && jsonA.data && jsonA.data.horario_apertura) {
+          globalApertura = parseInt(jsonA.data.horario_apertura.substring(0, 2), 10);
+          globalCierre = parseInt(jsonA.data.horario_cierre.substring(0, 2), 10);
         }
       } catch (e) {
         console.error('Error loading schedule', e);
