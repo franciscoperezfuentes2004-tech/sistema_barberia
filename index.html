@@ -932,7 +932,20 @@
   <div id="allReviewsModal" class="modal">
     <div class="modal-content" style="max-width:600px; max-height:80vh; overflow-y:auto; padding-right:15px">
       <button class="modal-close" onclick="document.getElementById('allReviewsModal').classList.remove('active')">✖</button>
-      <h3 style="color:var(--bright);margin-bottom:20px;font-family:var(--serif);font-size:1.6rem">Todas las Reseñas</h3>
+      
+      <div style="text-align: center; margin-bottom: 25px;">
+        <h3 style="color:var(--bright);font-family:var(--serif);font-size:1.8rem;margin-bottom:12px;">Experiencia de Clientes</h3>
+        
+        <!-- Creative Separator -->
+        <div style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 12px;">
+          <div style="height: 1px; background: linear-gradient(90deg, transparent, var(--gold)); width: 80px;"></div>
+          <div style="color: var(--gold); font-size: 1.2rem;">✦</div>
+          <div style="height: 1px; background: linear-gradient(270deg, transparent, var(--gold)); width: 80px;"></div>
+        </div>
+        
+        <p id="all-reviews-subtitle" style="color:var(--muted);font-size:0.85rem;margin:0;">Cargando reseñas...</p>
+      </div>
+
       <div id="all-reviews-container" style="display:flex; flex-direction:column; gap:15px;">
         <!-- Llenado dinámicamente -->
       </div>
@@ -1356,6 +1369,11 @@
             const maxVisible = 6;
             const hasMore = json.data.length > maxVisible;
 
+            const allRevSubtitle = document.getElementById('all-reviews-subtitle');
+            if (allRevSubtitle) {
+              allRevSubtitle.textContent = `Basado en ${json.data.length} opiniones reales`;
+            }
+
             json.data.forEach((rev, idx) => {
               const calificacion = parseInt(rev.calificacion) || 5;
               const stars = '★'.repeat(calificacion) + '☆'.repeat(5 - calificacion);
@@ -1382,15 +1400,15 @@
 
               // Diseño especial plano y moderno SOLO para la ventana emergente
               const htmlContentModal = `
-                <div style="border-bottom: 1px solid var(--border); padding-bottom: 20px; margin-bottom: 5px;">
-                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                      <div class="t-stars" style="color:var(--gold); font-size: 1.1rem;">${stars}</div>
+                <div style="border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 22px; margin-bottom: 22px;">
+                  <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+                    <div style="display: flex; flex-direction: column; gap: 4px;">
+                      <span style="font-size: 1.05rem; font-weight: 700; color: var(--bright);">${nombre}</span>
+                      <div class="t-stars" style="color:var(--gold); font-size: 0.95rem; letter-spacing: 1px;">${stars}</div>
                     </div>
-                    <div style="font-size: 0.75rem; color: var(--muted);">${date}</div>
+                    <div style="font-size: 0.8rem; color: var(--muted); padding-top: 4px;">${date}</div>
                   </div>
-                  <div style="font-size: 0.9rem; font-weight: 600; color: var(--bright); margin-bottom: 8px;">${nombre}</div>
-                  <p style="font-size: 0.95rem; line-height: 1.5; color: var(--bright); margin: 0;">${rev.comentario || 'Excelente servicio.'}</p>
+                  <p style="font-size: 0.95rem; line-height: 1.6; color: var(--muted); margin: 0; text-align: justify;">"${rev.comentario || 'Excelente servicio.'}"</p>
                 </div>
               `;
 
