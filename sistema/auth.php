@@ -123,5 +123,4 @@ if ($logged_in) {
     echo json_encode(["status" => "error", "message" => "Credenciales incorrectas."]);
 }
 
-mysqli_stmt_close($stmt);
 mysqli_close($conexion);
