@@ -1334,10 +1334,19 @@
               revContainer.innerHTML = '<p style="color:var(--muted)">Aún no hay reseñas. ¡Sé el primero en dejar una!</p>';
               return;
             }
+            
+            // Si hay más de 6 reseñas, preparamos el botón
+            const maxVisible = 6;
+            const hasMore = json.data.length > maxVisible;
+
             json.data.forEach((rev, idx) => {
               const delay = 0.05 * (idx + 1);
               const el = document.createElement('blockquote');
-              el.className = 'r-card rv';
+              // Si pasa de maxVisible, lo ocultamos por defecto
+              const isHidden = idx >= maxVisible;
+              el.className = 'r-card rv' + (isHidden ? ' hidden-review' : '');
+              if (isHidden) el.style.display = 'none'; // oculto inicialmente
+              
               el.setAttribute('role', 'listitem');
               el.style.transitionDelay = `${delay}s`;
               
@@ -1364,8 +1373,34 @@
                 </div>
               `;
               revContainer.appendChild(el);
-              obs.observe(el);
+              if (!isHidden) obs.observe(el);
             });
+
+            // Agregar botón "Ver Más" si aplica
+            if (hasMore) {
+              const btnContainer = document.createElement('div');
+              btnContainer.style.textAlign = 'center';
+              btnContainer.style.marginTop = '20px';
+              btnContainer.style.gridColumn = '1 / -1'; // Para que abarque todo el ancho del grid
+              
+              const btnMore = document.createElement('button');
+              btnMore.className = 'btn-outline';
+              btnMore.textContent = 'Ver más reseñas';
+              btnMore.onclick = function() {
+                const hiddenRevs = revContainer.querySelectorAll('.hidden-review');
+                const isExpanding = hiddenRevs[0].style.display === 'none';
+                
+                hiddenRevs.forEach(r => {
+                  r.style.display = isExpanding ? 'block' : 'none';
+                  if (isExpanding) obs.observe(r); // Animar al aparecer
+                });
+                
+                this.textContent = isExpanding ? 'Ver menos reseñas' : 'Ver más reseñas';
+              };
+              
+              btnContainer.appendChild(btnMore);
+              revContainer.appendChild(btnContainer);
+            }
           }
         }
       } catch(e) { console.error('Error fetching reviews:', e); }
