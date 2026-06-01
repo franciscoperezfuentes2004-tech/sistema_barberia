@@ -519,7 +519,7 @@
       document.getElementById('selected-date-lbl').textContent = `${dias[d.getDay()]} ${d.getDate()} ${meses[d.getMonth()]}`;
     }
 
-    function openCalendarModal() {
+    window.openCalendarModal = function() {
       document.getElementById('calendar-modal').style.display = 'flex';
       if (selectedDate) {
         const parts = selectedDate.split('-');
@@ -529,11 +529,11 @@
       loadCalendarMonth(currentCalMonth, currentCalYear);
     }
 
-    function closeCalendarModal() {
+    window.closeCalendarModal = function() {
       document.getElementById('calendar-modal').style.display = 'none';
     }
 
-    function changeMonth(delta) {
+    window.changeMonth = function(delta) {
       currentCalMonth += delta;
       if (currentCalMonth > 12) {
         currentCalMonth = 1;
@@ -568,7 +568,7 @@
       }
     }
 
-    async function handleSelectDate(isodate) {
+    window.handleSelectDate = async function(isodate) {
       closeCalendarModal();
       selectedDate = isodate;
       updateDateLabel(isodate);
