@@ -927,6 +927,19 @@
   </div>
 
   <!-- ════════════════════════════════════════════
+       MODAL TODAS LAS RESEÑAS
+  ════════════════════════════════════════════ -->
+  <div id="allReviewsModal" class="modal">
+    <div class="modal-content" style="max-width:600px; max-height:80vh; overflow-y:auto; padding-right:15px">
+      <button class="modal-close" onclick="document.getElementById('allReviewsModal').classList.remove('active')">✖</button>
+      <h3 style="color:var(--bright);margin-bottom:20px;font-family:var(--serif);font-size:1.6rem">Todas las Reseñas</h3>
+      <div id="all-reviews-container" style="display:flex; flex-direction:column; gap:15px;">
+        <!-- Llenado dinámicamente -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════
        FOOTER
   ════════════════════════════════════════════ -->
   <footer role="contentinfo">
@@ -1328,28 +1341,22 @@
           }
 
           const revContainer = document.getElementById('public-reviews');
-          if (revContainer) {
+          const allRevContainer = document.getElementById('all-reviews-container');
+          
+          if (revContainer && allRevContainer) {
             revContainer.innerHTML = '';
+            allRevContainer.innerHTML = '';
+            
             if (json.data.length === 0) {
               revContainer.innerHTML = '<p style="color:var(--muted)">Aún no hay reseñas. ¡Sé el primero en dejar una!</p>';
+              allRevContainer.innerHTML = '<p style="color:var(--muted)">No hay reseñas.</p>';
               return;
             }
             
-            // Si hay más de 6 reseñas, preparamos el botón
             const maxVisible = 6;
             const hasMore = json.data.length > maxVisible;
 
             json.data.forEach((rev, idx) => {
-              const delay = 0.05 * (idx + 1);
-              const el = document.createElement('blockquote');
-              // Si pasa de maxVisible, lo ocultamos por defecto
-              const isHidden = idx >= maxVisible;
-              el.className = 'r-card rv' + (isHidden ? ' hidden-review' : '');
-              if (isHidden) el.style.display = 'none'; // oculto inicialmente
-              
-              el.setAttribute('role', 'listitem');
-              el.style.transitionDelay = `${delay}s`;
-              
               const calificacion = parseInt(rev.calificacion) || 5;
               const stars = '★'.repeat(calificacion) + '☆'.repeat(5 - calificacion);
               
@@ -1361,9 +1368,9 @@
               const dateObj = new Date(rev.creado_en);
               const date = isNaN(dateObj) ? '' : dateObj.toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
               
-              el.innerHTML = `
+              const htmlContent = `
                 <div class="t-stars" aria-label="${calificacion} de 5 estrellas" style="color:var(--gold);margin-bottom:10px">${stars}</div>
-                <p class="r-q">"${rev.comentario || 'Excelente servicio.'}"</p>
+                <p class="r-q" style="margin-bottom:15px">"${rev.comentario || 'Excelente servicio.'}"</p>
                 <div class="r-author">
                   <div class="r-av" style="background:${color};color:#fff" aria-hidden="true">${initial}</div>
                   <div>
@@ -1372,8 +1379,24 @@
                   </div>
                 </div>
               `;
-              revContainer.appendChild(el);
-              if (!isHidden) obs.observe(el);
+
+              // Siempre agregar al modal de TODAS las reseñas
+              const modalEl = document.createElement('div');
+              modalEl.className = 'r-card rv';
+              modalEl.style.width = '100%';
+              modalEl.innerHTML = htmlContent;
+              allRevContainer.appendChild(modalEl);
+
+              // Solo agregar al grid principal si no excede maxVisible
+              if (idx < maxVisible) {
+                const el = document.createElement('blockquote');
+                el.className = 'r-card rv';
+                el.setAttribute('role', 'listitem');
+                el.style.transitionDelay = `${0.05 * (idx + 1)}s`;
+                el.innerHTML = htmlContent;
+                revContainer.appendChild(el);
+                obs.observe(el);
+              }
             });
 
             // Agregar botón "Ver Más" si aplica
@@ -1385,17 +1408,9 @@
               
               const btnMore = document.createElement('button');
               btnMore.className = 'btn-outline';
-              btnMore.textContent = 'Ver más reseñas';
+              btnMore.textContent = 'Ver todas las reseñas (' + json.data.length + ')';
               btnMore.onclick = function() {
-                const hiddenRevs = revContainer.querySelectorAll('.hidden-review');
-                const isExpanding = hiddenRevs[0].style.display === 'none';
-                
-                hiddenRevs.forEach(r => {
-                  r.style.display = isExpanding ? 'block' : 'none';
-                  if (isExpanding) obs.observe(r); // Animar al aparecer
-                });
-                
-                this.textContent = isExpanding ? 'Ver menos reseñas' : 'Ver más reseñas';
+                document.getElementById('allReviewsModal').classList.add('active');
               };
               
               btnContainer.appendChild(btnMore);
