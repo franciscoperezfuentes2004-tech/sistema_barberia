@@ -341,8 +341,12 @@
 
       // Set header from session data
       document.getElementById('hdr-name').textContent = user.barbero_nombre || user.username;
-      if (user.barbero_foto) {
-        document.getElementById('hdr-avatar').querySelector('img').src = '../' + user.barbero_foto;
+      if (user.barbero_foto && user.barbero_foto.trim() !== '') {
+        // La foto ya trae la ruta desde la BD o es base64
+        const imgPath = user.barbero_foto.startsWith('data:image') ? user.barbero_foto : '../' + user.barbero_foto;
+        document.getElementById('hdr-avatar').querySelector('img').src = imgPath;
+      } else {
+        document.getElementById('hdr-avatar').querySelector('img').src = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.barbero_nombre || 'Barbero') + '&background=C9A84C&color=0F0F0F';
       }
 
       await loadHorarios();
@@ -354,13 +358,24 @@
       }, 30000);
     }
 
+    let globalApertura = 9;
+    let globalCierre = 20;
+
     /* ——— Load Horarios ——— */
     async function loadHorarios() {
       try {
-        const res = await fetch(`${API}/obtener_datos.php?tabla=horarios&barbero_id=${BARBERO_ID}`);
-        const json = await res.json();
-        if (json.success && json.data) {
-          horariosMap = json.data;
+        const resH = await fetch(`${API}/obtener_datos.php?tabla=horarios&barbero_id=${BARBERO_ID}`);
+        const jsonH = await resH.json();
+        if (jsonH.success && jsonH.data) {
+          horariosMap = jsonH.data;
+        }
+        
+        // Fetch admin global settings (ajustes) para los horarios dinámicos
+        const resA = await fetch(`${API}/obtener_datos.php?tabla=ajustes`);
+        const jsonA = await resA.json();
+        if (jsonA && jsonA.horario_apertura) {
+          globalApertura = parseInt(jsonA.horario_apertura.substring(0, 2), 10);
+          globalCierre = parseInt(jsonA.horario_cierre.substring(0, 2), 10);
         }
       } catch (e) {
         console.error('Error loading schedule', e);
@@ -388,8 +403,8 @@
            }
         }
       } else {
-        HORA_INICIO = 10;
-        HORA_FIN = 20;
+        HORA_INICIO = globalApertura; // Utiliza la configuración dinámica del admin
+        HORA_FIN = globalCierre;
       }
     }
 
@@ -411,7 +426,8 @@
           data: {
             rol: payloadDecoded.rol,
             barbero_id: payloadDecoded.id,
-            barbero_nombre: payloadDecoded.username
+            barbero_nombre: payloadDecoded.nombre || payloadDecoded.usuario,
+            barbero_foto: payloadDecoded.foto
           }
         };
 
@@ -559,6 +575,18 @@
             <p class="empty-sub">Hoy no tienes horario laboral configurado.</p>
           </div>`;
         return;
+      }
+
+      // Expansión dinámica del horario para no ocultar citas tempranas o tardías
+      if (HORA_INICIO !== null && citasDelDia && citasDelDia.length > 0) {
+        citasDelDia.forEach(cita => {
+          const startH = parseInt(cita.hora_inicio.substring(0, 2), 10);
+          let endH = parseInt(cita.hora_fin.substring(0, 2), 10);
+          if (cita.hora_fin.substring(3, 5) !== '00') endH += 1;
+          
+          if (startH < HORA_INICIO) HORA_INICIO = startH;
+          if (endH > HORA_FIN) HORA_FIN = endH;
+        });
       }
 
       // Build slot map (30-min blocks)

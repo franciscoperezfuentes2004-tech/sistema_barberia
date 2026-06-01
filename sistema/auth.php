@@ -68,7 +68,7 @@ mysqli_stmt_close($stmt);
 
 // Si no es admin, buscar en la tabla 'barberos'
 if (!$logged_in) {
-    $sql_b = "SELECT id, usuario, password, nombre FROM `barberos` WHERE usuario = ? LIMIT 1";
+    $sql_b = "SELECT id, usuario, password, nombre, foto FROM `barberos` WHERE usuario = ? LIMIT 1";
     $stmt_b = mysqli_prepare($conexion, $sql_b);
     if ($stmt_b) {
         mysqli_stmt_bind_param($stmt_b, "s", $user_input);
@@ -80,7 +80,9 @@ if (!$logged_in) {
                 $user_data = [
                     'id' => $fila_b['id'],
                     'usuario' => $fila_b['usuario'],
-                    'rol' => 'barbero' // Forzar rol barbero
+                    'rol' => 'barbero',
+                    'foto' => $fila_b['foto'] ?? '',
+                    'nombre' => $fila_b['nombre'] ?? ''
                 ];
             }
         }
@@ -101,7 +103,9 @@ if ($logged_in) {
     $payload = json_encode([
         'id' => $user_data['id'], 
         'usuario' => $user_data['usuario'], 
-        'rol' => $user_data['rol']
+        'rol' => $user_data['rol'],
+        'foto' => $user_data['foto'] ?? '',
+        'nombre' => $user_data['nombre'] ?? ''
     ]);
     
     $base64UrlHeader = base64UrlEncode($header);
@@ -116,7 +120,14 @@ if ($logged_in) {
 
     ob_clean();
     http_response_code(200);
-    echo json_encode(["status" => "success", "message" => "¡Bienvenido!", "token" => $jwt, "rol" => $user_data['rol']]);
+    echo json_encode([
+        "status" => "success", 
+        "message" => "¡Bienvenido!", 
+        "token" => $jwt, 
+        "rol" => $user_data['rol'],
+        "foto" => $user_data['foto'] ?? '',
+        "nombre" => $user_data['nombre'] ?? ''
+    ]);
 } else {
     ob_clean();
     http_response_code(401);
