@@ -30,7 +30,7 @@
       --bright:     #F5F0E8;
       --green:      #27AE60;
       --red:        #E74C3C;
-      --serif: 'Playfair Display', Georgia, serif;
+      --serif: Arial, Helvetica, sans-serif;
       --sans:  'Inter', system-ui, sans-serif;
       --ease: all 0.25s cubic-bezier(.4,0,.2,1);
       --r: 16px;
@@ -243,20 +243,12 @@
     .nav-menu a:hover { color: var(--bright); }
     .nav-menu a:hover::after { transform: scaleX(1); }
     .nav-cta {
-      padding: 8px 16px; border-radius:999px; flex-shrink:0;
+      padding: 10px 22px; border-radius:999px; flex-shrink:0;
       background: linear-gradient(135deg, var(--gold-d), var(--gold));
-      color: #0F0F0F; font-weight:700; font-size:.75rem;
+      color: #0F0F0F; font-weight:700; font-size:.82rem;
       text-decoration:none; letter-spacing:.04em;
       box-shadow: 0 2px 12px rgba(201,168,76,.3);
       transition: var(--ease);
-      display: flex; align-items: center; justify-content: center;
-    }
-    .nav-cta .mobile-text { display: inline; font-size: 1rem; }
-    .nav-cta .desktop-text { display: none; }
-    @media (min-width: 768px) {
-      .nav-cta { padding: 10px 22px; font-size:.82rem; }
-      .nav-cta .mobile-text { display: none; }
-      .nav-cta .desktop-text { display: inline; }
     }
     .nav-cta:hover { transform:translateY(-1px); box-shadow:0 5px 20px rgba(201,168,76,.45); }
 
@@ -376,13 +368,17 @@
 
     .svc-card {
       position: relative; border-radius:20px; overflow:hidden;
-      background:var(--s2); border:1px solid var(--border);
+      background: linear-gradient(145deg, rgba(34,34,34,0.6), rgba(20,20,20,0.95));
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-top: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);
       display:flex; flex-direction:column; cursor:pointer;
       transition: var(--ease);
     }
     .svc-card:hover {
       border-color:var(--gold-d); transform:translateY(-5px);
-      box-shadow: 0 16px 48px rgba(0,0,0,.55), 0 0 0 1px rgba(201,168,76,.18);
+      box-shadow: 0 16px 48px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,0.05), 0 0 0 1px rgba(201,168,76,.18);
     }
     .svc-img { overflow:hidden; aspect-ratio:4/3; }
     .svc-img img {
@@ -554,8 +550,12 @@
       padding:2px 9px; border-radius:999px; font-weight:600; margin-right:8px;
     }
     .map-ph {
-      background:var(--s2); border:1px solid var(--border);
-      border-radius:18px; min-height:200px;
+      background: linear-gradient(145deg, rgba(34,34,34,0.6), rgba(20,20,20,0.95));
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-top: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05);
+      border-radius: 24px; min-height:200px;
       display:flex; flex-direction:column; align-items:center;
       justify-content:center; gap:10px; color:var(--muted); font-size:.85rem;
     }
@@ -590,10 +590,13 @@
     }
     .modal.active { display: flex; }
     .modal-content {
-      background: linear-gradient(145deg, var(--s2), #111); border: 1px solid rgba(255,255,255,0.05);
-      border-radius: 20px; width: 100%; max-width: 400px;
+      background: linear-gradient(145deg, rgba(34,34,34,0.6), rgba(20,20,20,0.95));
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-top: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05);
+      border-radius: 24px; width: 100%; max-width: 400px;
       padding: 30px; position: relative; text-align: center;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1);
     }
     .modal-close {
       position: absolute; top: 15px; right: 15px; background: transparent;
@@ -603,12 +606,6 @@
     .star-rating {
       display: flex; flex-direction: row-reverse; justify-content: center;
       gap: 10px; margin: 20px 0;
-    }
-    @media (max-width: 768px) {
-      .star-rating {
-        justify-content: flex-end; /* Align left due to row-reverse */
-        margin-top: 5px;
-      }
     }
     .star-rating input { display: none; }
     .star-rating label {
@@ -687,10 +684,7 @@
       <li><a href="#contacto">Contacto</a></li>
     </ul>
 
-    <a href="pages/booking.html" class="nav-cta" id="nav-reservar">
-      <span class="desktop-text">Reservar cita</span>
-      <span class="mobile-text">📅 Cita</span>
-    </a>
+    <a href="pages/booking.html" class="nav-cta" id="nav-reservar">Reservar cita</a>
   </nav>
 
   <!-- ════════════════════════════════════════════
@@ -840,26 +834,13 @@
         <span class="eyebrow">Lo que dicen nuestros clientes</span>
         <h2 id="rev-h" class="sec-title">Reseñas Reales</h2>
       </div>
-      <button class="btn-outline desktop-btn-review" onclick="document.getElementById('reviewModal').classList.add('active')" style="flex-shrink:0">
+      <button class="btn-outline" onclick="document.getElementById('reviewModal').classList.add('active')" style="flex-shrink:0">
         Dejar Reseña
       </button>
-      <style>
-        .desktop-btn-review { display: none; }
-        .mobile-btn-container { display: flex; justify-content: center; margin-top: 20px; }
-        @media (min-width: 768px) {
-          .desktop-btn-review { display: inline-flex; }
-          .mobile-btn-container { display: none; }
-        }
-      </style>
     </div>
 
     <div class="rev-wrap rv" role="list" aria-label="Reseñas de clientes" id="public-reviews">
       <!-- Generado dinámicamente -->
-    </div>
-    <div class="mobile-btn-container">
-      <button class="btn-outline" onclick="document.getElementById('reviewModal').classList.add('active')">
-        Dejar Reseña
-      </button>
     </div>
   </section>
 
@@ -940,8 +921,6 @@
       <p style="color:var(--muted);font-size:0.85rem;margin-bottom:15px">Agradecemos mucho tus comentarios.</p>
       
       <form id="formResena" onsubmit="submitReview(event)">
-        <input type="text" id="revName" class="modal-input" placeholder="Tu Nombre" required style="margin-bottom:5px;" />
-        
         <div class="star-rating">
           <input type="radio" id="star5" name="estrellas" value="5" checked /><label for="star5" title="5 estrellas">★</label>
           <input type="radio" id="star4" name="estrellas" value="4" /><label for="star4" title="4 estrellas">★</label>
@@ -950,10 +929,37 @@
           <input type="radio" id="star1" name="estrellas" value="1" /><label for="star1" title="1 estrella">★</label>
         </div>
         
+        <input type="text" id="revName" class="modal-input" placeholder="Tu Nombre" required />
         <textarea id="revComment" class="modal-input" placeholder="¿Qué te pareció el servicio?" rows="3" required></textarea>
         
         <button type="submit" class="btn-gold" style="width:100%;margin-top:10px" id="btnSubmitReview">Publicar Reseña</button>
       </form>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════
+       MODAL TODAS LAS RESEÑAS
+  ════════════════════════════════════════════ -->
+  <div id="allReviewsModal" class="modal">
+    <div class="modal-content" style="max-width:600px; padding:30px;">
+      <button class="modal-close" onclick="document.getElementById('allReviewsModal').classList.remove('active')">✖</button>
+      
+      <div style="text-align: center; margin-bottom: 25px;">
+        <h3 style="color:var(--bright);font-family:var(--serif);font-size:1.8rem;margin-bottom:12px;">Experiencia de Clientes</h3>
+        
+        <!-- Creative Separator -->
+        <div style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 12px;">
+          <div style="height: 1px; background: linear-gradient(90deg, transparent, var(--gold)); width: 80px;"></div>
+          <div style="color: var(--gold); font-size: 1.2rem;">✦</div>
+          <div style="height: 1px; background: linear-gradient(270deg, transparent, var(--gold)); width: 80px;"></div>
+        </div>
+        
+        <p id="all-reviews-subtitle" style="color:var(--muted);font-size:0.85rem;margin:0;">Cargando reseñas...</p>
+      </div>
+
+      <div id="all-reviews-container" style="display:flex; flex-direction:column; gap:15px; max-height:55vh; overflow-y:auto; padding-right:10px;">
+        <!-- Llenado dinámicamente -->
+      </div>
     </div>
   </div>
 
@@ -1243,7 +1249,7 @@
           if (svcContainer) {
             svcContainer.innerHTML = '';
             // Solo mostrar activos
-            const activos = jsonSvc.data.filter(s => parseInt(s.activo) === 1);
+            const activos = jsonSvc.data.filter(s => s.activo == 1);
             activos.forEach((svc, idx) => {
               const delay = 0.05 * (idx + 1);
               const el = document.createElement('article');
@@ -1271,7 +1277,7 @@
         }
         
         // ── EQUIPO ──
-        const resTeam = await fetch('sistema/obtener_datos.php?tabla=barberos&all=0');
+        const resTeam = await fetch('sistema/obtener_datos.php?tabla=barberos&activos=1');
         const jsonTeam = await resTeam.json();
         if (jsonTeam.success && jsonTeam.data) {
           const teamContainer = document.querySelector('.team-wrap');
@@ -1319,7 +1325,7 @@
               el.className = 'gi rv';
               el.style.transitionDelay = `${delay}s`;
               
-              const imgSrc = img.imagen || 'assets/img/hero-bg.png';
+              const imgSrc = img.ruta_imagen && img.ruta_imagen.startsWith('data:') ? img.ruta_imagen : (img.ruta_imagen || img.imagen || 'assets/img/hero-bg.png');
               el.innerHTML = `
                 <img src="${imgSrc}" alt="${img.titulo || 'Galería'}" loading="lazy" onerror="this.src='assets/img/hero-bg.png'"/>
                 ${img.titulo ? `<div class="gi-lbl">${img.titulo}</div>` : ''}
@@ -1350,7 +1356,7 @@
           const statRating = document.getElementById('stat-rating');
           if (statRating) {
             if (json.data.length > 0) {
-              const totalEstrellas = json.data.reduce((sum, rev) => sum + (parseInt(rev.estrellas) || 5), 0);
+              const totalEstrellas = json.data.reduce((sum, rev) => sum + (parseInt(rev.calificacion) || 5), 0);
               const promedio = (totalEstrellas / json.data.length).toFixed(1);
               statRating.textContent = promedio + '★';
             } else {
@@ -1359,41 +1365,97 @@
           }
 
           const revContainer = document.getElementById('public-reviews');
-          if (revContainer) {
+          const allRevContainer = document.getElementById('all-reviews-container');
+          
+          if (revContainer && allRevContainer) {
             revContainer.innerHTML = '';
+            allRevContainer.innerHTML = '';
+            
             if (json.data.length === 0) {
               revContainer.innerHTML = '<p style="color:var(--muted)">Aún no hay reseñas. ¡Sé el primero en dejar una!</p>';
+              allRevContainer.innerHTML = '<p style="color:var(--muted)">No hay reseñas.</p>';
               return;
             }
+            
+            const maxVisible = 6;
+            const hasMore = json.data.length > maxVisible;
+
+            const allRevSubtitle = document.getElementById('all-reviews-subtitle');
+            if (allRevSubtitle) {
+              allRevSubtitle.textContent = `Basado en ${json.data.length} opiniones reales`;
+            }
+
             json.data.forEach((rev, idx) => {
-              const delay = 0.05 * (idx + 1);
-              const el = document.createElement('blockquote');
-              el.className = 'r-card rv';
-              el.setAttribute('role', 'listitem');
-              el.style.transitionDelay = `${delay}s`;
+              const calificacion = parseInt(rev.calificacion) || 5;
+              const stars = '★'.repeat(calificacion) + '☆'.repeat(5 - calificacion);
               
-              const stars = '★'.repeat(rev.estrellas) + '☆'.repeat(5 - rev.estrellas);
-              
-              const parts = rev.nombre ? rev.nombre.trim().split(/\s+/) : ['U'];
+              const nombre = rev.cliente_nombre || 'Usuario';
+              const parts = nombre.trim().split(/\s+/);
               const initial = (parts[0].charAt(0) + (parts.length > 1 ? parts[parts.length - 1].charAt(0) : '')).toUpperCase();
               const colors = ['#9A7B32', '#1a5c3a', '#5c1a2e', '#1c3d5a', '#5a3d1c'];
               const color = colors[idx % colors.length];
-              const date = new Date(rev.created_at).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
+              const dateObj = new Date(rev.creado_en);
+              const date = isNaN(dateObj) ? '' : dateObj.toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
               
-              el.innerHTML = `
-                <div class="t-stars" aria-label="${rev.estrellas} de 5 estrellas" style="color:var(--gold);margin-bottom:10px">${stars}</div>
-                <p class="r-q">"${rev.comentario || 'Excelente servicio.'}"</p>
+              const htmlContent = `
+                <div class="t-stars" aria-label="${calificacion} de 5 estrellas" style="color:var(--gold);margin-bottom:10px">${stars}</div>
+                <p class="r-q" style="margin-bottom:15px">"${rev.comentario || 'Excelente servicio.'}"</p>
                 <div class="r-author">
                   <div class="r-av" style="background:${color};color:#fff" aria-hidden="true">${initial}</div>
                   <div>
-                    <p style="font-size:.84rem;font-weight:600;color:var(--bright)">${rev.nombre}</p>
+                    <p style="font-size:.84rem;font-weight:600;color:var(--bright)">${nombre}</p>
                     <p style="font-size:.7rem;color:var(--muted)">${date}</p>
                   </div>
                 </div>
               `;
-              revContainer.appendChild(el);
-              obs.observe(el);
+
+              // Diseño especial plano y moderno SOLO para la ventana emergente
+              const htmlContentModal = `
+                <div style="border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 22px; margin-bottom: 22px;">
+                  <div style="display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; margin-bottom: 12px; gap: 10px;">
+                    <span style="font-size: 1.05rem; font-weight: 700; color: var(--bright); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: left;">${nombre}</span>
+                    <div class="t-stars" style="color:var(--gold); font-size: 0.95rem; letter-spacing: 1px; text-align: center;">${stars}</div>
+                    <div style="font-size: 0.8rem; color: var(--muted); white-space: nowrap; text-align: right;">${date}</div>
+                  </div>
+                  <p style="font-size: 0.95rem; line-height: 1.6; color: var(--muted); margin: 0; text-align: justify;">"${rev.comentario || 'Excelente servicio.'}"</p>
+                </div>
+              `;
+
+              // Siempre agregar al modal de TODAS las reseñas (sin la clase r-card para quitar la caja)
+              const modalEl = document.createElement('div');
+              modalEl.style.width = '100%';
+              modalEl.innerHTML = htmlContentModal;
+              allRevContainer.appendChild(modalEl);
+
+              // Solo agregar al grid principal si no excede maxVisible (usando el diseño de tarjetas originales)
+              if (idx < maxVisible) {
+                const el = document.createElement('blockquote');
+                el.className = 'r-card rv';
+                el.setAttribute('role', 'listitem');
+                el.style.transitionDelay = `${0.05 * (idx + 1)}s`;
+                el.innerHTML = htmlContent;
+                revContainer.appendChild(el);
+                obs.observe(el);
+              }
             });
+
+            // Agregar botón "Ver Más" si aplica
+            if (hasMore) {
+              const btnContainer = document.createElement('div');
+              btnContainer.style.textAlign = 'center';
+              btnContainer.style.marginTop = '20px';
+              btnContainer.style.gridColumn = '1 / -1'; // Para que abarque todo el ancho del grid
+              
+              const btnMore = document.createElement('button');
+              btnMore.className = 'btn-outline';
+              btnMore.textContent = 'Ver todas las reseñas (' + json.data.length + ')';
+              btnMore.onclick = function() {
+                document.getElementById('allReviewsModal').classList.add('active');
+              };
+              
+              btnContainer.appendChild(btnMore);
+              revContainer.appendChild(btnContainer);
+            }
           }
         }
       } catch(e) { console.error('Error fetching reviews:', e); }
@@ -1417,10 +1479,10 @@
           let currentGroup = null;
 
           json.data.forEach(dia => {
-            const isToday = parseInt(dia.dia_semana) === hoy;
+            const isToday = Number(dia.dia_semana) === hoy;
             let statusHtml = '';
             
-            if (parseInt(dia.activo) === 1) {
+            if (dia.activo == 1) {
               const hIn = dia.hora_inicio.substring(0, 5);
               const hOut = dia.hora_fin.substring(0, 5);
               statusHtml = `
@@ -1517,7 +1579,7 @@
           if (d.stat_clientes) document.getElementById('stat-clientes').textContent = d.stat_clientes;
         }
 
-        const resBarberos = await fetch('sistema/obtener_datos.php?tabla=barberos&all=0');
+        const resBarberos = await fetch('sistema/obtener_datos.php?tabla=barberos&activos=1');
         const jsonBarberos = await resBarberos.json();
         if (jsonBarberos.success && jsonBarberos.data && jsonBarberos.data.length > 0) {
           const statBarberos = document.getElementById('stat-barberos');

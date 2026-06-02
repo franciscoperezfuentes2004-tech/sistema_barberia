@@ -9,6 +9,13 @@
    DESIGN TOKENS
 ───────────────────────────────────────────────────── */
 :root {
+  --glass-bg: rgba(20, 20, 20, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  --gradient-gold: linear-gradient(135deg, #F3A183, #E1B24A);
+  --accent: #E1B24A;
+  --bg-gradient: radial-gradient(circle at top, #1a1a1a, #0d0d0d);
+
   --gold:        #C9A84C;
   --gold-light:  #E8C97A;
   --gold-dark:   #9A7B32;
@@ -528,21 +535,3 @@ body::before {
   transition: opacity 0.55s ease, transform 0.55s ease;
 }
 .reveal.visible { opacity: 1; transform: translateY(0); }
-
-/* Responsive Overrides */
-@media (max-width: 768px) {
-  .modal-content {
-    flex-direction: column !important;
-    padding: 20px !important;
-    width: 95% !important;
-    margin: 0 auto !important;
-  }
-}
-@media (max-width: 480px) {
-  .gal-grid {
-    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)) !important;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
-}

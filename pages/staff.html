@@ -10,14 +10,14 @@
   <style>
     /* â•â•â•â•â•â•â•â•â•â•â• TOKENS â•â•â•â•â•â•â•â•â•â•â• */
     :root {
-      --gold:#C9A84C; --gold-l:#E8C97A; --gold-d:#9A7B32;
+      --gold:#C9A84C; --gold-l:#E8C97A; --gold-d:#9A7B32; --gradient-gold: linear-gradient(135deg, var(--gold-d), var(--gold), var(--gold-l));
       --bg:#0F0F0F; --s1:#181818; --s2:#222; --s3:#2A2A2A; --border:#333;
       --muted:#888; --base:#D4D4D4; --bright:#F5F0E8;
       --green:#27AE60; --green-bg:rgba(39,174,96,.1); --green-border:rgba(39,174,96,.25);
       --red:#E74C3C; --red-bg:rgba(231,76,60,.1); --red-border:rgba(231,76,60,.25);
       --blue:#3498DB; --blue-bg:rgba(52,152,219,.1); --blue-border:rgba(52,152,219,.25);
       --gold-bg:rgba(201,168,76,.1); --gold-border:rgba(201,168,76,.25);
-      --serif:'Playfair Display',serif; --sans:'Inter',system-ui,sans-serif;
+      --serif:Arial, Helvetica, sans-serif; --sans:'Inter',system-ui,sans-serif;
       --tr:all .22s cubic-bezier(.4,0,.2,1);
       --gutter:16px;
     }
@@ -75,27 +75,54 @@
     .pill-blue{border-color:var(--blue-border);color:var(--blue);background:var(--blue-bg)}
 
     /* ——————————— DATE SELECTOR ——————————— */
-    .dates-bar{
-      background:var(--s1);border-bottom:1px solid var(--border);
-      padding:12px var(--gutter);
-      display:flex;gap:6px;overflow-x:auto;
-      scrollbar-width:none;-webkit-overflow-scrolling:touch;
+    .cal-day {
+      width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;
+      border-radius: 12px; font-size: 0.95rem; margin: 0 auto; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      font-weight: 500; color: var(--bright);
     }
-    .dates-bar::-webkit-scrollbar{display:none}
-    .d-card{
-      flex-shrink:0;width:52px;padding:8px 0;border-radius:12px;
-      display:flex;flex-direction:column;align-items:center;gap:2px;
-      cursor:pointer;transition:var(--tr);border:1px solid transparent;
-      background:transparent;
+    .cal-day:hover {
+      background: var(--s2);
     }
-    .d-card:hover{background:var(--s2);border-color:var(--border)}
-    .d-card.selected{background:var(--gold);border-color:var(--gold);color:#0F0F0F}
-    .d-day{font-size:.62rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
-    .d-num{font-family:var(--serif);font-size:1.15rem;font-weight:700;color:var(--bright);line-height:1.2}
-    .d-month{font-size:.56rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
-    .d-card.selected .d-day,
-    .d-card.selected .d-num,
-    .d-card.selected .d-month{color:#0F0F0F}
+    .cal-day.empty { background: transparent; cursor: default; }
+    .cal-day.empty:hover { background: transparent; }
+    .cal-day.cerrado { 
+      color: #555; 
+      background: rgba(255,255,255,0.02); 
+      cursor: not-allowed; 
+      text-decoration: line-through;
+    }
+    .cal-day.cerrado:hover { background: rgba(255,255,255,0.02); }
+    .cal-day.hoy {
+      border: 2px solid var(--gold);
+      color: var(--gold);
+      font-weight: 800;
+    }
+    .cal-day.con_citas_futuras {
+      background: var(--green-bg);
+      border: 1px solid var(--green);
+      color: var(--green);
+      font-weight: 700;
+    }
+    .cal-day.con_citas_pasadas {
+      background: rgba(39, 174, 96, 0.05);
+      border: 1px dashed rgba(39, 174, 96, 0.4);
+      color: rgba(39, 174, 96, 0.8);
+    }
+    .cal-day.selected {
+      background: var(--gradient-gold);
+      color: #111;
+      font-weight: 800;
+      box-shadow: 0 0 20px rgba(225, 178, 74, 0.6); 
+      transform: scale(1.15) translateY(-2px);
+      border: none;
+    }
+    .modal-glass {
+      background: rgba(20, 20, 22, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+    }
 
     /* ——————————— TIMELINE ——————————— */
     .timeline-section{padding:12px var(--gutter) 100px; max-width:900px; margin:0 auto;}
@@ -147,7 +174,11 @@
     /* ——————————— APPOINTMENT CARD ——————————— */
     .appt-card{
       margin:4px 0 4px 0;padding:14px;border-radius:14px;
-      background:var(--s2);border:1px solid var(--border);
+      background: linear-gradient(145deg, rgba(34,34,34,0.6), rgba(20,20,20,0.95));
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-top: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);
       transition:var(--tr);position:relative;overflow:hidden;
     }
     .appt-card::before{
@@ -271,7 +302,15 @@
   </header>
 
   <!-- ————————— DATE SELECTOR ————————— -->
-  <div class="dates-bar" id="dates-bar"></div>
+  <div class="date-selector-wrap" style="padding: 12px var(--gutter); max-width: 900px; margin: 0 auto;">
+    <button onclick="openCalendarModal()" style="width: 100%; background: var(--s2); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; color: var(--bright); font-family: inherit; font-size: 1rem; transition: var(--tr);">
+      <span style="font-weight: 600;">Seleccionar Fecha</span>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span id="selected-date-lbl" style="color: var(--gold); font-weight: 700;"></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+      </div>
+    </button>
+  </div>
 
   <!-- ————————— TIMELINE ————————— -->
   <section class="timeline-section">
@@ -287,16 +326,40 @@
     <span class="toast-msg"></span>
   </div>
 
+  <!-- Premium Calendar Modal -->
+  <div id="calendar-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:100; align-items:center; justify-content:center; padding:20px; backdrop-filter:blur(8px); animation: fadeIn 0.3s ease;">
+    <div class="modal-content modal-glass" style="border-radius:24px; width:100%; max-width:400px; padding:28px; position:relative;">
+      <button onclick="closeCalendarModal()" style="position:absolute; top:16px; right:20px; background:rgba(255,255,255,0.1); border:none; color:var(--bright); width:32px; height:32px; border-radius:50%; font-size:1.2rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background 0.2s;">&times;</button>
+      
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:28px; margin-top:36px;">
+        <button id="cal-prev" onclick="changeMonth(-1)" onmouseover="this.style.background='var(--s3)';this.style.borderColor='var(--gold)'" onmouseout="this.style.background='var(--s2)';this.style.borderColor='var(--border)'" style="background:var(--s2); border:1px solid var(--border); color:var(--gold); border-radius:50%; width:44px; height:44px; cursor:pointer; transition:var(--tr); display:flex; align-items:center; justify-content:center;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:22px;height:22px;"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <h3 id="cal-month-year" style="margin:0; color:var(--gold); font-family:var(--serif); font-size:1.5rem; font-weight:800; letter-spacing:0.5px; text-transform:capitalize;"></h3>
+        <button id="cal-next" onclick="changeMonth(1)" onmouseover="this.style.background='var(--s3)';this.style.borderColor='var(--gold)'" onmouseout="this.style.background='var(--s2)';this.style.borderColor='var(--border)'" style="background:var(--s2); border:1px solid var(--border); color:var(--gold); border-radius:50%; width:44px; height:44px; cursor:pointer; transition:var(--tr); display:flex; align-items:center; justify-content:center;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:22px;height:22px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(7, 1fr); gap:8px; text-align:center; font-size:0.8rem; font-weight:700; color:var(--muted); margin-bottom:16px; text-transform:uppercase; letter-spacing:1px;">
+        <div>D</div><div>L</div><div>M</div><div>M</div><div>J</div><div>V</div><div>S</div>
+      </div>
+      <div id="cal-days-grid" style="display:grid; grid-template-columns:repeat(7, 1fr); gap:8px 4px;">
+        <!-- JS fills this -->
+      </div>
+    </div>
+  </div>
+
   <script>
   (() => {
     /* ——— Config ——— */
-    const API = '../api';
+    const API = '../sistema';
 
     // 🛡️ Interceptor Global de Fetch para Inyectar JWT
     const originalFetch = window.fetch;
     window.fetch = async function() {
       let [resource, config] = arguments;
-      if (typeof resource === 'string' && resource.includes('/api/')) {
+      if (typeof resource === 'string' && resource.includes('/sistema/')) {
         config = config || {};
         config.headers = config.headers || {};
         const token = localStorage.getItem('mi_token_jwt');
@@ -341,8 +404,12 @@
 
       // Set header from session data
       document.getElementById('hdr-name').textContent = user.barbero_nombre || user.username;
-      if (user.barbero_foto) {
-        document.getElementById('hdr-avatar').querySelector('img').src = '../' + user.barbero_foto;
+      if (user.barbero_foto && user.barbero_foto.trim() !== '') {
+        // La foto ya trae la ruta desde la BD o es base64
+        const imgPath = user.barbero_foto.startsWith('data:image') ? user.barbero_foto : '../' + user.barbero_foto;
+        document.getElementById('hdr-avatar').querySelector('img').src = imgPath;
+      } else {
+        document.getElementById('hdr-avatar').querySelector('img').src = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.barbero_nombre || 'Barbero') + '&background=C9A84C&color=0F0F0F';
       }
 
       await loadHorarios();
@@ -354,13 +421,22 @@
       }, 30000);
     }
 
+    let globalHorariosMap = null;
+
     /* ——— Load Horarios ——— */
     async function loadHorarios() {
       try {
-        const res = await fetch(`${API}/horarios?barbero_id=${BARBERO_ID}`);
-        const json = await res.json();
-        if (json.success && json.data) {
-          horariosMap = json.data;
+        const resH = await fetch(`${API}/obtener_datos.php?tabla=horarios&barbero_id=${BARBERO_ID}`);
+        const jsonH = await resH.json();
+        if (jsonH.success && jsonH.data) {
+          horariosMap = jsonH.data;
+        }
+        
+        // Fetch admin global settings (horarios generales con barbero_id=0)
+        const resG = await fetch(`${API}/obtener_datos.php?tabla=horarios&barbero_id=0`);
+        const jsonG = await resG.json();
+        if (jsonG.success && jsonG.data) {
+          globalHorariosMap = jsonG.data;
         }
       } catch (e) {
         console.error('Error loading schedule', e);
@@ -369,26 +445,36 @@
     
     function updateScheduleForDate(isoDate) {
       const d = new Date(isoDate + 'T12:00:00');
-      const diaSemana = d.getDay();
+      const diaSemana = d.getDay(); // número: 0=Dom, 1=Lun, etc.
       
       let scheduleForDay = null;
-      if (Array.isArray(horariosMap)) {
-        scheduleForDay = horariosMap.find(s => s.dia_semana === diaSemana);
+
+      // IMPORTANTE: MySQL devuelve dia_semana como STRING ("1"), getDay() es NUMBER (1).
+      // Usamos Number() para que la comparación funcione correctamente.
+      if (Array.isArray(horariosMap) && horariosMap.length > 0) {
+        scheduleForDay = horariosMap.find(s => Number(s.dia_semana) === diaSemana);
+      }
+
+      // Si el barbero no tiene un horario personalizado ese día, usamos el global (barbero 0)
+      if (!scheduleForDay && Array.isArray(globalHorariosMap)) {
+        scheduleForDay = globalHorariosMap.find(s => Number(s.dia_semana) === diaSemana);
       }
       
       if (scheduleForDay) {
-        if (scheduleForDay.activo === 0 || scheduleForDay.activo === false) {
+        // activo también viene como string "0" o "1" desde MySQL
+        if (Number(scheduleForDay.activo) === 0) {
            HORA_INICIO = null;
            HORA_FIN = null;
         } else {
            HORA_INICIO = parseInt(scheduleForDay.hora_inicio.substring(0,2), 10);
            HORA_FIN = parseInt(scheduleForDay.hora_fin.substring(0,2), 10);
+           // Si cierra a y media (ej. 19:30), sumamos 1 a HORA_FIN para que el bucle dibuje el slot
            if (scheduleForDay.hora_fin.substring(3,5) !== '00') {
              HORA_FIN += 1;
            }
         }
       } else {
-        HORA_INICIO = 10;
+        HORA_INICIO = 9; 
         HORA_FIN = 20;
       }
     }
@@ -411,7 +497,8 @@
           data: {
             rol: payloadDecoded.rol,
             barbero_id: payloadDecoded.id,
-            barbero_nombre: payloadDecoded.username
+            barbero_nombre: payloadDecoded.nombre || payloadDecoded.usuario,
+            barbero_foto: localStorage.getItem('mi_foto_perfil') || ''
           }
         };
 
@@ -437,37 +524,99 @@
     }
 
     /* ——— Date Selector ——— */
+    let currentCalMonth = new Date().getMonth() + 1;
+    let currentCalYear = new Date().getFullYear();
+
     function initDates() {
-      const bar = document.getElementById('dates-bar');
+      const hoy = new Date();
+      const hoyISO = hoy.getFullYear()+'-'+String(hoy.getMonth()+1).padStart(2,'0')+'-'+String(hoy.getDate()).padStart(2,'0');
+      
+      selectedDate = hoyISO;
+      updateDateLabel(hoyISO);
+      
+      // Load initial
+      updateScheduleForDate(hoyISO);
+      loadCitas();
+    }
+    
+    function updateDateLabel(iso) {
+      const d = new Date(iso + 'T12:00:00Z');
       const dias = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
       const meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
-      const hoy = new Date();
+      document.getElementById('selected-date-lbl').textContent = `${dias[d.getDay()]} ${d.getDate()} ${meses[d.getMonth()]}`;
+    }
 
-      for (let i = 0; i < 7; i++) {
-        const d = new Date(hoy);
-        d.setDate(d.getDate() + i);
-        const iso = d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+    window.openCalendarModal = function() {
+      document.getElementById('calendar-modal').style.display = 'flex';
+      if (selectedDate) {
+        const parts = selectedDate.split('-');
+        currentCalYear = parseInt(parts[0], 10);
+        currentCalMonth = parseInt(parts[1], 10);
+      }
+      loadCalendarMonth(currentCalMonth, currentCalYear);
+    }
 
-        const card = document.createElement('div');
-        card.className = 'd-card';
-        card.innerHTML = `
-          <span class="d-day">${i===0?'Hoy':dias[d.getDay()]}</span>
-          <span class="d-num">${d.getDate()}</span>
-          <span class="d-month">${meses[d.getMonth()]}</span>
-        `;
-        card.onclick = () => selectDate(card, iso);
-        bar.appendChild(card);
+    window.closeCalendarModal = function() {
+      document.getElementById('calendar-modal').style.display = 'none';
+    }
 
-        // Auto-select today
-        if (i === 0) selectDate(card, iso);
+    window.changeMonth = function(delta) {
+      currentCalMonth += delta;
+      if (currentCalMonth > 12) {
+        currentCalMonth = 1;
+        currentCalYear++;
+      } else if (currentCalMonth < 1) {
+        currentCalMonth = 12;
+        currentCalYear--;
+      }
+      loadCalendarMonth(currentCalMonth, currentCalYear);
+    }
+
+    async function loadCalendarMonth(m, a) {
+      const grid = document.getElementById('cal-days-grid');
+      const title = document.getElementById('cal-month-year');
+      const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+      
+      title.textContent = `${meses[m-1]} ${a}`;
+      grid.innerHTML = '<div style="grid-column:1/-1; padding:20px; color:var(--muted);">Cargando...</div>';
+      
+      try {
+        const res = await fetch(`${API}/calendario_staff.php?mes=${m}&anio=${a}&barbero_id=${BARBERO_ID}`);
+        const json = await res.json();
+        
+        if (!json.success) throw new Error('Error de API');
+        
+        grid.innerHTML = '';
+        
+        const firstDay = new Date(`${a}-${String(m).padStart(2,'0')}-01T12:00:00Z`).getUTCDay();
+        
+        for (let i = 0; i < firstDay; i++) {
+          grid.innerHTML += `<div class="cal-day empty"></div>`;
+        }
+
+        json.data.forEach(dia => {
+          const d = dia.dia;
+          let cls = 'cal-day ' + dia.estado;
+          
+          if (selectedDate === dia.fecha) cls += ' selected';
+          
+          let onclick = '';
+          if (dia.estado !== 'cerrado') {
+             onclick = `onclick="handleSelectDate('${dia.fecha}')"`;
+          }
+          
+          grid.innerHTML += `<div class="${cls}" ${onclick}>${d}</div>`;
+        });
+      } catch(e) {
+        grid.innerHTML = '<div style="grid-column:1/-1; color:var(--red);">Error cargando fechas</div>';
       }
     }
 
-    async function selectDate(el, iso) {
-      document.querySelectorAll('.d-card').forEach(c => c.classList.remove('selected'));
-      el.classList.add('selected');
-      selectedDate = iso;
-      updateScheduleForDate(iso);
+    window.handleSelectDate = async function(isodate) {
+      closeCalendarModal();
+      selectedDate = isodate;
+      updateDateLabel(isodate);
+      updateScheduleForDate(selectedDate);
       await loadCitas();
     }
 
@@ -479,7 +628,13 @@
       }
 
       try {
-        const res = await fetch(`${API}/citas?barbero_id=${BARBERO_ID}&fecha=${selectedDate}`, { cache: 'no-store' });
+        // Asegurarnos de que los horarios estén frescos antes de pintar
+        await loadHorarios();
+        if (selectedDate) {
+          updateScheduleForDate(selectedDate);
+        }
+
+        const res = await fetch(`${API}/obtener_datos.php?tabla=citas&barbero_id=${BARBERO_ID}&fecha=${selectedDate}`, { cache: 'no-store' });
         const json = await res.json();
         citasDelDia = json.data || [];
         renderTimeline(silent);
@@ -559,6 +714,18 @@
             <p class="empty-sub">Hoy no tienes horario laboral configurado.</p>
           </div>`;
         return;
+      }
+
+      // Expansión dinámica del horario para no ocultar citas tempranas o tardías
+      if (HORA_INICIO !== null && citasDelDia && citasDelDia.length > 0) {
+        citasDelDia.forEach(cita => {
+          const startH = parseInt(cita.hora_inicio.substring(0, 2), 10);
+          let endH = parseInt(cita.hora_fin.substring(0, 2), 10);
+          if (cita.hora_fin.substring(3, 5) !== '00') endH += 1;
+          
+          if (startH < HORA_INICIO) HORA_INICIO = startH;
+          if (endH > HORA_FIN) HORA_FIN = endH;
+        });
       }
 
       // Build slot map (30-min blocks)
@@ -744,7 +911,7 @@
     /* ——— Change State ——— */
     async function changeState(citaId, nuevoEstado) {
       try {
-        const res = await fetch(`${API}/citas`, {
+        const res = await fetch(`${API}/guardar_cita.php`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ id: citaId, estado: nuevoEstado }),

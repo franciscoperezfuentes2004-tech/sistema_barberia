@@ -10,10 +10,10 @@
   <style>
     :root{
       --gold:#C9A84C;--gold-l:#E8C97A;--gold-d:#9A7B32;
-      --bg:#0F0F0F;--s1:#181818;--s2:#222;--border:#333;
+      --bg:#0F0F0F;--s1:#181818;--s2:#222;--s3:#333;--border:#333;
       --muted:#888;--base:#D4D4D4;--bright:#F5F0E8;
       --green:#27AE60;--red:#E74C3C;
-      --serif:'Playfair Display',serif;--sans:'Inter',system-ui,sans-serif;
+      --serif:Arial, Helvetica, sans-serif;--sans:'Inter',system-ui,sans-serif;
       --tr:all .22s cubic-bezier(.4,0,.2,1);
       --gutter: clamp(12px, 3vw, 80px);
     }
@@ -43,7 +43,14 @@
     .sec-title{font-family:var(--serif);font-size:1.4rem;font-weight:700;color:var(--bright);margin-bottom:20px;text-align:center}
 
     /* Summary Card */
-    .summary-card{background:var(--s1);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:32px}
+    .summary-card{
+      background: linear-gradient(145deg, rgba(34,34,34,0.6), rgba(20,20,20,0.95));
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-top: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);
+      border-radius:24px;padding:24px;margin-bottom:32px;
+    }
     .sum-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--border)}
     .sum-row:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
     .sum-label{font-size:.8rem;color:var(--muted)}
@@ -192,7 +199,7 @@
   </div>
 
   <script>
-    const API = '../api';
+    const API = '../sistema';
 
     const step1 = JSON.parse(sessionStorage.getItem('bb_step1') || 'null');
     const step2 = JSON.parse(sessionStorage.getItem('bb_step2') || 'null');
@@ -233,33 +240,23 @@
       }
 
       try {
-        // 1. Crear/Buscar Cliente
-        const resCl = await fetch(`${API}/clientes`, {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({ nombre, telefono, email: email || null })
-        });
-        const jsonCl = await resCl.json();
-        if(!resCl.ok) throw new Error(jsonCl.error || 'Error al guardar cliente');
-        
-        const clienteId = jsonCl.data.id;
-
-        // 2. Crear Cita
         const bodyCita = {
-          cliente_id: clienteId,
+          nombre: nombre,
+          telefono: telefono,
+          email: email,
           barbero_id: step2.barberoId,
           servicios: step1.serviciosIds,
           fecha: step2.fecha,
           hora_inicio: step2.horaInicio
         };
 
-        const resCita = await fetch(`${API}/citas`, {
+        const resCita = await fetch(`${API}/guardar_cita.php`, {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify(bodyCita)
         });
         const jsonCita = await resCita.json();
-        if(!resCita.ok) throw new Error(jsonCita.error || 'Error al crear la cita');
+        if(!resCita.ok || !jsonCita.success) throw new Error(jsonCita.error || jsonCita.message || 'Error al crear la cita');
 
         // Éxito
         sessionStorage.removeItem('bb_step1');
@@ -280,7 +277,7 @@
     // Cargar branding dinámico
     async function loadBranding() {
       try {
-        const res = await fetch(`${API}/ajustes`);
+        const res = await fetch(`${API}/obtener_datos.php?tabla=ajustes`);
         const json = await res.json();
         if (json.success && json.data) {
           const d = json.data;

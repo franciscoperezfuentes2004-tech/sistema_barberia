@@ -26,7 +26,7 @@
       --bright: #F5F0E8;
       --green: #27AE60;
       --red: #E74C3C;
-      --serif: 'Playfair Display', serif;
+      --serif: Arial, Helvetica, sans-serif;
       --sans: 'Inter', system-ui, sans-serif;
     }
 
@@ -91,11 +91,17 @@
       z-index: 1;
       width: 100%;
       max-width: 480px;
-      padding: 40px 24px;
+      padding: 40px;
       display: flex;
       flex-direction: column;
       align-items: center;
       animation: fadeIn 0.8s ease-out;
+      background: linear-gradient(145deg, rgba(34,34,34,0.6), rgba(20,20,20,0.95));
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-top: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05);
+      border-radius: 24px;
     }
 
     /* ── Barber Pole ───────────────────────────────── */
@@ -582,12 +588,12 @@
   <script>
     (() => {
       // ── API Base URL ───────────────────────────
-      const API = '../api';
+      const API = '../sistema';
 
       // ── Dynamic Branding ───────────────────────────
       async function loadBranding() {
         try {
-          const res = await fetch(`../sistema/obtener_datos.php?tabla=ajustes`);
+          const res = await fetch(`${API}/obtener_datos.php?tabla=ajustes`);
           const json = await res.json();
           if (json.success && json.data) {
             const data = json.data;
@@ -668,7 +674,7 @@
         setLoading(true);
 
         try {
-          const response = await fetch(`../sistema/auth.php`, {
+          const response = await fetch(`${API}/auth.php`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, password })
@@ -676,21 +682,28 @@
 
           const json = await response.json();
 
-          if (json.success === true) {
-            // Guardar el Token de Seguridad
-            localStorage.setItem('mi_token_jwt', json.token);
-            
-            // Successful login — redirect based on role
+          if (json.status === 'success' || json.success === true) {
+            // Mostrar mensaje de éxito visualmente en el botón
+            btnSubmit.classList.remove('loading');
+            btnSubmit.innerHTML = `<span class="btn-text">${json.message || '¡Bienvenido!'}</span>`;
+            btnSubmit.style.background = 'var(--green)';
+
+            // Guardar sesión
             sessionStorage.setItem('tab_auth', 'true');
-            const rol = json.user?.rol;
-            if (rol === 'barbero') {
-              window.location.href = 'staff.html';
-            } else if (rol === 'admin') {
-              window.location.href = 'admin.html';
-            } else {
-              // Fallback redirect
-              window.location.href = 'staff.html';
-            }
+            if (json.token) localStorage.setItem('mi_token_jwt', json.token);
+            if (json.foto)  localStorage.setItem('mi_foto_perfil', json.foto);
+
+            // Retardo de 1 segundo y redirección fluida
+            setTimeout(() => {
+              const rol = json.rol || json.user?.rol || 'admin';
+              if (rol === 'barbero') {
+                window.location.href = 'staff.html';
+              } else {
+                // Redirigir a la raíz donde está admin.html
+                window.location.href = 'admin.html';
+              }
+            }, 1000);
+
           } else {
             // API returned an error
             const msg = json.message || json.error || 'Credenciales incorrectas. Intenta de nuevo.';
