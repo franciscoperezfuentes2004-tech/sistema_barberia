@@ -109,12 +109,12 @@
       width: 18px; height: 56px; flex-shrink: 0; margin-right: 4px;
     }
     .bp-cap {
-      width: 100%; height: 5px; background: #111; border: 1px solid #000;
+      width: 100%; height: 5px; background: linear-gradient(90deg, #b0b0b0, #e4e4e4, #b0b0b0); border: 1px solid #888;
       position: relative; z-index: 2; border-radius: 2px;
     }
     .bp-cap::before {
       content: ''; position: absolute; width: 10px; height: 4px;
-      background: #111; border: 1px solid #000; left: 50%; transform: translateX(-50%);
+      background: linear-gradient(90deg, #b0b0b0, #e4e4e4, #b0b0b0); border: 1px solid #888; left: 50%; transform: translateX(-50%);
     }
     .bp-top { border-radius: 3px 3px 0 0; }
     .bp-top::before { top: -4px; border-radius: 4px 4px 0 0; border-bottom: none; }
@@ -704,24 +704,11 @@
   <nav id="nav" role="navigation" aria-label="Navegación principal">
 
     <a href="#inicio" class="nav-logo" aria-label="Barbería — Inicio">
-      <div class="nav-brand-wrap">
+      <div style="display:flex; align-items:center; gap:10px;">
         <img id="nav-custom-logo" src="" style="display:none; height:42px; width:42px; object-fit:cover; border-radius:10px;" alt="Logo">
         <div class="nav-mark" id="nav-default-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><line x1="20" y1="4" x2="8.12" y2="15.88"></line><line x1="14.47" y1="14.48" x2="20" y2="20"></line><line x1="8.12" y1="8.12" x2="12" y2="12"></line></svg></div>
-        <div>
-          <span class="serif grad cms-site-name" style="font-size:1.05rem;font-weight:700;display:block;line-height:1">Barbería Premium</span>
-        </div>
       </div>
     </a>
-    <style>
-      .nav-brand-wrap {
-        display: flex; align-items: center; gap: 10px;
-      }
-      @media (max-width: 480px) {
-        .nav-brand-wrap {
-          flex-direction: column; align-items: flex-start; gap: 2px;
-        }
-      }
-    </style>
 
     <ul class="nav-menu" role="list">
       <li><a href="#servicios">Servicios</a></li>
@@ -758,7 +745,7 @@
               <div class="bp-silver"></div>
               <div class="bp-cap bp-bottom"></div>
             </div>
-            <p style="font-size:.71rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:600">Premium Barbershop</p>
+            <p class="cms-site-name" style="font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);font-weight:600">Premium Barbershop</p>
           </div>
 
           <h1 id="hero-h1" class="hero-h1 rv" style="transition-delay:.08s">
