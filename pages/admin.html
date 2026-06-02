@@ -595,11 +595,7 @@
         <h2 class="topbar-title" id="topbar-title">Control de Citas</h2>
       </div>
       <div style="display:flex;gap:12px;align-items:center">
-        <span style="color:var(--muted);font-size:.85rem;margin-right:16px;" id="current-date"></span>
-        <button id="btn-open-global-cal" class="pill-gold" onclick="openGlobalCalendar()" style="display:flex; align-items:center; gap:8px; cursor:pointer;">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          Seleccionar Fecha
-        </button>
+        <span style="color:var(--muted);font-size:.85rem" id="current-date"></span>
       </div>
     </header>
 
@@ -1468,20 +1464,15 @@
           }
 
           // 2. Format today date
-          if (!window.selectedGlobalDate) {
-            const now = new Date();
-            window.selectedGlobalDate = now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
-          }
-          const hoyISO = window.selectedGlobalDate;
+          const now = new Date();
+          const hoyISO = now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
+          const ahoraStr = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
           
           const dObj = new Date(hoyISO + 'T12:00:00Z');
           const dias = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
           const meses = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
           document.getElementById('current-date').textContent = `${dias[dObj.getDay()]}, ${dObj.getDate()} de ${meses[dObj.getMonth()]} de ${dObj.getFullYear()}`;
           
-          const now = new Date();
-          const ahoraStr = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
-
           // 3. Fetch citas and render
           let html = '';
           for (const barbero of barberos) {
@@ -2062,7 +2053,7 @@
         }
       };
 
-      // â”€â”€â”€ NAVIGATION â”€â”€â”€
+      // ⎯⎯⎯ NAVIGATION ⎯⎯⎯
       const navItems = document.querySelectorAll('.nav-item');
       const sections = document.querySelectorAll('.section');
       const titleEl = document.getElementById('topbar-title');
@@ -2089,9 +2080,9 @@
           titleEl.textContent = titles[target] || 'Admin Panel';
 
           if (target === 'agenda') {
-            document.getElementById('btn-open-global-cal').style.display = 'flex';
+            
           } else {
-            document.getElementById('btn-open-global-cal').style.display = 'none';
+            
           }
         });
       });
