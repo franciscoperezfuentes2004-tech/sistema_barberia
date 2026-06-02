@@ -249,6 +249,14 @@
       text-decoration:none; letter-spacing:.04em;
       box-shadow: 0 2px 12px rgba(201,168,76,.3);
       transition: var(--ease);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .nav-cta .mobile-icon { display: none; }
+    .nav-cta .desktop-text { display: inline; }
+    @media (max-width: 480px) {
+      .nav-cta { padding: 10px 14px; font-size: 1rem; }
+      .nav-cta .desktop-text { display: none; }
+      .nav-cta .mobile-icon { display: inline; }
     }
     .nav-cta:hover { transform:translateY(-1px); box-shadow:0 5px 20px rgba(201,168,76,.45); }
 
@@ -684,7 +692,10 @@
       <li><a href="#contacto">Contacto</a></li>
     </ul>
 
-    <a href="pages/booking.html" class="nav-cta" id="nav-reservar">Reservar cita</a>
+    <a href="pages/booking.html" class="nav-cta" id="nav-reservar">
+      <span class="desktop-text">Reservar cita</span>
+      <span class="mobile-icon">&#128197;</span>
+    </a>
   </nav>
 
   <!-- ════════════════════════════════════════════
@@ -1454,7 +1465,7 @@
               };
               
               btnContainer.appendChild(btnMore);
-              revContainer.appendChild(btnContainer);
+              revContainer.insertAdjacentElement('afterend', btnContainer);
             }
           }
         }
