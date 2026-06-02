@@ -52,14 +52,23 @@ $q_grafica = "SELECT DATE(c.fecha_hora) as fecha, COUNT(*) as conteo
               FROM citas c WHERE $where_dates 
               GROUP BY DATE(c.fecha_hora) ORDER BY DATE(c.fecha_hora) ASC";
 $res_grafica = mysqli_query($conexion, $q_grafica);
-$grafica = [];
+
+$grafica_map = [];
 if ($res_grafica) {
     while ($row = mysqli_fetch_assoc($res_grafica)) {
-        $grafica[] = [
-            "fecha" => $row['fecha'],
-            "total" => (int)$row['conteo']
-        ];
+        $grafica_map[$row['fecha']] = (int)$row['conteo'];
     }
+}
+
+$grafica = [];
+$start_time = strtotime($desde);
+$end_time = strtotime($hasta);
+for ($t = $start_time; $t <= $end_time; $t += 86400) {
+    $f = date('Y-m-d', $t);
+    $grafica[] = [
+        "fecha" => $f,
+        "total" => isset($grafica_map[$f]) ? $grafica_map[$f] : 0
+    ];
 }
 
 // 4. Tabla Detallada

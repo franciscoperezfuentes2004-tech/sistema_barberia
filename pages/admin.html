@@ -1525,12 +1525,16 @@
 
       window.openMonthPicker = function() {
         pickerYear = statSelectedYear;
-        document.getElementById('stat-picker-modal').style.display = 'flex';
+        const modal = document.getElementById('stat-picker-modal');
+        modal.style.display = 'flex';
+        setTimeout(() => modal.classList.add('show'), 10);
         renderMonthGrid();
       }
       
       window.closeMonthPicker = function() {
-        document.getElementById('stat-picker-modal').style.display = 'none';
+        const modal = document.getElementById('stat-picker-modal');
+        modal.classList.remove('show');
+        setTimeout(() => modal.style.display = 'none', 300);
       }
 
       window.changeStatYear = function(delta) {
