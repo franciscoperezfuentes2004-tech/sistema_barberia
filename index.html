@@ -496,6 +496,35 @@
     /* ═══════════════════════════════════════════════════
        RESEÑAS — igual que equipo: scroll móvil, grid desktop
     ═══════════════════════════════════════════════════ */
+    .rev-modal-header {
+      display: grid; grid-template-columns: 1fr auto 1fr;
+      align-items: center; margin-bottom: 12px; gap: 10px;
+    }
+    .rev-modal-stars {
+      color: var(--gold); font-size: 0.95rem; letter-spacing: 1px; text-align: center;
+    }
+    .rev-modal-name {
+      font-size: 1.05rem; font-weight: 700; color: var(--bright);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: left;
+    }
+    .rev-modal-date {
+      font-size: 0.8rem; color: var(--muted); white-space: nowrap; text-align: right;
+    }
+
+    @media (max-width: 480px) {
+      .rev-modal-header {
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+          "name date"
+          "stars stars";
+        row-gap: 4px;
+        align-items: start;
+      }
+      .rev-modal-name { grid-area: name; }
+      .rev-modal-date { grid-area: date; }
+      .rev-modal-stars { grid-area: stars; text-align: left; margin-left: 0; }
+    }
+
     .rev-wrap {
       display: flex; gap: clamp(12px,2vw,20px);
       overflow-x: auto; scroll-snap-type: x mandatory;
@@ -675,7 +704,7 @@
   <nav id="nav" role="navigation" aria-label="Navegación principal">
 
     <a href="#inicio" class="nav-logo" aria-label="Barbería — Inicio">
-      <div style="display:flex; align-items:center; gap:10px;">
+      <div class="nav-brand-wrap">
         <img id="nav-custom-logo" src="" style="display:none; height:42px; width:42px; object-fit:cover; border-radius:10px;" alt="Logo">
         <div class="nav-mark" id="nav-default-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><line x1="20" y1="4" x2="8.12" y2="15.88"></line><line x1="14.47" y1="14.48" x2="20" y2="20"></line><line x1="8.12" y1="8.12" x2="12" y2="12"></line></svg></div>
         <div>
@@ -683,6 +712,16 @@
         </div>
       </div>
     </a>
+    <style>
+      .nav-brand-wrap {
+        display: flex; align-items: center; gap: 10px;
+      }
+      @media (max-width: 480px) {
+        .nav-brand-wrap {
+          flex-direction: column; align-items: flex-start; gap: 2px;
+        }
+      }
+    </style>
 
     <ul class="nav-menu" role="list">
       <li><a href="#servicios">Servicios</a></li>
@@ -694,7 +733,7 @@
 
     <a href="pages/booking.html" class="nav-cta" id="nav-reservar">
       <span class="desktop-text">Reservar cita</span>
-      <span class="mobile-icon">&#128197;</span>
+      <span class="mobile-text">Agendar</span>
     </a>
   </nav>
 
@@ -1423,10 +1462,10 @@
               // Diseño especial plano y moderno SOLO para la ventana emergente
               const htmlContentModal = `
                 <div style="border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 22px; margin-bottom: 22px;">
-                  <div style="display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; margin-bottom: 12px; gap: 10px;">
-                    <span style="font-size: 1.05rem; font-weight: 700; color: var(--bright); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: left;">${nombre}</span>
-                    <div class="t-stars" style="color:var(--gold); font-size: 0.95rem; letter-spacing: 1px; text-align: center;">${stars}</div>
-                    <div style="font-size: 0.8rem; color: var(--muted); white-space: nowrap; text-align: right;">${date}</div>
+                  <div class="rev-modal-header">
+                    <span class="rev-modal-name">${nombre}</span>
+                    <div class="t-stars rev-modal-stars">${stars}</div>
+                    <div class="rev-modal-date">${date}</div>
                   </div>
                   <p style="font-size: 0.95rem; line-height: 1.6; color: var(--muted); margin: 0; text-align: justify;">"${rev.comentario || 'Excelente servicio.'}"</p>
                 </div>
