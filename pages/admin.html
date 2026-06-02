@@ -618,15 +618,17 @@
 
       <!-- 1.5 ESTADISTICAS -->
       <section id="estadisticas" class="section">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
-          <div>
-            <h3 style="margin:0; font-size:1.1rem; color:var(--bright);">Resumen de Rendimiento</h3>
-            <p style="margin:0; color:var(--muted); font-size:0.85rem;" id="stat-current-range">Cargando...</p>
+        <div style="display:flex; gap:16px; margin-bottom:24px; align-items:flex-end; flex-wrap:wrap;">
+          <div class="form-group" style="margin-bottom:0;">
+            <label>Seleccionar Mes</label>
+            <div style="position:relative;">
+               <button id="btn-month-picker" onclick="openMonthPicker()" style="background:var(--s2); border:1px solid var(--border); padding:10px 16px; border-radius:8px; color:var(--bright); cursor:pointer; min-width:180px; text-align:left; display:flex; justify-content:space-between; align-items:center; transition:var(--tr);">
+                 <span id="month-picker-label">Cargando...</span>
+                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+               </button>
+            </div>
           </div>
-          <button class="pill-gold" onclick="openStatPicker()" style="display:flex; align-items:center; gap:8px; cursor:pointer;">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M18 9l-5 5-4-4-4 4"/></svg>
-            Seleccionar Rango
-          </button>
+          <button class="btn btn-primary" onclick="loadEstadisticas()" style="height:42px; padding:0 24px;">Filtrar Mes</button>
         </div>
 
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:24px; margin-bottom:32px;">
@@ -645,7 +647,16 @@
         </div>
 
         <div class="card" style="margin-bottom:32px; padding:24px;">
-          <div class="card-title">Citas por Día</div>
+          <div class="card-title" style="display:flex; justify-content:space-between; align-items:center;">
+            <span>Citas por Día</span>
+            <select id="chart-week-filter" onchange="updateChartWeek()" style="background:var(--s2); border:1px solid var(--border); color:var(--bright); padding:6px 12px; border-radius:8px; font-size:0.85rem; outline:none;">
+              <option value="all">Todo el Mes</option>
+              <option value="1">Semana 1 (Días 1-7)</option>
+              <option value="2">Semana 2 (Días 8-14)</option>
+              <option value="3">Semana 3 (Días 15-21)</option>
+              <option value="4">Semana 4 (Días 22-Fin)</option>
+            </select>
+          </div>
           <canvas id="statChart" height="80"></canvas>
         </div>
 
@@ -1509,63 +1520,71 @@
       let chartInstance = null;
       let statSelectedMonth = new Date().getMonth() + 1;
       let statSelectedYear = new Date().getFullYear();
-      let statSelectedWeek = 'all'; // 'all', 1, 2, 3, 4
+      let pickerYear = statSelectedYear;
+      let globalStatData = null; // Guardar datos para filtrar por semana sin recargar
 
-      window.openStatPicker = function() {
+      window.openMonthPicker = function() {
+        pickerYear = statSelectedYear;
         document.getElementById('stat-picker-modal').style.display = 'flex';
-        updateStatPickerTitle();
+        renderMonthGrid();
       }
-
-      window.changeStatMonth = function(delta) {
-        statSelectedMonth += delta;
-        if (statSelectedMonth > 12) { statSelectedMonth = 1; statSelectedYear++; }
-        else if (statSelectedMonth < 1) { statSelectedMonth = 12; statSelectedYear--; }
-        updateStatPickerTitle();
-      }
-
-      function updateStatPickerTitle() {
-        const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-        document.getElementById('stat-picker-title').textContent = `${meses[statSelectedMonth-1]} ${statSelectedYear}`;
-      }
-
-      window.selectStatRange = function(week) {
-        statSelectedWeek = week;
+      
+      window.closeMonthPicker = function() {
         document.getElementById('stat-picker-modal').style.display = 'none';
-        loadEstadisticas();
+      }
+
+      window.changeStatYear = function(delta) {
+        pickerYear += delta;
+        renderMonthGrid();
+      }
+
+      function renderMonthGrid() {
+        document.getElementById('stat-picker-year').textContent = pickerYear;
+        const grid = document.getElementById('stat-months-grid');
+        grid.innerHTML = '';
+        const meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+        
+        meses.forEach((m, i) => {
+          let isSelected = (i+1 === statSelectedMonth && pickerYear === statSelectedYear);
+          let btn = document.createElement('button');
+          btn.textContent = m;
+          btn.style.padding = '12px 0';
+          btn.style.borderRadius = '8px';
+          btn.style.border = 'none';
+          btn.style.cursor = 'pointer';
+          btn.style.fontWeight = '600';
+          btn.style.transition = 'var(--tr)';
+          if (isSelected) {
+            btn.style.background = 'var(--gradient-gold)';
+            btn.style.color = '#111';
+          } else {
+            btn.style.background = 'var(--bg)';
+            btn.style.color = 'var(--bright)';
+            btn.onmouseover = () => btn.style.background = 'var(--s3)';
+            btn.onmouseout = () => btn.style.background = 'var(--bg)';
+          }
+          btn.onclick = () => {
+            statSelectedMonth = i+1;
+            statSelectedYear = pickerYear;
+            closeMonthPicker();
+            updateMonthLabel();
+          };
+          grid.appendChild(btn);
+        });
+      }
+
+      function updateMonthLabel() {
+        const mesesF = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+        document.getElementById('month-picker-label').textContent = `${mesesF[statSelectedMonth-1]} ${statSelectedYear}`;
       }
 
       async function loadEstadisticas() {
-        // Calcular desde y hasta en base al mes y semana seleccionada
         const y = statSelectedYear;
         const m = statSelectedMonth;
         const lastDay = new Date(y, m, 0).getDate();
         
-        let dDesde, dHasta, tituloRango;
-        const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-
-        if (statSelectedWeek === 'all') {
-          dDesde = `${y}-${String(m).padStart(2,'0')}-01`;
-          dHasta = `${y}-${String(m).padStart(2,'0')}-${String(lastDay).padStart(2,'0')}`;
-          tituloRango = `Todo el mes de ${meses[m-1]} ${y}`;
-        } else if (statSelectedWeek === 1) {
-          dDesde = `${y}-${String(m).padStart(2,'0')}-01`;
-          dHasta = `${y}-${String(m).padStart(2,'0')}-07`;
-          tituloRango = `Semana 1 (1-7) de ${meses[m-1]} ${y}`;
-        } else if (statSelectedWeek === 2) {
-          dDesde = `${y}-${String(m).padStart(2,'0')}-08`;
-          dHasta = `${y}-${String(m).padStart(2,'0')}-14`;
-          tituloRango = `Semana 2 (8-14) de ${meses[m-1]} ${y}`;
-        } else if (statSelectedWeek === 3) {
-          dDesde = `${y}-${String(m).padStart(2,'0')}-15`;
-          dHasta = `${y}-${String(m).padStart(2,'0')}-21`;
-          tituloRango = `Semana 3 (15-21) de ${meses[m-1]} ${y}`;
-        } else if (statSelectedWeek === 4) {
-          dDesde = `${y}-${String(m).padStart(2,'0')}-22`;
-          dHasta = `${y}-${String(m).padStart(2,'0')}-${String(lastDay).padStart(2,'0')}`;
-          tituloRango = `Semana 4 (22-${lastDay}) de ${meses[m-1]} ${y}`;
-        }
-
-        document.getElementById('stat-current-range').textContent = tituloRango;
+        const dDesde = `${y}-${String(m).padStart(2,'0')}-01`;
+        const dHasta = `${y}-${String(m).padStart(2,'0')}-${String(lastDay).padStart(2,'0')}`;
         
         let url = `${API}/estadisticas.php?desde=${dDesde}&hasta=${dHasta}`;
 
@@ -1573,6 +1592,8 @@
           const res = await fetch(url);
           const json = await res.json();
           if (!json.success) return alert('Error cargando estadísticas');
+
+          globalStatData = json.grafica; // Guardar datos de la gráfica globales
 
           document.getElementById('stat-total-citas').textContent = json.resumen.total_citas;
           document.getElementById('stat-ingresos').textContent = '$' + json.resumen.total_ingresos.toFixed(2);
@@ -1594,38 +1615,62 @@
             `;
           });
 
-          const ctx = document.getElementById('statChart').getContext('2d');
-          if (chartInstance) chartInstance.destroy();
-          
-          chartInstance = new Chart(ctx, {
-            type: 'line',
-            data: {
-              labels: json.grafica.map(g => g.fecha),
-              datasets: [{
-                label: 'Citas Completadas',
-                data: json.grafica.map(g => g.total),
-                borderColor: '#C9A84C',
-                backgroundColor: 'rgba(201, 168, 76, 0.2)',
-                borderWidth: 2,
-                fill: true,
-                tension: 0.3,
-                pointBackgroundColor: '#C9A84C'
-              }]
-            },
-            options: {
-              responsive: true,
-              scales: {
-                y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' } },
-                x: { grid: { color: 'rgba(255,255,255,0.05)' } }
-              },
-              plugins: { legend: { display: false } }
-            }
-          });
+          // Reset chart filter and draw
+          document.getElementById('chart-week-filter').value = 'all';
+          updateChartWeek();
 
         } catch (e) {
           console.error(e);
           alert('Error de conexión en analíticas');
         }
+      }
+
+      window.updateChartWeek = function() {
+        if (!globalStatData) return;
+        const week = document.getElementById('chart-week-filter').value;
+        let filteredData = [];
+        
+        if (week === 'all') {
+          filteredData = globalStatData;
+        } else {
+          const w = parseInt(week);
+          filteredData = globalStatData.filter(g => {
+            const day = parseInt(g.fecha.split('-')[2]);
+            if(w === 1 && day >= 1 && day <= 7) return true;
+            if(w === 2 && day >= 8 && day <= 14) return true;
+            if(w === 3 && day >= 15 && day <= 21) return true;
+            if(w === 4 && day >= 22) return true;
+            return false;
+          });
+        }
+
+        const ctx = document.getElementById('statChart').getContext('2d');
+        if (chartInstance) chartInstance.destroy();
+        
+        chartInstance = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: filteredData.map(g => g.fecha),
+            datasets: [{
+              label: 'Citas Completadas',
+              data: filteredData.map(g => g.total),
+              borderColor: '#C9A84C',
+              backgroundColor: 'rgba(201, 168, 76, 0.2)',
+              borderWidth: 2,
+              fill: true,
+              tension: 0.3,
+              pointBackgroundColor: '#C9A84C'
+            }]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { stepSize: 1 } },
+              x: { grid: { color: 'rgba(255,255,255,0.05)' } }
+            },
+            plugins: { legend: { display: false } }
+          }
+        });
       }
 
       // ⎯⎯⎯ AGENDA GLOBAL ⎯⎯⎯
@@ -2261,6 +2306,7 @@
           titleEl.textContent = titles[target] || 'Admin Panel';
 
           if (target === 'estadisticas') {
+            updateMonthLabel();
             loadEstadisticas();
           }
         });
@@ -2348,27 +2394,21 @@
     
     <!-- Modal Custom Range Picker para Estadísticas -->
     <div id="stat-picker-modal" class="modal-overlay" style="z-index:9999; display:none;">
-      <div class="modal-content modal-glass" style="border-radius:24px; width:100%; max-width:400px; padding:28px; position:relative;">
-        <button onclick="document.getElementById('stat-picker-modal').style.display='none'" style="position:absolute; top:16px; right:20px; background:rgba(255,255,255,0.1); border:none; color:var(--bright); width:32px; height:32px; border-radius:50%; font-size:1.2rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background 0.2s;">&times;</button>
+      <div class="modal-content modal-glass" style="border-radius:24px; width:100%; max-width:350px; padding:28px; position:relative;">
+        <button onclick="closeMonthPicker()" style="position:absolute; top:16px; right:20px; background:rgba(255,255,255,0.1); border:none; color:var(--bright); width:32px; height:32px; border-radius:50%; font-size:1.2rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background 0.2s;">&times;</button>
         
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:28px; margin-top:36px;">
-          <button onclick="changeStatMonth(-1)" onmouseover="this.style.background='var(--s3)';this.style.borderColor='var(--gold)'" onmouseout="this.style.background='var(--s2)';this.style.borderColor='var(--border)'" style="background:var(--s2); border:1px solid var(--border); color:var(--gold); border-radius:50%; width:44px; height:44px; cursor:pointer; transition:var(--tr); display:flex; align-items:center; justify-content:center;">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:22px;height:22px;"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:28px; margin-top:16px;">
+          <button onclick="changeStatYear(-1)" onmouseover="this.style.background='var(--s3)';this.style.borderColor='var(--gold)'" onmouseout="this.style.background='var(--s2)';this.style.borderColor='var(--border)'" style="background:var(--s2); border:1px solid var(--border); color:var(--gold); border-radius:50%; width:40px; height:40px; cursor:pointer; transition:var(--tr); display:flex; align-items:center; justify-content:center;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px;"><polyline points="15 18 9 12 15 6"></polyline></svg>
           </button>
-          <h3 id="stat-picker-title" style="margin:0; color:var(--gold); font-family:var(--serif); font-size:1.5rem; font-weight:800; letter-spacing:0.5px; text-transform:capitalize;">Junio 2026</h3>
-          <button onclick="changeStatMonth(1)" onmouseover="this.style.background='var(--s3)';this.style.borderColor='var(--gold)'" onmouseout="this.style.background='var(--s2)';this.style.borderColor='var(--border)'" style="background:var(--s2); border:1px solid var(--border); color:var(--gold); border-radius:50%; width:44px; height:44px; cursor:pointer; transition:var(--tr); display:flex; align-items:center; justify-content:center;">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:22px;height:22px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          <h3 id="stat-picker-year" style="margin:0; color:var(--gold); font-family:var(--serif); font-size:1.5rem; font-weight:800; letter-spacing:0.5px;">2026</h3>
+          <button onclick="changeStatYear(1)" onmouseover="this.style.background='var(--s3)';this.style.borderColor='var(--gold)'" onmouseout="this.style.background='var(--s2)';this.style.borderColor='var(--border)'" style="background:var(--s2); border:1px solid var(--border); color:var(--gold); border-radius:50%; width:40px; height:40px; cursor:pointer; transition:var(--tr); display:flex; align-items:center; justify-content:center;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
           </button>
         </div>
 
-        <div style="display:flex; flex-direction:column; gap:12px;">
-          <button onclick="selectStatRange('all')" class="btn btn-secondary" style="width:100%; justify-content:center; font-weight:700;">Todo el Mes</button>
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
-            <button onclick="selectStatRange(1)" class="btn btn-secondary" style="justify-content:center;">Semana 1 (1 - 7)</button>
-            <button onclick="selectStatRange(2)" class="btn btn-secondary" style="justify-content:center;">Semana 2 (8 - 14)</button>
-            <button onclick="selectStatRange(3)" class="btn btn-secondary" style="justify-content:center;">Semana 3 (15 - 21)</button>
-            <button onclick="selectStatRange(4)" class="btn btn-secondary" style="justify-content:center;">Semana 4 (22 - fin)</button>
-          </div>
+        <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px;" id="stat-months-grid">
+           <!-- Renderizado por JS -->
         </div>
       </div>
     </div>
