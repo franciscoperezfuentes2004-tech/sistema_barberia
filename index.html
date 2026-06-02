@@ -840,13 +840,26 @@
         <span class="eyebrow">Lo que dicen nuestros clientes</span>
         <h2 id="rev-h" class="sec-title">Reseñas Reales</h2>
       </div>
-      <button class="btn-outline" onclick="document.getElementById('reviewModal').classList.add('active')" style="flex-shrink:0">
+      <button class="btn-outline desktop-btn-review" onclick="document.getElementById('reviewModal').classList.add('active')" style="flex-shrink:0">
         Dejar Reseña
       </button>
+      <style>
+        .desktop-btn-review { display: none; }
+        .mobile-btn-container { display: flex; justify-content: center; margin-top: 20px; }
+        @media (min-width: 768px) {
+          .desktop-btn-review { display: inline-flex; }
+          .mobile-btn-container { display: none; }
+        }
+      </style>
     </div>
 
     <div class="rev-wrap rv" role="list" aria-label="Reseñas de clientes" id="public-reviews">
       <!-- Generado dinámicamente -->
+    </div>
+    <div class="mobile-btn-container">
+      <button class="btn-outline" onclick="document.getElementById('reviewModal').classList.add('active')">
+        Dejar Reseña
+      </button>
     </div>
   </section>
 
@@ -1230,7 +1243,7 @@
           if (svcContainer) {
             svcContainer.innerHTML = '';
             // Solo mostrar activos
-            const activos = jsonSvc.data.filter(s => s.activo === 1);
+            const activos = jsonSvc.data.filter(s => parseInt(s.activo) === 1);
             activos.forEach((svc, idx) => {
               const delay = 0.05 * (idx + 1);
               const el = document.createElement('article');

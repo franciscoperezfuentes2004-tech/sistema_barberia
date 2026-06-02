@@ -849,7 +849,7 @@
 
   <script>
     (() => {
-      const API = '../api';
+      const API = '../sistema';
 
       // 🛡️ Interceptor Global de Fetch para Inyectar JWT
       const originalFetch = window.fetch;
@@ -957,7 +957,7 @@
       // ⎯⎯⎯ CMS AJUSTES GLOBALES ⎯⎯⎯
       async function loadCMS() {
         try {
-          const res = await fetch(`${API}/ajustes`);
+          const res = await fetch(`${API}/obtener_datos.php?tabla=ajustes`);
           const json = await res.json();
           if (json.success && json.data) {
             const data = json.data;
@@ -1087,7 +1087,7 @@
         }
 
         try {
-          const res = await fetch(`${API}/ajustes`, {
+          const res = await fetch(`${API}/guardar_ajustes.php`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
@@ -1110,7 +1110,7 @@
       // ⎯⎯⎯ GALERIA ⎯⎯⎯
       window.loadGallery = async () => {
         try {
-          const res = await fetch(`${API}/galeria`);
+          const res = await fetch(`${API}/obtener_datos.php?tabla=galeria`);
           const json = await res.json();
           const grid = document.getElementById('cms-gallery');
           const fullGrid = document.getElementById('full-cms-gallery');
@@ -1169,7 +1169,7 @@
       window.deleteGalleryImage = async (id) => {
         if (!confirm('¿Seguro que deseas eliminar esta imagen de la galería?')) return;
         try {
-          const res = await fetch(`${API}/galeria?id=${id}`, { method: 'DELETE' });
+          const res = await fetch(`${API}/eliminar.php?tabla=galeria&id=${id}`, { method: 'DELETE' });
           const json = await res.json();
           if (json.success) {
             showToast('✅ Imagen eliminada');
@@ -1193,7 +1193,7 @@
         try { b64 = await compressImage(b64, 1200, 0.8); } catch(e) { /* usar original */ }
 
         try {
-          const res = await fetch(`${API}/galeria`, {
+          const res = await fetch(`${API}/guardar_galeria.php`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -1222,7 +1222,7 @@
         
         try {
           // 1. Fetch barberos
-          const resB = await fetch(`${API}/barberos?all=1`);
+          const resB = await fetch(`${API}/obtener_datos.php?tabla=barberos&all=1`);
           const jsonB = await resB.json();
           const barberos = jsonB.data || [];
           
@@ -1239,7 +1239,7 @@
           // 3. Fetch citas and render
           let html = '';
           for (const barbero of barberos) {
-            const resC = await fetch(`${API}/citas?barbero_id=${barbero.id}&fecha=${hoyISO}`);
+            const resC = await fetch(`${API}/obtener_datos.php?tabla=citas&barbero_id=${barbero.id}&fecha=${hoyISO}`);
             const jsonC = await resC.json();
             const citas = jsonC.data || [];
             
@@ -1342,7 +1342,7 @@
       async function loadEquipo() {
         const tbody = document.getElementById('team-tbody');
         try {
-          const res = await fetch(`${API}/barberos?all=1`);
+          const res = await fetch(`${API}/obtener_datos.php?tabla=barberos&all=1`);
           const json = await res.json();
           barberosList = json.data || [];
           
@@ -1448,7 +1448,7 @@
           payload.activo = document.getElementById('b-activo').checked ? 1 : 0;
         }
 
-        const url = id ? `${API}/barberos?id=${id}` : `${API}/barberos`;
+        const url = id ? `${API}/guardar_barbero.php?id=${id}` : `${API}/guardar_barbero.php`;
         const method = id ? 'PUT' : 'POST';
 
         try {
@@ -1476,7 +1476,7 @@
           return;
         }
         try {
-          const res = await fetch(`${API}/barberos?id=${id}`, { method: 'DELETE' });
+          const res = await fetch(`${API}/eliminar.php?tabla=barberos&id=${id}`, { method: 'DELETE' });
           const json = await res.json();
           if (json.success) {
             showToast('🗑️ Barbero eliminado permanentemente');
@@ -1497,7 +1497,7 @@
         const tbody = document.getElementById('servicios-tbody');
         if(!tbody) return;
         try {
-          const res = await fetch(`${API}/servicios`);
+          const res = await fetch(`${API}/obtener_datos.php?tabla=servicios`);
           const json = await res.json();
           serviciosList = json.data || [];
           
@@ -1578,7 +1578,7 @@
           payload.imagen_url = window.b64Files['s-imagen'];
         }
 
-        const url = id ? `${API}/servicios?id=${id}` : `${API}/servicios`;
+        const url = id ? `${API}/guardar_servicio.php?id=${id}` : `${API}/guardar_servicio.php`;
         const method = id ? 'PUT' : 'POST';
 
         try {
@@ -1606,7 +1606,7 @@
       window.deleteService = async (id, nombre) => {
         if (!confirm(`¿Estás seguro que deseas eliminar el servicio "${nombre}"?`)) return;
         try {
-          const res = await fetch(`${API}/servicios?id=${id}`, { method: 'DELETE' });
+          const res = await fetch(`${API}/eliminar.php?tabla=servicios&id=${id}`, { method: 'DELETE' });
           const json = await res.json();
           if (json.success) {
             showToast('ðŸ—‘ï¸ Servicio eliminado');
@@ -1700,7 +1700,7 @@
 
       window.loadGlobalSchedule = async () => {
         try {
-          const res = await fetch(`${API}/horarios?global=1`);
+          const res = await fetch(`${API}/obtener_datos.php?tabla=horarios&global=1`);
           const json = await res.json();
           if (json.success) {
             renderScheduleEditor('global-schedule-container', json.data, 'glb');
@@ -1715,7 +1715,7 @@
         const syncAll = document.getElementById('sync-all-barbers').checked;
         
         try {
-          const res = await fetch(`${API}/horarios?global=1`, {
+          const res = await fetch(`${API}/guardar_horarios.php?global=1`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ horario: scheduleData, sync_all: syncAll })
@@ -1738,7 +1738,7 @@
 
       window.populateBarberSelect = async () => {
         try {
-          const res = await fetch(`${API}/barberos?all=1`);
+          const res = await fetch(`${API}/obtener_datos.php?tabla=barberos&all=1`);
           const json = await res.json();
           const select = document.getElementById('horario-barbero-select');
           if (!select) return;
@@ -1766,7 +1766,7 @@
         }
         
         try {
-          const res = await fetch(`${API}/horarios?barbero_id=${barberoId}`);
+          const res = await fetch(`${API}/obtener_datos.php?tabla=horarios&barbero_id=${barberoId}`);
           const json = await res.json();
           if (json.success) {
             renderScheduleEditor('barber-schedule-container', json.data, 'brb');
@@ -1789,7 +1789,7 @@
         const scheduleData = extractScheduleData('brb');
         
         try {
-          const res = await fetch(`${API}/horarios?barbero_id=${barberoId}`, {
+          const res = await fetch(`${API}/guardar_horarios.php?barbero_id=${barberoId}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ horario: scheduleData })
