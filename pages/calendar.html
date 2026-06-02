@@ -32,18 +32,18 @@
     .logo-mark{width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,var(--gold-d),var(--gold));display:flex;align-items:center;justify-content:center;font-size:.95rem}
     .logo-name{font-family:var(--serif);font-size:1rem;font-weight:700;color:var(--gold)}
     
-    .steps{display:flex;align-items:center;gap:0;margin-bottom:32px}
-    .step-item{display:flex;align-items:center;gap:6px;flex-shrink:0}
-    .step-dot{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;border:2px solid var(--border);color:var(--muted);transition:var(--tr)}
+    .steps{display:flex;align-items:center;gap:0;margin-bottom:32px;justify-content:center;width:100%;}
+    .step-item{display:flex;align-items:center;gap:clamp(3px, 1vw, 6px);flex-shrink:0}
+    .step-dot{width:clamp(20px, 6vw, 26px);height:clamp(20px, 6vw, 26px);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:clamp(0.65rem, 2vw, 0.72rem);font-weight:700;border:2px solid var(--border);color:var(--muted);transition:var(--tr)}
     .step-dot.active{background:var(--gold);border-color:var(--gold);color:#0F0F0F}
     .step-dot.done{background:transparent;border-color:var(--green);color:var(--green)}
-    .step-label{font-size:.72rem;font-weight:500;color:var(--muted);transition:var(--tr)}
+    .step-label{font-size:clamp(0.6rem, 2.5vw, 0.72rem);font-weight:500;color:var(--muted);transition:var(--tr)}
     .step-label.active{color:var(--gold)}
     .step-label.done{color:var(--green)}
-    .step-line{flex:1;height:1px;background:var(--border);margin:0 8px;min-width:20px}
+    .step-line{flex:1;height:1px;background:var(--border);margin:0 clamp(4px, 1.5vw, 8px);min-width:10px}
     .step-line.done{background:var(--green)}
 
-    main{max-width:1400px;margin:0 auto;padding:28px var(--gutter) 200px}
+    main{max-width:1400px;margin:0 auto;padding:28px clamp(12px, 3vw, 24px) 200px}
     .sec-title-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
     .sec-title{font-family:var(--serif);font-size:1.3rem;font-weight:600;color:var(--gold-l);letter-spacing:0.02em}
     .divider-line{display:flex;align-items:center;gap:10px;margin-bottom:18px;color:var(--muted);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase}
@@ -186,6 +186,7 @@
         justify-content: center;
       }
     }
+    .cal-nav-btn:hover { background:rgba(255,255,255,0.1) !important; border-color:var(--gold) !important; color:var(--gold) !important; transform:translateY(-2px); box-shadow:0 6px 15px rgba(225,178,74,0.2); }
   </style>
 
   <style>
@@ -342,12 +343,18 @@
   <!-- Premium Calendar Modal -->
   <div id="calendar-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:100; align-items:center; justify-content:center; padding:clamp(10px, 3vw, 20px); backdrop-filter:blur(8px); animation: fadeIn 0.3s ease;">
     <div class="modal-content modal-glass" style="border-radius:24px; width:100%; max-width:400px; padding:clamp(14px, 4vw, 28px); position:relative;">
-      <button onclick="closeCalendarModal()" style="position:absolute; top:16px; right:20px; background:rgba(255,255,255,0.1); border:none; color:var(--bright); width:32px; height:32px; border-radius:50%; font-size:1.2rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background 0.2s;">&times;</button>
+      <button class="cal-nav-btn" onclick="closeCalendarModal()" style="position:absolute; top:16px; right:16px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.05); color:var(--muted); width:36px; height:36px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.3s; z-index:10;">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
       
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:28px; margin-top:36px;">
-        <button id="cal-prev" onclick="changeMonth(-1)" style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:var(--bright); border-radius:12px; width:40px; height:40px; cursor:pointer; transition:all 0.2s; font-size:1.1rem; display:flex; align-items:center; justify-content:center;">&lt;</button>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:28px; margin-top:48px;">
+        <button class="cal-nav-btn" id="cal-prev" onclick="changeMonth(-1)" style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:var(--bright); border-radius:12px; width:44px; height:44px; cursor:pointer; transition:all 0.3s; display:flex; align-items:center; justify-content:center;">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
         <h3 id="cal-month-year" style="margin:0; background:var(--gradient-gold); -webkit-background-clip:text; -webkit-text-fill-color:transparent; font-family:var(--serif); font-size:1.6rem; font-weight:800; letter-spacing:0.5px;">Mayo 2026</h3>
-        <button id="cal-next" onclick="changeMonth(1)" style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:var(--bright); border-radius:12px; width:40px; height:40px; cursor:pointer; transition:all 0.2s; font-size:1.1rem; display:flex; align-items:center; justify-content:center;">&gt;</button>
+        <button class="cal-nav-btn" id="cal-next" onclick="changeMonth(1)" style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:var(--bright); border-radius:12px; width:44px; height:44px; cursor:pointer; transition:all 0.3s; display:flex; align-items:center; justify-content:center;">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
       </div>
 
       <div style="display:grid; grid-template-columns:repeat(7, 1fr); gap:clamp(4px, 1.5vw, 8px); text-align:center; margin-bottom:16px;">
