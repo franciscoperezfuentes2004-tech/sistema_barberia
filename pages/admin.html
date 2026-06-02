@@ -618,12 +618,15 @@
 
       <!-- 1.5 ESTADISTICAS -->
       <section id="estadisticas" class="section">
-        <div style="display:flex; gap:16px; margin-bottom:24px; align-items:flex-end; flex-wrap:wrap;">
-          <div class="form-group" style="margin-bottom:0;">
-            <label>Seleccionar Mes</label>
-            <input type="month" id="stat-mes">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+          <div>
+            <h3 style="margin:0; font-size:1.1rem; color:var(--bright);">Resumen de Rendimiento</h3>
+            <p style="margin:0; color:var(--muted); font-size:0.85rem;" id="stat-current-range">Cargando...</p>
           </div>
-          <button class="btn btn-primary" onclick="loadEstadisticas()" style="height:42px; padding:0 24px;">Filtrar Mes</button>
+          <button class="pill-gold" onclick="openStatPicker()" style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M18 9l-5 5-4-4-4 4"/></svg>
+            Seleccionar Rango
+          </button>
         </div>
 
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:24px; margin-bottom:32px;">
@@ -1504,19 +1507,66 @@
 
       // ⎯⎯⎯ ESTADISTICAS ⎯⎯⎯
       let chartInstance = null;
+      let statSelectedMonth = new Date().getMonth() + 1;
+      let statSelectedYear = new Date().getFullYear();
+      let statSelectedWeek = 'all'; // 'all', 1, 2, 3, 4
+
+      window.openStatPicker = function() {
+        document.getElementById('stat-picker-modal').style.display = 'flex';
+        updateStatPickerTitle();
+      }
+
+      window.changeStatMonth = function(delta) {
+        statSelectedMonth += delta;
+        if (statSelectedMonth > 12) { statSelectedMonth = 1; statSelectedYear++; }
+        else if (statSelectedMonth < 1) { statSelectedMonth = 12; statSelectedYear--; }
+        updateStatPickerTitle();
+      }
+
+      function updateStatPickerTitle() {
+        const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+        document.getElementById('stat-picker-title').textContent = `${meses[statSelectedMonth-1]} ${statSelectedYear}`;
+      }
+
+      window.selectStatRange = function(week) {
+        statSelectedWeek = week;
+        document.getElementById('stat-picker-modal').style.display = 'none';
+        loadEstadisticas();
+      }
 
       async function loadEstadisticas() {
-        const valMes = document.getElementById('stat-mes').value;
-        if (!valMes) return alert("Por favor selecciona un mes");
-        
-        const partes = valMes.split('-');
-        const y = parseInt(partes[0], 10);
-        const m = parseInt(partes[1], 10);
-        
+        // Calcular desde y hasta en base al mes y semana seleccionada
+        const y = statSelectedYear;
+        const m = statSelectedMonth;
         const lastDay = new Date(y, m, 0).getDate();
-        const dDesde = `${y}-${String(m).padStart(2,'0')}-01`;
-        const dHasta = `${y}-${String(m).padStart(2,'0')}-${String(lastDay).padStart(2,'0')}`;
+        
+        let dDesde, dHasta, tituloRango;
+        const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 
+        if (statSelectedWeek === 'all') {
+          dDesde = `${y}-${String(m).padStart(2,'0')}-01`;
+          dHasta = `${y}-${String(m).padStart(2,'0')}-${String(lastDay).padStart(2,'0')}`;
+          tituloRango = `Todo el mes de ${meses[m-1]} ${y}`;
+        } else if (statSelectedWeek === 1) {
+          dDesde = `${y}-${String(m).padStart(2,'0')}-01`;
+          dHasta = `${y}-${String(m).padStart(2,'0')}-07`;
+          tituloRango = `Semana 1 (1-7) de ${meses[m-1]} ${y}`;
+        } else if (statSelectedWeek === 2) {
+          dDesde = `${y}-${String(m).padStart(2,'0')}-08`;
+          dHasta = `${y}-${String(m).padStart(2,'0')}-14`;
+          tituloRango = `Semana 2 (8-14) de ${meses[m-1]} ${y}`;
+        } else if (statSelectedWeek === 3) {
+          dDesde = `${y}-${String(m).padStart(2,'0')}-15`;
+          dHasta = `${y}-${String(m).padStart(2,'0')}-21`;
+          tituloRango = `Semana 3 (15-21) de ${meses[m-1]} ${y}`;
+        } else if (statSelectedWeek === 4) {
+          dDesde = `${y}-${String(m).padStart(2,'0')}-22`;
+          dHasta = `${y}-${String(m).padStart(2,'0')}-${String(lastDay).padStart(2,'0')}`;
+          tituloRango = `Semana 4 (22-${lastDay}) de ${meses[m-1]} ${y}`;
+        }
+
+        document.getElementById('stat-current-range').textContent = tituloRango;
+        
         let url = `${API}/estadisticas.php?desde=${dDesde}&hasta=${dHasta}`;
 
         try {
@@ -2211,12 +2261,6 @@
           titleEl.textContent = titles[target] || 'Admin Panel';
 
           if (target === 'estadisticas') {
-            if (!document.getElementById('stat-mes').value) {
-              const now = new Date();
-              const y = now.getFullYear();
-              const m = String(now.getMonth()+1).padStart(2,'0');
-              document.getElementById('stat-mes').value = `${y}-${m}`;
-            }
             loadEstadisticas();
           }
         });
@@ -2301,5 +2345,32 @@
       });
 
     </script>
+    
+    <!-- Modal Custom Range Picker para Estadísticas -->
+    <div id="stat-picker-modal" class="modal-overlay" style="z-index:9999; display:none;">
+      <div class="modal-content modal-glass" style="border-radius:24px; width:100%; max-width:400px; padding:28px; position:relative;">
+        <button onclick="document.getElementById('stat-picker-modal').style.display='none'" style="position:absolute; top:16px; right:20px; background:rgba(255,255,255,0.1); border:none; color:var(--bright); width:32px; height:32px; border-radius:50%; font-size:1.2rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background 0.2s;">&times;</button>
+        
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:28px; margin-top:36px;">
+          <button onclick="changeStatMonth(-1)" onmouseover="this.style.background='var(--s3)';this.style.borderColor='var(--gold)'" onmouseout="this.style.background='var(--s2)';this.style.borderColor='var(--border)'" style="background:var(--s2); border:1px solid var(--border); color:var(--gold); border-radius:50%; width:44px; height:44px; cursor:pointer; transition:var(--tr); display:flex; align-items:center; justify-content:center;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:22px;height:22px;"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          </button>
+          <h3 id="stat-picker-title" style="margin:0; color:var(--gold); font-family:var(--serif); font-size:1.5rem; font-weight:800; letter-spacing:0.5px; text-transform:capitalize;">Junio 2026</h3>
+          <button onclick="changeStatMonth(1)" onmouseover="this.style.background='var(--s3)';this.style.borderColor='var(--gold)'" onmouseout="this.style.background='var(--s2)';this.style.borderColor='var(--border)'" style="background:var(--s2); border:1px solid var(--border); color:var(--gold); border-radius:50%; width:44px; height:44px; cursor:pointer; transition:var(--tr); display:flex; align-items:center; justify-content:center;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:22px;height:22px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          <button onclick="selectStatRange('all')" class="btn btn-secondary" style="width:100%; justify-content:center; font-weight:700;">Todo el Mes</button>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+            <button onclick="selectStatRange(1)" class="btn btn-secondary" style="justify-content:center;">Semana 1 (1 - 7)</button>
+            <button onclick="selectStatRange(2)" class="btn btn-secondary" style="justify-content:center;">Semana 2 (8 - 14)</button>
+            <button onclick="selectStatRange(3)" class="btn btn-secondary" style="justify-content:center;">Semana 3 (15 - 21)</button>
+            <button onclick="selectStatRange(4)" class="btn btn-secondary" style="justify-content:center;">Semana 4 (22 - fin)</button>
+          </div>
+        </div>
+      </div>
+    </div>
 </body>
 </html>
