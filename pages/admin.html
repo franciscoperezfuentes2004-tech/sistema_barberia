@@ -1522,6 +1522,7 @@
       let statSelectedYear = new Date().getFullYear();
       let pickerYear = statSelectedYear;
       let globalStatData = null; // Guardar datos para filtrar por semana sin recargar
+      let globalStatTablaData = null;
 
       window.openMonthPicker = function() {
         pickerYear = statSelectedYear;
@@ -1602,26 +1603,11 @@
           if (!json.success) return alert('Error cargando estadísticas');
 
           globalStatData = json.grafica; // Guardar datos de la gráfica globales
+          globalStatTablaData = json.tabla; // Guardar tabla globalmente
 
           document.getElementById('stat-total-citas').textContent = json.resumen.total_citas;
           document.getElementById('stat-ingresos').textContent = '$' + json.resumen.total_ingresos.toFixed(2);
           document.getElementById('stat-mejor-barbero').textContent = json.resumen.mejor_barbero;
-
-          const tbody = document.getElementById('stat-table-body');
-          tbody.innerHTML = '';
-          json.tabla.forEach(c => {
-            const d = new Date(c.fecha_hora);
-            const fechaStr = d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-            tbody.innerHTML += `
-              <tr>
-                <td style="color:var(--muted)">${fechaStr}</td>
-                <td style="font-weight:600;color:var(--bright)">${c.cliente}</td>
-                <td>${c.barbero || 'N/A'}</td>
-                <td>${c.servicio || 'N/A'}</td>
-                <td style="color:var(--green)">$${c.precio.toFixed(2)}</td>
-              </tr>
-            `;
-          });
 
           // Reset chart filter and draw
           document.getElementById('chart-week-filter').value = 'all';
@@ -1634,16 +1620,27 @@
       }
 
       window.updateChartWeek = function() {
-        if (!globalStatData) return;
+        if (!globalStatData || !globalStatTablaData) return;
         const week = document.getElementById('chart-week-filter').value;
         let filteredData = [];
+        let filteredTabla = [];
         
         if (week === 'all') {
           filteredData = globalStatData;
+          filteredTabla = globalStatTablaData;
         } else {
           const w = parseInt(week);
           filteredData = globalStatData.filter(g => {
             const day = parseInt(g.fecha.split('-')[2]);
+            if(w === 1 && day >= 1 && day <= 7) return true;
+            if(w === 2 && day >= 8 && day <= 14) return true;
+            if(w === 3 && day >= 15 && day <= 21) return true;
+            if(w === 4 && day >= 22) return true;
+            return false;
+          });
+          filteredTabla = globalStatTablaData.filter(c => {
+            // fecha_hora comes like "2026-06-02 10:00:00"
+            const day = parseInt(c.fecha_hora.split(' ')[0].split('-')[2]);
             if(w === 1 && day >= 1 && day <= 7) return true;
             if(w === 2 && day >= 8 && day <= 14) return true;
             if(w === 3 && day >= 15 && day <= 21) return true;
@@ -1679,6 +1676,33 @@
             plugins: { legend: { display: false } }
           }
         });
+        
+        // Renderizar Tabla Dinámicamente
+        const tbody = document.getElementById('stat-table-body');
+        tbody.innerHTML = '';
+        if (filteredTabla.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:20px; color:var(--muted)">No hay citas en este periodo</td></tr>';
+        } else {
+          filteredTabla.forEach(c => {
+            const d = new Date(c.fecha_hora.replace(/-/g, '/')); // Fix Safari parse if needed, though split used above works
+            const fechaStr = c.fecha_hora; // Simplified for safety, or parse carefully
+            // Actually, Date constructor works perfectly in modern browsers. Let's keep it robust:
+            const parsed = new Date(c.fecha_hora);
+            const finalStr = !isNaN(parsed) 
+              ? parsed.toLocaleDateString() + ' ' + parsed.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+              : c.fecha_hora;
+              
+            tbody.innerHTML += `
+              <tr>
+                <td style="color:var(--muted)">${finalStr}</td>
+                <td style="font-weight:600;color:var(--bright)">${c.cliente}</td>
+                <td>${c.barbero || 'N/A'}</td>
+                <td>${c.servicio || 'N/A'}</td>
+                <td style="color:var(--green)">$${c.precio.toFixed(2)}</td>
+              </tr>
+            `;
+          });
+        }
       }
 
       // ⎯⎯⎯ AGENDA GLOBAL ⎯⎯⎯
@@ -2403,9 +2427,9 @@
     <!-- Modal Custom Range Picker para Estadísticas -->
     <div id="stat-picker-modal" class="modal-overlay" style="z-index:9999; display:none;">
       <div class="modal-content modal-glass" style="border-radius:24px; width:100%; max-width:350px; padding:28px; position:relative;">
-        <button onclick="closeMonthPicker()" style="position:absolute; top:16px; right:20px; background:rgba(255,255,255,0.1); border:none; color:var(--bright); width:32px; height:32px; border-radius:50%; font-size:1.2rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background 0.2s;">&times;</button>
+        <button onclick="closeMonthPicker()" style="position:absolute; top:-16px; right:-16px; background:var(--s2); border:2px solid var(--border); color:var(--bright); width:36px; height:36px; border-radius:50%; font-size:1.2rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:var(--tr); box-shadow:0 4px 12px rgba(0,0,0,0.5); z-index:10;" onmouseover="this.style.background='var(--gold)'; this.style.color='#111'" onmouseout="this.style.background='var(--s2)'; this.style.color='var(--bright)'">&times;</button>
         
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:28px; margin-top:16px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:28px; margin-top:12px;">
           <button onclick="changeStatYear(-1)" onmouseover="this.style.background='var(--s3)';this.style.borderColor='var(--gold)'" onmouseout="this.style.background='var(--s2)';this.style.borderColor='var(--border)'" style="background:var(--s2); border:1px solid var(--border); color:var(--gold); border-radius:50%; width:40px; height:40px; cursor:pointer; transition:var(--tr); display:flex; align-items:center; justify-content:center;">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px;"><polyline points="15 18 9 12 15 6"></polyline></svg>
           </button>
