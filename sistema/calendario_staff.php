@@ -44,19 +44,18 @@ if ($barbero_id > 0) {
     }
 }
 
-// 2. Cargar citas del mes para este barbero
+// 2. Cargar citas del mes para este barbero (o todos si es 0)
 $citas_por_dia = [];
-if ($barbero_id > 0) {
-    $q_citas = "SELECT DATE(fecha_hora) as fecha_cita, COUNT(*) as total FROM citas 
-                WHERE barbero_id = $barbero_id 
-                AND DATE(fecha_hora) >= '$primer_dia' AND DATE(fecha_hora) <= '$ultimo_dia'
-                AND estado != 'cancelada'
-                GROUP BY DATE(fecha_hora)";
-    $res_c = mysqli_query($conexion, $q_citas);
-    if ($res_c) {
-        while ($row = mysqli_fetch_assoc($res_c)) {
-            $citas_por_dia[$row['fecha_cita']] = (int)$row['total'];
-        }
+$q_cond = $barbero_id > 0 ? "barbero_id = $barbero_id AND" : "";
+$q_citas = "SELECT DATE(fecha_hora) as fecha_cita, COUNT(*) as total FROM citas 
+            WHERE $q_cond 
+            DATE(fecha_hora) >= '$primer_dia' AND DATE(fecha_hora) <= '$ultimo_dia'
+            AND estado != 'cancelada'
+            GROUP BY DATE(fecha_hora)";
+$res_c = mysqli_query($conexion, $q_citas);
+if ($res_c) {
+    while ($row = mysqli_fetch_assoc($res_c)) {
+        $citas_por_dia[$row['fecha_cita']] = (int)$row['total'];
     }
 }
 
