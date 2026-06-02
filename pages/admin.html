@@ -1548,13 +1548,17 @@
         grid.innerHTML = '';
         const meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
         
+        const realMonth = new Date().getMonth() + 1;
+        const realYear = new Date().getFullYear();
+        
         meses.forEach((m, i) => {
           let isSelected = (i+1 === statSelectedMonth && pickerYear === statSelectedYear);
+          let isCurrent = (i+1 === realMonth && pickerYear === realYear);
           let btn = document.createElement('button');
           btn.textContent = m;
           btn.style.padding = '12px 0';
           btn.style.borderRadius = '8px';
-          btn.style.border = 'none';
+          btn.style.border = isCurrent ? '2px solid var(--gold)' : '2px solid transparent';
           btn.style.cursor = 'pointer';
           btn.style.fontWeight = '600';
           btn.style.transition = 'var(--tr)';
@@ -1563,7 +1567,7 @@
             btn.style.color = '#111';
           } else {
             btn.style.background = 'var(--bg)';
-            btn.style.color = 'var(--bright)';
+            btn.style.color = isCurrent ? 'var(--gold)' : 'var(--bright)';
             btn.onmouseover = () => btn.style.background = 'var(--s3)';
             btn.onmouseout = () => btn.style.background = 'var(--bg)';
           }
@@ -1582,7 +1586,7 @@
         document.getElementById('month-picker-label').textContent = `${mesesF[statSelectedMonth-1]} ${statSelectedYear}`;
       }
 
-      async function loadEstadisticas() {
+      window.loadEstadisticas = async function() {
         const y = statSelectedYear;
         const m = statSelectedMonth;
         const lastDay = new Date(y, m, 0).getDate();
