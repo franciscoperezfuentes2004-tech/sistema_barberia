@@ -1,13 +1,13 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Admin Dashboard â€” BarberÃ­a Premium</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Admin Dashboard — Barbería Premium</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    /* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â TOKENS Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
+    /* â•â•â•â•â•â•â•â•â•â•â• TOKENS â•â•â•â•â•â•â•â•â•â•â• */
     :root {
       --gold:#C9A84C; --gold-l:#E8C97A; --gold-d:#9A7B32;
       --bg:#0F0F0F; --s1:#181818; --s2:#222; --s3:#2A2A2A; --border:#333;
@@ -27,7 +27,7 @@
     ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
     ::-webkit-scrollbar-thumb:hover{background:var(--muted)}
 
-    /* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â SIDEBAR Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
+    /* â•â•â•â•â•â•â•â•â•â•â• SIDEBAR â•â•â•â•â•â•â•â•â•â•â• */
     .sidebar{
       width:260px;background:var(--s1);border-right:1px solid var(--border);
       display:flex;flex-direction:column;flex-shrink:0;z-index:10;
@@ -64,7 +64,7 @@
     .logout-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
     .logout-btn:hover{background:var(--red-bg);border-color:var(--red-border)}
 
-    /* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â MAIN CONTENT Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
+    /* â•â•â•â•â•â•â•â•â•â•â• MAIN CONTENT â•â•â•â•â•â•â•â•â•â•â• */
     .main{flex:1;display:flex;flex-direction:column;overflow:hidden;position:relative}
     .topbar{
       height:72px;background:var(--bg);border-bottom:1px solid var(--border);
@@ -77,7 +77,7 @@
     .section.active{display:block}
     @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
-    /* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â COMPONENTS Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
+    /* â•â•â•â•â•â•â•â•â•â•â• COMPONENTS â•â•â•â•â•â•â•â•â•â•â• */
     .card{background:var(--s1);border:1px solid var(--border);border-radius:16px;padding:24px}
     .card-title{font-size:1.1rem;font-weight:600;color:var(--bright);margin-bottom:16px;display:flex;align-items:center;gap:8px}
     
@@ -91,7 +91,7 @@
     .btn-secondary{background:var(--s2);color:var(--base);border:1px solid var(--border)}
     .btn-secondary:hover{background:var(--s3);color:var(--bright)}
 
-    /* Ã¢â€â‚¬Ã¢â€â‚¬ 1. AGENDA GLOBAL Ã¢â€â‚¬Ã¢â€â‚¬ */
+    /* â”€â”€ 1. AGENDA GLOBAL â”€â”€ */
     .agenda-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;min-width:900px}
     .agenda-col{background:var(--s1);border:1px solid var(--border);border-radius:16px;display:flex;flex-direction:column;height:calc(100vh - 200px)}
     .col-header{
@@ -110,7 +110,7 @@
     .mock-appt-time{font-size:.75rem;color:var(--muted);margin-bottom:4px}
     .mock-appt-client{font-size:.9rem;font-weight:600;color:var(--bright)}
 
-    /* Ã¢â€â‚¬Ã¢â€â‚¬ 2. USUARIOS Ã¢â€â‚¬Ã¢â€â‚¬ */
+    /* â”€â”€ 2. USUARIOS â”€â”€ */
     .table-wrapper{overflow-x:auto}
     table{width:100%;border-collapse:collapse;text-align:left}
     th{padding:16px;font-size:.8rem;color:var(--muted);font-weight:600;border-bottom:1px solid var(--border);text-transform:uppercase;letter-spacing:.05em}
@@ -120,7 +120,7 @@
     .status-active{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)}
     .status-inactive{background:var(--s3);color:var(--muted);border:1px solid var(--border)}
 
-    /* Ã¢â€â‚¬Ã¢â€â‚¬ 3. CMS Ã¢â€â‚¬Ã¢â€â‚¬ */
+    /* â”€â”€ 3. CMS â”€â”€ */
     .cms-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
     @media(max-width:1100px){.cms-grid{grid-template-columns:1fr}}
     .form-group{margin-bottom:20px}
@@ -179,7 +179,7 @@
     }
     .toast.show{transform:translateY(0);opacity:1}
     
-    /* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â RESPONSIVE Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
+    /* â•â•â•â•â•â•â•â•â•â•â• RESPONSIVE â•â•â•â•â•â•â•â•â•â•â• */
     .mobile-nav-toggle {
       display: none;
       background: transparent;
@@ -264,14 +264,14 @@
         text-overflow: ellipsis;
       }
 
-      /* Ã¢â€â‚¬Ã¢â€â‚¬ Previews de logo/portada: apilar vertical Ã¢â€â‚¬Ã¢â€â‚¬ */
+      /* â”€â”€ Previews de logo/portada: apilar vertical â”€â”€ */
       .preview-row {
         flex-direction: column !important;
         align-items: flex-start !important;
         gap: 8px !important;
       }
 
-      /* Ã¢â€â‚¬Ã¢â€â‚¬ GalerÃ­a upload: apilar vertical Ã¢â€â‚¬Ã¢â€â‚¬ */
+      /* â”€â”€ Galería upload: apilar vertical â”€â”€ */
       .upload-row {
         flex-direction: column !important;
         align-items: stretch !important;
@@ -282,13 +282,13 @@
         flex: none !important;
       }
 
-      /* Ã¢â€â‚¬Ã¢â€â‚¬ Wrapper derecho del CMS Ã¢â€â‚¬Ã¢â€â‚¬ */
+      /* â”€â”€ Wrapper derecho del CMS â”€â”€ */
       .cms-right-col {
         height: auto !important;
         gap: 12px !important;
       }
 
-      /* Ã¢â€â‚¬Ã¢â€â‚¬ Fecha en topbar: ocultar en mÃ³vil Ã¢â€â‚¬Ã¢â€â‚¬ */
+      /* â”€â”€ Fecha en topbar: ocultar en móvil â”€â”€ */
       #current-date {
         display: none !important;
       }
@@ -319,7 +319,7 @@
         font-size: 0.65rem !important;
       }
       
-      /* Ã¢â€â‚¬Ã¢â€â‚¬ Forzar saltos de lÃ­nea en descripciÃ³n Ã¢â€â‚¬Ã¢â€â‚¬ */
+      /* â”€â”€ Forzar saltos de línea en descripción â”€â”€ */
       .service-desc, .team-desc {
         max-width: 130px;
         display: block;
@@ -327,7 +327,7 @@
         margin-top: 4px;
       }
 
-      /* Ã¢â€â‚¬Ã¢â€â‚¬ Botones de tabla: apilar vertical Ã¢â€â‚¬Ã¢â€â‚¬ */
+      /* â”€â”€ Botones de tabla: apilar vertical â”€â”€ */
       .table-wrapper td:last-child {
         vertical-align: middle;
       }
@@ -349,7 +349,7 @@
         height: 28px !important;
       }
 
-      /* Ã¢â€â‚¬Ã¢â€â‚¬ Card title con botÃ³n: apilar Ã¢â€â‚¬Ã¢â€â‚¬ */
+      /* â”€â”€ Card title con botón: apilar â”€â”€ */
       .card-title {
         flex-wrap: wrap !important;
         gap: 8px !important;
@@ -360,7 +360,7 @@
         padding: 6px 10px !important;
       }
 
-      /* Ã¢â€â‚¬Ã¢â€â‚¬ Tarjetas compactas Ã¢â€â‚¬Ã¢â€â‚¬ */
+      /* â”€â”€ Tarjetas compactas â”€â”€ */
       .card {
         padding: 12px;
         border-radius: 12px;
@@ -370,7 +370,7 @@
         margin-bottom: 10px !important;
       }
 
-      /* Ã¢â€â‚¬Ã¢â€â‚¬ CMS Grid Ã¢â€â‚¬Ã¢â€â‚¬ */
+      /* â”€â”€ CMS Grid â”€â”€ */
       .cms-grid {
         gap: 12px;
       }
@@ -379,7 +379,7 @@
         flex: none !important;
       }
 
-      /* Ã¢â€â‚¬Ã¢â€â‚¬ Formularios compactos Ã¢â€â‚¬Ã¢â€â‚¬ */
+      /* â”€â”€ Formularios compactos â”€â”€ */
       .form-group {
         margin-bottom: 12px !important;
       }
@@ -399,12 +399,12 @@
         font-size: 0.65rem !important;
       }
 
-      /* Ã¢â€â‚¬Ã¢â€â‚¬ Mapa mÃ¡s pequeÃ±o Ã¢â€â‚¬Ã¢â€â‚¬ */
+      /* â”€â”€ Mapa más pequeño â”€â”€ */
       #cms-map-preview-container {
         height: 120px !important;
       }
 
-      /* Ã¢â€â‚¬Ã¢â€â‚¬ Previews de logo y portada mÃ¡s chicos Ã¢â€â‚¬Ã¢â€â‚¬ */
+      /* â”€â”€ Previews de logo y portada más chicos â”€â”€ */
       #cms-logo-preview {
         width: 50px !important;
         height: 50px !important;
@@ -416,19 +416,19 @@
         min-width: 90px !important;
       }
 
-      /* Ã¢â€â‚¬Ã¢â€â‚¬ Botones compactos Ã¢â€â‚¬Ã¢â€â‚¬ */
+      /* â”€â”€ Botones compactos â”€â”€ */
       .btn {
         padding: 8px 12px !important;
         font-size: 0.8rem !important;
       }
 
-      /* Ã¢â€â‚¬Ã¢â€â‚¬ GalerÃ­a mÃ¡s compacta Ã¢â€â‚¬Ã¢â€â‚¬ */
+      /* â”€â”€ Galería más compacta â”€â”€ */
       .gallery-grid {
         grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)) !important;
         gap: 8px !important;
       }
 
-      /* Ã¢â€â‚¬Ã¢â€â‚¬ Horarios Ã¢â€â‚¬Ã¢â€â‚¬ */
+      /* â”€â”€ Horarios â”€â”€ */
       .schedule-row {
         flex-direction: column !important;
         align-items: stretch !important;
@@ -461,9 +461,9 @@
   <aside class="sidebar">
     <div class="brand">
       <img id="admin-custom-logo" src="" style="display:none; height:48px; width:48px; object-fit:cover; border-radius:12px;" alt="Logo">
-      <div class="brand-icon" id="admin-default-icon">âœ‚ï¸Â</div>
+      <div class="brand-icon" id="admin-default-icon">✂️</div>
       <div>
-        <div id="admin-site-name" class="brand-text">BarberÃ­a</div>
+        <div id="admin-site-name" class="brand-text">Barbería</div>
         <div class="brand-sub">Admin Panel</div>
       </div>
     </div>
@@ -494,7 +494,7 @@
     <div class="sidebar-footer">
       <button class="logout-btn" onclick="logout()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-        Cerrar SesiÃ³n
+        Cerrar Sesión
       </button>
     </div>
   </aside>
@@ -503,7 +503,7 @@
   <main class="main">
     <header class="topbar">
       <div style="display:flex;align-items:center;gap:12px">
-        <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="MenÃº">
+        <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Menú">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
         <h2 class="topbar-title" id="topbar-title">Control de Citas</h2>
@@ -530,7 +530,7 @@
       <section id="equipo" class="section">
         <div class="card">
           <div class="card-title" style="justify-content:space-between">
-            <span>GestiÃ³n de Personal</span>
+            <span>Gestión de Personal</span>
             <button class="btn btn-primary" onclick="openModal()">+ Nuevo Barbero</button>
           </div>
           <div class="table-wrapper">
@@ -555,7 +555,7 @@
       <section id="servicios" class="section">
         <div class="card">
           <div class="card-title" style="justify-content:space-between">
-            <span>CatÃ¡logo de Servicios</span>
+            <span>Catálogo de Servicios</span>
             <button class="btn btn-primary" onclick="openServiceModal()">+ Nuevo Servicio</button>
           </div>
           <div class="table-wrapper">
@@ -565,7 +565,7 @@
                   <th>Imagen</th>
                   <th>Servicio</th>
                   <th>Precio</th>
-                  <th>DuraciÃ³n</th>
+                  <th>Duración</th>
                   <th>Acciones</th>
                 </tr>
               </thead>
@@ -587,7 +587,7 @@
               Horario del Local (Global)
             </div>
             <p style="font-size:0.85rem;color:var(--muted);margin-top:-10px;margin-bottom:20px">
-              Establece el horario por defecto. Si desmarcas un dÃ­a, la barberÃ­a aparecerÃ¡ como cerrada.
+              Establece el horario por defecto. Si desmarcas un día, la barbería aparecerá como cerrada.
             </p>
             <div id="global-schedule-container">
               <!-- Render via JS -->
@@ -609,7 +609,7 @@
               Horario Personalizado por Barbero
             </div>
             <p style="font-size:0.85rem;color:var(--muted);margin-top:-10px;margin-bottom:20px">
-              Personaliza el horario, descansos o jornadas reducidas de un barbero especÃ­fico.
+              Personaliza el horario, descansos o jornadas reducidas de un barbero específico.
             </p>
             <div class="form-group">
               <label>Seleccionar Barbero</label>
@@ -630,25 +630,25 @@
       <section id="cms" class="section">
         <div class="cms-grid">
           <div class="card" style="display:flex; flex-direction:column; height:100%;">
-            <div class="card-title">InformaciÃ³n de la BarberÃ­a</div>
+            <div class="card-title">Información de la Barbería</div>
             <div class="form-group">
               <label>Nombre Comercial</label>
-              <input type="text" id="cms-name" placeholder="Ej. BarberÃ­a Premium">
+              <input type="text" id="cms-name" placeholder="Ej. Barbería Premium">
             </div>
             <div class="form-group">
-              <label>TelÃ©fono de Contacto (WhatsApp)</label>
+              <label>Teléfono de Contacto (WhatsApp)</label>
               <input type="text" id="cms-phone" placeholder="Ej. 55 1234 5678">
             </div>
             <div class="form-group">
-              <label>Correo ElectrÃ³nico</label>
+              <label>Correo Electrónico</label>
               <input type="email" id="cms-email" placeholder="Ej. contacto@barberia.com">
             </div>
             <div class="form-group">
-              <label>DirecciÃ³n de la BarberÃ­a</label>
+              <label>Dirección de la Barbería</label>
               <input type="text" id="cms-address" placeholder="Ej. Av. Insurgentes Sur 123, CDMX" oninput="if(window.updateAdminMapPreview) window.updateAdminMapPreview()">
-              <small style="color:var(--muted);font-size:0.75rem;margin-top:4px;display:block">Esta direcciÃ³n se mostrarÃ¡ en texto y generarÃ¡ el mapa interactivo automÃ¡ticamente.</small>
+              <small style="color:var(--muted);font-size:0.75rem;margin-top:4px;display:block">Esta dirección se mostrará en texto y generará el mapa interactivo automáticamente.</small>
               <div style="margin-top:12px; border-radius:12px; overflow:hidden; border:1px solid var(--border); height:200px; background:var(--s2); display:flex; justify-content:center; align-items:center; position:relative;" id="cms-map-preview-container">
-                <span id="cms-map-preview-fallback" style="color:var(--muted); font-size:0.85rem; padding:0 10px; text-align:center;">Escribe una direcciÃ³n para ver la vista previa del mapa</span>
+                <span id="cms-map-preview-fallback" style="color:var(--muted); font-size:0.85rem; padding:0 10px; text-align:center;">Escribe una dirección para ver la vista previa del mapa</span>
               </div>
             </div>
             <div class="form-group">
@@ -664,10 +664,10 @@
               <input type="text" id="cms-tiktok" placeholder="https://tiktok.com/@...">
             </div>
             <div class="form-group" style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border);">
-              <label>EstadÃ­sticas de la Barra Principal</label>
+              <label>Estadísticas de la Barra Principal</label>
               <div style="display:flex; gap:12px; margin-bottom: 8px;">
                 <div style="flex:1;">
-                  <small style="color:var(--muted); display:block; margin-bottom:4px;">AÃ±os de exp.</small>
+                  <small style="color:var(--muted); display:block; margin-bottom:4px;">Años de exp.</small>
                   <input type="text" id="cms-stat-exp" placeholder="+15">
                 </div>
                 <div style="flex:1;">
@@ -675,7 +675,7 @@
                   <input type="text" id="cms-stat-clientes" placeholder="+8K">
                 </div>
               </div>
-              <small style="color:var(--muted); font-size:0.75rem;">(El Rating y los Maestros Barberos se calculan automÃ¡ticamente)</small>
+              <small style="color:var(--muted); font-size:0.75rem;">(El Rating y los Maestros Barberos se calculan automáticamente)</small>
             </div>
             
             <div class="form-group" style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border);">
@@ -694,14 +694,14 @@
           
           <div class="cms-right-col" style="display: flex; flex-direction: column; gap: 24px; height:100%;">
             <div class="card" style="display:flex; flex-direction:column;">
-              <div class="card-title">DiseÃ±o de Portada (Hero)</div>
+              <div class="card-title">Diseño de Portada (Hero)</div>
             <div class="form-group">
               <label>Eslogan Principal</label>
               <input type="text" id="cms-slogan" placeholder="Ej. El estilo que te define.">
             </div>
             <div class="form-group">
-              <label>DescripciÃ³n Corta</label>
-              <textarea id="cms-hero-desc" placeholder="Cortes de precisiÃ³n, barbas esculpidas..." style="width:100%;padding:12px;border-radius:12px;background:var(--s2);color:var(--bright);border:1px solid var(--border);resize:none;min-height:80px;font-family:inherit;"></textarea>
+              <label>Descripción Corta</label>
+              <textarea id="cms-hero-desc" placeholder="Cortes de precisión, barbas esculpidas..." style="width:100%;padding:12px;border-radius:12px;background:var(--s2);color:var(--bright);border:1px solid var(--border);resize:none;min-height:80px;font-family:inherit;"></textarea>
             </div>
             <div class="form-group" style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border);">
               <label>Imagen de Fondo de Portada</label>
@@ -717,15 +717,15 @@
           </div>
 
           <div class="card" style="display:flex; flex-direction:column; flex:1;">
-            <div class="card-title">GalerÃ­a de Estilos</div>
+            <div class="card-title">Galería de Estilos</div>
             <div class="gallery-grid" id="cms-gallery">
               <!-- Rendered via JS -->
             </div>
             
             <div style="margin-top:auto; padding-top:24px; border-top:1px solid var(--border)">
-              <div style="font-weight:600; margin-bottom:12px; font-size:0.9rem; color:var(--bright)">AÃ±adir Nueva Foto</div>
+              <div style="font-weight:600; margin-bottom:12px; font-size:0.9rem; color:var(--bright)">Añadir Nueva Foto</div>
               <div class="upload-row" style="display:flex; gap:12px; align-items:center;">
-                <input type="text" id="new-gal-title" placeholder="TÃ­tulo (ej. Skin Fade)" style="flex:1; padding:10px 14px; background:var(--bg); border:1px solid var(--border); border-radius:8px; color:var(--bright); font-family:var(--sans); outline:none;">
+                <input type="text" id="new-gal-title" placeholder="Título (ej. Skin Fade)" style="flex:1; padding:10px 14px; background:var(--bg); border:1px solid var(--border); border-radius:8px; color:var(--bright); font-family:var(--sans); outline:none;">
                 <input type="file" id="new-gal-file" accept="image/png, image/jpeg, image/webp" style="flex:1;">
                 <button class="btn btn-secondary" onclick="addGalleryImage()">Subir</button>
               </div>
@@ -742,7 +742,7 @@
   <div class="modal-overlay" id="gallery-modal">
     <div class="modal" style="max-width:600px; width:95%;">
       <div class="modal-header">
-        <h2 class="modal-title">Todas las fotos de la GalerÃ­a</h2>
+        <h2 class="modal-title">Todas las fotos de la Galería</h2>
         <button class="btn-close" onclick="document.getElementById('gallery-modal').classList.remove('show')">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
         </button>
@@ -779,21 +779,21 @@
         </div>
         <div class="form-group">
           <label>Especialidad</label>
-          <input type="text" id="b-esp" placeholder="Ej. Fades & ClÃ¡sicos">
+          <input type="text" id="b-esp" placeholder="Ej. Fades & Clásicos">
         </div>
         <div class="form-group">
           <label>Usuario (Login)</label>
           <input type="text" id="b-username" placeholder="Nombre de usuario">
-          <small id="help-username" style="display:none;color:var(--muted);font-size:0.7rem;margin-top:4px">Si lo dejas en blanco, el sistema generarÃ¡ uno automÃ¡ticamente.</small>
+          <small id="help-username" style="display:none;color:var(--muted);font-size:0.7rem;margin-top:4px">Si lo dejas en blanco, el sistema generará uno automáticamente.</small>
         </div>
         <div class="form-group">
-          <label id="lbl-password">ContraseÃ±a</label>
-          <input type="password" id="b-password" placeholder="ContraseÃ±a de acceso">
-          <small id="help-password" style="display:none;color:var(--muted);font-size:0.7rem;margin-top:4px">DÃ©jalo en blanco si no quieres cambiarla.</small>
+          <label id="lbl-password">Contraseña</label>
+          <input type="password" id="b-password" placeholder="Contraseña de acceso">
+          <small id="help-password" style="display:none;color:var(--muted);font-size:0.7rem;margin-top:4px">Déjalo en blanco si no quieres cambiarla.</small>
         </div>
         <div class="form-group" id="group-activo" style="display:none; align-items:center; gap:8px;">
           <input type="checkbox" id="b-activo" style="width:auto;margin:0;">
-          <label style="margin:0;color:var(--bright);cursor:pointer" for="b-activo">Barbero Activo (Mostrar en pÃ¡gina web y sistema)</label>
+          <label style="margin:0;color:var(--bright);cursor:pointer" for="b-activo">Barbero Activo (Mostrar en página web y sistema)</label>
         </div>
         <div style="margin-top:24px;display:flex;gap:12px;justify-content:flex-end">
           <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
@@ -819,7 +819,7 @@
           <input type="text" id="s-nombre" required placeholder="Ej. Fade & Taper">
         </div>
         <div class="form-group">
-          <label>DescripciÃ³n Breve</label>
+          <label>Descripción Breve</label>
           <input type="text" id="s-descripcion" placeholder="Ej. Degradado preciso con navaja">
         </div>
         <div style="display:flex; gap:16px;">
@@ -828,14 +828,14 @@
             <input type="number" id="s-precio" required min="0" step="0.01" placeholder="Ej. 150">
           </div>
           <div class="form-group" style="flex:1">
-            <label>DuraciÃ³n (Minutos)</label>
+            <label>Duración (Minutos)</label>
             <input type="number" id="s-duracion" required min="1" placeholder="Ej. 40">
           </div>
         </div>
         <div class="form-group">
           <label>Imagen de Referencia</label>
           <input type="file" id="s-imagen" accept="image/png, image/jpeg, image/webp" style="padding: 8px">
-          <small style="color:var(--muted);font-size:0.7rem;margin-top:4px">Opcional. Se ajustarÃ¡ automÃ¡ticamente a formato retrato.</small>
+          <small style="color:var(--muted);font-size:0.7rem;margin-top:4px">Opcional. Se ajustará automáticamente a formato retrato.</small>
         </div>
         <div style="margin-top:24px;display:flex;gap:12px;justify-content:flex-end">
           <button type="button" class="btn btn-secondary" onclick="closeServiceModal()">Cancelar</button>
@@ -845,13 +845,13 @@
     </div>
   </div>
 
-  <div class="toast" id="toast">âœ… Cambios guardados correctamente</div>
+  <div class="toast" id="toast">✅ Cambios guardados correctamente</div>
 
   <script>
     (() => {
       const API = '../api';
 
-      // ðŸ›¡ï¸ Interceptor Global de Fetch para Inyectar JWT
+      // 🛡️ Interceptor Global de Fetch para Inyectar JWT
       const originalFetch = window.fetch;
       window.fetch = async function() {
         let [resource, config] = arguments;
@@ -866,7 +866,7 @@
         return originalFetch(resource, config);
       };
 
-      // âŽ¯âŽ¯âŽ¯ AUTH CHECK âŽ¯âŽ¯âŽ¯
+      // ⎯⎯⎯ AUTH CHECK ⎯⎯⎯
       window.b64Files = {};
 
       // Comprime una imagen Base64 usando un canvas para no exceder los 4.5MB de Vercel
@@ -908,7 +908,7 @@
                 // Comprimir para no exceder 4.5MB de Vercel
                 try { result = await compressImage(result, 1200, 0.75); } catch(err) { /* usar original */ }
                 window.b64Files[id] = result;
-                console.log(`Imagen ${id} conectada y convertida con Ã©xito (${(result.length / 1024).toFixed(0)} KB)`);
+                console.log(`Imagen ${id} conectada y convertida con éxito (${(result.length / 1024).toFixed(0)} KB)`);
                 if (id === 'cms-logo') document.getElementById('cms-logo-preview').src = result;
                 if (id === 'cms-hero-bg') document.getElementById('cms-hero-preview').src = result;
               };
@@ -926,7 +926,7 @@
         }
 
         try {
-          // DecodificaciÃ³n simple del Payload JWT para verificar rol
+          // Decodificación simple del Payload JWT para verificar rol
           const payloadBase64 = token.split('.')[1];
           const payloadDecoded = JSON.parse(atob(payloadBase64));
           
@@ -954,7 +954,7 @@
         attachFileListeners();
       }
 
-      // âŽ¯âŽ¯âŽ¯ CMS AJUSTES GLOBALES âŽ¯âŽ¯âŽ¯
+      // ⎯⎯⎯ CMS AJUSTES GLOBALES ⎯⎯⎯
       async function loadCMS() {
         try {
           const res = await fetch(`${API}/ajustes`);
@@ -1029,7 +1029,7 @@
             }
             container.innerHTML = previewHtml;
           } else {
-            container.innerHTML = '<span id="cms-map-preview-fallback" style="color:var(--muted); font-size:0.85rem; padding:0 10px; text-align:center;">Escribe una direcciÃ³n para ver la vista previa del mapa</span>';
+            container.innerHTML = '<span id="cms-map-preview-fallback" style="color:var(--muted); font-size:0.85rem; padding:0 10px; text-align:center;">Escribe una dirección para ver la vista previa del mapa</span>';
           }
         }, 800);
       };
@@ -1054,7 +1054,7 @@
               if (longest.length > 2) return longest;
           }
           
-          return "DirecciÃ³n en Mapa"; 
+          return "Dirección en Mapa"; 
       }
 
       window.saveCMS = async () => {
@@ -1094,7 +1094,7 @@
           });
           const json = await res.json();
           if (json.success) {
-            showToast('ðŸŒ± Ajustes de la pÃ¡gina web actualizados');
+            showToast('🌱 Ajustes de la página web actualizados');
             delete window.b64Files['cms-logo'];
             delete window.b64Files['cms-hero-bg'];
             loadCMS();
@@ -1103,11 +1103,11 @@
           }
         } catch(e) {
           console.error(e);
-          alert('Error de conexiÃ³n guardando ajustes');
+          alert('Error de conexión guardando ajustes');
         }
       };
 
-      // âŽ¯âŽ¯âŽ¯ GALERIA âŽ¯âŽ¯âŽ¯
+      // ⎯⎯⎯ GALERIA ⎯⎯⎯
       window.loadGallery = async () => {
         try {
           const res = await fetch(`${API}/galeria`);
@@ -1167,12 +1167,12 @@
       };
 
       window.deleteGalleryImage = async (id) => {
-        if (!confirm('Â¿Seguro que deseas eliminar esta imagen de la galerÃ­a?')) return;
+        if (!confirm('¿Seguro que deseas eliminar esta imagen de la galería?')) return;
         try {
           const res = await fetch(`${API}/galeria?id=${id}`, { method: 'DELETE' });
           const json = await res.json();
           if (json.success) {
-            showToast('âœ… Imagen eliminada');
+            showToast('✅ Imagen eliminada');
             loadGallery();
           } else {
             alert(json.message);
@@ -1189,7 +1189,7 @@
         let b64 = window.b64Files['new-gal-file'];
 
 
-        // Comprimir imagen para no exceder el lÃ­mite de Vercel (4.5MB)
+        // Comprimir imagen para no exceder el límite de Vercel (4.5MB)
         try { b64 = await compressImage(b64, 1200, 0.8); } catch(e) { /* usar original */ }
 
         try {
@@ -1203,7 +1203,7 @@
           });
           const json = await res.json();
           if (json.success) {
-            showToast('ðŸ“¸ Imagen aÃ±adida a la galerÃ­a');
+            showToast('📸 Imagen añadida a la galería');
             fileInput.value = '';
             delete window.b64Files['new-gal-file'];
             titleInput.value = '';
@@ -1212,11 +1212,11 @@
             alert(json.error || json.message || 'Error al subir');
           }
         } catch(e) {
-          alert('Error de conexiÃ³n al subir imagen');
+          alert('Error de conexión al subir imagen');
         }
       };
 
-      // âŽ¯âŽ¯âŽ¯ AGENDA GLOBAL âŽ¯âŽ¯âŽ¯
+      // ⎯⎯⎯ AGENDA GLOBAL ⎯⎯⎯
       async function loadAgenda() {
         const grid = document.getElementById('agenda-grid');
         
@@ -1301,7 +1301,7 @@
                 citasHtml += `
                   <div class="mock-appt" style="border-left-color:${borderColor}; opacity:${opacity}; transition:all 0.3s ease;">
                     <div class="mock-appt-time" style="display:flex;justify-content:space-between">
-                      <span>${cita.hora_inicio.substring(0,5)} â€” ${cita.hora_fin.substring(0,5)}</span>
+                      <span>${cita.hora_inicio.substring(0,5)} — ${cita.hora_fin.substring(0,5)}</span>
                       <span style="text-transform:uppercase;font-size:.6rem;color:${borderColor};font-weight:600">${displaySt}</span>
                     </div>
                     <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -1336,7 +1336,7 @@
         }
       }
 
-      // âŽ¯âŽ¯âŽ¯ EQUIPO (PERSONAL) âŽ¯âŽ¯âŽ¯
+      // ⎯⎯⎯ EQUIPO (PERSONAL) ⎯⎯⎯
       let barberosList = [];
       
       async function loadEquipo() {
@@ -1460,26 +1460,26 @@
           const json = await res.json();
           if (json.success) {
             closeModal();
-            showToast(id ? 'âœ… Barbero actualizado' : `ðŸŽ‰ Barbero creado. Su usuario es: ${json.data?.username || ''}`);
+            showToast(id ? '✅ Barbero actualizado' : `🎉 Barbero creado. Su usuario es: ${json.data?.username || ''}`);
             loadEquipo(); // recargar tabla
             loadAgenda(); // recargar agenda para que aparezca la columna
           } else {
             alert(json.message);
           }
         } catch(e) {
-          alert('Error de conexiÃ³n');
+          alert('Error de conexión');
         }
       };
 
       window.deleteBarber = async (id, nombre) => {
-        if (!confirm(`âš ï¸ CUIDADO: Â¿EstÃ¡s seguro que deseas ELIMINAR permanentemente a ${nombre}?\n\nEsto borrarÃ¡ tambiÃ©n todas sus citas del historial y no se puede deshacer.`)) {
+        if (!confirm(`⚠️ CUIDADO: ¿Estás seguro que deseas ELIMINAR permanentemente a ${nombre}?\n\nEsto borrará también todas sus citas del historial y no se puede deshacer.`)) {
           return;
         }
         try {
           const res = await fetch(`${API}/barberos?id=${id}`, { method: 'DELETE' });
           const json = await res.json();
           if (json.success) {
-            showToast('ðŸ—‘ï¸ Barbero eliminado permanentemente');
+            showToast('🗑️ Barbero eliminado permanentemente');
             loadEquipo();
             loadAgenda();
           } else {
@@ -1490,7 +1490,7 @@
         }
       };
 
-      // Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ SERVICIOS Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+      // â”€â”€â”€ SERVICIOS â”€â”€â”€
       let serviciosList = [];
 
       window.loadServicios = async () => {
@@ -1590,13 +1590,13 @@
           const json = await res.json();
           if (json.success) {
             closeServiceModal();
-            showToast(id ? 'Ã¢Å“â€¦ Servicio actualizado' : 'Ã°Å¸Å½â€° Servicio creado');
+            showToast(id ? 'âœ… Servicio actualizado' : 'ðŸŽ‰ Servicio creado');
             loadServicios();
           } else {
             alert(json.message);
           }
         } catch(err) {
-          alert('Error de conexiÃ³n');
+          alert('Error de conexión');
         } finally {
           btn.disabled = false;
           btn.textContent = 'Guardar';
@@ -1604,12 +1604,12 @@
       };
 
       window.deleteService = async (id, nombre) => {
-        if (!confirm(`Â¿EstÃ¡s seguro que deseas eliminar el servicio "${nombre}"?`)) return;
+        if (!confirm(`¿Estás seguro que deseas eliminar el servicio "${nombre}"?`)) return;
         try {
           const res = await fetch(`${API}/servicios?id=${id}`, { method: 'DELETE' });
           const json = await res.json();
           if (json.success) {
-            showToast('Ã°Å¸â€”â€˜Ã¯Â¸Â Servicio eliminado');
+            showToast('ðŸ—‘ï¸ Servicio eliminado');
             loadServicios();
           } else {
             alert(json.message);
@@ -1619,8 +1619,8 @@
         }
       };
 
-      // Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ HORARIOS Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
-      const diasNombres = ['Domingo', 'Lunes', 'Martes', 'MiÃ©rcoles', 'Jueves', 'Viernes', 'SÃ¡bado'];
+      // â”€â”€â”€ HORARIOS â”€â”€â”€
+      const diasNombres = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
 
       function renderScheduleEditor(containerId, scheduleData, prefix) {
         const container = document.getElementById(containerId);
@@ -1643,7 +1643,7 @@
                 <input type="time" id="${prefix}_in_${i}" value="${row.hora_inicio}" style="padding:8px; flex:1;" ${checked ? '' : 'disabled'}>
                 <span style="color:var(--muted)">a</span>
                 <input type="time" id="${prefix}_out_${i}" value="${row.hora_fin}" style="padding:8px; flex:1;" ${checked ? '' : 'disabled'}>
-                <button type="button" class="btn btn-secondary" style="padding:6px 10px;font-size:0.75rem;margin-left:auto" onclick="copyScheduleRow('${prefix}', ${i})" title="Copiar este horario a los demÃ¡s dÃ­as activos">Copiar a todos</button>
+                <button type="button" class="btn btn-secondary" style="padding:6px 10px;font-size:0.75rem;margin-left:auto" onclick="copyScheduleRow('${prefix}', ${i})" title="Copiar este horario a los demás días activos">Copiar a todos</button>
               </div>
             </div>
           `;
@@ -1688,14 +1688,14 @@
         for (let i = 0; i <= 6; i++) {
           if (i !== sourceIndex) {
             const chk = document.getElementById(`${prefix}_act_${i}`);
-            // Solo copiamos a los dias que estÃ¡n activos (para no forzar horas a dias cerrados)
+            // Solo copiamos a los dias que están activos (para no forzar horas a dias cerrados)
             if (chk.checked) {
               document.getElementById(`${prefix}_in_${i}`).value = inValue;
               document.getElementById(`${prefix}_out_${i}`).value = outValue;
             }
           }
         }
-        showToast('Ã°Å¸â€¢â€™ Horario copiado a los demÃ¡s dÃ­as activos');
+        showToast('ðŸ•’ Horario copiado a los demás días activos');
       };
 
       window.loadGlobalSchedule = async () => {
@@ -1722,9 +1722,9 @@
           });
           const json = await res.json();
           if (json.success) {
-            showToast('Ã¢Å“â€¦ Horario global guardado');
+            showToast('âœ… Horario global guardado');
             document.getElementById('sync-all-barbers').checked = false;
-            // Recargar horarios por barbero si estÃ¡ uno seleccionado
+            // Recargar horarios por barbero si está uno seleccionado
             if (document.getElementById('horario-barbero-select').value) {
               loadBarberSchedule();
             }
@@ -1732,7 +1732,7 @@
             alert(json.error || json.message || 'Error desconocido');
           }
         } catch (e) {
-          alert('Error de conexiÃ³n al guardar horario global');
+          alert('Error de conexión al guardar horario global');
         }
       };
 
@@ -1772,7 +1772,7 @@
             renderScheduleEditor('barber-schedule-container', json.data, 'brb');
             containerWrapper.style.display = 'block';
             
-            // Re-aÃ±adir el botÃ³n de guardado que fue sobreescrito por renderScheduleEditor
+            // Re-añadir el botón de guardado que fue sobreescrito por renderScheduleEditor
             containerWrapper.innerHTML += `
               <button class="btn btn-primary" style="width:100%;margin-top:20px" onclick="saveBarberSchedule()">Guardar Horario de ${select.options[select.selectedIndex].text}</button>
             `;
@@ -1796,24 +1796,24 @@
           });
           const json = await res.json();
           if (json.success) {
-            showToast('Ã¢Å“â€¦ Horario del barbero actualizado');
+            showToast('âœ… Horario del barbero actualizado');
           } else {
             alert(json.error || json.message || 'Error desconocido');
           }
         } catch (e) {
-          alert('Error de conexiÃ³n al guardar horario del barbero');
+          alert('Error de conexión al guardar horario del barbero');
         }
       };
 
-      // Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ NAVIGATION Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+      // â”€â”€â”€ NAVIGATION â”€â”€â”€
       const navItems = document.querySelectorAll('.nav-item');
       const sections = document.querySelectorAll('.section');
       const titleEl = document.getElementById('topbar-title');
       
       const titles = {
         agenda: 'Control de Citas',
-        equipo: 'GestiÃ³n de Personal',
-        cms: 'PersonalizaciÃ³n Web'
+        equipo: 'Gestión de Personal',
+        cms: 'Personalización Web'
       };
 
       navItems.forEach(item => {
@@ -1829,15 +1829,15 @@
         });
       });
 
-      // Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ LOGOUT Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+      // â”€â”€â”€ LOGOUT â”€â”€â”€
       window.logout = async () => {
         sessionStorage.removeItem('tab_auth');
         localStorage.removeItem('mi_token_jwt');
         window.location.href = 'login.html';
       };
 
-      // Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ TOAST Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
-      window.showToast = (msg = 'Ã¢Å“â€¦ Cambios guardados correctamente') => {
+      // â”€â”€â”€ TOAST â”€â”€â”€
+      window.showToast = (msg = 'âœ… Cambios guardados correctamente') => {
         const t = document.getElementById('toast');
         t.textContent = msg;
         t.classList.add('show');
@@ -1847,7 +1847,7 @@
       init();
     })();
 
-      // LÃ³gica menÃº mÃ³vil
+      // Lógica menú móvil
       const sidebar = document.querySelector('.sidebar');
       const mobileToggle = document.getElementById('mobile-nav-toggle');
       let overlay = document.createElement('div');
@@ -1864,7 +1864,7 @@
         overlay.classList.remove('active');
       });
 
-      // Cerrar menÃº al hacer click en un item (sÃ³lo mÃ³vil)
+      // Cerrar menú al hacer click en un item (sólo móvil)
       document.querySelectorAll('.nav-item').forEach(item => {
         item.addEventListener('click', () => {
           if (window.innerWidth <= 900) {
@@ -1876,6 +1876,5 @@
     </script>
 </body>
 </html>
-
 
 
