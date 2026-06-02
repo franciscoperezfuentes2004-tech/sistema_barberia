@@ -375,6 +375,7 @@
     }
     .svc-grid::-webkit-scrollbar { display:none; }
     .svc-grid > * { scroll-snap-align: start; flex-shrink: 0; width: clamp(180px, 65vw, 240px); }
+    @media (min-width: 768px) { .svc-grid > * { width: 320px; } }
 
     .svc-card {
       position: relative; border-radius:20px; overflow:hidden;
@@ -423,6 +424,7 @@
     }
     .gal-grid::-webkit-scrollbar { display:none; }
     .gal-grid > * { scroll-snap-align: start; flex-shrink: 0; width: clamp(160px, 50vw, 260px); }
+    @media (min-width: 768px) { .gal-grid > * { width: 300px; } }
 
     .gi {
       position:relative; border-radius:16px; overflow:hidden;
@@ -462,6 +464,7 @@
       flex-shrink: 0;
       transition: var(--ease);
     }
+    @media (min-width: 768px) { .t-card { width: 300px; } }
     @media (min-width:768px) { .t-card { min-width:unset; flex-shrink:unset; } }
     .t-card:hover { border-color:var(--gold-d); transform:translateY(-4px); box-shadow:0 12px 40px rgba(0,0,0,.5); }
     .t-img {
