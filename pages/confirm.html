@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="theme-color" content="#0F0F0F"/>
-  <title>Paso 3 — Confirmar · Barbería</title>
+  <title>Paso 3 â€” Confirmar Â· BarberÃ­a</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <style>
@@ -119,19 +119,19 @@
     <div class="hdr-inner">
       <div class="hdr-top">
         <a href="../index.html" class="logo">
-          <div class="logo-mark">✂️</div>
-          <span class="logo-name">Barbería</span>
+          <div class="logo-mark">âœ‚ï¸</div>
+          <span class="logo-name">BarberÃ­a</span>
         </a>
-        <a href="calendar.html" style="font-size:.78rem;color:var(--muted);text-decoration:none">← Volver</a>
+        <a href="calendar.html" style="font-size:.78rem;color:var(--muted);text-decoration:none">â† Volver</a>
       </div>
     </div>
   </header>
 
   <main>
       <nav class="steps">
-        <div class="step-item"><div class="step-dot done">✓</div></div>
+        <div class="step-item"><div class="step-dot done">âœ“</div></div>
         <div class="step-line done"></div>
-        <div class="step-item"><div class="step-dot done">✓</div></div>
+        <div class="step-item"><div class="step-dot done">âœ“</div></div>
         <div class="step-line done"></div>
         <div class="step-item">
           <div class="step-dot active">3</div>
@@ -165,14 +165,14 @@
     <form id="booking-form" onsubmit="event.preventDefault(); submitBooking();">
       <div class="form-group">
         <label class="form-label">Nombre Completo *</label>
-        <input type="text" id="inp-nombre" class="form-input" required placeholder="Ej. Juan Pérez" oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')">
+        <input type="text" id="inp-nombre" class="form-input" required placeholder="Ej. Juan PÃ©rez" oninput="this.value = this.value.replace(/[^a-zA-ZÃ¡Ã©Ã­Ã³ÃºÃÃ‰ÃÃ“ÃšÃ±Ã‘\s]/g, '')">
       </div>
       <div class="form-group">
-        <label class="form-label">Teléfono (10 dígitos) *</label>
+        <label class="form-label">TelÃ©fono (10 dÃ­gitos) *</label>
         <input type="tel" id="inp-telefono" class="form-input" required placeholder="Ej. 5551234567" maxlength="10" minlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
       </div>
       <div class="form-group">
-        <label class="form-label">Correo Electrónico</label>
+        <label class="form-label">Correo ElectrÃ³nico</label>
         <input type="email" id="inp-email" class="form-input" placeholder="Para enviarte el recibo (Opcional)">
       </div>
       
@@ -186,14 +186,14 @@
   <!-- Success Modal -->
   <div id="success-modal">
     <div class="modal-content">
-      <div class="check-circle">✓</div>
-      <h2 class="modal-title">¡Reserva Confirmada!</h2>
+      <div class="check-circle">âœ“</div>
+      <h2 class="modal-title">Â¡Reserva Confirmada!</h2>
       <p class="modal-desc">
-        Tu lugar está asegurado. Te esperamos el <br>
+        Tu lugar estÃ¡ asegurado. Te esperamos el <br>
         <span class="modal-highlight" id="succ-fecha"></span> a las <span class="modal-highlight" id="succ-hora"></span>
       </p>
       <div class="modal-divider"></div>
-      <p style="color:var(--muted); font-size:0.85rem; margin-bottom:24px;">Gracias por elegir nuestra Barbería.<br>Nos vemos pronto.</p>
+      <p style="color:var(--muted); font-size:0.85rem; margin-bottom:24px;">Gracias por elegir nuestra BarberÃ­a.<br>Nos vemos pronto.</p>
       <button onclick="window.location.href='../index.html'" class="modal-btn">Volver al inicio</button>
     </div>
   </div>
@@ -232,7 +232,7 @@
       const email = document.getElementById('inp-email').value.trim();
 
       if (telefono.length !== 10) {
-        err.textContent = 'El teléfono debe tener exactamente 10 números.';
+        err.textContent = 'El telÃ©fono debe tener exactamente 10 nÃºmeros.';
         err.style.display = 'block';
         btn.disabled = false;
         btn.textContent = 'Confirmar Reserva';
@@ -258,7 +258,7 @@
         const jsonCita = await resCita.json();
         if(!resCita.ok || !jsonCita.success) throw new Error(jsonCita.error || jsonCita.message || 'Error al crear la cita');
 
-        // Éxito
+        // Ã‰xito
         sessionStorage.removeItem('bb_step1');
         sessionStorage.removeItem('bb_step2');
 
@@ -274,7 +274,7 @@
       }
     }
 
-    // Cargar branding dinámico
+    // Cargar branding dinÃ¡mico
     async function loadBranding() {
       try {
         const res = await fetch(`${API}/obtener_datos.php?tabla=ajustes`);
@@ -283,8 +283,8 @@
           const d = json.data;
           if (d.site_name) {
             const currentTitle = document.title;
-            const stepPrefix = currentTitle.split('·')[0].trim();
-            document.title = `${stepPrefix} · ${d.site_name}`;
+            const stepPrefix = currentTitle.split('Â·')[0].trim();
+            document.title = `${stepPrefix} Â· ${d.site_name}`;
             document.querySelectorAll('.logo-name').forEach(el => el.textContent = d.site_name);
           }
           document.querySelectorAll('.logo-mark').forEach(logoMark => {

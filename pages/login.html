@@ -1,15 +1,15 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="theme-color" content="#0F0F0F">
-  <title>Iniciar Sesión — Barbería Premium</title>
+  <title>Iniciar SesiÃ³n â€” BarberÃ­a Premium</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    /* ── Reset & Base ──────────────────────────────── */
+    /* â”€â”€ Reset & Base â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
@@ -47,7 +47,7 @@
       overflow-x: hidden;
     }
 
-    /* ── Noise Texture Overlay ─────────────────────── */
+    /* â”€â”€ Noise Texture Overlay â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     body::before {
       content: '';
       position: fixed;
@@ -60,7 +60,7 @@
       background-size: 200px 200px;
     }
 
-    /* ── Ambient Glow ──────────────────────────────── */
+    /* â”€â”€ Ambient Glow â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     body::after {
       content: '';
       position: fixed;
@@ -74,7 +74,7 @@
       z-index: 0;
     }
 
-    /* ── Fade-in Animations ────────────────────────── */
+    /* â”€â”€ Fade-in Animations â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(24px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -85,7 +85,7 @@
       to   { opacity: 1; }
     }
 
-    /* ── Main Container ────────────────────────────── */
+    /* â”€â”€ Main Container â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     .login-container {
       position: relative;
       z-index: 1;
@@ -104,7 +104,7 @@
       border-radius: 24px;
     }
 
-    /* ── Barber Pole ───────────────────────────────── */
+    /* â”€â”€ Barber Pole â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     .barber-pole-wrapper {
       width: 28px;
       height: 90px;
@@ -189,7 +189,7 @@
       to   { transform: translateY(45.25483px); }
     }
 
-    /* ── Logo ──────────────────────────────────────── */
+    /* â”€â”€ Logo â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     .logo {
       width: 72px;
       height: 72px;
@@ -215,7 +215,7 @@
       50%      { background-position: 100% 50%; }
     }
 
-    /* ── Title & Subtitle ──────────────────────────── */
+    /* â”€â”€ Title & Subtitle â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     .title {
       font-family: var(--serif);
       font-size: 2rem;
@@ -241,7 +241,7 @@
       animation-delay: 0.4s;
     }
 
-    /* ── Form ──────────────────────────────────────── */
+    /* â”€â”€ Form â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     .login-form {
       width: 100%;
       display: flex;
@@ -251,7 +251,7 @@
       animation-delay: 0.5s;
     }
 
-    /* ── Input Group ───────────────────────────────── */
+    /* â”€â”€ Input Group â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     .input-group {
       position: relative;
       width: 100%;
@@ -298,7 +298,7 @@
       color: var(--gold);
     }
 
-    /* ── Password Toggle ───────────────────────────── */
+    /* â”€â”€ Password Toggle â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     .toggle-password {
       position: absolute;
       right: 14px;
@@ -329,7 +329,7 @@
     .toggle-password.active .eye-on { display: none; }
     .toggle-password.active .eye-off { display: block; }
 
-    /* ── Submit Button ─────────────────────────────── */
+    /* â”€â”€ Submit Button â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     .btn-submit {
       width: 100%;
       padding: 16px;
@@ -418,7 +418,7 @@
       to { transform: translate(-50%, -50%) rotate(360deg); }
     }
 
-    /* ── Error Message ─────────────────────────────── */
+    /* â”€â”€ Error Message â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     .error-message {
       width: 100%;
       padding: 14px 16px;
@@ -448,7 +448,7 @@
       100% { transform: translateX(0); }
     }
 
-    /* ── Divider ───────────────────────────────────── */
+    /* â”€â”€ Divider â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     .divider {
       width: 40px;
       height: 1.5px;
@@ -459,7 +459,7 @@
       animation-delay: 0.6s;
     }
 
-    /* ── Footer ────────────────────────────────────── */
+    /* â”€â”€ Footer â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     .footer {
       font-size: 0.7rem;
       color: var(--muted);
@@ -470,7 +470,7 @@
       animation-delay: 0.7s;
     }
 
-    /* ── Responsive ────────────────────────────────── */
+    /* â”€â”€ Responsive â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     @media (max-width: 480px) {
       .login-container {
         padding: 32px 20px;
@@ -487,13 +487,13 @@
       }
     }
 
-    /* ── Selection Color ───────────────────────────── */
+    /* â”€â”€ Selection Color â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     ::selection {
       background: rgba(201,168,76,0.3);
       color: var(--bright);
     }
 
-    /* ── Autofill Styles ───────────────────────────── */
+    /* â”€â”€ Autofill Styles â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     input:-webkit-autofill,
     input:-webkit-autofill:hover,
     input:-webkit-autofill:focus {
@@ -515,10 +515,10 @@
     </div>
 
     <!-- Logo -->
-    <div class="logo" aria-hidden="true">✂️</div>
+    <div class="logo" aria-hidden="true">âœ‚ï¸</div>
 
     <!-- Title -->
-    <h1 class="title">Barbería</h1>
+    <h1 class="title">BarberÃ­a</h1>
     <p class="subtitle">Portal del Equipo</p>
 
     <!-- Login Form -->
@@ -550,7 +550,7 @@
           type="password"
           id="password"
           name="password"
-          placeholder="Contraseña"
+          placeholder="ContraseÃ±a"
           autocomplete="current-password"
           required
         >
@@ -558,7 +558,7 @@
           <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
           <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
         </svg>
-        <button type="button" class="toggle-password" id="togglePassword" aria-label="Mostrar contraseña" tabindex="-1">
+        <button type="button" class="toggle-password" id="togglePassword" aria-label="Mostrar contraseÃ±a" tabindex="-1">
           <!-- Eye On -->
           <svg class="eye-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
@@ -574,23 +574,23 @@
 
       <!-- Submit Button -->
       <button type="submit" class="btn-submit" id="btnSubmit">
-        <span class="btn-text">Iniciar Sesión</span>
+        <span class="btn-text">Iniciar SesiÃ³n</span>
         <span class="spinner"></span>
       </button>
     </form>
 
     <!-- Divider & Footer -->
     <div class="divider"></div>
-    <p class="footer">© 2026 Barbería Premium · Panel de Staff</p>
+    <p class="footer">Â© 2026 BarberÃ­a Premium Â· Panel de Staff</p>
 
   </div>
 
   <script>
     (() => {
-      // ── API Base URL ───────────────────────────
+      // â”€â”€ API Base URL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
       const API = '../sistema';
 
-      // ── Dynamic Branding ───────────────────────────
+      // â”€â”€ Dynamic Branding â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
       async function loadBranding() {
         try {
           const res = await fetch(`${API}/obtener_datos.php?tabla=ajustes`);
@@ -598,11 +598,11 @@
           if (json.success && json.data) {
             const data = json.data;
             if (data.site_name) {
-              document.title = `Iniciar Sesión — ${data.site_name}`;
+              document.title = `Iniciar SesiÃ³n â€” ${data.site_name}`;
               const titleEl = document.querySelector('.title');
               if (titleEl) titleEl.textContent = data.site_name;
               const footerEl = document.querySelector('.footer');
-              if (footerEl) footerEl.textContent = `© ${new Date().getFullYear()} ${data.site_name} · Panel de Staff`;
+              if (footerEl) footerEl.textContent = `Â© ${new Date().getFullYear()} ${data.site_name} Â· Panel de Staff`;
             }
             const logoContainer = document.querySelector('.logo');
             if (logoContainer) {
@@ -617,7 +617,7 @@
       }
       loadBranding();
 
-      // ── DOM Elements ──────────────────────────────
+      // â”€â”€ DOM Elements â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
       const form         = document.getElementById('loginForm');
       const usernameInput = document.getElementById('username');
       const passwordInput = document.getElementById('password');
@@ -625,15 +625,15 @@
       const errorMessage  = document.getElementById('errorMessage');
       const toggleBtn     = document.getElementById('togglePassword');
 
-      // ── Password Toggle ───────────────────────────
+      // â”€â”€ Password Toggle â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
       toggleBtn.addEventListener('click', () => {
         const isPassword = passwordInput.type === 'password';
         passwordInput.type = isPassword ? 'text' : 'password';
         toggleBtn.classList.toggle('active', isPassword);
-        toggleBtn.setAttribute('aria-label', isPassword ? 'Ocultar contraseña' : 'Mostrar contraseña');
+        toggleBtn.setAttribute('aria-label', isPassword ? 'Ocultar contraseÃ±a' : 'Mostrar contraseÃ±a');
       });
 
-      // ── Show Error ────────────────────────────────
+      // â”€â”€ Show Error â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
       function showError(message) {
         errorMessage.textContent = message;
         errorMessage.classList.remove('visible');
@@ -646,7 +646,7 @@
         errorMessage.classList.remove('visible');
       }
 
-      // ── Set Loading State ─────────────────────────
+      // â”€â”€ Set Loading State â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
       function setLoading(loading) {
         if (loading) {
           btnSubmit.classList.add('loading');
@@ -657,7 +657,7 @@
         }
       }
 
-      // ── Form Submit ───────────────────────────────
+      // â”€â”€ Form Submit â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
         hideError();
@@ -667,7 +667,7 @@
 
         // Basic validation
         if (!username || !password) {
-          showError('Por favor, ingresa tu usuario y contraseña.');
+          showError('Por favor, ingresa tu usuario y contraseÃ±a.');
           return;
         }
 
@@ -683,23 +683,23 @@
           const json = await response.json();
 
           if (json.status === 'success' || json.success === true) {
-            // Mostrar mensaje de éxito visualmente en el botón
+            // Mostrar mensaje de Ã©xito visualmente en el botÃ³n
             btnSubmit.classList.remove('loading');
-            btnSubmit.innerHTML = `<span class="btn-text">${json.message || '¡Bienvenido!'}</span>`;
+            btnSubmit.innerHTML = `<span class="btn-text">${json.message || 'Â¡Bienvenido!'}</span>`;
             btnSubmit.style.background = 'var(--green)';
 
-            // Guardar sesión
+            // Guardar sesiÃ³n
             sessionStorage.setItem('tab_auth', 'true');
             if (json.token) localStorage.setItem('mi_token_jwt', json.token);
             if (json.foto)  localStorage.setItem('mi_foto_perfil', json.foto);
 
-            // Retardo de 1 segundo y redirección fluida
+            // Retardo de 1 segundo y redirecciÃ³n fluida
             setTimeout(() => {
               const rol = json.rol || json.user?.rol || 'admin';
               if (rol === 'barbero') {
                 window.location.href = 'staff.html';
               } else {
-                // Redirigir a la raíz donde está admin.html
+                // Redirigir a la raÃ­z donde estÃ¡ admin.html
                 window.location.href = 'admin.html';
               }
             }, 1000);
@@ -711,12 +711,12 @@
             setLoading(false);
           }
         } catch (err) {
-          showError('Error de conexión. Verifica tu red e intenta de nuevo.');
+          showError('Error de conexiÃ³n. Verifica tu red e intenta de nuevo.');
           setLoading(false);
         }
       });
 
-      // ── Focus first input on load ─────────────────
+      // â”€â”€ Focus first input on load â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
       window.addEventListener('DOMContentLoaded', () => {
         usernameInput.focus();
       });

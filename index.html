@@ -2,20 +2,20 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="theme-color" content="#0F0F0F" />
-  <meta name="description" content="Barbería Premium — Cortes clásicos, fades, barba y tratamientos capilares. Reserva tu cita hoy." />
-  <title>Barbería Premium — Estilo que habla por ti</title>
+  <meta name="description" content="BarberÃ­a Premium â€” Cortes clÃ¡sicos, fades, barba y tratamientos capilares. Reserva tu cita hoy." />
+  <title>BarberÃ­a Premium â€” Estilo que habla por ti</title>
 
-  <!-- Google Fonts — NO Tailwind, CSS propio aquí abajo -->
+  <!-- Google Fonts â€” NO Tailwind, CSS propio aquÃ­ abajo -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <style>
-    /* ═══════════════════════════════════════════════════
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        DESIGN TOKENS
-    ═══════════════════════════════════════════════════ */
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     :root {
       --gold:       #C9A84C;
       --gold-l:     #E8C97A;
@@ -35,14 +35,14 @@
       --ease: all 0.25s cubic-bezier(.4,0,.2,1);
       --r: 16px;
 
-      /* ── CLAVE: padding que escala con la pantalla ──
-         móvil 20px | tablet 40px | desktop ~6% del ancho */
+      /* â”€â”€ CLAVE: padding que escala con la pantalla â”€â”€
+         mÃ³vil 20px | tablet 40px | desktop ~6% del ancho */
       --gutter: clamp(20px, 6vw, 100px);
     }
 
-    /* ═══════════════════════════════════════════════════
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        RESET
-    ═══════════════════════════════════════════════════ */
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html  { scroll-behavior: smooth; }
     body  {
@@ -58,9 +58,9 @@
     ::-webkit-scrollbar-track { background: var(--s1); }
     ::-webkit-scrollbar-thumb { background: var(--gold-d); border-radius: 4px; }
 
-    /* ═══════════════════════════════════════════════════
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        NOISE TEXTURE (sutil)
-    ═══════════════════════════════════════════════════ */
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     body::before {
       content: '';
       position: fixed; inset: 0;
@@ -68,9 +68,9 @@
       pointer-events: none; z-index: 0; opacity: 0.4;
     }
 
-    /* ═══════════════════════════════════════════════════
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        TYPOGRAPHY HELPERS
-    ═══════════════════════════════════════════════════ */
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     .serif { font-family: var(--serif); }
     .grad  {
       background: linear-gradient(135deg, var(--gold-l), var(--gold), var(--gold-d));
@@ -94,9 +94,9 @@
       color: var(--muted); line-height: 1.7;
     }
 
-    /* ═══════════════════════════════════════════════════
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        REVEAL ANIMATION
-    ═══════════════════════════════════════════════════ */
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     .rv {
       opacity: 0; transform: translateY(22px);
       transition: opacity .55s ease, transform .55s ease;
@@ -156,9 +156,9 @@
       animation: pdot 2s infinite;
     }
 
-    /* ═══════════════════════════════════════════════════
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        BOTONES
-    ═══════════════════════════════════════════════════ */
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     .btn-gold {
       display: inline-flex; align-items: center; justify-content: center;
       gap: 10px; padding: 15px 30px;
@@ -200,10 +200,10 @@
     }
     .btn-wa:hover { background: #1ebe5d; transform: translateY(-2px); }
 
-    /* ═══════════════════════════════════════════════════
-       NAV — STICKY FLOTANTE
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       NAV â€” STICKY FLOTANTE
        Usa var(--gutter) para que coincida con el resto del contenido
-    ═══════════════════════════════════════════════════ */
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     #nav {
       position: fixed; top:0; left:0; right:0; z-index:100;
       padding: 16px var(--gutter);
@@ -224,9 +224,9 @@
       background: linear-gradient(135deg,var(--gold-d),var(--gold));
       display:flex; align-items:center; justify-content:center; font-size:1rem;
     }
-    /* Links del menú — sólo visibles en pantallas ≥1024px */
+    /* Links del menÃº â€” sÃ³lo visibles en pantallas â‰¥1024px */
     .nav-menu {
-      display: none; /* MÓVIL: oculto */
+      display: none; /* MÃ“VIL: oculto */
       list-style: none; gap: 28px; align-items: center;
       flex: 1; justify-content: center;
     }
@@ -252,14 +252,14 @@
     }
     .nav-cta:hover { transform:translateY(-1px); box-shadow:0 5px 20px rgba(201,168,76,.45); }
 
-    /* ═══════════════════════════════════════════════════
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        HERO
-       móvil: contenido en la parte inferior
+       mÃ³vil: contenido en la parte inferior
        desktop: centrado verticalmente, texto a la izquierda
-    ═══════════════════════════════════════════════════ */
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     #hero {
       position: relative; min-height: 100dvh; overflow: hidden;
-      display: flex; align-items: flex-end; /* móvil: abajo */
+      display: flex; align-items: flex-end; /* mÃ³vil: abajo */
     }
     @media (min-width: 1024px) { #hero { align-items: center; } }
 
@@ -271,7 +271,7 @@
     }
     .hero-bg.go { transform: scale(1); }
 
-    /* Overlay: en móvil va de abajo a arriba; en desktop de izquierda a derecha */
+    /* Overlay: en mÃ³vil va de abajo a arriba; en desktop de izquierda a derecha */
     .hero-ov {
       position: absolute; inset:0;
       background: linear-gradient(to bottom,
@@ -285,7 +285,7 @@
       }
     }
 
-    /* Contenido del hero: padding lateral = var(--gutter) → igual que el resto */
+    /* Contenido del hero: padding lateral = var(--gutter) â†’ igual que el resto */
     .hero-body {
       position: relative; z-index:2; width:100%;
       padding: 110px var(--gutter) 52px;
@@ -307,17 +307,17 @@
     .hero-sub {
       font-size: clamp(.9rem, 1.4vw, 1.08rem);
       color: rgba(212,212,212,.82); line-height:1.65;
-      margin-bottom:36px; max-width:500px;
+      margin-bottom:36px; max-width:min(500px, 100%);
     }
     .hero-btns { display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
 
-    /* ═══════════════════════════════════════════════════
-       STATS BAR — siempre full width
-    ═══════════════════════════════════════════════════ */
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       STATS BAR â€” siempre full width
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     .stats {
       background:var(--s1);
       border-top:1px solid var(--border); border-bottom:1px solid var(--border);
-      /* El grid se auto-ajusta según el ancho disponible */
+      /* El grid se auto-ajusta segÃºn el ancho disponible */
       display: grid;
       grid-template-columns: repeat(3, 1fr);
     }
@@ -339,15 +339,15 @@
     }
     .stat-l { font-size:.64rem; color:var(--muted); text-transform:uppercase; letter-spacing:.12em; margin-top:5px; }
 
-    /* ═══════════════════════════════════════════════════
-       SECCIÓN GENÉRICA — padding que usa el mismo gutter
-    ═══════════════════════════════════════════════════ */
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       SECCIÃ“N GENÃ‰RICA â€” padding que usa el mismo gutter
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     .sec {
       padding: clamp(52px,8vw,100px) var(--gutter);
     }
     .sec-alt { background: var(--s1); border-top:1px solid var(--border); }
 
-    /* Header de sección */
+    /* Header de secciÃ³n */
     .sec-hdr {
       display: flex; flex-direction: column; gap: 16px;
       margin-bottom: clamp(28px,4vw,48px);
@@ -356,13 +356,13 @@
       .sec-hdr { flex-direction:row; align-items:flex-end; justify-content:space-between; }
     }
 
-    /* ═══════════════════════════════════════════════════
-       SERVICIOS — auto-fit: se ajusta automáticamente
-    ═══════════════════════════════════════════════════ */
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       SERVICIOS â€” auto-fit: se ajusta automÃ¡ticamente
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     .svc-grid {
       display: grid;
       gap: clamp(14px, 2vw, 22px);
-      /* auto-fill: mete tantas columnas como quepan de mínimo 260px */
+      /* auto-fill: mete tantas columnas como quepan de mÃ­nimo 260px */
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     }
 
@@ -402,13 +402,13 @@
       display:inline-flex; align-items:center; gap:4px;
     }
 
-    /* ═══════════════════════════════════════════════════
-       GALERÍA
-    ═══════════════════════════════════════════════════ */
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       GALERÃA
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     .gal-grid {
       display: grid;
       gap: clamp(10px,1.5vw,16px);
-      grid-template-columns: repeat(2, 1fr); /* móvil: 2 col */
+      grid-template-columns: repeat(2, 1fr); /* mÃ³vil: 2 col */
     }
     @media (min-width: 768px) {
       .gal-grid { grid-template-columns: repeat(3, 1fr); }
@@ -434,12 +434,12 @@
       font-size:.8rem; font-weight:600; color:var(--bright); letter-spacing:.03em;
     }
 
-    /* ═══════════════════════════════════════════════════
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        EQUIPO
-       móvil: scroll horizontal | tablet+: grid
-    ═══════════════════════════════════════════════════ */
+       mÃ³vil: scroll horizontal | tablet+: grid
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     .team-wrap {
-      /* MÓVIL: flex con scroll */
+      /* MÃ“VIL: flex con scroll */
       display: flex; gap: clamp(12px,2vw,20px);
       overflow-x: auto; scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
@@ -461,7 +461,7 @@
     .t-card {
       background:var(--s2); border:1px solid var(--border);
       border-radius:20px; overflow:hidden;
-      min-width: clamp(200px,45vw,280px); /* ancho mínimo en scroll móvil */
+      min-width: clamp(200px,45vw,280px); /* ancho mÃ­nimo en scroll mÃ³vil */
       flex-shrink: 0;
       transition: var(--ease);
     }
@@ -485,9 +485,9 @@
       padding:3px 9px; border-radius:999px;
     }
 
-    /* ═══════════════════════════════════════════════════
-       RESEÑAS — igual que equipo: scroll móvil, grid desktop
-    ═══════════════════════════════════════════════════ */
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       RESEÃ‘AS â€” igual que equipo: scroll mÃ³vil, grid desktop
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     .rev-wrap {
       display: flex; gap: clamp(12px,2vw,20px);
       overflow-x: auto; scroll-snap-type: x mandatory;
@@ -525,9 +525,9 @@
       font-size:.88rem; font-weight:700; flex-shrink:0;
     }
 
-    /* ═══════════════════════════════════════════════════
-       CONTACTO — 1 col móvil, 2 col desktop
-    ═══════════════════════════════════════════════════ */
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       CONTACTO â€” 1 col mÃ³vil, 2 col desktop
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     .contact-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -555,15 +555,15 @@
       border: 1px solid rgba(255,255,255,0.06);
       border-top: 1px solid rgba(255,255,255,0.12);
       box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05);
-      border-radius: 24px; min-height:200px;
+      border-radius: 24px; min-height: 200px; height: clamp(200px, 40vw, 350px);
       display:flex; flex-direction:column; align-items:center;
       justify-content:center; gap:10px; color:var(--muted); font-size:.85rem;
     }
     .info-row { display:flex; align-items:center; gap:12px; font-size:.84rem; color:var(--muted); }
 
-    /* ═══════════════════════════════════════════════════
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        FOOTER CTA BAND
-    ═══════════════════════════════════════════════════ */
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     .cta-band {
       padding: clamp(48px,7vw,88px) var(--gutter);
       background: linear-gradient(135deg,rgba(154,123,50,.12),rgba(201,168,76,.06));
@@ -580,9 +580,9 @@
       font-size:clamp(1.5rem,3vw,2.2rem); margin-bottom:6px;
     }
 
-    /* ═══════════════════════════════════════════════════
-       MODAL DE RESEÑAS
-    ═══════════════════════════════════════════════════ */
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       MODAL DE RESEÃ‘AS
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     .modal {
       display: none; position: fixed; inset: 0; z-index: 1000;
       background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
@@ -624,9 +624,9 @@
     }
     .modal-input:focus { border-color: var(--gold); outline: none; }
 
-    /* ═══════════════════════════════════════════════════
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        FOOTER
-    ═══════════════════════════════════════════════════ */
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     footer {
       background: var(--s1);
       padding: clamp(40px,6vw,72px) var(--gutter) clamp(24px,4vw,40px);
@@ -660,36 +660,49 @@
 </head>
 
 <body>
+  <!-- Global Loader Premium -->
+  <div id="global-loader" style="position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;align-items:center;justify-content:center;transition:opacity 0.6s ease, visibility 0.6s ease;">
+    <div class="barber-pole" style="transform:scale(1.5);">
+      <div class="bp-cap bp-top"></div>
+      <div class="bp-silver"></div>
+      <div class="bp-cylinder">
+        <div class="bp-stripes"></div>
+        <div class="bp-shadow"></div>
+      </div>
+      <div class="bp-silver"></div>
+      <div class="bp-cap bp-bottom"></div>
+    </div>
+  </div>
 
-  <!-- ════════════════════════════════════════════
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        NAV
-  ════════════════════════════════════════════ -->
-  <nav id="nav" role="navigation" aria-label="Navegación principal">
+  â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <nav id="nav" role="navigation" aria-label="NavegaciÃ³n principal">
 
-    <a href="#inicio" class="nav-logo" aria-label="Barbería — Inicio">
+    <a href="#inicio" class="nav-logo" aria-label="BarberÃ­a â€” Inicio">
       <div style="display:flex; align-items:center; gap:10px;">
         <img id="nav-custom-logo" src="" style="display:none; height:42px; width:42px; object-fit:cover; border-radius:10px;" alt="Logo">
         <div class="nav-mark" id="nav-default-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><line x1="20" y1="4" x2="8.12" y2="15.88"></line><line x1="14.47" y1="14.48" x2="20" y2="20"></line><line x1="8.12" y1="8.12" x2="12" y2="12"></line></svg></div>
         <div>
-          <span class="serif grad cms-site-name" style="font-size:1.05rem;font-weight:700;display:block;line-height:1">Barbería Premium</span>
+          <span class="serif grad cms-site-name" style="font-size:1.05rem;font-weight:700;display:block;line-height:1">BarberÃ­a Premium</span>
         </div>
       </div>
     </a>
 
     <ul class="nav-menu" role="list">
       <li><a href="#servicios">Servicios</a></li>
-      <li><a href="#galeria">Galería</a></li>
+      <li><a href="#galeria">GalerÃ­a</a></li>
       <li><a href="#equipo">Equipo</a></li>
-      <li><a href="#resenas">Reseñas</a></li>
+      <li><a href="#resenas">ReseÃ±as</a></li>
       <li><a href="#contacto">Contacto</a></li>
     </ul>
 
     <a href="pages/booking.html" class="nav-cta" id="nav-reservar">Reservar cita</a>
   </nav>
 
-  <!-- ════════════════════════════════════════════
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        HERO
-  ════════════════════════════════════════════ -->
+  â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
   <section id="inicio" aria-labelledby="hero-h1">
     <div id="hero">
       <div class="hero-bg" id="hero-bg"></div>
@@ -717,7 +730,7 @@
           </h1>
 
           <p id="hero-sub" class="hero-sub rv" style="transition-delay:.16s">
-            Cortes de precisión, barbas esculpidas y tratamientos premium en un ambiente que inspira confianza. Tu imagen es nuestra obsesión.
+            Cortes de precisiÃ³n, barbas esculpidas y tratamientos premium en un ambiente que inspira confianza. Tu imagen es nuestra obsesiÃ³n.
           </p>
 
           <div class="hero-btns rv" style="transition-delay:.24s">
@@ -736,20 +749,20 @@
     </div>
   </section>
 
-  <!-- ════════════════════════════════════════════
-       STATS BAR — full width sin contenedor limitante
-  ════════════════════════════════════════════ -->
-  <div class="stats" aria-label="Nuestros números">
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       STATS BAR â€” full width sin contenedor limitante
+  â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <div class="stats" aria-label="Nuestros nÃºmeros">
     <div class="stat rv">
       <p class="stat-n" id="stat-exp">+15</p>
-      <p class="stat-l">Años de experiencia</p>
+      <p class="stat-l">AÃ±os de experiencia</p>
     </div>
     <div class="stat rv" style="transition-delay:.08s">
       <p class="stat-n" id="stat-clientes">+8K</p>
       <p class="stat-l">Clientes satisfechos</p>
     </div>
     <div class="stat rv" style="transition-delay:.16s">
-      <p class="stat-n" id="stat-rating">4.9★</p>
+      <p class="stat-n" id="stat-rating">4.9â˜…</p>
       <p class="stat-l">Rating promedio</p>
     </div>
     <div class="stat stat-hide rv" style="transition-delay:.24s">
@@ -758,16 +771,16 @@
     </div>
   </div>
 
-  <!-- ════════════════════════════════════════════
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        SERVICIOS
-  ════════════════════════════════════════════ -->
+  â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
   <section id="servicios" class="sec" aria-labelledby="svc-h">
 
     <div class="sec-hdr rv">
       <div>
         <span class="eyebrow">Lo que hacemos mejor</span>
         <h2 id="svc-h" class="sec-title">Nuestros Servicios</h2>
-        <p class="sec-sub">Cada servicio ejecutado con navaja, tijera y años de oficio.</p>
+        <p class="sec-sub">Cada servicio ejecutado con navaja, tijera y aÃ±os de oficio.</p>
       </div>
       <a href="pages/booking.html" class="btn-outline" id="link-all-svc" style="flex-shrink:0">
         Ver todos y reservar
@@ -775,41 +788,41 @@
       </a>
     </div>
 
-    <!-- auto-fill: más columnas a mayor pantalla, sin breakpoints manuales -->
+    <!-- auto-fill: mÃ¡s columnas a mayor pantalla, sin breakpoints manuales -->
     <div class="svc-grid" id="public-services">
-      <!-- Generado dinámicamente -->
+      <!-- Generado dinÃ¡micamente -->
     </div>
   </section>
 
-  <!-- ════════════════════════════════════════════
-       GALERÍA
-  ════════════════════════════════════════════ -->
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       GALERÃA
+  â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
   <section id="galeria" class="sec sec-alt" aria-labelledby="gal-h">
 
     <div class="sec-hdr rv">
       <div>
         <span class="eyebrow">Nuestro trabajo</span>
-        <h2 id="gal-h" class="sec-title">Galería de Estilos</h2>
-        <p class="sec-sub">Cada corte es una obra. Inspírate en nuestros trabajos más recientes.</p>
+        <h2 id="gal-h" class="sec-title">GalerÃ­a de Estilos</h2>
+        <p class="sec-sub">Cada corte es una obra. InspÃ­rate en nuestros trabajos mÃ¡s recientes.</p>
       </div>
     </div>
 
     <div class="gal-grid" id="public-gallery">
-      <!-- Generado dinámicamente -->
+      <!-- Generado dinÃ¡micamente -->
     </div>
 
   </section>
 
-  <!-- ════════════════════════════════════════════
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        EQUIPO
-  ════════════════════════════════════════════ -->
+  â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
   <section id="equipo" class="sec" aria-labelledby="eq-h">
 
     <div class="sec-hdr rv">
       <div>
         <span class="eyebrow">Conoce al equipo</span>
         <h2 id="eq-h" class="sec-title">Nuestros Maestros</h2>
-        <p class="sec-sub">Años de experiencia, manos expertas y pasión por el detalle.</p>
+        <p class="sec-sub">AÃ±os de experiencia, manos expertas y pasiÃ³n por el detalle.</p>
       </div>
       <a href="pages/booking.html" class="btn-outline" id="link-eq-bk" style="flex-shrink:0">
         Elegir barbero
@@ -819,41 +832,41 @@
 
     <div class="team-wrap rv" role="list" aria-label="Nuestros barberos">
 
-      <!-- Generado dinámicamente -->
+      <!-- Generado dinÃ¡micamente -->
 
     </div>
   </section>
 
-  <!-- ════════════════════════════════════════════
-       RESEÑAS
-  ════════════════════════════════════════════ -->
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       RESEÃ‘AS
+  â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
   <section id="resenas" class="sec sec-alt" aria-labelledby="rev-h">
 
     <div class="sec-hdr rv">
       <div>
         <span class="eyebrow">Lo que dicen nuestros clientes</span>
-        <h2 id="rev-h" class="sec-title">Reseñas Reales</h2>
+        <h2 id="rev-h" class="sec-title">ReseÃ±as Reales</h2>
       </div>
       <button class="btn-outline" onclick="document.getElementById('reviewModal').classList.add('active')" style="flex-shrink:0">
-        Dejar Reseña
+        Dejar ReseÃ±a
       </button>
     </div>
 
-    <div class="rev-wrap rv" role="list" aria-label="Reseñas de clientes" id="public-reviews">
-      <!-- Generado dinámicamente -->
+    <div class="rev-wrap rv" role="list" aria-label="ReseÃ±as de clientes" id="public-reviews">
+      <!-- Generado dinÃ¡micamente -->
     </div>
   </section>
 
-  <!-- ════════════════════════════════════════════
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        CONTACTO
-  ════════════════════════════════════════════ -->
+  â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
   <section id="contacto" class="sec" aria-labelledby="ct-h">
 
     <div class="sec-hdr rv">
       <div>
-        <span class="eyebrow">Encuéntranos</span>
+        <span class="eyebrow">EncuÃ©ntranos</span>
         <h2 id="ct-h" class="sec-title">Horarios &amp; Contacto</h2>
-        <p class="sec-sub">Estamos aquí para ti. Sin esperas, sin complicaciones.</p>
+        <p class="sec-sub">Estamos aquÃ­ para ti. Sin esperas, sin complicaciones.</p>
       </div>
     </div>
 
@@ -862,7 +875,7 @@
       <!-- Columna 1: Horarios + botones -->
       <div class="rv">
         <div style="background:var(--s2);border:1px solid var(--border);border-radius:18px;padding:8px 20px;margin-bottom:20px" id="public-horarios">
-          <!-- Generado dinámicamente -->
+          <!-- Generado dinÃ¡micamente -->
         </div>
 
         <div style="display:flex;gap:12px;margin-bottom:12px">
@@ -871,78 +884,79 @@
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.555 4.122 1.528 5.852L0 24l6.336-1.51A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.012-1.368l-.36-.214-3.727.888.94-3.64-.235-.374A9.818 9.818 0 1112 21.818z"/></svg>
             WhatsApp
           </a>
-          <a href="mailto:contacto@barberia.com" class="btn-outline" style="flex:1;border-radius:12px;display:flex;justify-content:center;align-items:center;font-size:0.95rem" id="link-mail">✉️ Email</a>
+          <a href="mailto:contacto@barberia.com" class="btn-outline" style="flex:1;border-radius:12px;display:flex;justify-content:center;align-items:center;font-size:0.95rem" id="link-mail">âœ‰ï¸ Email</a>
+          <a href="mailto:contacto@barberia.com" class="btn-outline" style="flex:1;border-radius:12px;display:flex;justify-content:center;align-items:center;font-size:0.95rem" id="link-mail">âœ‰ï¸  Email</a>
         </div>
       </div>
 
       <!-- Columna 2: Mapa + info -->
       <div class="rv" style="transition-delay:.1s">
-        <div id="map-container" style="margin-bottom:16px; border-radius:18px; overflow:hidden; border:1px solid var(--border); height:280px; background:var(--s2); position:relative; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-          <iframe id="map-iframe" width="100%" height="100%" frameborder="0" style="border:0;display:none;" allowfullscreen="" aria-hidden="false" tabindex="0" title="Ubicación de la Barbería"></iframe>
+        <div id="map-container" style="height:clamp(200px, 40vw, 350px); width:100%; border-radius:24px; overflow:hidden; border:1px solid var(--border); background:var(--s2); position:relative; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+          <iframe id="map-iframe" width="100%" height="100%" frameborder="0" style="border:0;display:none;" allowfullscreen="" aria-hidden="false" tabindex="0" title="UbicaciÃ³n de la BarberÃ­a"></iframe>
           <div id="map-fallback" style="text-align:center;padding:20px;">
-            <span style="font-size:2.4rem" aria-hidden="true">📍</span>
+            <span style="font-size:2.4rem" aria-hidden="true">ðŸ“ </span>
             <p style="font-weight:600;color:var(--base);margin-top:10px" class="cms-site-address">Av. Insurgentes Sur 123, CDMX</p>
           </div>
         </div>
         <div style="background:var(--s2);border:1px solid var(--border);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:12px">
-          <div class="info-row"><span aria-hidden="true">🚗</span> Estacionamiento gratuito disponible</div>
-          <div class="info-row"><span aria-hidden="true">♿</span> Acceso para personas con discapacidad</div>
-          <div class="info-row"><span aria-hidden="true">💳</span> Efectivo, tarjeta y transferencia</div>
+          <div class="info-row"><span aria-hidden="true">ðŸš—</span> Estacionamiento gratuito disponible</div>
+          <div class="info-row"><span aria-hidden="true">â™¿</span> Acceso para personas con discapacidad</div>
+          <div class="info-row"><span aria-hidden="true">ðŸ’³</span> Efectivo, tarjeta y transferencia</div>
         </div>
       </div>
 
     </div>
   </section>
 
-  <!-- ════════════════════════════════════════════
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        FOOTER CTA
-  ════════════════════════════════════════════ -->
+  â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
   <div class="cta-band">
     <div class="cta-inner">
       <div class="rv">
-        <p class="cta-title">¿Listo para tu <span class="grad">próximo look?</span></p>
+        <p class="cta-title">Â¿Listo para tu <span class="grad">prÃ³ximo look?</span></p>
         <p style="font-size:.88rem;color:var(--muted)">Agenda en segundos. Sin llamadas, sin esperas.</p>
       </div>
       <a href="pages/booking.html" class="btn-gold rv" id="btn-footer-bk" role="button"
          style="font-size:1rem;padding:18px 40px;transition-delay:.1s">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-        Reservar ahora — Es gratis
+        Reservar ahora â€” Es gratis
       </a>
     </div>
   </div>
 
-  <!-- ════════════════════════════════════════════
-       MODAL RESEÑAS
-  ════════════════════════════════════════════ -->
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       MODAL RESEÃ‘AS
+  â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
   <div id="reviewModal" class="modal">
     <div class="modal-content">
-      <button class="modal-close" onclick="document.getElementById('reviewModal').classList.remove('active')">✖</button>
+      <button class="modal-close" onclick="document.getElementById('reviewModal').classList.remove('active')">âœ–</button>
       <h3 style="color:var(--bright);margin-bottom:10px;font-family:var(--serif);font-size:1.6rem">Tu Experiencia</h3>
       <p style="color:var(--muted);font-size:0.85rem;margin-bottom:15px">Agradecemos mucho tus comentarios.</p>
       
       <form id="formResena" onsubmit="submitReview(event)">
         <div class="star-rating">
-          <input type="radio" id="star5" name="estrellas" value="5" checked /><label for="star5" title="5 estrellas">★</label>
-          <input type="radio" id="star4" name="estrellas" value="4" /><label for="star4" title="4 estrellas">★</label>
-          <input type="radio" id="star3" name="estrellas" value="3" /><label for="star3" title="3 estrellas">★</label>
-          <input type="radio" id="star2" name="estrellas" value="2" /><label for="star2" title="2 estrellas">★</label>
-          <input type="radio" id="star1" name="estrellas" value="1" /><label for="star1" title="1 estrella">★</label>
+          <input type="radio" id="star5" name="estrellas" value="5" checked /><label for="star5" title="5 estrellas">â˜…</label>
+          <input type="radio" id="star4" name="estrellas" value="4" /><label for="star4" title="4 estrellas">â˜…</label>
+          <input type="radio" id="star3" name="estrellas" value="3" /><label for="star3" title="3 estrellas">â˜…</label>
+          <input type="radio" id="star2" name="estrellas" value="2" /><label for="star2" title="2 estrellas">â˜…</label>
+          <input type="radio" id="star1" name="estrellas" value="1" /><label for="star1" title="1 estrella">â˜…</label>
         </div>
         
         <input type="text" id="revName" class="modal-input" placeholder="Tu Nombre" required />
-        <textarea id="revComment" class="modal-input" placeholder="¿Qué te pareció el servicio?" rows="3" required></textarea>
+        <textarea id="revComment" class="modal-input" placeholder="Â¿QuÃ© te pareciÃ³ el servicio?" rows="3" required></textarea>
         
-        <button type="submit" class="btn-gold" style="width:100%;margin-top:10px" id="btnSubmitReview">Publicar Reseña</button>
+        <button type="submit" class="btn-gold" style="width:100%;margin-top:10px" id="btnSubmitReview">Publicar ReseÃ±a</button>
       </form>
     </div>
   </div>
 
-  <!-- ════════════════════════════════════════════
-       MODAL TODAS LAS RESEÑAS
-  ════════════════════════════════════════════ -->
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       MODAL TODAS LAS RESEÃ‘AS
+  â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
   <div id="allReviewsModal" class="modal">
     <div class="modal-content" style="max-width:600px; padding:30px;">
-      <button class="modal-close" onclick="document.getElementById('allReviewsModal').classList.remove('active')">✖</button>
+      <button class="modal-close" onclick="document.getElementById('allReviewsModal').classList.remove('active')">âœ–</button>
       
       <div style="text-align: center; margin-bottom: 25px;">
         <h3 style="color:var(--bright);font-family:var(--serif);font-size:1.8rem;margin-bottom:12px;">Experiencia de Clientes</h3>
@@ -950,22 +964,22 @@
         <!-- Creative Separator -->
         <div style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 12px;">
           <div style="height: 1px; background: linear-gradient(90deg, transparent, var(--gold)); width: 80px;"></div>
-          <div style="color: var(--gold); font-size: 1.2rem;">✦</div>
+          <div style="color: var(--gold); font-size: 1.2rem;">âœ¦</div>
           <div style="height: 1px; background: linear-gradient(270deg, transparent, var(--gold)); width: 80px;"></div>
         </div>
         
-        <p id="all-reviews-subtitle" style="color:var(--muted);font-size:0.85rem;margin:0;">Cargando reseñas...</p>
+        <p id="all-reviews-subtitle" style="color:var(--muted);font-size:0.85rem;margin:0;">Cargando reseÃ±as...</p>
       </div>
 
       <div id="all-reviews-container" style="display:flex; flex-direction:column; gap:15px; max-height:55vh; overflow-y:auto; padding-right:10px;">
-        <!-- Llenado dinámicamente -->
+        <!-- Llenado dinÃ¡micamente -->
       </div>
     </div>
   </div>
 
-  <!-- ════════════════════════════════════════════
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        FOOTER
-  ════════════════════════════════════════════ -->
+  â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
   <footer role="contentinfo">
     <div class="ft-grid">
 
@@ -973,10 +987,10 @@
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
           <img id="footer-custom-logo" src="" style="display:none; height:50px; width:50px; object-fit:cover; border-radius:12px;" alt="Logo">
           <div class="nav-mark" id="footer-default-icon" aria-hidden="true" style="width:34px;height:34px;font-size:.95rem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><line x1="20" y1="4" x2="8.12" y2="15.88"></line><line x1="14.47" y1="14.48" x2="20" y2="20"></line><line x1="8.12" y1="8.12" x2="12" y2="12"></line></svg></div>
-          <span class="serif grad cms-site-name" style="font-size:1.1rem;font-weight:700">Barbería Premium</span>
+          <span class="serif grad cms-site-name" style="font-size:1.1rem;font-weight:700">BarberÃ­a Premium</span>
         </div>
         <p style="font-size:.83rem;color:var(--muted);line-height:1.65;max-width:300px;margin-bottom:20px">
-          Más de 15 años transformando imágenes. Tu estilo, nuestra pasión. Agenda hoy mismo tu cita.
+          MÃ¡s de 15 aÃ±os transformando imÃ¡genes. Tu estilo, nuestra pasiÃ³n. Agenda hoy mismo tu cita.
         </p>
         <div class="soc-row" aria-label="Redes sociales">
           <a href="#" class="soc-btn" id="link-ig" aria-label="Instagram" title="Instagram" target="_blank" rel="noopener noreferrer"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a><a href="#" class="soc-btn" id="link-fb" aria-label="Facebook" title="Facebook" target="_blank" rel="noopener noreferrer"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a><a href="#" class="soc-btn" id="link-tt" aria-label="TikTok" title="TikTok" target="_blank" rel="noopener noreferrer"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg></a>
@@ -984,12 +998,12 @@
       </div>
 
       <div>
-        <p style="font-size:.7rem;color:var(--gold);text-transform:uppercase;letter-spacing:.12em;font-weight:600;margin-bottom:14px">Navegación</p>
+        <p style="font-size:.7rem;color:var(--gold);text-transform:uppercase;letter-spacing:.12em;font-weight:600;margin-bottom:14px">NavegaciÃ³n</p>
         <ul class="ft-links" role="list">
           <li><a href="#servicios">Servicios</a></li>
-          <li><a href="#galeria">Galería</a></li>
+          <li><a href="#galeria">GalerÃ­a</a></li>
           <li><a href="#equipo">Nuestro equipo</a></li>
-          <li><a href="#resenas">Reseñas</a></li>
+          <li><a href="#resenas">ReseÃ±as</a></li>
           <li><a href="#contacto">Contacto</a></li>
           <li><a href="pages/booking.html">Reservar cita</a></li>
         </ul>
@@ -998,26 +1012,26 @@
       <div>
         <p style="font-size:.7rem;color:var(--gold);text-transform:uppercase;letter-spacing:.12em;font-weight:600;margin-bottom:14px">Contacto</p>
         <ul class="ft-links" role="list">
-          <li><a href="tel:+521234567890" id="footer-phone-link">📞 <span class="cms-site-phone">+52 123 456 7890</span></a></li>
-          <li><a href="mailto:contacto@barberia.com" id="footer-email-link">✉️ <span id="footer-email-text">contacto@barberia.com</span></a></li>
-          <li style="color:var(--muted);font-size:.84rem;margin-top:4px;display:flex;gap:6px"><span>🕒</span><span id="footer-horario-text">Lun–Vie: 9–20h · Sáb: 9–18h</span></li>
+          <li><a href="tel:+521234567890" id="footer-phone-link">ðŸ“ž <span class="cms-site-phone">+52 123 456 7890</span></a></li>
+          <li><a href="mailto:contacto@barberia.com" id="footer-email-link">âœ‰ï¸ <span id="footer-email-text">contacto@barberia.com</span></a></li>
+          <li style="color:var(--muted);font-size:.84rem;margin-top:4px;display:flex;gap:6px"><span>ðŸ•’</span><span id="footer-horario-text">Lunâ€“Vie: 9â€“20h Â· SÃ¡b: 9â€“18h</span></li>
         </ul>
       </div>
 
     </div>
 
     <div class="ft-bottom">
-      <p>© 2026 Barbería Premium. Todos los derechos reservados.</p>
+      <p>Â© 2026 BarberÃ­a Premium. Todos los derechos reservados.</p>
       <div style="display:flex;gap:20px">
         <a href="#" style="color:var(--muted);text-decoration:none;transition:color .2s" onmouseenter="this.style.color='var(--gold)'" onmouseleave="this.style.color='var(--muted)'">Privacidad</a>
-        <a href="#" style="color:var(--muted);text-decoration:none;transition:color .2s" onmouseenter="this.style.color='var(--gold)'" onmouseleave="this.style.color='var(--muted)'">Términos</a>
+        <a href="#" style="color:var(--muted);text-decoration:none;transition:color .2s" onmouseenter="this.style.color='var(--gold)'" onmouseleave="this.style.color='var(--muted)'">TÃ©rminos</a>
       </div>
     </div>
   </footer>
 
-  <!-- ════════════════════════════════════════════
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        SCRIPTS
-  ════════════════════════════════════════════ -->
+  â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
   <script>
     'use strict';
 
@@ -1042,7 +1056,7 @@
     }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
     document.querySelectorAll('.rv').forEach(el => obs.observe(el));
 
-    /* Badge "Hoy" en días de semana */
+    /* Badge "Hoy" en dÃ­as de semana */
     const d = new Date().getDay();
     if (d >= 1 && d <= 5) { const b = document.getElementById('today-b'); if (b) b.style.display = 'inline-block'; }
 
@@ -1072,7 +1086,7 @@
         let addr = decodeURIComponent(match[1].replace(/\+/g, ' '));
         return addr;
       }
-      // Intentar extraer la cadena más larga de !2s (nombre del lugar en el embed de Google)
+      // Intentar extraer la cadena mÃ¡s larga de !2s (nombre del lugar en el embed de Google)
       let matches = mapStr.match(/!2s([^!&"]+)/g);
       if (matches) {
         let longest = '';
@@ -1094,10 +1108,10 @@
           
           // Name
           if (d.site_name) {
-            document.title = d.site_name + ' — Estilo que habla por ti';
+            document.title = d.site_name + ' â€” Estilo que habla por ti';
             document.querySelectorAll('.cms-site-name').forEach(el => el.textContent = d.site_name);
             const copy = document.querySelector('.ft-bottom p');
-            if (copy) copy.textContent = '© ' + new Date().getFullYear() + ' ' + d.site_name + '. Todos los derechos reservados.';
+            if (copy) copy.textContent = 'Â© ' + new Date().getFullYear() + ' ' + d.site_name + '. Todos los derechos reservados.';
           }
           
           // Hero (Portada)
@@ -1131,14 +1145,14 @@
             const rawMap = (d.site_map || '').trim();
             let displayAddr = d.site_address || '';
 
-            // Si la dirección guardada es genérica o vacía, extraer del enlace del mapa
-            if (!displayAddr || displayAddr === 'Dirección en Mapa' || displayAddr === 'Dirección de la Barbería') {
+            // Si la direcciÃ³n guardada es genÃ©rica o vacÃ­a, extraer del enlace del mapa
+            if (!displayAddr || displayAddr === 'DirecciÃ³n en Mapa' || displayAddr === 'DirecciÃ³n de la BarberÃ­a') {
               displayAddr = extractAddrFromMapUrl(rawMap);
             }
 
-            // Mostrar dirección en todos los elementos .cms-site-address
+            // Mostrar direcciÃ³n en todos los elementos .cms-site-address
             if (!displayAddr) {
-              displayAddr = 'Ubicación en el mapa';
+              displayAddr = 'UbicaciÃ³n en el mapa';
             }
             document.querySelectorAll('.cms-site-address').forEach(el => el.textContent = displayAddr);
 
@@ -1241,7 +1255,7 @@
           
         }
         
-        // ── SERVICIOS ──
+        // â”€â”€ SERVICIOS â”€â”€
         const resSvc = await fetch('sistema/obtener_datos.php?tabla=servicios');
         const jsonSvc = await resSvc.json();
         if (jsonSvc.success && jsonSvc.data) {
@@ -1265,7 +1279,7 @@
                 <div class="svc-body">
                   <div style="display:flex;align-items:center;justify-content:space-between">
                     <h3 class="svc-name">${svc.nombre}</h3>
-                    <span class="chip">⏱️ ${svc.duracion_min} min</span>
+                    <span class="chip">â±ï¸ ${svc.duracion_min} min</span>
                   </div>
                   <p class="svc-desc">${svc.descripcion || ''}</p>
                 </div>
@@ -1276,7 +1290,7 @@
           }
         }
         
-        // ── EQUIPO ──
+        // â”€â”€ EQUIPO â”€â”€
         const resTeam = await fetch('sistema/obtener_datos.php?tabla=barberos&activos=1');
         const jsonTeam = await resTeam.json();
         if (jsonTeam.success && jsonTeam.data) {
@@ -1312,7 +1326,7 @@
           }
         }
         
-        // ── GALERIA ──
+        // â”€â”€ GALERIA â”€â”€
         const resGal = await fetch('sistema/obtener_datos.php?tabla=galeria');
         const jsonGal = await resGal.json();
         if (jsonGal.success && jsonGal.data) {
@@ -1327,21 +1341,21 @@
               
               const imgSrc = img.ruta_imagen && img.ruta_imagen.startsWith('data:') ? img.ruta_imagen : (img.ruta_imagen || img.imagen || 'assets/img/hero-bg.png');
               el.innerHTML = `
-                <img src="${imgSrc}" alt="${img.titulo || 'Galería'}" loading="lazy" onerror="this.src='assets/img/hero-bg.png'"/>
+                <img src="${imgSrc}" alt="${img.titulo || 'GalerÃ­a'}" loading="lazy" onerror="this.src='assets/img/hero-bg.png'"/>
                 ${img.titulo ? `<div class="gi-lbl">${img.titulo}</div>` : ''}
               `;
               galContainer.appendChild(el);
               
-              // Observar para la animación de entrada
+              // Observar para la animaciÃ³n de entrada
               obs.observe(el);
             });
           }
         }
 
-        // ── RESEÑAS ──
+        // â”€â”€ RESEÃ‘AS â”€â”€
         loadReviews();
 
-        // ── HORARIOS ──
+        // â”€â”€ HORARIOS â”€â”€
         loadHorarios();
 
       } catch(e) { console.error('Error fetching CMS settings:', e); }
@@ -1352,15 +1366,15 @@
         const res = await fetch('sistema/obtener_datos.php?tabla=resenas');
         const json = await res.json();
         if (json.success && json.data) {
-          // Calcular rating promedio dinámicamente
+          // Calcular rating promedio dinÃ¡micamente
           const statRating = document.getElementById('stat-rating');
           if (statRating) {
             if (json.data.length > 0) {
               const totalEstrellas = json.data.reduce((sum, rev) => sum + (parseInt(rev.calificacion) || 5), 0);
               const promedio = (totalEstrellas / json.data.length).toFixed(1);
-              statRating.textContent = promedio + '★';
+              statRating.textContent = promedio + 'â˜…';
             } else {
-              statRating.textContent = '5.0★';
+              statRating.textContent = '5.0â˜…';
             }
           }
 
@@ -1372,8 +1386,8 @@
             allRevContainer.innerHTML = '';
             
             if (json.data.length === 0) {
-              revContainer.innerHTML = '<p style="color:var(--muted)">Aún no hay reseñas. ¡Sé el primero en dejar una!</p>';
-              allRevContainer.innerHTML = '<p style="color:var(--muted)">No hay reseñas.</p>';
+              revContainer.innerHTML = '<p style="color:var(--muted)">AÃºn no hay reseÃ±as. Â¡SÃ© el primero en dejar una!</p>';
+              allRevContainer.innerHTML = '<p style="color:var(--muted)">No hay reseÃ±as.</p>';
               return;
             }
             
@@ -1387,7 +1401,7 @@
 
             json.data.forEach((rev, idx) => {
               const calificacion = parseInt(rev.calificacion) || 5;
-              const stars = '★'.repeat(calificacion) + '☆'.repeat(5 - calificacion);
+              const stars = 'â˜…'.repeat(calificacion) + 'â˜†'.repeat(5 - calificacion);
               
               const nombre = rev.cliente_nombre || 'Usuario';
               const parts = nombre.trim().split(/\s+/);
@@ -1409,7 +1423,7 @@
                 </div>
               `;
 
-              // Diseño especial plano y moderno SOLO para la ventana emergente
+              // DiseÃ±o especial plano y moderno SOLO para la ventana emergente
               const htmlContentModal = `
                 <div style="border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 22px; margin-bottom: 22px;">
                   <div style="display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; margin-bottom: 12px; gap: 10px;">
@@ -1421,13 +1435,13 @@
                 </div>
               `;
 
-              // Siempre agregar al modal de TODAS las reseñas (sin la clase r-card para quitar la caja)
+              // Siempre agregar al modal de TODAS las reseÃ±as (sin la clase r-card para quitar la caja)
               const modalEl = document.createElement('div');
               modalEl.style.width = '100%';
               modalEl.innerHTML = htmlContentModal;
               allRevContainer.appendChild(modalEl);
 
-              // Solo agregar al grid principal si no excede maxVisible (usando el diseño de tarjetas originales)
+              // Solo agregar al grid principal si no excede maxVisible (usando el diseÃ±o de tarjetas originales)
               if (idx < maxVisible) {
                 const el = document.createElement('blockquote');
                 el.className = 'r-card rv';
@@ -1439,7 +1453,7 @@
               }
             });
 
-            // Agregar botón "Ver Más" si aplica
+            // Agregar botÃ³n "Ver MÃ¡s" si aplica
             if (hasMore) {
               const btnContainer = document.createElement('div');
               btnContainer.style.textAlign = 'center';
@@ -1448,7 +1462,7 @@
               
               const btnMore = document.createElement('button');
               btnMore.className = 'btn-outline';
-              btnMore.textContent = 'Ver todas las reseñas (' + json.data.length + ')';
+              btnMore.textContent = 'Ver todas las reseÃ±as (' + json.data.length + ')';
               btnMore.onclick = function() {
                 document.getElementById('allReviewsModal').classList.add('active');
               };
@@ -1470,8 +1484,8 @@
           if (!container) return;
           
           container.innerHTML = '';
-          const dias = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-          const diasCortos = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+          const dias = ['Domingo', 'Lunes', 'Martes', 'MiÃ©rcoles', 'Jueves', 'Viernes', 'SÃ¡bado'];
+          const diasCortos = ['Dom', 'Lun', 'Mar', 'MiÃ©', 'Jue', 'Vie', 'SÃ¡b'];
           const hoy = new Date().getDay();
           
           // Build schedule groups for footer summary
@@ -1488,7 +1502,7 @@
               statusHtml = `
                 <div style="display:flex;align-items:center">
                   ${isToday ? '<span class="today-b" style="display:inline-block;margin-right:8px">Hoy</span>' : ''}
-                  <span style="color:var(--bright);font-weight:500">${hIn} — ${hOut}</span>
+                  <span style="color:var(--bright);font-weight:500">${hIn} â€” ${hOut}</span>
                 </div>
               `;
               // Group consecutive days with same schedule
@@ -1522,10 +1536,10 @@
           const footerHorario = document.getElementById('footer-horario-text');
           if (footerHorario && groups.length > 0) {
             const parts = groups.map(g => {
-              const range = g.startName === g.endName ? g.startName : g.startName + '–' + g.endName;
-              return range + ': ' + g.hIn + '–' + g.hOut;
+              const range = g.startName === g.endName ? g.startName : g.startName + 'â€“' + g.endName;
+              return range + ': ' + g.hIn + 'â€“' + g.hOut;
             });
-            footerHorario.textContent = parts.join(' · ');
+            footerHorario.textContent = parts.join(' Â· ');
           }
         }
       } catch(e) { console.error('Error fetching horarios:', e); }
@@ -1557,15 +1571,15 @@
           document.getElementById('reviewModal').classList.remove('active');
           form.reset();
           loadReviews();
-          alert('¡Gracias por tu reseña!');
+          alert('Â¡Gracias por tu reseÃ±a!');
         } else {
-          alert(json.error || 'Error al enviar la reseña');
+          alert(json.error || 'Error al enviar la reseÃ±a');
         }
       } catch(e) {
-        alert('Error de conexión');
+        alert('Error de conexiÃ³n');
       } finally {
         btn.disabled = false;
-        btn.textContent = 'Publicar Reseña';
+        btn.textContent = 'Publicar ReseÃ±a';
       }
     }
 
@@ -1586,16 +1600,23 @@
           if (statBarberos) statBarberos.textContent = jsonBarberos.data.length;
         }
       } catch (e) {
-        console.error("Error al cargar estadísticas:", e);
+        console.error("Error al cargar estadÃ­sticas:", e);
       }
     }
-
-    initCMS();
-    loadStats();
+    
+    async function init() {
+      await initCMS();
+      await loadReviews();
+      
+      const loader = document.getElementById('global-loader');
+      if(loader) {
+        loader.style.opacity = '0';
+        setTimeout(() => loader.style.visibility = 'hidden', 600);
+      }
+    }
+    init();
 
   </script>
 
 </body>
 </html>
-
-

@@ -535,3 +535,46 @@ body::before {
   transition: opacity 0.55s ease, transform 0.55s ease;
 }
 .reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ─────────────────────────────────────────────────────
+   RESPONSIVE OVERRIDES (MÓVILES) 
+───────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .modal-content {
+    flex-direction: column !important;
+    padding: 20px !important;
+    width: 95% !important;
+    margin: 0 auto !important;
+  }
+  .modal-content form, .modal-content .flex-row, .modal-content .star-rating {
+    flex-direction: column !important;
+  }
+  .star-rating { align-items: center; }
+  .section-pad { padding: 32px 0 !important; }
+  .container { padding: 0 15px !important; }
+  h1, .sec-heading { font-size: clamp(1.6rem, 8vw, 2.2rem) !important; }
+  /* Hero limits */
+  .hero-sub { max-width: 100% !important; }
+  /* Admin sidebar and content fixes */
+  #admin-main { margin-left: 0 !important; }
+  .stat-card { min-width: 100% !important; }
+  .form-row { flex-direction: column !important; gap: 10px !important; }
+}
+
+@media (max-width: 480px) {
+  .gal-grid { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)) !important; }
+  .hero-btns { flex-direction: column; width: 100%; }
+  .hero-btns > * { width: 100%; margin-bottom: 10px; }
+  .svc-grid { grid-template-columns: 1fr !important; }
+}
+
+/* Accesibilidad: Reducir animaciones */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+

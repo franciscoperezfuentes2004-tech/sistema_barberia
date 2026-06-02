@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="theme-color" content="#0F0F0F"/>
-  <title>Paso 2 — Fecha y Barbero · Barbería</title>
+  <title>Paso 2 â€” Fecha y Barbero Â· BarberÃ­a</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <style>
@@ -202,10 +202,10 @@
     <div class="hdr-inner">
       <div class="hdr-top">
         <a href="../index.html" class="logo">
-          <div class="logo-mark">✂️</div>
-          <span class="logo-name">Barbería</span>
+          <div class="logo-mark">âœ‚ï¸</div>
+          <span class="logo-name">BarberÃ­a</span>
         </a>
-        <a href="booking.html" style="font-size:.78rem;color:var(--muted);text-decoration:none">← Volver</a>
+        <a href="booking.html" style="font-size:.78rem;color:var(--muted);text-decoration:none">â† Volver</a>
       </div>
     </div>
   </header>
@@ -213,7 +213,7 @@
   <main>
       <nav class="steps">
         <div class="step-item">
-          <div class="step-dot done">✓</div>
+          <div class="step-dot done">âœ“</div>
           <span class="step-label done">Servicios</span>
         </div>
         <div class="step-line done"></div>
@@ -289,9 +289,9 @@
         
         <!-- 1. Fechas -->
         <div class="panel-card">
-          <h2 class="panel-title"><span class="panel-title-num">1</span> Elige tu día</h2>
+          <h2 class="panel-title"><span class="panel-title-num">1</span> Elige tu dÃ­a</h2>
           <button id="btn-open-calendar" class="cta-btn" style="width:100%; margin:0; background:var(--s1); border:1px solid var(--border); color:var(--bright); font-weight:600; box-shadow:none;" onclick="openCalendarModal()">
-            🗓️ Abrir Calendario
+            ðŸ—“ï¸ Abrir Calendario
           </button>
           <div id="selected-date-display" style="margin-top:16px; font-size:1.1rem; color:var(--gold); font-weight:700; display:none; align-items:center; gap:8px; justify-content:center; background:rgba(201,168,76,0.1); padding:12px; border-radius:12px;">
             <!-- JS fills this -->
@@ -315,7 +315,7 @@
         </div>
         
         <div id="horarios-empty-state" class="empty-state" style="flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-          <div style="font-size: 2rem; margin-bottom: 12px; opacity: 0.5;">🕒</div>
+          <div style="font-size: 2rem; margin-bottom: 12px; opacity: 0.5;">ðŸ•’</div>
           <p>Selecciona una fecha y un barbero primero<br>para ver los horarios disponibles.</p>
         </div>
 
@@ -333,7 +333,7 @@
   <div class="bottom-cta">
     <div class="bottom-inner">
       <button id="btn-continuar" class="cta-btn" disabled onclick="goToStep3()">
-        Continuar al resumen →
+        Continuar al resumen â†’
       </button>
     </div>
   </div>
@@ -476,12 +476,12 @@
 
       const parts = isodate.split('-');
       const d = new Date(isodate + 'T12:00:00Z');
-      const dias = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+      const dias = ['Domingo','Lunes','Martes','MiÃ©rcoles','Jueves','Viernes','SÃ¡bado'];
       const meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
       const text = `${dias[d.getUTCDay()]} ${parts[2]} de ${meses[parseInt(parts[1])-1]}`;
       
       const display = document.getElementById('selected-date-display');
-      display.innerHTML = `<span>📅</span> ${text}`;
+      display.innerHTML = `<span>ðŸ“…</span> ${text}`;
       display.style.display = 'flex';
       
       document.getElementById('sec-horarios').style.display = 'none';
@@ -497,7 +497,7 @@
       const durBadge = document.getElementById('dur-badge');
       if (durBadge) {
         const slotsNecesarios = calcSlots(state.duracion);
-        durBadge.innerHTML = `⏱️ ${state.duracion} min <span style="opacity:0.7; font-weight:400; font-size:0.7rem; margin-left:4px;">(${slotsNecesarios} bloque${slotsNecesarios > 1 ? 's' : ''})</span>`;
+        durBadge.innerHTML = `â±ï¸ ${state.duracion} min <span style="opacity:0.7; font-weight:400; font-size:0.7rem; margin-left:4px;">(${slotsNecesarios} bloque${slotsNecesarios > 1 ? 's' : ''})</span>`;
         durBadge.style.display = 'inline-flex';
       }
     }
@@ -619,7 +619,7 @@
       // Filtrar: si no hay slots con disponible=true, mostrar mensaje
       const hayDisponibles = slots.some(s => s.disponible);
       if(slots.length === 0 || !hayDisponibles) {
-        grid.innerHTML = '<div style="color:var(--muted);font-size:.85rem;grid-column:1/-1">No hay horarios que acomoden tu servicio este día.</div>';
+        grid.innerHTML = '<div style="color:var(--muted);font-size:.85rem;grid-column:1/-1">No hay horarios que acomoden tu servicio este dÃ­a.</div>';
         return;
       }
       
@@ -631,7 +631,7 @@
           el.onclick = () => {
             document.querySelectorAll('.time-slot').forEach(c => c.classList.remove('selected', 'covered'));
             
-            // Calcular cuántos bloques de 30 min ocupa el servicio
+            // Calcular cuÃ¡ntos bloques de 30 min ocupa el servicio
             const slotsNecesarios = calcSlots(state.duracion);
             for(let i = 0; i < slotsNecesarios; i++) {
               const sibling = grid.children[idx + i];
@@ -645,7 +645,7 @@
             
             if (s.retraso_minutos > 0) {
               delayMsg.style.display = 'block';
-              delayMsg.innerHTML = `⚠️ <b>Aviso:</b> El barbero podría terminar la cita anterior con un retraso de <b>aproximadamente ${Math.ceil(s.retraso_minutos)} minutos</b>. Tendría que esperar ese tiempo.`;
+              delayMsg.innerHTML = `âš ï¸ <b>Aviso:</b> El barbero podrÃ­a terminar la cita anterior con un retraso de <b>aproximadamente ${Math.ceil(s.retraso_minutos)} minutos</b>. TendrÃ­a que esperar ese tiempo.`;
             } else {
               delayMsg.style.display = 'none';
             }
@@ -658,7 +658,7 @@
         grid.appendChild(el);
       });
       
-      // Mostrar indicador de duración
+      // Mostrar indicador de duraciÃ³n
       const durBadge = document.getElementById('dur-badge');
       if (durBadge) {
         const slotsNecesarios = calcSlots(state.duracion);
@@ -670,10 +670,10 @@
       const btn = document.getElementById('btn-continuar');
       if(state.fecha && state.barberoId && state.horaInicio) {
         btn.disabled = false;
-        btn.textContent = `Confirmar para las ${state.horaInicio} →`;
+        btn.textContent = `Confirmar para las ${state.horaInicio} â†’`;
       } else {
         btn.disabled = true;
-        btn.textContent = 'Completa tu selección';
+        btn.textContent = 'Completa tu selecciÃ³n';
       }
     }
 
@@ -688,7 +688,7 @@
       window.location.href = 'confirm.html';
     }
 
-    // Cargar branding dinámico
+    // Cargar branding dinÃ¡mico
     async function loadBranding() {
       try {
         const res = await fetch(`${API}/obtener_datos.php?tabla=ajustes`);
@@ -697,8 +697,8 @@
           const d = json.data;
           if (d.site_name) {
             const currentTitle = document.title;
-            const stepPrefix = currentTitle.split('·')[0].trim();
-            document.title = `${stepPrefix} · ${d.site_name}`;
+            const stepPrefix = currentTitle.split('Â·')[0].trim();
+            document.title = `${stepPrefix} Â· ${d.site_name}`;
             document.querySelectorAll('.logo-name').forEach(el => el.textContent = d.site_name);
           }
           document.querySelectorAll('.logo-mark').forEach(logoMark => {

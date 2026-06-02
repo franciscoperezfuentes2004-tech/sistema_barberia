@@ -1,15 +1,15 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="theme-color" content="#0F0F0F"/>
   <meta name="description" content="Selecciona los servicios que deseas reservar."/>
-  <title>Paso 1 — Selecciona tus Servicios · Barbería</title>
+  <title>Paso 1 â€” Selecciona tus Servicios Â· BarberÃ­a</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <style>
-    /* ─── TOKENS ─── */
+    /* â”€â”€â”€ TOKENS â”€â”€â”€ */
     :root{
       --gold:#C9A84C;--gold-l:#E8C97A;--gold-d:#9A7B32;
       --bg:#0F0F0F;--s1:#181818;--s2:#222;--s3:#333;--border:#333;
@@ -25,7 +25,7 @@
          -webkit-font-smoothing:antialiased;min-height:100dvh}
     img{display:block;max-width:100%}
 
-    /* ─── HEADER ─── */
+    /* â”€â”€â”€ HEADER â”€â”€â”€ */
     .app-header{
       position:sticky;top:0;z-index:50;
       background:rgba(15,15,15,.96);backdrop-filter:blur(18px);
@@ -42,7 +42,7 @@
       background:linear-gradient(135deg,var(--gold-l),var(--gold));
       -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 
-    /* ─── STEPS BAR ─── */
+    /* â”€â”€â”€ STEPS BAR â”€â”€â”€ */
     .steps{display:flex;align-items:center;gap:0;margin-bottom:32px}
     .step-item{display:flex;align-items:center;gap:6px;flex-shrink:0}
     .step-dot{
@@ -60,10 +60,10 @@
     .step-line{flex:1;height:1px;background:var(--border);margin:0 8px;min-width:20px}
     .step-line.done{background:var(--green)}
 
-    /* ─── MAIN ─── */
+    /* â”€â”€â”€ MAIN â”€â”€â”€ */
     main{max-width:1400px;margin:0 auto;padding:28px var(--gutter) 200px}
 
-    /* ─── SECTION TITLE ─── */
+    /* â”€â”€â”€ SECTION TITLE â”€â”€â”€ */
     .sec-title-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
     .sec-title{font-family:var(--serif);font-size:1.15rem;font-weight:600;color:var(--bright)}
     .badge-multi{font-size:.68rem;background:var(--s2);border:1px solid var(--border);
@@ -76,7 +76,7 @@
       content:'';flex:1;height:1px;background:var(--border)
     }
 
-    /* ─── SERVICE GRID ─── */
+    /* â”€â”€â”€ SERVICE GRID â”€â”€â”€ */
     #services-grid{
       display:grid;
       grid-template-columns:1fr;
@@ -85,7 +85,7 @@
     @media(min-width:768px){#services-grid{grid-template-columns:repeat(2,1fr)}}
     @media(min-width:1024px){#services-grid{grid-template-columns:repeat(3,1fr)}}
 
-    /* ─── SERVICE CARD ─── */
+    /* â”€â”€â”€ SERVICE CARD â”€â”€â”€ */
     .svc-card{
       background: linear-gradient(145deg, rgba(34,34,34,0.6), rgba(20,20,20,0.95));
       backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
@@ -135,12 +135,12 @@
       border-color:var(--gold);background:var(--gold);color:#0F0F0F
     }
 
-    /* ─── SKELETON ─── */
+    /* â”€â”€â”€ SKELETON â”€â”€â”€ */
     .skeleton{background:linear-gradient(90deg,var(--s2) 25%,var(--s3) 50%,var(--s2) 75%);
       background-size:200%;animation:sk 1.4s infinite;border-radius:14px}
     @keyframes sk{0%{background-position:200% 0}100%{background-position:-200% 0}}
 
-    /* ─── BOTTOM BAR ─── */
+    /* â”€â”€â”€ BOTTOM BAR â”€â”€â”€ */
     .bottom-fade{
       position:fixed;bottom:0;left:0;right:0;height:160px;
       background:linear-gradient(to top,rgba(15,15,15,1) 50%,transparent);
@@ -194,13 +194,13 @@
     <div class="hdr-inner">
       <!-- Top row -->
       <div class="hdr-top">
-        <a href="../index.html" class="logo" aria-label="Barbería — Inicio">
-          <div class="logo-mark" aria-hidden="true">✂️</div>
-          <span class="logo-name">Barbería</span>
+        <a href="../index.html" class="logo" aria-label="BarberÃ­a â€” Inicio">
+          <div class="logo-mark" aria-hidden="true">âœ‚ï¸</div>
+          <span class="logo-name">BarberÃ­a</span>
         </a>
         <a href="../index.html" style="font-size:.78rem;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:4px;transition:color .2s"
            onmouseenter="this.style.color='var(--gold)'" onmouseleave="this.style.color='var(--muted)'">
-          ✖ Cancelar
+          âœ– Cancelar
         </a>
       </div>
     </div>
@@ -227,21 +227,21 @@
 
     <!-- Greeting -->
     <section style="margin-bottom:28px">
-      <p id="greeting-time" style="font-size:.75rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px">Buenos días 👋</p>
+      <p id="greeting-time" style="font-size:.75rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px">Buenos dÃ­as ðŸ‘‹</p>
       <h1 id="main-h" style="font-family:var(--serif);font-size:1.7rem;font-weight:700;color:var(--bright);line-height:1.2;margin-bottom:5px">
-        ¿Qué te hacemos
+        Â¿QuÃ© te hacemos
         <span style="background:linear-gradient(135deg,var(--gold-l),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">hoy?</span>
       </h1>
-      <p style="font-size:.82rem;color:var(--muted)">Elige uno o más servicios. Después eliges fecha y barbero.</p>
+      <p style="font-size:.82rem;color:var(--muted)">Elige uno o mÃ¡s servicios. DespuÃ©s eliges fecha y barbero.</p>
     </section>
 
     <!-- Services -->
     <section aria-labelledby="svc-heading">
       <div class="sec-title-row">
         <h2 id="svc-heading" class="sec-title">Servicios</h2>
-        <span class="badge-multi">Selección múltiple</span>
+        <span class="badge-multi">SelecciÃ³n mÃºltiple</span>
       </div>
-      <div class="divider-line">Menú</div>
+      <div class="divider-line">MenÃº</div>
 
       <div id="services-grid" role="group" aria-label="Selecciona los servicios">
         <!-- Skeletons mientras carga -->
@@ -262,9 +262,9 @@
   <div class="bottom-cta" role="complementary" aria-label="Resumen y continuar">
     <div class="bottom-inner">
       <div class="pills" role="status" aria-live="polite">
-        <div class="pill">🛍️ <strong id="pill-count">—</strong></div>
-        <div class="pill">⏱️ <strong id="pill-dur">0 min</strong></div>
-        <div class="pill">💰 <strong id="pill-price">$0 MXN</strong></div>
+        <div class="pill">ðŸ›ï¸ <strong id="pill-count">â€”</strong></div>
+        <div class="pill">â±ï¸ <strong id="pill-dur">0 min</strong></div>
+        <div class="pill">ðŸ’° <strong id="pill-price">$0 MXN</strong></div>
       </div>
       <button id="btn-continuar" class="cta-btn" onclick="goToStep2()"
               disabled aria-disabled="true" aria-label="Continuar al paso 2">
@@ -284,7 +284,7 @@
   // Saludo
   const h = new Date().getHours();
   const grEl = document.getElementById('greeting-time');
-  if(grEl) grEl.textContent = h<12?'Buenos días 👋':h<19?'Buenas tardes 👋':'Buenas noches 👋';
+  if(grEl) grEl.textContent = h<12?'Buenos dÃ­as ðŸ‘‹':h<19?'Buenas tardes ðŸ‘‹':'Buenas noches ðŸ‘‹';
 
   // Cargar servicios
   async function loadServicios() {
@@ -296,7 +296,7 @@
       renderServicios(grid);
     } catch(e) {
       grid.innerHTML = `<div style="padding:24px;text-align:center;color:var(--muted);grid-column:1/-1">
-        <p style="font-size:2rem;margin-bottom:8px">⚠️</p>
+        <p style="font-size:2rem;margin-bottom:8px">âš ï¸</p>
         <p>No se pudieron cargar los servicios</p>
         <p style="font-size:.75rem;margin-top:4px;color:#555">${e.message}</p>
         <button onclick="loadServicios()" style="margin-top:14px;padding:8px 20px;background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:8px;cursor:pointer;font-family:var(--sans)">Reintentar</button>
@@ -315,16 +315,16 @@
       card.setAttribute('tabindex','0');
       card.setAttribute('aria-label',`${svc.nombre}, $${svc.precio} MXN, ${svc.duracion_min} minutos`);
       card.innerHTML = `
-        <div class="svc-icon" aria-hidden="true">${svc.icono||'✂️'}</div>
+        <div class="svc-icon" aria-hidden="true">${svc.icono||'âœ‚ï¸'}</div>
         <div class="svc-info">
           <div class="svc-head">
             <span class="svc-name">${svc.nombre}</span>
             <span class="svc-price">$${parseFloat(svc.precio).toLocaleString('es-MX')} MXN</span>
           </div>
           <p class="svc-desc">${svc.descripcion||''}</p>
-          <span class="svc-dur">⏱️ ${svc.duracion_min} min</span>
+          <span class="svc-dur">â±ï¸ ${svc.duracion_min} min</span>
         </div>
-        <div class="svc-check" aria-hidden="true">✓</div>`;
+        <div class="svc-check" aria-hidden="true">âœ“</div>`;
       const toggle = () => toggleSvc(card, svc);
       card.addEventListener('click', toggle);
       card.addEventListener('keydown', e => { if(e.key===' '||e.key==='Enter'){e.preventDefault();toggle();} });
@@ -354,7 +354,7 @@
       if(s){ state.totalPrecio += parseFloat(s.precio); state.totalDur += parseInt(s.duracion_min); }
     });
     const n = state.selIds.size;
-    document.getElementById('pill-count').textContent  = n===0?'—':`${n} servicio${n>1?'s':''}`;
+    document.getElementById('pill-count').textContent  = n===0?'â€”':`${n} servicio${n>1?'s':''}`;
     document.getElementById('pill-dur').textContent    = `${state.totalDur} min`;
     document.getElementById('pill-price').textContent  = `$${state.totalPrecio.toLocaleString('es-MX')} MXN`;
   }
@@ -366,7 +366,7 @@
     btn.disabled = !ok;
     btn.setAttribute('aria-disabled', String(!ok));
     label.textContent = ok
-      ? `Continuar — $${state.totalPrecio.toLocaleString('es-MX')} MXN · ${state.totalDur} min`
+      ? `Continuar â€” $${state.totalPrecio.toLocaleString('es-MX')} MXN Â· ${state.totalDur} min`
       : 'Elige al menos un servicio';
   }
 
@@ -382,7 +382,7 @@
     window.location.href = 'calendar.html';
   }
 
-  // Cargar branding dinámico
+  // Cargar branding dinÃ¡mico
   async function loadBranding() {
     try {
       const res = await fetch(`${API}/obtener_datos.php?tabla=ajustes`);
@@ -391,8 +391,8 @@
         const d = json.data;
         if (d.site_name) {
           const currentTitle = document.title;
-          const stepPrefix = currentTitle.split('·')[0].trim();
-          document.title = `${stepPrefix} · ${d.site_name}`;
+          const stepPrefix = currentTitle.split('Â·')[0].trim();
+          document.title = `${stepPrefix} Â· ${d.site_name}`;
           document.querySelectorAll('.logo-name').forEach(el => el.textContent = d.site_name);
         }
         document.querySelectorAll('.logo-mark').forEach(logoMark => {

@@ -1,14 +1,14 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="theme-color" content="#0F0F0F"/>
-  <title>Mi Agenda — Barbería Premium</title>
+  <title>Mi Agenda â€” BarberÃ­a Premium</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <style>
-    /* â•â•â•â•â•â•â•â•â•â•â• TOKENS â•â•â•â•â•â•â•â•â•â•â• */
+    /* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â TOKENS Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
     :root {
       --gold:#C9A84C; --gold-l:#E8C97A; --gold-d:#9A7B32; --gradient-gold: linear-gradient(135deg, var(--gold-d), var(--gold), var(--gold-l));
       --bg:#0F0F0F; --s1:#181818; --s2:#222; --s3:#2A2A2A; --border:#333;
@@ -37,7 +37,7 @@
     ::-webkit-scrollbar-track{background:var(--s1)}
     ::-webkit-scrollbar-thumb{background:var(--gold-d);border-radius:4px}
 
-    /* â•â•â•â•â•â•â•â•â•â•â• HEADER â•â•â•â•â•â•â•â•â•â•â• */
+    /* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â HEADER Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
     .staff-header{
       position:sticky;top:0;z-index:50;
       background:rgba(15,15,15,.97);backdrop-filter:blur(20px);
@@ -74,7 +74,7 @@
     .pill-green{border-color:var(--green-border);color:var(--green);background:var(--green-bg)}
     .pill-blue{border-color:var(--blue-border);color:var(--blue);background:var(--blue-bg)}
 
-    /* ——————————— DATE SELECTOR ——————————— */
+    /* â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€” DATE SELECTOR â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€” */
     .cal-day {
       width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;
       border-radius: 12px; font-size: 0.95rem; margin: 0 auto; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -124,7 +124,7 @@
       box-shadow: 0 20px 50px rgba(0,0,0,0.6);
     }
 
-    /* ——————————— TIMELINE ——————————— */
+    /* â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€” TIMELINE â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€” */
     .timeline-section{padding:12px var(--gutter) 100px; max-width:900px; margin:0 auto;}
     .tl-label{
       font-size:.68rem;color:var(--muted);text-transform:uppercase;
@@ -171,7 +171,7 @@
       font-style:italic;
     }
 
-    /* ——————————— APPOINTMENT CARD ——————————— */
+    /* â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€” APPOINTMENT CARD â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€” */
     .appt-card{
       margin:4px 0 4px 0;padding:14px;border-radius:14px;
       background: linear-gradient(145deg, rgba(34,34,34,0.6), rgba(20,20,20,0.95));
@@ -245,7 +245,7 @@
     }
     .act-wa:hover{background:#1ebe5d}
 
-    /* ——————————— EMPTY STATE ——————————— */
+    /* â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€” EMPTY STATE â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€” */
     .empty-day{
       text-align:center;padding:60px 20px;
     }
@@ -253,7 +253,7 @@
     .empty-title{font-family:var(--serif);font-size:1.1rem;color:var(--bright);margin-bottom:6px}
     .empty-sub{font-size:.8rem;color:var(--muted);line-height:1.5}
 
-    /* ——————————— LOADING ——————————— */
+    /* â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€” LOADING â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€” */
     .loading-spinner{
       display:flex;align-items:center;justify-content:center;padding:60px 0;
     }
@@ -264,7 +264,7 @@
     }
     @keyframes spin{to{transform:rotate(360deg)}}
 
-    /* ——————————— TOAST ——————————— */
+    /* â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€” TOAST â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€” */
     .toast{
       position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);
       background:var(--s2);border:1px solid var(--border);color:var(--bright);
@@ -279,29 +279,29 @@
 </head>
 <body>
 
-  <!-- ————————— HEADER ————————— -->
+  <!-- â€”â€”â€”â€”â€”â€”â€”â€”â€” HEADER â€”â€”â€”â€”â€”â€”â€”â€”â€” -->
   <header class="staff-header">
     <div class="hdr-row">
       <div>
-        <p class="hdr-greeting" id="hdr-greeting">Buenos días</p>
+        <p class="hdr-greeting" id="hdr-greeting">Buenos dÃ­as</p>
         <h1 class="hdr-name" id="hdr-name">Carlos</h1>
       </div>
       <div class="hdr-actions">
         <div class="hdr-avatar" id="hdr-avatar">
           <img src="../assets/img/barbers/carlos.png" alt="Foto de perfil"/>
         </div>
-        <button class="btn-logout" onclick="app.logout()" title="Cerrar sesión">
+        <button class="btn-logout" onclick="app.logout()" title="Cerrar sesiÃ³n">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
         </button>
       </div>
     </div>
     <div class="hdr-pills" id="hdr-pills">
-      <span class="pill pill-gold" id="pill-citas">📅 — citas hoy</span>
-      <span class="pill pill-green" id="pill-next">⏳ Cargando...</span>
+      <span class="pill pill-gold" id="pill-citas">ðŸ“… â€” citas hoy</span>
+      <span class="pill pill-green" id="pill-next">â³ Cargando...</span>
     </div>
   </header>
 
-  <!-- ————————— DATE SELECTOR ————————— -->
+  <!-- â€”â€”â€”â€”â€”â€”â€”â€”â€” DATE SELECTOR â€”â€”â€”â€”â€”â€”â€”â€”â€” -->
   <div class="date-selector-wrap" style="padding: 12px var(--gutter); max-width: 900px; margin: 0 auto;">
     <button onclick="openCalendarModal()" style="width: 100%; background: var(--s2); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; color: var(--bright); font-family: inherit; font-size: 1rem; transition: var(--tr);">
       <span style="font-weight: 600;">Seleccionar Fecha</span>
@@ -312,15 +312,15 @@
     </button>
   </div>
 
-  <!-- ————————— TIMELINE ————————— -->
+  <!-- â€”â€”â€”â€”â€”â€”â€”â€”â€” TIMELINE â€”â€”â€”â€”â€”â€”â€”â€”â€” -->
   <section class="timeline-section">
-    <div class="tl-label" id="tl-label">Agenda del día</div>
+    <div class="tl-label" id="tl-label">Agenda del dÃ­a</div>
     <div id="timeline-container">
       <div class="loading-spinner"><div class="spinner"></div></div>
     </div>
   </section>
 
-  <!-- ————————— TOAST ————————— -->
+  <!-- â€”â€”â€”â€”â€”â€”â€”â€”â€” TOAST â€”â€”â€”â€”â€”â€”â€”â€”â€” -->
   <div class="toast" id="toast">
     <span class="toast-icon"></span>
     <span class="toast-msg"></span>
@@ -352,10 +352,10 @@
 
   <script>
   (() => {
-    /* ——— Config ——— */
+    /* â€”â€”â€” Config â€”â€”â€” */
     const API = '../sistema';
 
-    // 🛡️ Interceptor Global de Fetch para Inyectar JWT
+    // ðŸ›¡ï¸ Interceptor Global de Fetch para Inyectar JWT
     const originalFetch = window.fetch;
     window.fetch = async function() {
       let [resource, config] = arguments;
@@ -370,7 +370,7 @@
       return originalFetch(resource, config);
     };
 
-    // Barbero actual — se carga desde la sesión
+    // Barbero actual â€” se carga desde la sesiÃ³n
     let BARBERO_ID = null;
     let BARBERO_DATA = null;
     let selectedDate  = null;
@@ -385,10 +385,10 @@
       confirmada: 'Confirmada',
       en_silla:   'En silla',
       completada: 'Finalizada',
-      no_asistio: 'No asistió',
+      no_asistio: 'No asistiÃ³',
     };
 
-    /* ——— Init ——— */
+    /* â€”â€”â€” Init â€”â€”â€” */
     async function init() {
       // Tab-isolation check
       if (!sessionStorage.getItem('tab_auth')) {
@@ -423,7 +423,7 @@
 
     let globalHorariosMap = null;
 
-    /* ——— Load Horarios ——— */
+    /* â€”â€”â€” Load Horarios â€”â€”â€” */
     async function loadHorarios() {
       try {
         const resH = await fetch(`${API}/obtener_datos.php?tabla=horarios&barbero_id=${BARBERO_ID}`);
@@ -445,23 +445,23 @@
     
     function updateScheduleForDate(isoDate) {
       const d = new Date(isoDate + 'T12:00:00');
-      const diaSemana = d.getDay(); // número: 0=Dom, 1=Lun, etc.
+      const diaSemana = d.getDay(); // nÃºmero: 0=Dom, 1=Lun, etc.
       
       let scheduleForDay = null;
 
       // IMPORTANTE: MySQL devuelve dia_semana como STRING ("1"), getDay() es NUMBER (1).
-      // Usamos Number() para que la comparación funcione correctamente.
+      // Usamos Number() para que la comparaciÃ³n funcione correctamente.
       if (Array.isArray(horariosMap) && horariosMap.length > 0) {
         scheduleForDay = horariosMap.find(s => Number(s.dia_semana) === diaSemana);
       }
 
-      // Si el barbero no tiene un horario personalizado ese día, usamos el global (barbero 0)
+      // Si el barbero no tiene un horario personalizado ese dÃ­a, usamos el global (barbero 0)
       if (!scheduleForDay && Array.isArray(globalHorariosMap)) {
         scheduleForDay = globalHorariosMap.find(s => Number(s.dia_semana) === diaSemana);
       }
       
       if (scheduleForDay) {
-        // activo también viene como string "0" o "1" desde MySQL
+        // activo tambiÃ©n viene como string "0" o "1" desde MySQL
         if (Number(scheduleForDay.activo) === 0) {
            HORA_INICIO = null;
            HORA_FIN = null;
@@ -479,7 +479,7 @@
       }
     }
 
-    /* ——— Auth Check ——— */
+    /* â€”â€”â€” Auth Check â€”â€”â€” */
     async function checkAuth() {
       try {
         const token = localStorage.getItem('mi_token_jwt');
@@ -491,7 +491,7 @@
         const payloadBase64 = token.split('.')[1];
         const payloadDecoded = JSON.parse(atob(payloadBase64));
 
-        // Simulamos la estructura esperada por el código viejo para evitar romper cosas
+        // Simulamos la estructura esperada por el cÃ³digo viejo para evitar romper cosas
         const json = {
           success: true,
           data: {
@@ -518,12 +518,12 @@
     function updateGreeting() {
       const h = new Date().getHours();
       const el = document.getElementById('hdr-greeting');
-      if (h < 12) el.textContent = 'Buenos días';
+      if (h < 12) el.textContent = 'Buenos dÃ­as';
       else if (h < 19) el.textContent = 'Buenas tardes';
       else el.textContent = 'Buenas noches';
     }
 
-    /* ——— Date Selector ——— */
+    /* â€”â€”â€” Date Selector â€”â€”â€” */
     let currentCalMonth = new Date().getMonth() + 1;
     let currentCalYear = new Date().getFullYear();
 
@@ -541,7 +541,7 @@
     
     function updateDateLabel(iso) {
       const d = new Date(iso + 'T12:00:00Z');
-      const dias = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+      const dias = ['Dom','Lun','Mar','MiÃ©','Jue','Vie','SÃ¡b'];
       const meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
       document.getElementById('selected-date-lbl').textContent = `${dias[d.getDay()]} ${d.getDate()} ${meses[d.getMonth()]}`;
     }
@@ -620,7 +620,7 @@
       await loadCitas();
     }
 
-    /* ——— Load Citas ——— */
+    /* â€”â€”â€” Load Citas â€”â€”â€” */
     async function loadCitas(silent = false) {
       const container = document.getElementById('timeline-container');
       if (!silent) {
@@ -628,7 +628,7 @@
       }
 
       try {
-        // Asegurarnos de que los horarios estén frescos antes de pintar
+        // Asegurarnos de que los horarios estÃ©n frescos antes de pintar
         await loadHorarios();
         if (selectedDate) {
           updateScheduleForDate(selectedDate);
@@ -646,13 +646,13 @@
       }
     }
 
-    /* ——— Update Pills ——— */
+    /* â€”â€”â€” Update Pills â€”â€”â€” */
     function updatePills() {
       const total = citasDelDia.length;
       const pillCitas = document.getElementById('pill-citas');
       const pillNext  = document.getElementById('pill-next');
 
-      pillCitas.textContent = `📅 ${total} cita${total!==1?'s':''} hoy`;
+      pillCitas.textContent = `ðŸ“… ${total} cita${total!==1?'s':''} hoy`;
 
       // Find next pending appointment
       const ahora = new Date();
@@ -660,7 +660,7 @@
       const hoyISO = ahora.getFullYear()+'-'+String(ahora.getMonth()+1).padStart(2,'0')+'-'+String(ahora.getDate()).padStart(2,'0');
 
       if (selectedDate !== hoyISO) {
-        pillNext.textContent = '📋 ' + formatDateLabel(selectedDate);
+        pillNext.textContent = 'ðŸ“‹ ' + formatDateLabel(selectedDate);
         pillNext.className = 'pill pill-blue';
         return;
       }
@@ -673,18 +673,18 @@
       if (proxima) {
         const diffMin = diffMinutes(ahoraStr, proxima.hora_inicio.substring(0,5));
         if (diffMin <= 60) {
-          pillNext.textContent = `⏳ Próxima en ${diffMin} min`;
+          pillNext.textContent = `â³ PrÃ³xima en ${diffMin} min`;
         } else {
-          pillNext.textContent = `⏳ Próxima a las ${proxima.hora_inicio.substring(0,5)}`;
+          pillNext.textContent = `â³ PrÃ³xima a las ${proxima.hora_inicio.substring(0,5)}`;
         }
         pillNext.className = 'pill pill-green';
       } else {
         const enSilla = citasDelDia.find(c => c.estado === 'en_silla');
         if (enSilla) {
-          pillNext.textContent = '💈 En silla ahora';
+          pillNext.textContent = 'ðŸ’ˆ En silla ahora';
           pillNext.className = 'pill pill-blue';
         } else {
-          pillNext.textContent = '✅ Día libre';
+          pillNext.textContent = 'âœ… DÃ­a libre';
           pillNext.className = 'pill pill-green';
         }
       }
@@ -698,25 +698,25 @@
 
     function formatDateLabel(iso) {
       const d = new Date(iso + 'T12:00:00');
-      const dias = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+      const dias = ['Domingo','Lunes','Martes','MiÃ©rcoles','Jueves','Viernes','SÃ¡bado'];
       return dias[d.getDay()] + ' ' + d.getDate();
     }
 
-    /* ——— Render Timeline ——— */
+    /* â€”â€”â€” Render Timeline â€”â€”â€” */
     function renderTimeline(silent = false) {
       const container = document.getElementById('timeline-container');
 
       if (HORA_INICIO === null) {
         container.innerHTML = `
           <div class="empty-day">
-            <div class="empty-icon">☕</div>
-            <p class="empty-title">Día Inactivo</p>
+            <div class="empty-icon">â˜•</div>
+            <p class="empty-title">DÃ­a Inactivo</p>
             <p class="empty-sub">Hoy no tienes horario laboral configurado.</p>
           </div>`;
         return;
       }
 
-      // Expansión dinámica del horario para no ocultar citas tempranas o tardías
+      // ExpansiÃ³n dinÃ¡mica del horario para no ocultar citas tempranas o tardÃ­as
       if (HORA_INICIO !== null && citasDelDia && citasDelDia.length > 0) {
         citasDelDia.forEach(cita => {
           const startH = parseInt(cita.hora_inicio.substring(0, 2), 10);
@@ -751,7 +751,7 @@
         }
       });
 
-      // Check if today — for the "now" marker
+      // Check if today â€” for the "now" marker
       const ahora = new Date();
       const hoyISO = ahora.getFullYear()+'-'+String(ahora.getMonth()+1).padStart(2,'0')+'-'+String(ahora.getDate()).padStart(2,'0');
       const isToday = selectedDate === hoyISO;
@@ -818,7 +818,7 @@
       if (citasDelDia.length === 0) {
         html = `
           <div class="empty-day">
-            <div class="empty-icon">☕</div>
+            <div class="empty-icon">â˜•</div>
             <p class="empty-title">Sin citas agendadas</p>
             <p class="empty-sub">Disfruta tu tiempo libre o espera que alguien reserve contigo.</p>
           </div>`;
@@ -867,7 +867,7 @@
           </button>
           <button class="act-btn act-noshow" onclick="app.changeState('${cita.id}','no_asistio')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>
-            No asistió
+            No asistiÃ³
           </button>
           <a href="${waLink}" target="_blank" class="act-wa" title="WhatsApp">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
@@ -884,11 +884,11 @@
       } else if (realSt === 'completada') {
         actionsHTML = `<span style="font-size:.7rem;color:var(--green);display:flex;align-items:center;gap:4px">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-          Servicio completado · $${cita.precio_total || 0} MXN</span>`;
+          Servicio completado Â· $${cita.precio_total || 0} MXN</span>`;
       } else if (realSt === 'no_asistio') {
         actionsHTML = `<span style="font-size:.7rem;color:var(--red);display:flex;align-items:center;gap:4px">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>
-          Cliente no asistió</span>`;
+          Cliente no asistiÃ³</span>`;
       }
 
       return `
@@ -896,19 +896,19 @@
           <div class="appt-top">
             <div>
               <div class="appt-client">${cita.cliente_nombre}</div>
-              <div class="appt-time">${cita.hora_inicio.substring(0,5)} — ${cita.hora_fin.substring(0,5)}</div>
+              <div class="appt-time">${cita.hora_inicio.substring(0,5)} â€” ${cita.hora_fin.substring(0,5)}</div>
             </div>
             <span class="appt-status st-${st}">${displayStatus}</span>
           </div>
           <div class="appt-services">
-            <span class="appt-svc-chip">💈 ${serviciosStr}</span>
-            <span class="appt-dur">⏱️ ${durMin} min</span>
+            <span class="appt-svc-chip">ðŸ’ˆ ${serviciosStr}</span>
+            <span class="appt-dur">â±ï¸ ${durMin} min</span>
           </div>
           <div class="appt-actions">${actionsHTML}</div>
         </div>`;
     }
 
-    /* ——— Change State ——— */
+    /* â€”â€”â€” Change State â€”â€”â€” */
     async function changeState(citaId, nuevoEstado) {
       try {
         const res = await fetch(`${API}/guardar_cita.php`, {
@@ -927,21 +927,21 @@
           updatePills();
 
           const msgs = {
-            en_silla:   ['💈','Cliente en silla — ¡a trabajar!'],
-            completada: ['✅','Servicio finalizado — ¡buen trabajo!'],
-            no_asistio: ['❌','Marcado como no asistió'],
+            en_silla:   ['ðŸ’ˆ','Cliente en silla â€” Â¡a trabajar!'],
+            completada: ['âœ…','Servicio finalizado â€” Â¡buen trabajo!'],
+            no_asistio: ['âŒ','Marcado como no asistiÃ³'],
           };
-          const [icon, msg] = msgs[nuevoEstado] || ['ℹ️','Estado actualizado'];
+          const [icon, msg] = msgs[nuevoEstado] || ['â„¹ï¸','Estado actualizado'];
           showToast(icon, msg);
         } else {
-          showToast('âš ï¸', json.message || 'Error al actualizar');
+          showToast('Ã¢Å¡Â Ã¯Â¸Â', json.message || 'Error al actualizar');
         }
       } catch(e) {
-        showToast('âš ï¸', 'Error de conexión');
+        showToast('Ã¢Å¡Â Ã¯Â¸Â', 'Error de conexiÃ³n');
       }
     }
 
-    /* â”€â”€â”€ Toast â”€â”€â”€ */
+    /* Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Toast Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
     function showToast(icon, msg) {
       const el = document.getElementById('toast');
       el.querySelector('.toast-icon').textContent = icon;
@@ -950,7 +950,7 @@
       setTimeout(() => el.classList.remove('show'), 2800);
     }
 
-    /* â”€â”€â”€ Logout â”€â”€â”€ */
+    /* Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Logout Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
     async function logout() {
       sessionStorage.removeItem('tab_auth');
       sessionStorage.removeItem('tab_auth');
