@@ -6,8 +6,9 @@
   <title>Admin Dashboard — Barbería Premium</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    /* â•â•â•â•â•â•â•â•â•â•â• TOKENS â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════ TOKENS ═══════════ */
     :root {
       --gold:#C9A84C; --gold-l:#E8C97A; --gold-d:#9A7B32;
       --bg:#0F0F0F; --s1:#181818; --s2:#222; --s3:#2A2A2A; --border:#333;
@@ -27,7 +28,7 @@
     ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
     ::-webkit-scrollbar-thumb:hover{background:var(--muted)}
 
-    /* â•â•â•â•â•â•â•â•â•â•â• SIDEBAR â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════ SIDEBAR ═══════════ */
     .sidebar{
       width:260px;background:var(--s1);border-right:1px solid var(--border);
       display:flex;flex-direction:column;flex-shrink:0;z-index:10;
@@ -64,7 +65,7 @@
     .logout-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
     .logout-btn:hover{background:var(--red-bg);border-color:var(--red-border)}
 
-    /* â•â•â•â•â•â•â•â•â•â•â• MAIN CONTENT â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════ MAIN CONTENT ═══════════ */
     .main{flex:1;display:flex;flex-direction:column;overflow:hidden;position:relative}
     .topbar{
       height:72px;background:var(--bg);border-bottom:1px solid var(--border);
@@ -77,7 +78,7 @@
     .section.active{display:block}
     @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
-    /* â•â•â•â•â•â•â•â•â•â•â• COMPONENTS â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════ COMPONENTS ═══════════ */
     .card {
       background: linear-gradient(145deg, rgba(34,34,34,0.6), rgba(20,20,20,0.95));
       backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
@@ -98,7 +99,7 @@
     .btn-secondary{background:var(--s2);color:var(--base);border:1px solid var(--border)}
     .btn-secondary:hover{background:var(--s3);color:var(--bright)}
 
-    /* â”€â”€ 1. AGENDA GLOBAL â”€â”€ */
+    /* ── 1. AGENDA GLOBAL ── */
     .agenda-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;min-width:900px}
     .agenda-col{
       background: linear-gradient(145deg, rgba(34,34,34,0.6), rgba(20,20,20,0.95));
@@ -174,7 +175,7 @@
     .mock-appt-time{font-size:.75rem;color:var(--muted);margin-bottom:4px}
     .mock-appt-client{font-size:.9rem;font-weight:600;color:var(--bright)}
 
-    /* â”€â”€ 2. USUARIOS â”€â”€ */
+    /* ── 2. USUARIOS ── */
     .table-wrapper{overflow-x:auto}
     table{width:100%;border-collapse:collapse;text-align:left}
     th{padding:16px;font-size:.8rem;color:var(--muted);font-weight:600;border-bottom:1px solid var(--border);text-transform:uppercase;letter-spacing:.05em}
@@ -184,7 +185,7 @@
     .status-active{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)}
     .status-inactive{background:var(--s3);color:var(--muted);border:1px solid var(--border)}
 
-    /* â”€â”€ 3. CMS â”€â”€ */
+    /* ── 3. CMS ── */
     .cms-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
     @media(max-width:1100px){.cms-grid{grid-template-columns:1fr}}
     .form-group{margin-bottom:20px}
@@ -243,7 +244,7 @@
     }
     .toast.show{transform:translateY(0);opacity:1}
     
-    /* â•â•â•â•â•â•â•â•â•â•â• RESPONSIVE â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════ RESPONSIVE ═══════════ */
     .mobile-nav-toggle {
       display: none;
       background: transparent;
@@ -332,14 +333,14 @@
         text-overflow: ellipsis;
       }
 
-      /* â”€â”€ Previews de logo/portada: apilar vertical â”€â”€ */
+      /* ── Previews de logo/portada: apilar vertical ── */
       .preview-row {
         flex-direction: column !important;
         align-items: flex-start !important;
         gap: 8px !important;
       }
 
-      /* â”€â”€ Galería upload: apilar vertical â”€â”€ */
+      /* ── Galería upload: apilar vertical ── */
       .upload-row {
         flex-direction: column !important;
         align-items: stretch !important;
@@ -350,13 +351,13 @@
         flex: none !important;
       }
 
-      /* â”€â”€ Wrapper derecho del CMS â”€â”€ */
+      /* ── Wrapper derecho del CMS ── */
       .cms-right-col {
         height: auto !important;
         gap: 12px !important;
       }
 
-      /* â”€â”€ Fecha en topbar: ocultar en móvil â”€â”€ */
+      /* ── Fecha en topbar: ocultar en móvil ── */
       #current-date {
         display: none !important;
       }
@@ -387,7 +388,7 @@
         font-size: 0.65rem !important;
       }
       
-      /* â”€â”€ Forzar saltos de línea en descripción â”€â”€ */
+      /* ── Forzar saltos de línea en descripción ── */
       .service-desc, .team-desc {
         max-width: 130px;
         display: block;
@@ -395,7 +396,7 @@
         margin-top: 4px;
       }
 
-      /* â”€â”€ Botones de tabla: apilar vertical â”€â”€ */
+      /* ── Botones de tabla: apilar vertical ── */
       .table-wrapper td:last-child {
         vertical-align: middle;
       }
@@ -417,7 +418,7 @@
         height: 28px !important;
       }
 
-      /* â”€â”€ Card title con botón: apilar â”€â”€ */
+      /* ── Card title con botón: apilar ── */
       .card-title {
         flex-wrap: wrap !important;
         gap: 8px !important;
@@ -428,7 +429,7 @@
         padding: 6px 10px !important;
       }
 
-      /* â”€â”€ Tarjetas compactas â”€â”€ */
+      /* ── Tarjetas compactas ── */
       .card {
         padding: 12px;
         border-radius: 12px;
@@ -438,7 +439,7 @@
         margin-bottom: 10px !important;
       }
 
-      /* â”€â”€ CMS Grid â”€â”€ */
+      /* ── CMS Grid ── */
       .cms-grid {
         gap: 12px;
       }
@@ -447,7 +448,7 @@
         flex: none !important;
       }
 
-      /* â”€â”€ Formularios compactos â”€â”€ */
+      /* ── Formularios compactos ── */
       .form-group {
         margin-bottom: 12px !important;
       }
@@ -467,12 +468,12 @@
         font-size: 0.65rem !important;
       }
 
-      /* â”€â”€ Mapa más pequeño â”€â”€ */
+      /* ── Mapa más pequeño ── */
       #cms-map-preview-container {
         height: 120px !important;
       }
 
-      /* â”€â”€ Previews de logo y portada más chicos â”€â”€ */
+      /* ── Previews de logo y portada más chicos ── */
       #cms-logo-preview {
         width: 50px !important;
         height: 50px !important;
@@ -484,19 +485,19 @@
         min-width: 90px !important;
       }
 
-      /* â”€â”€ Botones compactos â”€â”€ */
+      /* ── Botones compactos ── */
       .btn {
         padding: 8px 12px !important;
         font-size: 0.8rem !important;
       }
 
-      /* â”€â”€ Galería más compacta â”€â”€ */
+      /* ── Galería más compacta ── */
       .gallery-grid {
         grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)) !important;
         gap: 8px !important;
       }
 
-      /* â”€â”€ Horarios â”€â”€ */
+      /* ── Horarios ── */
       .schedule-row {
         flex-direction: column !important;
         align-items: stretch !important;
@@ -538,7 +539,7 @@
   <aside class="sidebar">
     <div class="brand">
       <img id="admin-custom-logo" src="" style="display:none; height:48px; width:48px; object-fit:cover; border-radius:12px;" alt="Logo">
-      <div class="brand-icon" id="admin-default-icon">✂️</div>
+      <div class="brand-icon" id="admin-default-icon">✂️ </div>
       <div>
         <div id="admin-site-name" class="brand-text">Barbería</div>
         <div class="brand-sub">Admin Panel</div>
@@ -549,6 +550,10 @@
       <a class="nav-item active" data-target="agenda">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
         Agenda Global
+      </a>
+      <a class="nav-item" data-target="estadisticas">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M18 9l-5 5-4-4-4 4"/></svg>
+        Estadísticas
       </a>
       <a class="nav-item" data-target="perfil">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
@@ -573,7 +578,6 @@
       <a class="nav-item" data-target="resenas">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
         Reseñas
-      </a>
       </a>
     </nav>
     
@@ -608,6 +612,60 @@
             <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--muted);">
               Cargando agenda global...
             </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 1.5 ESTADISTICAS -->
+      <section id="estadisticas" class="section">
+        <div style="display:flex; gap:16px; margin-bottom:24px; align-items:flex-end; flex-wrap:wrap;">
+          <div class="form-group" style="margin-bottom:0;">
+            <label>Desde</label>
+            <input type="date" id="stat-desde">
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <label>Hasta</label>
+            <input type="date" id="stat-hasta">
+          </div>
+          <button class="btn btn-primary" onclick="loadEstadisticas()" style="height:42px; padding:0 24px;">Filtrar Rango</button>
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:24px; margin-bottom:32px;">
+          <div class="card" style="text-align:center; padding:24px;">
+            <div style="font-size:0.9rem; color:var(--muted); margin-bottom:8px;">Citas Completadas</div>
+            <div style="font-size:2.5rem; font-weight:800; color:var(--gold);" id="stat-total-citas">-</div>
+          </div>
+          <div class="card" style="text-align:center; padding:24px;">
+            <div style="font-size:0.9rem; color:var(--muted); margin-bottom:8px;">Ingresos Totales</div>
+            <div style="font-size:2.5rem; font-weight:800; color:var(--green);" id="stat-ingresos">-</div>
+          </div>
+          <div class="card" style="text-align:center; padding:24px;">
+            <div style="font-size:0.9rem; color:var(--muted); margin-bottom:8px;">Mejor Barbero</div>
+            <div style="font-size:1.3rem; font-weight:800; color:var(--blue); margin-top:8px;" id="stat-mejor-barbero">-</div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-bottom:32px; padding:24px;">
+          <div class="card-title">Citas por Día</div>
+          <canvas id="statChart" height="80"></canvas>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Registro Detallado</div>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width:20%">Fecha</th>
+                  <th style="width:25%">Cliente</th>
+                  <th style="width:20%">Barbero</th>
+                  <th style="width:20%">Servicio</th>
+                  <th style="width:15%">Ingreso</th>
+                </tr>
+              </thead>
+              <tbody id="stat-table-body">
+              </tbody>
+            </table>
           </div>
         </div>
       </section>
@@ -1448,6 +1506,78 @@
         }
       };
 
+      // ⎯⎯⎯ ESTADISTICAS ⎯⎯⎯
+      let chartInstance = null;
+
+      async function loadEstadisticas() {
+        const dDesde = document.getElementById('stat-desde').value;
+        const dHasta = document.getElementById('stat-hasta').value;
+        
+        let url = `${API}/estadisticas.php`;
+        const params = [];
+        if (dDesde) params.push(`desde=${dDesde}`);
+        if (dHasta) params.push(`hasta=${dHasta}`);
+        if (params.length > 0) url += '?' + params.join('&');
+
+        try {
+          const res = await fetch(url);
+          const json = await res.json();
+          if (!json.success) return alert('Error cargando estadísticas');
+
+          document.getElementById('stat-total-citas').textContent = json.resumen.total_citas;
+          document.getElementById('stat-ingresos').textContent = '$' + json.resumen.total_ingresos.toFixed(2);
+          document.getElementById('stat-mejor-barbero').textContent = json.resumen.mejor_barbero;
+
+          const tbody = document.getElementById('stat-table-body');
+          tbody.innerHTML = '';
+          json.tabla.forEach(c => {
+            const d = new Date(c.fecha_hora);
+            const fechaStr = d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            tbody.innerHTML += `
+              <tr>
+                <td style="color:var(--muted)">${fechaStr}</td>
+                <td style="font-weight:600;color:var(--bright)">${c.cliente}</td>
+                <td>${c.barbero || 'N/A'}</td>
+                <td>${c.servicio || 'N/A'}</td>
+                <td style="color:var(--green)">$${c.precio.toFixed(2)}</td>
+              </tr>
+            `;
+          });
+
+          const ctx = document.getElementById('statChart').getContext('2d');
+          if (chartInstance) chartInstance.destroy();
+          
+          chartInstance = new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels: json.grafica.map(g => g.fecha),
+              datasets: [{
+                label: 'Citas Completadas',
+                data: json.grafica.map(g => g.total),
+                borderColor: '#C9A84C',
+                backgroundColor: 'rgba(201, 168, 76, 0.2)',
+                borderWidth: 2,
+                fill: true,
+                tension: 0.3,
+                pointBackgroundColor: '#C9A84C'
+              }]
+            },
+            options: {
+              responsive: true,
+              scales: {
+                y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' } },
+                x: { grid: { color: 'rgba(255,255,255,0.05)' } }
+              },
+              plugins: { legend: { display: false } }
+            }
+          });
+
+        } catch (e) {
+          console.error(e);
+          alert('Error de conexión en analíticas');
+        }
+      }
+
       // ⎯⎯⎯ AGENDA GLOBAL ⎯⎯⎯
       async function loadAgenda() {
         const grid = document.getElementById('agenda-grid');
@@ -1730,7 +1860,7 @@
         }
       };
 
-      // â”€â”€â”€ SERVICIOS â”€â”€â”€
+      // ─── SERVICIOS ───
       let serviciosList = [];
 
       window.loadServicios = async () => {
@@ -1859,7 +1989,7 @@
         }
       };
 
-      // â”€â”€â”€ HORARIOS â”€â”€â”€
+      // ─── HORARIOS ───
       const diasNombres = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
 
       function renderScheduleEditor(containerId, scheduleData, prefix) {
@@ -2060,6 +2190,7 @@
       
       const titles = {
         agenda: 'Control de Citas',
+        estadisticas: 'Historial y Analíticas',
         equipo: 'Gestión de Personal',
         servicios: 'Catálogo de Servicios',
         horarios: 'Configuración de Horarios',
@@ -2079,10 +2210,16 @@
           
           titleEl.textContent = titles[target] || 'Admin Panel';
 
-          if (target === 'agenda') {
-            
-          } else {
-            
+          if (target === 'estadisticas') {
+            if (!document.getElementById('stat-desde').value) {
+              const now = new Date();
+              const y = now.getFullYear();
+              const m = String(now.getMonth()+1).padStart(2,'0');
+              const d = new Date(y, now.getMonth()+1, 0).getDate();
+              document.getElementById('stat-desde').value = `${y}-${m}-01`;
+              document.getElementById('stat-hasta').value = `${y}-${m}-${d}`;
+            }
+            loadEstadisticas();
           }
         });
       });
