@@ -620,14 +620,10 @@
       <section id="estadisticas" class="section">
         <div style="display:flex; gap:16px; margin-bottom:24px; align-items:flex-end; flex-wrap:wrap;">
           <div class="form-group" style="margin-bottom:0;">
-            <label>Desde</label>
-            <input type="date" id="stat-desde">
+            <label>Seleccionar Mes</label>
+            <input type="month" id="stat-mes">
           </div>
-          <div class="form-group" style="margin-bottom:0;">
-            <label>Hasta</label>
-            <input type="date" id="stat-hasta">
-          </div>
-          <button class="btn btn-primary" onclick="loadEstadisticas()" style="height:42px; padding:0 24px;">Filtrar Rango</button>
+          <button class="btn btn-primary" onclick="loadEstadisticas()" style="height:42px; padding:0 24px;">Filtrar Mes</button>
         </div>
 
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:24px; margin-bottom:32px;">
@@ -1510,14 +1506,18 @@
       let chartInstance = null;
 
       async function loadEstadisticas() {
-        const dDesde = document.getElementById('stat-desde').value;
-        const dHasta = document.getElementById('stat-hasta').value;
+        const valMes = document.getElementById('stat-mes').value;
+        if (!valMes) return alert("Por favor selecciona un mes");
         
-        let url = `${API}/estadisticas.php`;
-        const params = [];
-        if (dDesde) params.push(`desde=${dDesde}`);
-        if (dHasta) params.push(`hasta=${dHasta}`);
-        if (params.length > 0) url += '?' + params.join('&');
+        const partes = valMes.split('-');
+        const y = parseInt(partes[0], 10);
+        const m = parseInt(partes[1], 10);
+        
+        const lastDay = new Date(y, m, 0).getDate();
+        const dDesde = `${y}-${String(m).padStart(2,'0')}-01`;
+        const dHasta = `${y}-${String(m).padStart(2,'0')}-${String(lastDay).padStart(2,'0')}`;
+
+        let url = `${API}/estadisticas.php?desde=${dDesde}&hasta=${dHasta}`;
 
         try {
           const res = await fetch(url);
@@ -2211,13 +2211,11 @@
           titleEl.textContent = titles[target] || 'Admin Panel';
 
           if (target === 'estadisticas') {
-            if (!document.getElementById('stat-desde').value) {
+            if (!document.getElementById('stat-mes').value) {
               const now = new Date();
               const y = now.getFullYear();
               const m = String(now.getMonth()+1).padStart(2,'0');
-              const d = new Date(y, now.getMonth()+1, 0).getDate();
-              document.getElementById('stat-desde').value = `${y}-${m}-01`;
-              document.getElementById('stat-hasta').value = `${y}-${m}-${d}`;
+              document.getElementById('stat-mes').value = `${y}-${m}`;
             }
             loadEstadisticas();
           }
