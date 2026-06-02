@@ -5,10 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Admin Dashboard â€” BarberÃ­a Premium</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    /* â•â•â•â•â•â•â•â•â•â•â• TOKENS â•â•â•â•â•â•â•â•â•â•â• */
+    /* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â TOKENS Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
     :root {
       --gold:#C9A84C; --gold-l:#E8C97A; --gold-d:#9A7B32;
       --bg:#0F0F0F; --s1:#181818; --s2:#222; --s3:#2A2A2A; --border:#333;
@@ -16,7 +15,7 @@
       --green:#27AE60; --green-bg:rgba(39,174,96,.1); --green-border:rgba(39,174,96,.25);
       --red:#E74C3C; --red-bg:rgba(231,76,60,.1); --red-border:rgba(231,76,60,.25);
       --blue:#3498DB; --blue-bg:rgba(52,152,219,.1); --blue-border:rgba(52,152,219,.25);
-      --serif:Arial, Helvetica, sans-serif; --sans:'Inter',system-ui,sans-serif;
+      --serif:'Playfair Display',serif; --sans:'Inter',system-ui,sans-serif;
       --tr:all .2s ease;
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -28,7 +27,7 @@
     ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
     ::-webkit-scrollbar-thumb:hover{background:var(--muted)}
 
-    /* â•â•â•â•â•â•â•â•â•â•â• SIDEBAR â•â•â•â•â•â•â•â•â•â•â• */
+    /* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â SIDEBAR Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
     .sidebar{
       width:260px;background:var(--s1);border-right:1px solid var(--border);
       display:flex;flex-direction:column;flex-shrink:0;z-index:10;
@@ -65,7 +64,7 @@
     .logout-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
     .logout-btn:hover{background:var(--red-bg);border-color:var(--red-border)}
 
-    /* â•â•â•â•â•â•â•â•â•â•â• MAIN CONTENT â•â•â•â•â•â•â•â•â•â•â• */
+    /* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â MAIN CONTENT Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
     .main{flex:1;display:flex;flex-direction:column;overflow:hidden;position:relative}
     .topbar{
       height:72px;background:var(--bg);border-bottom:1px solid var(--border);
@@ -78,15 +77,8 @@
     .section.active{display:block}
     @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
-    /* â•â•â•â•â•â•â•â•â•â•â• COMPONENTS â•â•â•â•â•â•â•â•â•â•â• */
-    .card {
-      background: linear-gradient(145deg, rgba(34,34,34,0.6), rgba(20,20,20,0.95));
-      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-top: 1px solid rgba(255,255,255,0.12);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);
-      border-radius:24px;padding:24px;
-    }
+    /* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â COMPONENTS Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
+    .card{background:var(--s1);border:1px solid var(--border);border-radius:16px;padding:24px}
     .card-title{font-size:1.1rem;font-weight:600;color:var(--bright);margin-bottom:16px;display:flex;align-items:center;gap:8px}
     
     .btn{
@@ -99,16 +91,9 @@
     .btn-secondary{background:var(--s2);color:var(--base);border:1px solid var(--border)}
     .btn-secondary:hover{background:var(--s3);color:var(--bright)}
 
-    /* â”€â”€ 1. AGENDA GLOBAL â”€â”€ */
+    /* Ã¢â€â‚¬Ã¢â€â‚¬ 1. AGENDA GLOBAL Ã¢â€â‚¬Ã¢â€â‚¬ */
     .agenda-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;min-width:900px}
-    .agenda-col{
-      background: linear-gradient(145deg, rgba(34,34,34,0.6), rgba(20,20,20,0.95));
-      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-top: 1px solid rgba(255,255,255,0.12);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);
-      border-radius:24px;display:flex;flex-direction:column;height:calc(100vh - 200px);
-    }
+    .agenda-col{background:var(--s1);border:1px solid var(--border);border-radius:16px;display:flex;flex-direction:column;height:calc(100vh - 200px)}
     .col-header{
       padding:16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;
       background:rgba(255,255,255,.02);border-radius:16px 16px 0 0;
@@ -117,56 +102,6 @@
     .col-name{font-weight:600;color:var(--bright);font-size:1rem}
     .col-status{font-size:.7rem;color:var(--green);background:var(--green-bg);padding:2px 8px;border-radius:999px}
     .col-body{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
-
-    /* â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€” DATE SELECTOR â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€” */
-    .cal-day {
-      width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;
-      border-radius: 12px; font-size: 0.95rem; margin: 0 auto; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      font-weight: 500; color: var(--bright);
-    }
-    .cal-day:hover {
-      background: var(--s2);
-    }
-    .cal-day.empty { background: transparent; cursor: default; }
-    .cal-day.empty:hover { background: transparent; }
-    .cal-day.cerrado { 
-      color: #555; 
-      background: rgba(255,255,255,0.02); 
-      cursor: not-allowed; 
-      text-decoration: line-through;
-    }
-    .cal-day.cerrado:hover { background: rgba(255,255,255,0.02); }
-    .cal-day.hoy {
-      border: 2px solid var(--gold);
-      color: var(--gold);
-      font-weight: 800;
-    }
-    .cal-day.con_citas_futuras {
-      background: var(--green-bg);
-      border: 1px solid var(--green);
-      color: var(--green);
-      font-weight: 700;
-    }
-    .cal-day.con_citas_pasadas {
-      background: rgba(39, 174, 96, 0.05);
-      border: 1px dashed rgba(39, 174, 96, 0.4);
-      color: rgba(39, 174, 96, 0.8);
-    }
-    .cal-day.selected {
-      background: var(--gradient-gold);
-      color: #111;
-      font-weight: 800;
-      box-shadow: 0 0 20px rgba(225, 178, 74, 0.6); 
-      transform: scale(1.15) translateY(-2px);
-      border: none;
-    }
-    .modal-glass {
-      background: rgba(20, 20, 22, 0.85);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
-    }
     
     .mock-appt{
       background:var(--s2);border:1px solid var(--border);border-left:3px solid var(--gold);
@@ -175,17 +110,17 @@
     .mock-appt-time{font-size:.75rem;color:var(--muted);margin-bottom:4px}
     .mock-appt-client{font-size:.9rem;font-weight:600;color:var(--bright)}
 
-    /* â”€â”€ 2. USUARIOS â”€â”€ */
+    /* Ã¢â€â‚¬Ã¢â€â‚¬ 2. USUARIOS Ã¢â€â‚¬Ã¢â€â‚¬ */
     .table-wrapper{overflow-x:auto}
     table{width:100%;border-collapse:collapse;text-align:left}
     th{padding:16px;font-size:.8rem;color:var(--muted);font-weight:600;border-bottom:1px solid var(--border);text-transform:uppercase;letter-spacing:.05em}
     td{padding:16px;font-size:.9rem;border-bottom:1px solid var(--border);vertical-align:middle}
     .user-cell{display:flex;align-items:center;gap:12px}
-    .status-badge{white-space: nowrap;display:inline-block;padding:4px 10px;border-radius:999px;font-size:.75rem;font-weight:600}
+    .status-badge{display:inline-block;padding:4px 10px;border-radius:999px;font-size:.75rem;font-weight:600}
     .status-active{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)}
     .status-inactive{background:var(--s3);color:var(--muted);border:1px solid var(--border)}
 
-    /* â”€â”€ 3. CMS â”€â”€ */
+    /* Ã¢â€â‚¬Ã¢â€â‚¬ 3. CMS Ã¢â€â‚¬Ã¢â€â‚¬ */
     .cms-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
     @media(max-width:1100px){.cms-grid{grid-template-columns:1fr}}
     .form-group{margin-bottom:20px}
@@ -244,7 +179,7 @@
     }
     .toast.show{transform:translateY(0);opacity:1}
     
-    /* â•â•â•â•â•â•â•â•â•â•â• RESPONSIVE â•â•â•â•â•â•â•â•â•â•â• */
+    /* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â RESPONSIVE Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
     .mobile-nav-toggle {
       display: none;
       background: transparent;
@@ -310,19 +245,15 @@
       }
       .content-area {
         padding: 10px;
-        padding-bottom: 150px !important; /* Huge padding to ensure nothing is hidden by mobile toolbars */
         overflow-x: hidden;
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch; /* Fix iOS sticky scroll */
       }
       .section {
         max-width: 100%;
         overflow-x: hidden;
-        overflow-y: visible !important;
       }
       .card {
         max-width: 100%;
-        overflow: visible !important;
+        overflow: hidden;
         word-break: break-word;
       }
       .form-group input,
@@ -333,14 +264,14 @@
         text-overflow: ellipsis;
       }
 
-      /* â”€â”€ Previews de logo/portada: apilar vertical â”€â”€ */
+      /* Ã¢â€â‚¬Ã¢â€â‚¬ Previews de logo/portada: apilar vertical Ã¢â€â‚¬Ã¢â€â‚¬ */
       .preview-row {
         flex-direction: column !important;
         align-items: flex-start !important;
         gap: 8px !important;
       }
 
-      /* â”€â”€ GalerÃ­a upload: apilar vertical â”€â”€ */
+      /* Ã¢â€â‚¬Ã¢â€â‚¬ GalerÃ­a upload: apilar vertical Ã¢â€â‚¬Ã¢â€â‚¬ */
       .upload-row {
         flex-direction: column !important;
         align-items: stretch !important;
@@ -351,13 +282,13 @@
         flex: none !important;
       }
 
-      /* â”€â”€ Wrapper derecho del CMS â”€â”€ */
+      /* Ã¢â€â‚¬Ã¢â€â‚¬ Wrapper derecho del CMS Ã¢â€â‚¬Ã¢â€â‚¬ */
       .cms-right-col {
         height: auto !important;
         gap: 12px !important;
       }
 
-      /* â”€â”€ Fecha en topbar: ocultar en mÃ³vil â”€â”€ */
+      /* Ã¢â€â‚¬Ã¢â€â‚¬ Fecha en topbar: ocultar en mÃ³vil Ã¢â€â‚¬Ã¢â€â‚¬ */
       #current-date {
         display: none !important;
       }
@@ -388,7 +319,7 @@
         font-size: 0.65rem !important;
       }
       
-      /* â”€â”€ Forzar saltos de lÃ­nea en descripciÃ³n â”€â”€ */
+      /* Ã¢â€â‚¬Ã¢â€â‚¬ Forzar saltos de lÃ­nea en descripciÃ³n Ã¢â€â‚¬Ã¢â€â‚¬ */
       .service-desc, .team-desc {
         max-width: 130px;
         display: block;
@@ -396,7 +327,7 @@
         margin-top: 4px;
       }
 
-      /* â”€â”€ Botones de tabla: apilar vertical â”€â”€ */
+      /* Ã¢â€â‚¬Ã¢â€â‚¬ Botones de tabla: apilar vertical Ã¢â€â‚¬Ã¢â€â‚¬ */
       .table-wrapper td:last-child {
         vertical-align: middle;
       }
@@ -418,7 +349,7 @@
         height: 28px !important;
       }
 
-      /* â”€â”€ Card title con botÃ³n: apilar â”€â”€ */
+      /* Ã¢â€â‚¬Ã¢â€â‚¬ Card title con botÃ³n: apilar Ã¢â€â‚¬Ã¢â€â‚¬ */
       .card-title {
         flex-wrap: wrap !important;
         gap: 8px !important;
@@ -429,7 +360,7 @@
         padding: 6px 10px !important;
       }
 
-      /* â”€â”€ Tarjetas compactas â”€â”€ */
+      /* Ã¢â€â‚¬Ã¢â€â‚¬ Tarjetas compactas Ã¢â€â‚¬Ã¢â€â‚¬ */
       .card {
         padding: 12px;
         border-radius: 12px;
@@ -439,7 +370,7 @@
         margin-bottom: 10px !important;
       }
 
-      /* â”€â”€ CMS Grid â”€â”€ */
+      /* Ã¢â€â‚¬Ã¢â€â‚¬ CMS Grid Ã¢â€â‚¬Ã¢â€â‚¬ */
       .cms-grid {
         gap: 12px;
       }
@@ -448,7 +379,7 @@
         flex: none !important;
       }
 
-      /* â”€â”€ Formularios compactos â”€â”€ */
+      /* Ã¢â€â‚¬Ã¢â€â‚¬ Formularios compactos Ã¢â€â‚¬Ã¢â€â‚¬ */
       .form-group {
         margin-bottom: 12px !important;
       }
@@ -468,12 +399,12 @@
         font-size: 0.65rem !important;
       }
 
-      /* â”€â”€ Mapa mÃ¡s pequeÃ±o â”€â”€ */
+      /* Ã¢â€â‚¬Ã¢â€â‚¬ Mapa mÃ¡s pequeÃ±o Ã¢â€â‚¬Ã¢â€â‚¬ */
       #cms-map-preview-container {
         height: 120px !important;
       }
 
-      /* â”€â”€ Previews de logo y portada mÃ¡s chicos â”€â”€ */
+      /* Ã¢â€â‚¬Ã¢â€â‚¬ Previews de logo y portada mÃ¡s chicos Ã¢â€â‚¬Ã¢â€â‚¬ */
       #cms-logo-preview {
         width: 50px !important;
         height: 50px !important;
@@ -485,19 +416,19 @@
         min-width: 90px !important;
       }
 
-      /* â”€â”€ Botones compactos â”€â”€ */
+      /* Ã¢â€â‚¬Ã¢â€â‚¬ Botones compactos Ã¢â€â‚¬Ã¢â€â‚¬ */
       .btn {
         padding: 8px 12px !important;
         font-size: 0.8rem !important;
       }
 
-      /* â”€â”€ GalerÃ­a mÃ¡s compacta â”€â”€ */
+      /* Ã¢â€â‚¬Ã¢â€â‚¬ GalerÃ­a mÃ¡s compacta Ã¢â€â‚¬Ã¢â€â‚¬ */
       .gallery-grid {
         grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)) !important;
         gap: 8px !important;
       }
 
-      /* â”€â”€ Horarios â”€â”€ */
+      /* Ã¢â€â‚¬Ã¢â€â‚¬ Horarios Ã¢â€â‚¬Ã¢â€â‚¬ */
       .schedule-row {
         flex-direction: column !important;
         align-items: stretch !important;
@@ -522,15 +453,6 @@
         margin-top: 4px;
       }
     }
-  
-    @media(max-width:768px){ 
-      th, td { padding: 8px 4px !important; font-size: 0.75rem !important; } 
-      .col-avatar { width: 32px; height: 32px; }
-      .btn { padding: 4px 8px !important; font-size: 0.65rem !important; margin-bottom: 4px; display: block; width: 100%; text-align: center; }
-      .status-badge { padding: 3px 6px; font-size: 0.65rem; }
-      /* Prevent price and duration from wrapping */
-      td:nth-child(3), td:nth-child(4) { white-space: nowrap; }
-    }
   </style>
 </head>
 <body>
@@ -539,7 +461,7 @@
   <aside class="sidebar">
     <div class="brand">
       <img id="admin-custom-logo" src="" style="display:none; height:48px; width:48px; object-fit:cover; border-radius:12px;" alt="Logo">
-      <div class="brand-icon" id="admin-default-icon">âœ‚ï¸ </div>
+      <div class="brand-icon" id="admin-default-icon">âœ‚ï¸Â</div>
       <div>
         <div id="admin-site-name" class="brand-text">BarberÃ­a</div>
         <div class="brand-sub">Admin Panel</div>
@@ -550,14 +472,6 @@
       <a class="nav-item active" data-target="agenda">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
         Agenda Global
-      </a>
-      <a class="nav-item" data-target="estadisticas">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M18 9l-5 5-4-4-4 4"/></svg>
-        EstadÃ­sticas
-      </a>
-      <a class="nav-item" data-target="perfil">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        Mi Perfil
       </a>
       <a class="nav-item" data-target="equipo">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
@@ -574,10 +488,6 @@
       <a class="nav-item" data-target="cms">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
         Sitio Web
-      </a>
-      <a class="nav-item" data-target="resenas">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-        ReseÃ±as
       </a>
     </nav>
     
@@ -616,70 +526,6 @@
         </div>
       </section>
 
-      <!-- 1.5 ESTADISTICAS -->
-      <section id="estadisticas" class="section">
-        <div style="display:flex; gap:16px; margin-bottom:24px; align-items:flex-end; flex-wrap:wrap;">
-          <div class="form-group" style="margin-bottom:0;">
-            <label>Seleccionar Mes</label>
-            <div style="position:relative;">
-               <button id="btn-month-picker" onclick="openMonthPicker()" style="background:var(--s2); border:1px solid var(--border); padding:10px 16px; border-radius:8px; color:var(--bright); cursor:pointer; min-width:180px; text-align:left; display:flex; justify-content:space-between; align-items:center; transition:var(--tr);">
-                 <span id="month-picker-label">Cargando...</span>
-                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-               </button>
-            </div>
-          </div>
-          <button class="btn btn-primary" onclick="loadEstadisticas()" style="height:42px; padding:0 24px;">Filtrar Mes</button>
-        </div>
-
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:24px; margin-bottom:32px;">
-          <div class="card" style="text-align:center; padding:24px;">
-            <div style="font-size:0.9rem; color:var(--muted); margin-bottom:8px;">Citas Completadas</div>
-            <div style="font-size:2.5rem; font-weight:800; color:var(--gold);" id="stat-total-citas">-</div>
-          </div>
-          <div class="card" style="text-align:center; padding:24px;">
-            <div style="font-size:0.9rem; color:var(--muted); margin-bottom:8px;">Ingresos Totales</div>
-            <div style="font-size:2.5rem; font-weight:800; color:var(--green);" id="stat-ingresos">-</div>
-          </div>
-          <div class="card" style="text-align:center; padding:24px;">
-            <div style="font-size:0.9rem; color:var(--muted); margin-bottom:8px;">Mejor Barbero</div>
-            <div style="font-size:1.3rem; font-weight:800; color:var(--blue); margin-top:8px;" id="stat-mejor-barbero">-</div>
-          </div>
-        </div>
-
-        <div class="card" style="margin-bottom:32px; padding:24px;">
-          <div class="card-title" style="display:flex; justify-content:space-between; align-items:center;">
-            <span>Citas por DÃ­a</span>
-            <select id="chart-week-filter" onchange="updateChartWeek()" style="background:var(--s2); border:1px solid var(--border); color:var(--bright); padding:6px 12px; border-radius:8px; font-size:0.85rem; outline:none;">
-              <option value="all">Todo el Mes</option>
-              <option value="1">Semana 1 (DÃ­as 1-7)</option>
-              <option value="2">Semana 2 (DÃ­as 8-14)</option>
-              <option value="3">Semana 3 (DÃ­as 15-21)</option>
-              <option value="4">Semana 4 (DÃ­as 22-Fin)</option>
-            </select>
-          </div>
-          <canvas id="statChart" height="80"></canvas>
-        </div>
-
-        <div class="card">
-          <div class="card-title">Registro Detallado</div>
-          <div class="table-wrapper">
-            <table>
-              <thead>
-                <tr>
-                  <th style="width:20%">Fecha</th>
-                  <th style="width:25%">Cliente</th>
-                  <th style="width:20%">Barbero</th>
-                  <th style="width:20%">Servicio</th>
-                  <th style="width:15%">Ingreso</th>
-                </tr>
-              </thead>
-              <tbody id="stat-table-body">
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
       <!-- 2. EQUIPO -->
       <section id="equipo" class="section">
         <div class="card">
@@ -691,10 +537,10 @@
             <table>
               <thead>
                 <tr>
-                  <th style="width: 38%;">Barbero</th>
-                  <th style="width: 22%;">Especialidad</th>
-                  <th style="width: 15%;">Estado</th>
-                  <th style="width: 25%;">Acciones</th>
+                  <th>Barbero</th>
+                  <th>Especialidad</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
                 </tr>
               </thead>
               <tbody id="team-tbody">
@@ -716,10 +562,10 @@
             <table>
               <thead>
                 <tr>
-                  <th style="width: 60px;">Imagen</th>
-                  <th style="width: 25%;">Servicio</th>
-                  <th style="width: 20%;">Precio</th>
-                  <th style="width: 20%;">DuraciÃ³n</th>
+                  <th>Imagen</th>
+                  <th>Servicio</th>
+                  <th>Precio</th>
+                  <th>DuraciÃ³n</th>
                   <th>Acciones</th>
                 </tr>
               </thead>
@@ -728,66 +574,6 @@
               </tbody>
             </table>
           </div>
-        </div>
-      </section>
-
-      <section id="resenas" class="section">
-        <div class="card">
-          <div class="card-title" style="justify-content:space-between">
-            <span>Control de ReseÃ±as</span>
-            <div>
-              <button class="btn btn-secondary" style="color:var(--red);border-color:var(--red);margin-right:8px;" onclick="deleteAllResenas()">Eliminar Todas</button>
-              <button class="btn btn-primary" style="background:var(--red);color:#fff;" onclick="deleteSelectedResenas()">Eliminar Seleccionadas</button>
-            </div>
-          </div>
-          
-          <div style="display:flex;gap:12px;margin-bottom:20px;align-items:center;">
-            <select id="resenas-filter" onchange="renderResenasAdmin()" style="padding:10px 16px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--bright);outline:none;">
-              <option value="newest">MÃ¡s Recientes</option>
-              <option value="oldest">MÃ¡s Antiguas</option>
-              <option value="best">Mejor Calificadas (5â˜…)</option>
-              <option value="worst">Peor Calificadas (1-3â˜…)</option>
-            </select>
-            <span style="color:var(--muted);font-size:0.85rem;" id="resenas-count">Cargando...</span>
-          </div>
-
-          <div class="table-wrapper">
-            <table>
-              <thead>
-                <tr>
-                  <th style="width: 50px; text-align:center;">
-                    <input type="checkbox" id="resenas-select-all" onchange="toggleAllResenas(this)">
-                  </th>
-                  <th style="width: 20%;">Cliente</th>
-                  <th style="width: 15%;">CalificaciÃ³n</th>
-                  <th style="width: 45%;">Comentario</th>
-                  <th style="width: 15%;">Fecha</th>
-                </tr>
-              </thead>
-              <tbody id="resenas-tbody">
-                <tr><td colspan="5" style="text-align:center;padding:20px;color:var(--muted)">Cargando reseÃ±as...</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <!-- 2.7 MI PERFIL -->
-      <section id="perfil" class="section">
-        <div class="card" style="max-width:500px;">
-          <div class="card-title">Mis Credenciales</div>
-          <p style="font-size:0.85rem;color:var(--muted);margin-top:-10px;margin-bottom:20px">
-            Actualiza el usuario y contraseÃ±a del administrador. Al cambiar, deberÃ¡s iniciar sesiÃ³n nuevamente.
-          </p>
-          <div class="form-group">
-            <label>Nuevo Usuario</label>
-            <input type="text" id="admin-user" placeholder="Ej: paco_admin" autocomplete="off">
-          </div>
-          <div class="form-group" style="margin-top:16px;">
-            <label>Nueva ContraseÃ±a</label>
-            <input type="password" id="admin-pass" placeholder="MÃ­nimo 6 caracteres" autocomplete="new-password">
-          </div>
-          <button class="btn btn-primary" style="margin-top:24px;width:100%" onclick="updateAdminCredentials()">Guardar Credenciales</button>
         </div>
       </section>
 
@@ -1063,13 +849,13 @@
 
   <script>
     (() => {
-      const API = '../sistema';
+      const API = '../api';
 
       // ðŸ›¡ï¸ Interceptor Global de Fetch para Inyectar JWT
       const originalFetch = window.fetch;
       window.fetch = async function() {
         let [resource, config] = arguments;
-        if (typeof resource === 'string' && resource.includes('/sistema/')) {
+        if (typeof resource === 'string' && resource.includes('/api/')) {
           config = config || {};
           config.headers = config.headers || {};
           const token = localStorage.getItem('mi_token_jwt');
@@ -1164,98 +950,14 @@
         if (window.loadGallery) window.loadGallery();
         if (window.loadServicios) window.loadServicios();
         if (window.loadGlobalSchedule) window.loadGlobalSchedule();
-        if (window.loadResenasAdmin) window.loadResenasAdmin();
         if (window.populateBarberSelect) window.populateBarberSelect();
         attachFileListeners();
       }
 
-      // âŽ¯âŽ¯âŽ¯ CONTROL DE RESEÃ‘AS âŽ¯âŽ¯âŽ¯
-      let adminResenas = [];
-      window.loadResenasAdmin = async () => {
-        try {
-          const res = await fetch(`${API}/obtener_datos.php?tabla=resenas`);
-          const json = await res.json();
-          if (json.success) {
-            adminResenas = json.data || [];
-            if (window.renderResenasAdmin) window.renderResenasAdmin();
-          }
-        } catch(e) { console.error('Error loadResenasAdmin:', e); }
-      };
-
-      window.renderResenasAdmin = () => {
-        const filter = document.getElementById('resenas-filter').value;
-        const tbody = document.getElementById('resenas-tbody');
-        if (!tbody) return;
-        let filtered = [...adminResenas];
-
-        if (filter === 'newest') filtered.sort((a,b) => new Date(b.creado_en) - new Date(a.creado_en));
-        else if (filter === 'oldest') filtered.sort((a,b) => new Date(a.creado_en) - new Date(b.creado_en));
-        else if (filter === 'best') filtered.sort((a,b) => parseInt(b.calificacion) - parseInt(a.calificacion));
-        else if (filter === 'worst') filtered.sort((a,b) => parseInt(a.calificacion) - parseInt(b.calificacion));
-
-        document.getElementById('resenas-count').textContent = `${filtered.length} reseÃ±as encontradas`;
-
-        if(filtered.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--muted)">No hay reseÃ±as registradas.</td></tr>`;
-          return;
-        }
-
-        tbody.innerHTML = filtered.map(r => `
-          <tr style="border-bottom:1px solid var(--border);">
-            <td style="text-align:center;"><input type="checkbox" class="resena-chk" value="${r.id}"></td>
-            <td style="padding:12px;"><strong>${r.cliente_nombre || 'Cliente AnÃ³nimo'}</strong></td>
-            <td style="color:var(--gold);padding:12px;font-size:1.1rem;">${'â˜…'.repeat(r.calificacion)}${'â˜†'.repeat(5-r.calificacion)}</td>
-            <td style="font-size:0.85rem;color:var(--base);max-width:300px;white-space:normal;padding:12px;">${r.comentario}</td>
-            <td style="font-size:0.8rem;color:var(--muted);padding:12px;">${new Date(r.creado_en).toLocaleDateString()}</td>
-          </tr>
-        `).join('');
-      };
-
-      window.toggleAllResenas = (cb) => {
-        document.querySelectorAll('.resena-chk').forEach(c => c.checked = cb.checked);
-      };
-
-      window.deleteSelectedResenas = async () => {
-        const checked = Array.from(document.querySelectorAll('.resena-chk:checked')).map(c => c.value);
-        if(checked.length === 0) return alert('Selecciona al menos una reseÃ±a para eliminar.');
-        if(!confirm(`Â¿Seguro que deseas eliminar ${checked.length} reseÃ±a(s)?`)) return;
-
-        try {
-          const res = await fetch(`${API}/eliminar.php?tabla=resenas&ids=${checked.join(',')}`, { method: 'DELETE' });
-          const json = await res.json();
-          if(json.success) {
-            showToast('\u2705 ReseÃ±as eliminadas correctamente');
-            const selectAll = document.getElementById('resenas-select-all');
-            if(selectAll) selectAll.checked = false;
-            if (window.loadResenasAdmin) window.loadResenasAdmin();
-          } else {
-            alert(json.message || 'Error al eliminar reseÃ±as');
-          }
-        } catch(e) { console.error('Error deleteSelectedResenas:', e); }
-      };
-
-      window.deleteAllResenas = async () => {
-        if(adminResenas.length === 0) return alert('No hay reseÃ±as para eliminar.');
-        if(!confirm(`Â¿Seguro que deseas eliminar TODAS las reseÃ±as de forma permanente?`)) return;
-        const allIds = adminResenas.map(r => r.id).join(',');
-        try {
-          const res = await fetch(`${API}/eliminar.php?tabla=resenas&ids=${allIds}`, { method: 'DELETE' });
-          const json = await res.json();
-          if(json.success) {
-            showToast('\u2705 Todas las reseÃ±as han sido eliminadas');
-            const selectAll = document.getElementById('resenas-select-all');
-            if(selectAll) selectAll.checked = false;
-            if (window.loadResenasAdmin) window.loadResenasAdmin();
-          } else {
-            alert(json.message || 'Error al eliminar reseÃ±as');
-          }
-        } catch(e) { console.error('Error deleteAllResenas:', e); }
-      };
-
       // âŽ¯âŽ¯âŽ¯ CMS AJUSTES GLOBALES âŽ¯âŽ¯âŽ¯
       async function loadCMS() {
         try {
-          const res = await fetch(`${API}/obtener_datos.php?tabla=ajustes`);
+          const res = await fetch(`${API}/ajustes`);
           const json = await res.json();
           if (json.success && json.data) {
             const data = json.data;
@@ -1385,14 +1087,14 @@
         }
 
         try {
-          const res = await fetch(`${API}/guardar_ajustes.php`, {
+          const res = await fetch(`${API}/ajustes`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
           });
           const json = await res.json();
           if (json.success) {
-            showToast('\u2705 Ajustes web actualizados');
+            showToast('ðŸŒ± Ajustes de la pÃ¡gina web actualizados');
             delete window.b64Files['cms-logo'];
             delete window.b64Files['cms-hero-bg'];
             loadCMS();
@@ -1408,7 +1110,7 @@
       // âŽ¯âŽ¯âŽ¯ GALERIA âŽ¯âŽ¯âŽ¯
       window.loadGallery = async () => {
         try {
-          const res = await fetch(`${API}/obtener_datos.php?tabla=galeria`);
+          const res = await fetch(`${API}/galeria`);
           const json = await res.json();
           const grid = document.getElementById('cms-gallery');
           const fullGrid = document.getElementById('full-cms-gallery');
@@ -1422,10 +1124,9 @@
             
             // Llenar modal completo
             json.data.forEach(img => {
-              const imgSrc = img.ruta_imagen && img.ruta_imagen.startsWith('data:') ? img.ruta_imagen : '../' + (img.ruta_imagen || img.imagen);
               fullGrid.innerHTML += `
                 <div class="gallery-item">
-                  <img src="${imgSrc}" alt="${img.titulo || 'Galeria'}" loading="lazy">
+                  <img src="../${img.imagen}" alt="${img.titulo || 'Galeria'}" loading="lazy">
                   <div class="gallery-overlay">
                     <button class="btn btn-primary" style="background:var(--red); padding:8px; border:none;" onclick="deleteGalleryImage('${img.id}')" title="Eliminar">
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
@@ -1438,10 +1139,9 @@
             // Llenar grid limitado en la tarjeta
             const displayData = total > 10 ? json.data.slice(0, maxItems) : json.data;
             displayData.forEach(img => {
-              const imgSrc = img.ruta_imagen && img.ruta_imagen.startsWith('data:') ? img.ruta_imagen : '../' + (img.ruta_imagen || img.imagen);
               grid.innerHTML += `
                 <div class="gallery-item">
-                  <img src="${imgSrc}" alt="${img.titulo || 'Galeria'}" loading="lazy">
+                  <img src="../${img.imagen}" alt="${img.titulo || 'Galeria'}" loading="lazy">
                   <div class="gallery-overlay">
                     <button class="btn btn-primary" style="background:var(--red); padding:8px; border:none;" onclick="deleteGalleryImage('${img.id}')" title="Eliminar">
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
@@ -1469,10 +1169,10 @@
       window.deleteGalleryImage = async (id) => {
         if (!confirm('Â¿Seguro que deseas eliminar esta imagen de la galerÃ­a?')) return;
         try {
-          const res = await fetch(`${API}/eliminar.php?tabla=galeria&id=${id}`, { method: 'DELETE' });
+          const res = await fetch(`${API}/galeria?id=${id}`, { method: 'DELETE' });
           const json = await res.json();
           if (json.success) {
-            showToast('\u2705 Imagen eliminada');
+            showToast('âœ… Imagen eliminada');
             loadGallery();
           } else {
             alert(json.message);
@@ -1493,7 +1193,7 @@
         try { b64 = await compressImage(b64, 1200, 0.8); } catch(e) { /* usar original */ }
 
         try {
-          const res = await fetch(`${API}/guardar_galeria.php`, {
+          const res = await fetch(`${API}/galeria`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -1503,7 +1203,7 @@
           });
           const json = await res.json();
           if (json.success) {
-            showToast('\u2705 Imagen aÃ±adida');
+            showToast('ðŸ“¸ Imagen aÃ±adida a la galerÃ­a');
             fileInput.value = '';
             delete window.b64Files['new-gal-file'];
             titleInput.value = '';
@@ -1516,202 +1216,13 @@
         }
       };
 
-      // âŽ¯âŽ¯âŽ¯ ESTADISTICAS âŽ¯âŽ¯âŽ¯
-      let chartInstance = null;
-      let statSelectedMonth = new Date().getMonth() + 1;
-      let statSelectedYear = new Date().getFullYear();
-      let pickerYear = statSelectedYear;
-      let globalStatData = null; // Guardar datos para filtrar por semana sin recargar
-      let globalStatTablaData = null;
-
-      window.openMonthPicker = function() {
-        pickerYear = statSelectedYear;
-        const modal = document.getElementById('stat-picker-modal');
-        modal.style.display = 'flex';
-        setTimeout(() => modal.classList.add('show'), 10);
-        renderMonthGrid();
-      }
-      
-      window.closeMonthPicker = function() {
-        const modal = document.getElementById('stat-picker-modal');
-        modal.classList.remove('show');
-        setTimeout(() => modal.style.display = 'none', 300);
-      }
-
-      window.changeStatYear = function(delta) {
-        pickerYear += delta;
-        renderMonthGrid();
-      }
-
-      function renderMonthGrid() {
-        document.getElementById('stat-picker-year').textContent = pickerYear;
-        const grid = document.getElementById('stat-months-grid');
-        grid.innerHTML = '';
-        const meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
-        
-        const realMonth = new Date().getMonth() + 1;
-        const realYear = new Date().getFullYear();
-        
-        meses.forEach((m, i) => {
-          let isSelected = (i+1 === statSelectedMonth && pickerYear === statSelectedYear);
-          let isCurrent = (i+1 === realMonth && pickerYear === realYear);
-          let btn = document.createElement('button');
-          btn.textContent = m;
-          btn.style.padding = '12px 0';
-          btn.style.borderRadius = '8px';
-          btn.style.border = isCurrent ? '2px solid var(--gold)' : '2px solid transparent';
-          btn.style.cursor = 'pointer';
-          btn.style.fontWeight = '600';
-          btn.style.transition = 'var(--tr)';
-          if (isSelected) {
-            btn.style.background = 'var(--gold)';
-            btn.style.color = '#111';
-          } else {
-            btn.style.background = 'var(--bg)';
-            btn.style.color = isCurrent ? 'var(--gold)' : 'var(--bright)';
-            btn.onmouseover = () => btn.style.background = 'var(--s3)';
-            btn.onmouseout = () => btn.style.background = 'var(--bg)';
-          }
-          btn.onclick = () => {
-            statSelectedMonth = i+1;
-            statSelectedYear = pickerYear;
-            closeMonthPicker();
-            updateMonthLabel();
-          };
-          grid.appendChild(btn);
-        });
-      }
-
-      function updateMonthLabel() {
-        const mesesF = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-        document.getElementById('month-picker-label').textContent = `${mesesF[statSelectedMonth-1]} ${statSelectedYear}`;
-      }
-
-      window.loadEstadisticas = async function() {
-        const y = statSelectedYear;
-        const m = statSelectedMonth;
-        const lastDay = new Date(y, m, 0).getDate();
-        
-        const dDesde = `${y}-${String(m).padStart(2,'0')}-01`;
-        const dHasta = `${y}-${String(m).padStart(2,'0')}-${String(lastDay).padStart(2,'0')}`;
-        
-        let url = `${API}/estadisticas.php?desde=${dDesde}&hasta=${dHasta}`;
-
-        try {
-          const res = await fetch(url);
-          const json = await res.json();
-          if (!json.success) return alert('Error cargando estadÃ­sticas');
-
-          globalStatData = json.grafica; // Guardar datos de la grÃ¡fica globales
-          globalStatTablaData = json.tabla; // Guardar tabla globalmente
-
-          document.getElementById('stat-total-citas').textContent = json.resumen.total_citas;
-          document.getElementById('stat-ingresos').textContent = '$' + json.resumen.total_ingresos.toFixed(2);
-          document.getElementById('stat-mejor-barbero').textContent = json.resumen.mejor_barbero;
-
-          // Reset chart filter and draw
-          document.getElementById('chart-week-filter').value = 'all';
-          updateChartWeek();
-
-        } catch (e) {
-          console.error(e);
-          alert('Error de conexiÃ³n en analÃ­ticas');
-        }
-      }
-
-      window.updateChartWeek = function() {
-        if (!globalStatData || !globalStatTablaData) return;
-        const week = document.getElementById('chart-week-filter').value;
-        let filteredData = [];
-        let filteredTabla = [];
-        
-        if (week === 'all') {
-          filteredData = globalStatData;
-          filteredTabla = globalStatTablaData;
-        } else {
-          const w = parseInt(week);
-          filteredData = globalStatData.filter(g => {
-            const day = parseInt(g.fecha.split('-')[2]);
-            if(w === 1 && day >= 1 && day <= 7) return true;
-            if(w === 2 && day >= 8 && day <= 14) return true;
-            if(w === 3 && day >= 15 && day <= 21) return true;
-            if(w === 4 && day >= 22) return true;
-            return false;
-          });
-          filteredTabla = globalStatTablaData.filter(c => {
-            // fecha_hora comes like "2026-06-02 10:00:00"
-            const day = parseInt(c.fecha_hora.split(' ')[0].split('-')[2]);
-            if(w === 1 && day >= 1 && day <= 7) return true;
-            if(w === 2 && day >= 8 && day <= 14) return true;
-            if(w === 3 && day >= 15 && day <= 21) return true;
-            if(w === 4 && day >= 22) return true;
-            return false;
-          });
-        }
-
-        const ctx = document.getElementById('statChart').getContext('2d');
-        if (chartInstance) chartInstance.destroy();
-        
-        chartInstance = new Chart(ctx, {
-          type: 'line',
-          data: {
-            labels: filteredData.map(g => g.fecha),
-            datasets: [{
-              label: 'Citas Completadas',
-              data: filteredData.map(g => g.total),
-              borderColor: '#C9A84C',
-              backgroundColor: 'rgba(201, 168, 76, 0.2)',
-              borderWidth: 2,
-              fill: true,
-              tension: 0.3,
-              pointBackgroundColor: '#C9A84C'
-            }]
-          },
-          options: {
-            responsive: true,
-            scales: {
-              y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { stepSize: 1 } },
-              x: { grid: { color: 'rgba(255,255,255,0.05)' } }
-            },
-            plugins: { legend: { display: false } }
-          }
-        });
-        
-        // Renderizar Tabla DinÃ¡micamente
-        const tbody = document.getElementById('stat-table-body');
-        tbody.innerHTML = '';
-        if (filteredTabla.length === 0) {
-          tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:20px; color:var(--muted)">No hay citas en este periodo</td></tr>';
-        } else {
-          filteredTabla.forEach(c => {
-            const d = new Date(c.fecha_hora.replace(/-/g, '/')); // Fix Safari parse if needed, though split used above works
-            const fechaStr = c.fecha_hora; // Simplified for safety, or parse carefully
-            // Actually, Date constructor works perfectly in modern browsers. Let's keep it robust:
-            const parsed = new Date(c.fecha_hora);
-            const finalStr = !isNaN(parsed) 
-              ? parsed.toLocaleDateString() + ' ' + parsed.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
-              : c.fecha_hora;
-              
-            tbody.innerHTML += `
-              <tr>
-                <td style="color:var(--muted)">${finalStr}</td>
-                <td style="font-weight:600;color:var(--bright)">${c.cliente}</td>
-                <td>${c.barbero || 'N/A'}</td>
-                <td>${c.servicio || 'N/A'}</td>
-                <td style="color:var(--green)">$${c.precio.toFixed(2)}</td>
-              </tr>
-            `;
-          });
-        }
-      }
-
       // âŽ¯âŽ¯âŽ¯ AGENDA GLOBAL âŽ¯âŽ¯âŽ¯
       async function loadAgenda() {
         const grid = document.getElementById('agenda-grid');
         
         try {
           // 1. Fetch barberos
-          const resB = await fetch(`${API}/obtener_datos.php?tabla=barberos`);
+          const resB = await fetch(`${API}/barberos?all=1`);
           const jsonB = await resB.json();
           const barberos = jsonB.data || [];
           
@@ -1724,16 +1235,11 @@
           const now = new Date();
           const hoyISO = now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
           const ahoraStr = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
-          
-          const dObj = new Date(hoyISO + 'T12:00:00Z');
-          const dias = ['domingo','lunes','martes','miÃ©rcoles','jueves','viernes','sÃ¡bado'];
-          const meses = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
-          document.getElementById('current-date').textContent = `${dias[dObj.getDay()]}, ${dObj.getDate()} de ${meses[dObj.getMonth()]} de ${dObj.getFullYear()}`;
-          
+
           // 3. Fetch citas and render
           let html = '';
           for (const barbero of barberos) {
-            const resC = await fetch(`${API}/obtener_datos.php?tabla=citas&barbero_id=${barbero.id}&fecha=${hoyISO}`);
+            const resC = await fetch(`${API}/citas?barbero_id=${barbero.id}&fecha=${hoyISO}`);
             const jsonC = await resC.json();
             const citas = jsonC.data || [];
             
@@ -1808,12 +1314,10 @@
               });
             }
 
-            const fotoSrc = barbero.foto && barbero.foto.startsWith('data:') ? barbero.foto : (barbero.foto ? '../' + barbero.foto : '');
-
             html += `
               <div class="agenda-col">
                 <div class="col-header">
-                  <img src="${fotoSrc}" class="col-avatar" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' viewBox=\\'0 0 100 100\\'%3E%3Crect width=\\'100\\' height=\\'100\\' fill=\\'%23181818\\'/%3E%3C/svg%3E'">
+                  <img src="../${barbero.foto}" class="col-avatar" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' viewBox=\\'0 0 100 100\\'%3E%3Crect width=\\'100\\' height=\\'100\\' fill=\\'%23181818\\'/%3E%3C/svg%3E'">
                   <div style="flex:1">
                     <div class="col-name">${barbero.nombre} ${barbero.apellido.charAt(0)}.</div>
                     ${statusHtml}
@@ -1838,24 +1342,23 @@
       async function loadEquipo() {
         const tbody = document.getElementById('team-tbody');
         try {
-          const res = await fetch(`${API}/obtener_datos.php?tabla=barberos`);
+          const res = await fetch(`${API}/barberos?all=1`);
           const json = await res.json();
           barberosList = json.data || [];
           
           let html = '';
           barberosList.forEach(b => {
-            const statusClass = b.activo == 1 ? 'status-active' : 'status-inactive';
-            const statusText = b.activo == 1 ? 'Activo' : 'Inactivo';
-            const fotoSrc = b.foto && b.foto.startsWith('data:') ? b.foto : (b.foto ? '../' + b.foto : '');
+            const statusClass = b.activo === 1 ? 'status-active' : 'status-inactive';
+            const statusText = b.activo === 1 ? 'Activo' : 'Inactivo';
             
             html += `
               <tr>
                 <td>
                   <div class="user-cell">
-                    <img src="${fotoSrc}" class="col-avatar" style="border-radius:50%" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' viewBox=\\'0 0 100 100\\'%3E%3Crect width=\\'100\\' height=\\'100\\' fill=\\'%23181818\\'/%3E%3C/svg%3E'">
+                    <img src="../${b.foto}" class="col-avatar" style="border-radius:50%" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' viewBox=\\'0 0 100 100\\'%3E%3Crect width=\\'100\\' height=\\'100\\' fill=\\'%23181818\\'/%3E%3C/svg%3E'">
                     <div>
                       <div style="font-weight:600;color:var(--bright)">${b.nombre} ${b.apellido}</div>
-                      <div style="font-size:.75rem;color:var(--muted)">Usuario: ${b.usuario || 'N/A'}</div>
+                      <div style="font-size:.75rem;color:var(--muted)">Usuario: ${b.username || 'N/A'}</div>
                     </div>
                   </div>
                 </td>
@@ -1884,20 +1387,20 @@
 
         if (id) {
           title.textContent = 'Editar Barbero';
-          const b = barberosList.find(x => x.id == id);
+          const b = barberosList.find(x => x.id === id);
           document.getElementById('b-id').value = b.id;
           document.getElementById('b-nombre').value = b.nombre;
           document.getElementById('b-apellido').value = b.apellido;
           document.getElementById('b-foto').value = '';
           delete window.b64Files['b-foto'];
           document.getElementById('b-esp').value = b.especialidad || '';
-          document.getElementById('b-username').value = b.usuario || '';
+          document.getElementById('b-username').value = b.username || '';
           document.getElementById('help-username').style.display = 'none';
           document.getElementById('b-password').value = '';
           document.getElementById('b-password').required = false;
           document.getElementById('help-password').style.display = 'block';
           document.getElementById('group-activo').style.display = 'flex';
-          document.getElementById('b-activo').checked = (b.activo == 1);
+          document.getElementById('b-activo').checked = (b.activo === 1);
         } else {
           title.textContent = 'Nuevo Barbero';
           document.getElementById('b-id').value = '';
@@ -1945,7 +1448,7 @@
           payload.activo = document.getElementById('b-activo').checked ? 1 : 0;
         }
 
-        const url = `${API}/guardar_barbero.php` + (id ? `?id=${id}` : '');
+        const url = id ? `${API}/barberos?id=${id}` : `${API}/barberos`;
         const method = id ? 'PUT' : 'POST';
 
         try {
@@ -1957,7 +1460,7 @@
           const json = await res.json();
           if (json.success) {
             closeModal();
-            showToast(id ? '\u2705 Barbero actualizado' : '\u2705 Barbero creado');
+            showToast(id ? 'âœ… Barbero actualizado' : `ðŸŽ‰ Barbero creado. Su usuario es: ${json.data?.username || ''}`);
             loadEquipo(); // recargar tabla
             loadAgenda(); // recargar agenda para que aparezca la columna
           } else {
@@ -1973,10 +1476,10 @@
           return;
         }
         try {
-          const res = await fetch(`${API}/eliminar.php?tabla=barberos&id=${id}`, { method: 'DELETE' });
+          const res = await fetch(`${API}/barberos?id=${id}`, { method: 'DELETE' });
           const json = await res.json();
           if (json.success) {
-            showToast('\u2705 Barbero eliminado');
+            showToast('ðŸ—‘ï¸ Barbero eliminado permanentemente');
             loadEquipo();
             loadAgenda();
           } else {
@@ -1987,14 +1490,14 @@
         }
       };
 
-      // â”€â”€â”€ SERVICIOS â”€â”€â”€
+      // Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ SERVICIOS Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
       let serviciosList = [];
 
       window.loadServicios = async () => {
         const tbody = document.getElementById('servicios-tbody');
         if(!tbody) return;
         try {
-          const res = await fetch(`${API}/obtener_datos.php?tabla=servicios`);
+          const res = await fetch(`${API}/servicios`);
           const json = await res.json();
           serviciosList = json.data || [];
           
@@ -2005,7 +1508,7 @@
 
           let html = '';
           serviciosList.forEach(s => {
-            const imgSrc = s.imagen_b64 || s.imagen_url || (s.imagen ? `../${s.imagen}` : '../assets/img/hero-bg.png');
+            const imgSrc = s.imagen_url || (s.imagen ? `../${s.imagen}` : '../assets/img/hero-bg.png');
             const estadoHtml = s.activo ? '<span style="color:var(--green)">Activo</span>' : '<span style="color:var(--muted)">Inactivo</span>';
             
             html += `
@@ -2064,36 +1567,36 @@
         btn.disabled = true;
         btn.textContent = 'Guardando...';
 
-        const formData = new FormData();
-        if (id) formData.append('id', id);
-        formData.append('nombre', document.getElementById('s-nombre').value);
-        formData.append('descripcion', document.getElementById('s-descripcion').value);
-        formData.append('precio', document.getElementById('s-precio').value);
-        formData.append('duracion_min', document.getElementById('s-duracion').value);
+        const payload = {
+          nombre: document.getElementById('s-nombre').value,
+          descripcion: document.getElementById('s-descripcion').value,
+          precio: document.getElementById('s-precio').value,
+          duracion_min: document.getElementById('s-duracion').value
+        };
 
-        const fileInput = document.getElementById('s-imagen');
-        if (fileInput && fileInput.files.length > 0) {
-          formData.append('imagen', fileInput.files[0]);
+        if (window.b64Files['s-imagen']) {
+          payload.imagen_url = window.b64Files['s-imagen'];
         }
 
-        const url = `${API}/guardar_servicio.php`;
+        const url = id ? `${API}/servicios?id=${id}` : `${API}/servicios`;
+        const method = id ? 'PUT' : 'POST';
 
         try {
           const res = await fetch(url, {
-            method: 'POST',
-            body: formData
+            method,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
           });
-          const json = await res.json().catch(() => ({ error: 'Error del servidor (no JSON)' }));
+          const json = await res.json();
           if (json.success) {
             closeServiceModal();
-            showToast(id ? '\u2705 Servicio actualizado' : '\u2705 Servicio creado');
+            showToast(id ? 'Ã¢Å“â€¦ Servicio actualizado' : 'Ã°Å¸Å½â€° Servicio creado');
             loadServicios();
           } else {
-            alert(json.error || json.message || 'Error desconocido');
+            alert(json.message);
           }
         } catch(err) {
           alert('Error de conexiÃ³n');
-          console.error(err);
         } finally {
           btn.disabled = false;
           btn.textContent = 'Guardar';
@@ -2103,10 +1606,10 @@
       window.deleteService = async (id, nombre) => {
         if (!confirm(`Â¿EstÃ¡s seguro que deseas eliminar el servicio "${nombre}"?`)) return;
         try {
-          const res = await fetch(`${API}/eliminar.php?tabla=servicios&id=${id}`, { method: 'DELETE' });
+          const res = await fetch(`${API}/servicios?id=${id}`, { method: 'DELETE' });
           const json = await res.json();
           if (json.success) {
-            showToast('\u2705 Servicio eliminado');
+            showToast('Ã°Å¸â€”â€˜Ã¯Â¸Â Servicio eliminado');
             loadServicios();
           } else {
             alert(json.message);
@@ -2116,7 +1619,7 @@
         }
       };
 
-      // â”€â”€â”€ HORARIOS â”€â”€â”€
+      // Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ HORARIOS Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
       const diasNombres = ['Domingo', 'Lunes', 'Martes', 'MiÃ©rcoles', 'Jueves', 'Viernes', 'SÃ¡bado'];
 
       function renderScheduleEditor(containerId, scheduleData, prefix) {
@@ -2192,12 +1695,12 @@
             }
           }
         }
-        showToast('\u2705 Horario copiado');
+        showToast('Ã°Å¸â€¢â€™ Horario copiado a los demÃ¡s dÃ­as activos');
       };
 
       window.loadGlobalSchedule = async () => {
         try {
-          const res = await fetch(`${API}/obtener_datos.php?tabla=horarios&global=1`);
+          const res = await fetch(`${API}/horarios?global=1`);
           const json = await res.json();
           if (json.success) {
             renderScheduleEditor('global-schedule-container', json.data, 'glb');
@@ -2212,14 +1715,14 @@
         const syncAll = document.getElementById('sync-all-barbers').checked;
         
         try {
-          const res = await fetch(`${API}/guardar_horarios.php?global=1`, {
+          const res = await fetch(`${API}/horarios?global=1`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ horario: scheduleData, sync_all: syncAll })
           });
           const json = await res.json();
           if (json.success) {
-            showToast('\u2705 Horario global guardado');
+            showToast('Ã¢Å“â€¦ Horario global guardado');
             document.getElementById('sync-all-barbers').checked = false;
             // Recargar horarios por barbero si estÃ¡ uno seleccionado
             if (document.getElementById('horario-barbero-select').value) {
@@ -2235,7 +1738,7 @@
 
       window.populateBarberSelect = async () => {
         try {
-          const res = await fetch(`${API}/obtener_datos.php?tabla=barberos`);
+          const res = await fetch(`${API}/barberos?all=1`);
           const json = await res.json();
           const select = document.getElementById('horario-barbero-select');
           if (!select) return;
@@ -2263,18 +1766,10 @@
         }
         
         try {
-          const res = await fetch(`${API}/obtener_datos.php?tabla=horarios&barbero_id=${barberoId}`);
+          const res = await fetch(`${API}/horarios?barbero_id=${barberoId}`);
           const json = await res.json();
           if (json.success) {
-            let scheduleData = json.data;
-            if (!scheduleData || scheduleData.length === 0) {
-              const resGlob = await fetch(`${API}/obtener_datos.php?tabla=horarios&global=1`);
-              const jsonGlob = await resGlob.json();
-              if (jsonGlob.success && jsonGlob.data && jsonGlob.data.length > 0) {
-                scheduleData = jsonGlob.data;
-              }
-            }
-            renderScheduleEditor('barber-schedule-container', scheduleData, 'brb');
+            renderScheduleEditor('barber-schedule-container', json.data, 'brb');
             containerWrapper.style.display = 'block';
             
             // Re-aÃ±adir el botÃ³n de guardado que fue sobreescrito por renderScheduleEditor
@@ -2294,14 +1789,14 @@
         const scheduleData = extractScheduleData('brb');
         
         try {
-          const res = await fetch(`${API}/guardar_horarios.php?barbero_id=${barberoId}`, {
+          const res = await fetch(`${API}/horarios?barbero_id=${barberoId}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ horario: scheduleData })
           });
           const json = await res.json();
           if (json.success) {
-            showToast('\u2705 Horario de barbero actualizado');
+            showToast('Ã¢Å“â€¦ Horario del barbero actualizado');
           } else {
             alert(json.error || json.message || 'Error desconocido');
           }
@@ -2310,20 +1805,15 @@
         }
       };
 
-      // âŽ¯âŽ¯âŽ¯ NAVIGATION âŽ¯âŽ¯âŽ¯
+      // Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ NAVIGATION Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
       const navItems = document.querySelectorAll('.nav-item');
       const sections = document.querySelectorAll('.section');
       const titleEl = document.getElementById('topbar-title');
       
       const titles = {
         agenda: 'Control de Citas',
-        estadisticas: 'Historial y AnalÃ­ticas',
         equipo: 'GestiÃ³n de Personal',
-        servicios: 'CatÃ¡logo de Servicios',
-        horarios: 'ConfiguraciÃ³n de Horarios',
-        cms: 'PersonalizaciÃ³n Web',
-        resenas: 'Control de ReseÃ±as',
-        perfil: 'Mi Perfil'
+        cms: 'PersonalizaciÃ³n Web'
       };
 
       navItems.forEach(item => {
@@ -2335,12 +1825,7 @@
           sections.forEach(s => s.classList.remove('active'));
           document.getElementById(target).classList.add('active');
           
-          titleEl.textContent = titles[target] || 'Admin Panel';
-
-          if (target === 'estadisticas') {
-            updateMonthLabel();
-            loadEstadisticas();
-          }
+          titleEl.textContent = titles[target];
         });
       });
 
@@ -2352,44 +1837,11 @@
       };
 
       // Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ TOAST Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
-      window.showToast = (msg = '\u2705 Cambios guardados') => {
+      window.showToast = (msg = 'Ã¢Å“â€¦ Cambios guardados correctamente') => {
         const t = document.getElementById('toast');
         t.textContent = msg;
         t.classList.add('show');
         setTimeout(() => t.classList.remove('show'), 3000);
-      };
-
-      // âŽ¯âŽ¯âŽ¯ MI PERFIL âŽ¯âŽ¯âŽ¯
-      window.updateAdminCredentials = async () => {
-        const user = document.getElementById('admin-user').value.trim();
-        const pass = document.getElementById('admin-pass').value.trim();
-
-        if (!user || !pass) {
-          return alert('El usuario y la contraseÃ±a son obligatorios.');
-        }
-
-        if (pass.length < 6) {
-          return alert('La contraseÃ±a debe tener al menos 6 caracteres.');
-        }
-
-        try {
-          const res = await fetch(`${API}/actualizar_credenciales.php`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ usuario: user, password: pass })
-          });
-          const json = await res.json();
-          
-          if (json.success) {
-            showToast('\u2705 Credenciales actualizadas. Cerrando sesiÃ³n...');
-            setTimeout(() => { window.logout(); }, 2000);
-          } else {
-            alert(json.message || 'Error al actualizar credenciales');
-          }
-        } catch (error) {
-          console.error(error);
-          alert('Error de conexiÃ³n al actualizar credenciales.');
-        }
       };
 
       init();
@@ -2421,28 +1873,9 @@
           }
         });
       });
-
     </script>
-    
-    <!-- Modal Custom Range Picker para EstadÃ­sticas -->
-    <div id="stat-picker-modal" class="modal-overlay" style="z-index:9999; display:none;">
-      <div class="modal-content modal-glass" style="border-radius:24px; width:100%; max-width:350px; padding:28px; position:relative;">
-        <button onclick="closeMonthPicker()" style="position:absolute; top:-16px; right:-16px; background:var(--s2); border:2px solid var(--border); color:var(--bright); width:36px; height:36px; border-radius:50%; font-size:1.2rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:var(--tr); box-shadow:0 4px 12px rgba(0,0,0,0.5); z-index:10;" onmouseover="this.style.background='var(--gold)'; this.style.color='#111'" onmouseout="this.style.background='var(--s2)'; this.style.color='var(--bright)'">&times;</button>
-        
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:28px; margin-top:12px;">
-          <button onclick="changeStatYear(-1)" onmouseover="this.style.background='var(--s3)';this.style.borderColor='var(--gold)'" onmouseout="this.style.background='var(--s2)';this.style.borderColor='var(--border)'" style="background:var(--s2); border:1px solid var(--border); color:var(--gold); border-radius:50%; width:40px; height:40px; cursor:pointer; transition:var(--tr); display:flex; align-items:center; justify-content:center;">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px;"><polyline points="15 18 9 12 15 6"></polyline></svg>
-          </button>
-          <h3 id="stat-picker-year" style="margin:0; color:var(--gold); font-family:var(--serif); font-size:1.5rem; font-weight:800; letter-spacing:0.5px;">2026</h3>
-          <button onclick="changeStatYear(1)" onmouseover="this.style.background='var(--s3)';this.style.borderColor='var(--gold)'" onmouseout="this.style.background='var(--s2)';this.style.borderColor='var(--border)'" style="background:var(--s2); border:1px solid var(--border); color:var(--gold); border-radius:50%; width:40px; height:40px; cursor:pointer; transition:var(--tr); display:flex; align-items:center; justify-content:center;">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
-          </button>
-        </div>
-
-        <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px;" id="stat-months-grid">
-           <!-- Renderizado por JS -->
-        </div>
-      </div>
-    </div>
 </body>
 </html>
+
+
+

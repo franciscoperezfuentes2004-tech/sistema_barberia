@@ -1,23 +1,23 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
   <meta name="theme-color" content="#0F0F0F"/>
-  <title>Mi Agenda â€” BarberÃ­a Premium</title>
+  <title>Mi Agenda — Barbería Premium</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <style>
-    /* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â TOKENS Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
+    /* â•â•â•â•â•â•â•â•â•â•â• TOKENS â•â•â•â•â•â•â•â•â•â•â• */
     :root {
-      --gold:#C9A84C; --gold-l:#E8C97A; --gold-d:#9A7B32; --gradient-gold: linear-gradient(135deg, var(--gold-d), var(--gold), var(--gold-l));
+      --gold:#C9A84C; --gold-l:#E8C97A; --gold-d:#9A7B32;
       --bg:#0F0F0F; --s1:#181818; --s2:#222; --s3:#2A2A2A; --border:#333;
       --muted:#888; --base:#D4D4D4; --bright:#F5F0E8;
       --green:#27AE60; --green-bg:rgba(39,174,96,.1); --green-border:rgba(39,174,96,.25);
       --red:#E74C3C; --red-bg:rgba(231,76,60,.1); --red-border:rgba(231,76,60,.25);
       --blue:#3498DB; --blue-bg:rgba(52,152,219,.1); --blue-border:rgba(52,152,219,.25);
       --gold-bg:rgba(201,168,76,.1); --gold-border:rgba(201,168,76,.25);
-      --serif:Arial, Helvetica, sans-serif; --sans:'Inter',system-ui,sans-serif;
+      --serif:'Playfair Display',serif; --sans:'Inter',system-ui,sans-serif;
       --tr:all .22s cubic-bezier(.4,0,.2,1);
       --gutter:16px;
     }
@@ -37,7 +37,7 @@
     ::-webkit-scrollbar-track{background:var(--s1)}
     ::-webkit-scrollbar-thumb{background:var(--gold-d);border-radius:4px}
 
-    /* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â HEADER Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
+    /* â•â•â•â•â•â•â•â•â•â•â• HEADER â•â•â•â•â•â•â•â•â•â•â• */
     .staff-header{
       position:sticky;top:0;z-index:50;
       background:rgba(15,15,15,.97);backdrop-filter:blur(20px);
@@ -74,57 +74,30 @@
     .pill-green{border-color:var(--green-border);color:var(--green);background:var(--green-bg)}
     .pill-blue{border-color:var(--blue-border);color:var(--blue);background:var(--blue-bg)}
 
-    /* â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€” DATE SELECTOR â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€” */
-    .cal-day {
-      width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;
-      border-radius: 12px; font-size: 0.95rem; margin: 0 auto; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      font-weight: 500; color: var(--bright);
+    /* ——————————— DATE SELECTOR ——————————— */
+    .dates-bar{
+      background:var(--s1);border-bottom:1px solid var(--border);
+      padding:12px var(--gutter);
+      display:flex;gap:6px;overflow-x:auto;
+      scrollbar-width:none;-webkit-overflow-scrolling:touch;
     }
-    .cal-day:hover {
-      background: var(--s2);
+    .dates-bar::-webkit-scrollbar{display:none}
+    .d-card{
+      flex-shrink:0;width:52px;padding:8px 0;border-radius:12px;
+      display:flex;flex-direction:column;align-items:center;gap:2px;
+      cursor:pointer;transition:var(--tr);border:1px solid transparent;
+      background:transparent;
     }
-    .cal-day.empty { background: transparent; cursor: default; }
-    .cal-day.empty:hover { background: transparent; }
-    .cal-day.cerrado { 
-      color: #555; 
-      background: rgba(255,255,255,0.02); 
-      cursor: not-allowed; 
-      text-decoration: line-through;
-    }
-    .cal-day.cerrado:hover { background: rgba(255,255,255,0.02); }
-    .cal-day.hoy {
-      border: 2px solid var(--gold);
-      color: var(--gold);
-      font-weight: 800;
-    }
-    .cal-day.con_citas_futuras {
-      background: var(--green-bg);
-      border: 1px solid var(--green);
-      color: var(--green);
-      font-weight: 700;
-    }
-    .cal-day.con_citas_pasadas {
-      background: rgba(39, 174, 96, 0.05);
-      border: 1px dashed rgba(39, 174, 96, 0.4);
-      color: rgba(39, 174, 96, 0.8);
-    }
-    .cal-day.selected {
-      background: var(--gradient-gold);
-      color: #111;
-      font-weight: 800;
-      box-shadow: 0 0 20px rgba(225, 178, 74, 0.6); 
-      transform: scale(1.15) translateY(-2px);
-      border: none;
-    }
-    .modal-glass {
-      background: rgba(20, 20, 22, 0.85);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
-    }
+    .d-card:hover{background:var(--s2);border-color:var(--border)}
+    .d-card.selected{background:var(--gold);border-color:var(--gold);color:#0F0F0F}
+    .d-day{font-size:.62rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+    .d-num{font-family:var(--serif);font-size:1.15rem;font-weight:700;color:var(--bright);line-height:1.2}
+    .d-month{font-size:.56rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+    .d-card.selected .d-day,
+    .d-card.selected .d-num,
+    .d-card.selected .d-month{color:#0F0F0F}
 
-    /* â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€” TIMELINE â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€” */
+    /* ——————————— TIMELINE ——————————— */
     .timeline-section{padding:12px var(--gutter) 100px; max-width:900px; margin:0 auto;}
     .tl-label{
       font-size:.68rem;color:var(--muted);text-transform:uppercase;
@@ -171,14 +144,10 @@
       font-style:italic;
     }
 
-    /* â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€” APPOINTMENT CARD â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€” */
+    /* ——————————— APPOINTMENT CARD ——————————— */
     .appt-card{
       margin:4px 0 4px 0;padding:14px;border-radius:14px;
-      background: linear-gradient(145deg, rgba(34,34,34,0.6), rgba(20,20,20,0.95));
-      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-top: 1px solid rgba(255,255,255,0.12);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);
+      background:var(--s2);border:1px solid var(--border);
       transition:var(--tr);position:relative;overflow:hidden;
     }
     .appt-card::before{
@@ -245,7 +214,7 @@
     }
     .act-wa:hover{background:#1ebe5d}
 
-    /* â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€” EMPTY STATE â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€” */
+    /* ——————————— EMPTY STATE ——————————— */
     .empty-day{
       text-align:center;padding:60px 20px;
     }
@@ -253,7 +222,7 @@
     .empty-title{font-family:var(--serif);font-size:1.1rem;color:var(--bright);margin-bottom:6px}
     .empty-sub{font-size:.8rem;color:var(--muted);line-height:1.5}
 
-    /* â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€” LOADING â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€” */
+    /* ——————————— LOADING ——————————— */
     .loading-spinner{
       display:flex;align-items:center;justify-content:center;padding:60px 0;
     }
@@ -264,7 +233,7 @@
     }
     @keyframes spin{to{transform:rotate(360deg)}}
 
-    /* â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€” TOAST â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€” */
+    /* ——————————— TOAST ——————————— */
     .toast{
       position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);
       background:var(--s2);border:1px solid var(--border);color:var(--bright);
@@ -279,87 +248,55 @@
 </head>
 <body>
 
-  <!-- â€”â€”â€”â€”â€”â€”â€”â€”â€” HEADER â€”â€”â€”â€”â€”â€”â€”â€”â€” -->
+  <!-- ————————— HEADER ————————— -->
   <header class="staff-header">
     <div class="hdr-row">
       <div>
-        <p class="hdr-greeting" id="hdr-greeting">Buenos dÃ­as</p>
+        <p class="hdr-greeting" id="hdr-greeting">Buenos días</p>
         <h1 class="hdr-name" id="hdr-name">Carlos</h1>
       </div>
       <div class="hdr-actions">
         <div class="hdr-avatar" id="hdr-avatar">
           <img src="../assets/img/barbers/carlos.png" alt="Foto de perfil"/>
         </div>
-        <button class="btn-logout" onclick="app.logout()" title="Cerrar sesiÃ³n">
+        <button class="btn-logout" onclick="app.logout()" title="Cerrar sesión">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
         </button>
       </div>
     </div>
     <div class="hdr-pills" id="hdr-pills">
-      <span class="pill pill-gold" id="pill-citas">ðŸ“… â€” citas hoy</span>
-      <span class="pill pill-green" id="pill-next">â³ Cargando...</span>
+      <span class="pill pill-gold" id="pill-citas">📅 — citas hoy</span>
+      <span class="pill pill-green" id="pill-next">⏳ Cargando...</span>
     </div>
   </header>
 
-  <!-- â€”â€”â€”â€”â€”â€”â€”â€”â€” DATE SELECTOR â€”â€”â€”â€”â€”â€”â€”â€”â€” -->
-  <div class="date-selector-wrap" style="padding: 12px var(--gutter); max-width: 900px; margin: 0 auto;">
-    <button onclick="openCalendarModal()" style="width: 100%; background: var(--s2); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; color: var(--bright); font-family: inherit; font-size: 1rem; transition: var(--tr);">
-      <span style="font-weight: 600;">Seleccionar Fecha</span>
-      <div style="display: flex; align-items: center; gap: 8px;">
-        <span id="selected-date-lbl" style="color: var(--gold); font-weight: 700;"></span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-      </div>
-    </button>
-  </div>
+  <!-- ————————— DATE SELECTOR ————————— -->
+  <div class="dates-bar" id="dates-bar"></div>
 
-  <!-- â€”â€”â€”â€”â€”â€”â€”â€”â€” TIMELINE â€”â€”â€”â€”â€”â€”â€”â€”â€” -->
+  <!-- ————————— TIMELINE ————————— -->
   <section class="timeline-section">
-    <div class="tl-label" id="tl-label">Agenda del dÃ­a</div>
+    <div class="tl-label" id="tl-label">Agenda del día</div>
     <div id="timeline-container">
       <div class="loading-spinner"><div class="spinner"></div></div>
     </div>
   </section>
 
-  <!-- â€”â€”â€”â€”â€”â€”â€”â€”â€” TOAST â€”â€”â€”â€”â€”â€”â€”â€”â€” -->
+  <!-- ————————— TOAST ————————— -->
   <div class="toast" id="toast">
     <span class="toast-icon"></span>
     <span class="toast-msg"></span>
   </div>
 
-  <!-- Premium Calendar Modal -->
-  <div id="calendar-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:100; align-items:center; justify-content:center; padding:20px; backdrop-filter:blur(8px); animation: fadeIn 0.3s ease;">
-    <div class="modal-content modal-glass" style="border-radius:24px; width:100%; max-width:400px; padding:28px; position:relative;">
-      <button onclick="closeCalendarModal()" style="position:absolute; top:16px; right:20px; background:rgba(255,255,255,0.1); border:none; color:var(--bright); width:32px; height:32px; border-radius:50%; font-size:1.2rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background 0.2s;">&times;</button>
-      
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:28px; margin-top:36px;">
-        <button id="cal-prev" onclick="changeMonth(-1)" onmouseover="this.style.background='var(--s3)';this.style.borderColor='var(--gold)'" onmouseout="this.style.background='var(--s2)';this.style.borderColor='var(--border)'" style="background:var(--s2); border:1px solid var(--border); color:var(--gold); border-radius:50%; width:44px; height:44px; cursor:pointer; transition:var(--tr); display:flex; align-items:center; justify-content:center;">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:22px;height:22px;"><polyline points="15 18 9 12 15 6"></polyline></svg>
-        </button>
-        <h3 id="cal-month-year" style="margin:0; color:var(--gold); font-family:var(--serif); font-size:1.5rem; font-weight:800; letter-spacing:0.5px; text-transform:capitalize;"></h3>
-        <button id="cal-next" onclick="changeMonth(1)" onmouseover="this.style.background='var(--s3)';this.style.borderColor='var(--gold)'" onmouseout="this.style.background='var(--s2)';this.style.borderColor='var(--border)'" style="background:var(--s2); border:1px solid var(--border); color:var(--gold); border-radius:50%; width:44px; height:44px; cursor:pointer; transition:var(--tr); display:flex; align-items:center; justify-content:center;">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:22px;height:22px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
-        </button>
-      </div>
-
-      <div style="display:grid; grid-template-columns:repeat(7, 1fr); gap:8px; text-align:center; font-size:0.8rem; font-weight:700; color:var(--muted); margin-bottom:16px; text-transform:uppercase; letter-spacing:1px;">
-        <div>D</div><div>L</div><div>M</div><div>M</div><div>J</div><div>V</div><div>S</div>
-      </div>
-      <div id="cal-days-grid" style="display:grid; grid-template-columns:repeat(7, 1fr); gap:8px 4px;">
-        <!-- JS fills this -->
-      </div>
-    </div>
-  </div>
-
   <script>
   (() => {
-    /* â€”â€”â€” Config â€”â€”â€” */
-    const API = '../sistema';
+    /* ——— Config ——— */
+    const API = '../api';
 
-    // ðŸ›¡ï¸ Interceptor Global de Fetch para Inyectar JWT
+    // 🛡️ Interceptor Global de Fetch para Inyectar JWT
     const originalFetch = window.fetch;
     window.fetch = async function() {
       let [resource, config] = arguments;
-      if (typeof resource === 'string' && resource.includes('/sistema/')) {
+      if (typeof resource === 'string' && resource.includes('/api/')) {
         config = config || {};
         config.headers = config.headers || {};
         const token = localStorage.getItem('mi_token_jwt');
@@ -370,7 +307,7 @@
       return originalFetch(resource, config);
     };
 
-    // Barbero actual â€” se carga desde la sesiÃ³n
+    // Barbero actual — se carga desde la sesión
     let BARBERO_ID = null;
     let BARBERO_DATA = null;
     let selectedDate  = null;
@@ -385,10 +322,10 @@
       confirmada: 'Confirmada',
       en_silla:   'En silla',
       completada: 'Finalizada',
-      no_asistio: 'No asistiÃ³',
+      no_asistio: 'No asistió',
     };
 
-    /* â€”â€”â€” Init â€”â€”â€” */
+    /* ——— Init ——— */
     async function init() {
       // Tab-isolation check
       if (!sessionStorage.getItem('tab_auth')) {
@@ -404,12 +341,8 @@
 
       // Set header from session data
       document.getElementById('hdr-name').textContent = user.barbero_nombre || user.username;
-      if (user.barbero_foto && user.barbero_foto.trim() !== '') {
-        // La foto ya trae la ruta desde la BD o es base64
-        const imgPath = user.barbero_foto.startsWith('data:image') ? user.barbero_foto : '../' + user.barbero_foto;
-        document.getElementById('hdr-avatar').querySelector('img').src = imgPath;
-      } else {
-        document.getElementById('hdr-avatar').querySelector('img').src = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.barbero_nombre || 'Barbero') + '&background=C9A84C&color=0F0F0F';
+      if (user.barbero_foto) {
+        document.getElementById('hdr-avatar').querySelector('img').src = '../' + user.barbero_foto;
       }
 
       await loadHorarios();
@@ -421,22 +354,13 @@
       }, 30000);
     }
 
-    let globalHorariosMap = null;
-
-    /* â€”â€”â€” Load Horarios â€”â€”â€” */
+    /* ——— Load Horarios ——— */
     async function loadHorarios() {
       try {
-        const resH = await fetch(`${API}/obtener_datos.php?tabla=horarios&barbero_id=${BARBERO_ID}`);
-        const jsonH = await resH.json();
-        if (jsonH.success && jsonH.data) {
-          horariosMap = jsonH.data;
-        }
-        
-        // Fetch admin global settings (horarios generales con barbero_id=0)
-        const resG = await fetch(`${API}/obtener_datos.php?tabla=horarios&barbero_id=0`);
-        const jsonG = await resG.json();
-        if (jsonG.success && jsonG.data) {
-          globalHorariosMap = jsonG.data;
+        const res = await fetch(`${API}/horarios?barbero_id=${BARBERO_ID}`);
+        const json = await res.json();
+        if (json.success && json.data) {
+          horariosMap = json.data;
         }
       } catch (e) {
         console.error('Error loading schedule', e);
@@ -445,41 +369,31 @@
     
     function updateScheduleForDate(isoDate) {
       const d = new Date(isoDate + 'T12:00:00');
-      const diaSemana = d.getDay(); // nÃºmero: 0=Dom, 1=Lun, etc.
+      const diaSemana = d.getDay();
       
       let scheduleForDay = null;
-
-      // IMPORTANTE: MySQL devuelve dia_semana como STRING ("1"), getDay() es NUMBER (1).
-      // Usamos Number() para que la comparaciÃ³n funcione correctamente.
-      if (Array.isArray(horariosMap) && horariosMap.length > 0) {
-        scheduleForDay = horariosMap.find(s => Number(s.dia_semana) === diaSemana);
-      }
-
-      // Si el barbero no tiene un horario personalizado ese dÃ­a, usamos el global (barbero 0)
-      if (!scheduleForDay && Array.isArray(globalHorariosMap)) {
-        scheduleForDay = globalHorariosMap.find(s => Number(s.dia_semana) === diaSemana);
+      if (Array.isArray(horariosMap)) {
+        scheduleForDay = horariosMap.find(s => s.dia_semana === diaSemana);
       }
       
       if (scheduleForDay) {
-        // activo tambiÃ©n viene como string "0" o "1" desde MySQL
-        if (Number(scheduleForDay.activo) === 0) {
+        if (scheduleForDay.activo === 0 || scheduleForDay.activo === false) {
            HORA_INICIO = null;
            HORA_FIN = null;
         } else {
            HORA_INICIO = parseInt(scheduleForDay.hora_inicio.substring(0,2), 10);
            HORA_FIN = parseInt(scheduleForDay.hora_fin.substring(0,2), 10);
-           // Si cierra a y media (ej. 19:30), sumamos 1 a HORA_FIN para que el bucle dibuje el slot
            if (scheduleForDay.hora_fin.substring(3,5) !== '00') {
              HORA_FIN += 1;
            }
         }
       } else {
-        HORA_INICIO = 9; 
+        HORA_INICIO = 10;
         HORA_FIN = 20;
       }
     }
 
-    /* â€”â€”â€” Auth Check â€”â€”â€” */
+    /* ——— Auth Check ——— */
     async function checkAuth() {
       try {
         const token = localStorage.getItem('mi_token_jwt');
@@ -491,14 +405,13 @@
         const payloadBase64 = token.split('.')[1];
         const payloadDecoded = JSON.parse(atob(payloadBase64));
 
-        // Simulamos la estructura esperada por el cÃ³digo viejo para evitar romper cosas
+        // Simulamos la estructura esperada por el código viejo para evitar romper cosas
         const json = {
           success: true,
           data: {
             rol: payloadDecoded.rol,
             barbero_id: payloadDecoded.id,
-            barbero_nombre: payloadDecoded.nombre || payloadDecoded.usuario,
-            barbero_foto: localStorage.getItem('mi_foto_perfil') || ''
+            barbero_nombre: payloadDecoded.username
           }
         };
 
@@ -518,109 +431,47 @@
     function updateGreeting() {
       const h = new Date().getHours();
       const el = document.getElementById('hdr-greeting');
-      if (h < 12) el.textContent = 'Buenos dÃ­as';
+      if (h < 12) el.textContent = 'Buenos días';
       else if (h < 19) el.textContent = 'Buenas tardes';
       else el.textContent = 'Buenas noches';
     }
 
-    /* â€”â€”â€” Date Selector â€”â€”â€” */
-    let currentCalMonth = new Date().getMonth() + 1;
-    let currentCalYear = new Date().getFullYear();
-
+    /* ——— Date Selector ——— */
     function initDates() {
-      const hoy = new Date();
-      const hoyISO = hoy.getFullYear()+'-'+String(hoy.getMonth()+1).padStart(2,'0')+'-'+String(hoy.getDate()).padStart(2,'0');
-      
-      selectedDate = hoyISO;
-      updateDateLabel(hoyISO);
-      
-      // Load initial
-      updateScheduleForDate(hoyISO);
-      loadCitas();
-    }
-    
-    function updateDateLabel(iso) {
-      const d = new Date(iso + 'T12:00:00Z');
-      const dias = ['Dom','Lun','Mar','MiÃ©','Jue','Vie','SÃ¡b'];
+      const bar = document.getElementById('dates-bar');
+      const dias = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
       const meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
-      document.getElementById('selected-date-lbl').textContent = `${dias[d.getDay()]} ${d.getDate()} ${meses[d.getMonth()]}`;
-    }
+      const hoy = new Date();
 
-    window.openCalendarModal = function() {
-      document.getElementById('calendar-modal').style.display = 'flex';
-      if (selectedDate) {
-        const parts = selectedDate.split('-');
-        currentCalYear = parseInt(parts[0], 10);
-        currentCalMonth = parseInt(parts[1], 10);
-      }
-      loadCalendarMonth(currentCalMonth, currentCalYear);
-    }
+      for (let i = 0; i < 7; i++) {
+        const d = new Date(hoy);
+        d.setDate(d.getDate() + i);
+        const iso = d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 
-    window.closeCalendarModal = function() {
-      document.getElementById('calendar-modal').style.display = 'none';
-    }
+        const card = document.createElement('div');
+        card.className = 'd-card';
+        card.innerHTML = `
+          <span class="d-day">${i===0?'Hoy':dias[d.getDay()]}</span>
+          <span class="d-num">${d.getDate()}</span>
+          <span class="d-month">${meses[d.getMonth()]}</span>
+        `;
+        card.onclick = () => selectDate(card, iso);
+        bar.appendChild(card);
 
-    window.changeMonth = function(delta) {
-      currentCalMonth += delta;
-      if (currentCalMonth > 12) {
-        currentCalMonth = 1;
-        currentCalYear++;
-      } else if (currentCalMonth < 1) {
-        currentCalMonth = 12;
-        currentCalYear--;
-      }
-      loadCalendarMonth(currentCalMonth, currentCalYear);
-    }
-
-    async function loadCalendarMonth(m, a) {
-      const grid = document.getElementById('cal-days-grid');
-      const title = document.getElementById('cal-month-year');
-      const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-      
-      title.textContent = `${meses[m-1]} ${a}`;
-      grid.innerHTML = '<div style="grid-column:1/-1; padding:20px; color:var(--muted);">Cargando...</div>';
-      
-      try {
-        const res = await fetch(`${API}/calendario_staff.php?mes=${m}&anio=${a}&barbero_id=${BARBERO_ID}`);
-        const json = await res.json();
-        
-        if (!json.success) throw new Error('Error de API');
-        
-        grid.innerHTML = '';
-        
-        const firstDay = new Date(`${a}-${String(m).padStart(2,'0')}-01T12:00:00Z`).getUTCDay();
-        
-        for (let i = 0; i < firstDay; i++) {
-          grid.innerHTML += `<div class="cal-day empty"></div>`;
-        }
-
-        json.data.forEach(dia => {
-          const d = dia.dia;
-          let cls = 'cal-day ' + dia.estado;
-          
-          if (selectedDate === dia.fecha) cls += ' selected';
-          
-          let onclick = '';
-          if (dia.estado !== 'cerrado') {
-             onclick = `onclick="handleSelectDate('${dia.fecha}')"`;
-          }
-          
-          grid.innerHTML += `<div class="${cls}" ${onclick}>${d}</div>`;
-        });
-      } catch(e) {
-        grid.innerHTML = '<div style="grid-column:1/-1; color:var(--red);">Error cargando fechas</div>';
+        // Auto-select today
+        if (i === 0) selectDate(card, iso);
       }
     }
 
-    window.handleSelectDate = async function(isodate) {
-      closeCalendarModal();
-      selectedDate = isodate;
-      updateDateLabel(isodate);
-      updateScheduleForDate(selectedDate);
+    async function selectDate(el, iso) {
+      document.querySelectorAll('.d-card').forEach(c => c.classList.remove('selected'));
+      el.classList.add('selected');
+      selectedDate = iso;
+      updateScheduleForDate(iso);
       await loadCitas();
     }
 
-    /* â€”â€”â€” Load Citas â€”â€”â€” */
+    /* ——— Load Citas ——— */
     async function loadCitas(silent = false) {
       const container = document.getElementById('timeline-container');
       if (!silent) {
@@ -628,13 +479,7 @@
       }
 
       try {
-        // Asegurarnos de que los horarios estÃ©n frescos antes de pintar
-        await loadHorarios();
-        if (selectedDate) {
-          updateScheduleForDate(selectedDate);
-        }
-
-        const res = await fetch(`${API}/obtener_datos.php?tabla=citas&barbero_id=${BARBERO_ID}&fecha=${selectedDate}`, { cache: 'no-store' });
+        const res = await fetch(`${API}/citas?barbero_id=${BARBERO_ID}&fecha=${selectedDate}`, { cache: 'no-store' });
         const json = await res.json();
         citasDelDia = json.data || [];
         renderTimeline(silent);
@@ -646,13 +491,13 @@
       }
     }
 
-    /* â€”â€”â€” Update Pills â€”â€”â€” */
+    /* ——— Update Pills ——— */
     function updatePills() {
       const total = citasDelDia.length;
       const pillCitas = document.getElementById('pill-citas');
       const pillNext  = document.getElementById('pill-next');
 
-      pillCitas.textContent = `ðŸ“… ${total} cita${total!==1?'s':''} hoy`;
+      pillCitas.textContent = `📅 ${total} cita${total!==1?'s':''} hoy`;
 
       // Find next pending appointment
       const ahora = new Date();
@@ -660,7 +505,7 @@
       const hoyISO = ahora.getFullYear()+'-'+String(ahora.getMonth()+1).padStart(2,'0')+'-'+String(ahora.getDate()).padStart(2,'0');
 
       if (selectedDate !== hoyISO) {
-        pillNext.textContent = 'ðŸ“‹ ' + formatDateLabel(selectedDate);
+        pillNext.textContent = '📋 ' + formatDateLabel(selectedDate);
         pillNext.className = 'pill pill-blue';
         return;
       }
@@ -673,18 +518,18 @@
       if (proxima) {
         const diffMin = diffMinutes(ahoraStr, proxima.hora_inicio.substring(0,5));
         if (diffMin <= 60) {
-          pillNext.textContent = `â³ PrÃ³xima en ${diffMin} min`;
+          pillNext.textContent = `⏳ Próxima en ${diffMin} min`;
         } else {
-          pillNext.textContent = `â³ PrÃ³xima a las ${proxima.hora_inicio.substring(0,5)}`;
+          pillNext.textContent = `⏳ Próxima a las ${proxima.hora_inicio.substring(0,5)}`;
         }
         pillNext.className = 'pill pill-green';
       } else {
         const enSilla = citasDelDia.find(c => c.estado === 'en_silla');
         if (enSilla) {
-          pillNext.textContent = 'ðŸ’ˆ En silla ahora';
+          pillNext.textContent = '💈 En silla ahora';
           pillNext.className = 'pill pill-blue';
         } else {
-          pillNext.textContent = 'âœ… DÃ­a libre';
+          pillNext.textContent = '✅ Día libre';
           pillNext.className = 'pill pill-green';
         }
       }
@@ -698,34 +543,22 @@
 
     function formatDateLabel(iso) {
       const d = new Date(iso + 'T12:00:00');
-      const dias = ['Domingo','Lunes','Martes','MiÃ©rcoles','Jueves','Viernes','SÃ¡bado'];
+      const dias = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
       return dias[d.getDay()] + ' ' + d.getDate();
     }
 
-    /* â€”â€”â€” Render Timeline â€”â€”â€” */
+    /* ——— Render Timeline ——— */
     function renderTimeline(silent = false) {
       const container = document.getElementById('timeline-container');
 
       if (HORA_INICIO === null) {
         container.innerHTML = `
           <div class="empty-day">
-            <div class="empty-icon">â˜•</div>
-            <p class="empty-title">DÃ­a Inactivo</p>
+            <div class="empty-icon">☕</div>
+            <p class="empty-title">Día Inactivo</p>
             <p class="empty-sub">Hoy no tienes horario laboral configurado.</p>
           </div>`;
         return;
-      }
-
-      // ExpansiÃ³n dinÃ¡mica del horario para no ocultar citas tempranas o tardÃ­as
-      if (HORA_INICIO !== null && citasDelDia && citasDelDia.length > 0) {
-        citasDelDia.forEach(cita => {
-          const startH = parseInt(cita.hora_inicio.substring(0, 2), 10);
-          let endH = parseInt(cita.hora_fin.substring(0, 2), 10);
-          if (cita.hora_fin.substring(3, 5) !== '00') endH += 1;
-          
-          if (startH < HORA_INICIO) HORA_INICIO = startH;
-          if (endH > HORA_FIN) HORA_FIN = endH;
-        });
       }
 
       // Build slot map (30-min blocks)
@@ -751,7 +584,7 @@
         }
       });
 
-      // Check if today â€” for the "now" marker
+      // Check if today — for the "now" marker
       const ahora = new Date();
       const hoyISO = ahora.getFullYear()+'-'+String(ahora.getMonth()+1).padStart(2,'0')+'-'+String(ahora.getDate()).padStart(2,'0');
       const isToday = selectedDate === hoyISO;
@@ -818,7 +651,7 @@
       if (citasDelDia.length === 0) {
         html = `
           <div class="empty-day">
-            <div class="empty-icon">â˜•</div>
+            <div class="empty-icon">☕</div>
             <p class="empty-title">Sin citas agendadas</p>
             <p class="empty-sub">Disfruta tu tiempo libre o espera que alguien reserve contigo.</p>
           </div>`;
@@ -867,7 +700,7 @@
           </button>
           <button class="act-btn act-noshow" onclick="app.changeState('${cita.id}','no_asistio')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>
-            No asistiÃ³
+            No asistió
           </button>
           <a href="${waLink}" target="_blank" class="act-wa" title="WhatsApp">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
@@ -884,11 +717,11 @@
       } else if (realSt === 'completada') {
         actionsHTML = `<span style="font-size:.7rem;color:var(--green);display:flex;align-items:center;gap:4px">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-          Servicio completado Â· $${cita.precio_total || 0} MXN</span>`;
+          Servicio completado · $${cita.precio_total || 0} MXN</span>`;
       } else if (realSt === 'no_asistio') {
         actionsHTML = `<span style="font-size:.7rem;color:var(--red);display:flex;align-items:center;gap:4px">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>
-          Cliente no asistiÃ³</span>`;
+          Cliente no asistió</span>`;
       }
 
       return `
@@ -896,22 +729,22 @@
           <div class="appt-top">
             <div>
               <div class="appt-client">${cita.cliente_nombre}</div>
-              <div class="appt-time">${cita.hora_inicio.substring(0,5)} â€” ${cita.hora_fin.substring(0,5)}</div>
+              <div class="appt-time">${cita.hora_inicio.substring(0,5)} — ${cita.hora_fin.substring(0,5)}</div>
             </div>
             <span class="appt-status st-${st}">${displayStatus}</span>
           </div>
           <div class="appt-services">
-            <span class="appt-svc-chip">ðŸ’ˆ ${serviciosStr}</span>
-            <span class="appt-dur">â±ï¸ ${durMin} min</span>
+            <span class="appt-svc-chip">💈 ${serviciosStr}</span>
+            <span class="appt-dur">⏱️ ${durMin} min</span>
           </div>
           <div class="appt-actions">${actionsHTML}</div>
         </div>`;
     }
 
-    /* â€”â€”â€” Change State â€”â€”â€” */
+    /* ——— Change State ——— */
     async function changeState(citaId, nuevoEstado) {
       try {
-        const res = await fetch(`${API}/guardar_cita.php`, {
+        const res = await fetch(`${API}/citas`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ id: citaId, estado: nuevoEstado }),
@@ -927,21 +760,21 @@
           updatePills();
 
           const msgs = {
-            en_silla:   ['ðŸ’ˆ','Cliente en silla â€” Â¡a trabajar!'],
-            completada: ['âœ…','Servicio finalizado â€” Â¡buen trabajo!'],
-            no_asistio: ['âŒ','Marcado como no asistiÃ³'],
+            en_silla:   ['💈','Cliente en silla — ¡a trabajar!'],
+            completada: ['✅','Servicio finalizado — ¡buen trabajo!'],
+            no_asistio: ['❌','Marcado como no asistió'],
           };
-          const [icon, msg] = msgs[nuevoEstado] || ['â„¹ï¸','Estado actualizado'];
+          const [icon, msg] = msgs[nuevoEstado] || ['ℹ️','Estado actualizado'];
           showToast(icon, msg);
         } else {
-          showToast('Ã¢Å¡Â Ã¯Â¸Â', json.message || 'Error al actualizar');
+          showToast('âš ï¸', json.message || 'Error al actualizar');
         }
       } catch(e) {
-        showToast('Ã¢Å¡Â Ã¯Â¸Â', 'Error de conexiÃ³n');
+        showToast('âš ï¸', 'Error de conexión');
       }
     }
 
-    /* Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Toast Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
+    /* â”€â”€â”€ Toast â”€â”€â”€ */
     function showToast(icon, msg) {
       const el = document.getElementById('toast');
       el.querySelector('.toast-icon').textContent = icon;
@@ -950,7 +783,7 @@
       setTimeout(() => el.classList.remove('show'), 2800);
     }
 
-    /* Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ Logout Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬ */
+    /* â”€â”€â”€ Logout â”€â”€â”€ */
     async function logout() {
       sessionStorage.removeItem('tab_auth');
       sessionStorage.removeItem('tab_auth');

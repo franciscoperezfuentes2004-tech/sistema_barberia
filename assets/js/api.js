@@ -6,7 +6,7 @@
 // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // Base URL — detecta automáticamente el host
 // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-const API_BASE = '../sistema';
+const API_BASE = '../api';
 
 // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // Wrapper genérico de fetch
@@ -43,14 +43,14 @@ async function apiFetch(endpoint, options = {}) {
 // SERVICIOS
 // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export async function getServicios() {
-  return apiFetch('obtener_datos.php?tabla=servicios');
+  return apiFetch('servicios');
 }
 
 // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // BARBEROS
 // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export async function getBarberos() {
-  return apiFetch('obtener_datos.php?tabla=usuarios&activos=1');
+  return apiFetch('barberos');
 }
 
 // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
@@ -62,14 +62,14 @@ export async function getDisponibilidad(barberoId, fecha, duracionMin = 30) {
     fecha,
     duracion: duracionMin,
   });
-  return apiFetch(`disponibilidad.php?${params}`);
+  return apiFetch(`disponibilidad?${params}`);
 }
 
 // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // CLIENTES
 // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export async function crearCliente({ nombre, email, telefono }) {
-  return apiFetch('guardar_cliente.php', {
+  return apiFetch('clientes', {
     method: 'POST',
     body: { nombre, email, telefono },
   });
@@ -79,27 +79,27 @@ export async function crearCliente({ nombre, email, telefono }) {
 // CITAS
 // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export async function crearCita({ cliente_id, barbero_id, servicios, fecha, hora_inicio, notas }) {
-  return apiFetch('guardar_cita.php', {
+  return apiFetch('citas', {
     method: 'POST',
     body: { cliente_id, barbero_id, servicios, fecha, hora_inicio, notas },
   });
 }
 
 export async function getCitasCliente(clienteId) {
-  return apiFetch(`obtener_datos.php?tabla=citas&cliente_id=${clienteId}`);
+  return apiFetch(`citas?cliente_id=${clienteId}`);
 }
 
 export async function getCita(citaId) {
-  return apiFetch(`obtener_datos.php?tabla=citas&id=${citaId}`);
+  return apiFetch(`citas?id=${citaId}`);
 }
 
 export async function cancelarCita(citaId) {
-  return apiFetch(`eliminar.php?tabla=citas&id=${citaId}`, { method: 'DELETE' });
+  return apiFetch(`citas?id=${citaId}`, { method: 'DELETE' });
 }
 
 export async function actualizarEstadoCita(citaId, estado) {
-  return apiFetch(`guardar_cita.php?id=${citaId}`, {
-    method: 'POST', // In simple PHP it's easier to use POST over PUT for form data/JSON
+  return apiFetch(`citas?id=${citaId}`, {
+    method: 'PUT',
     body: { estado },
   });
 }
