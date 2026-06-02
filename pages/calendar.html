@@ -88,13 +88,14 @@
     .barber-badge.sold-out{background:rgba(231,76,60,.1);color:var(--red);border-color:rgba(231,76,60,.3)}
     
     /* Timeslots */
-    #times-grid{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:10px}
+    #times-grid{display:grid;grid-template-columns:repeat(3, 1fr);gap:8px}
     .time-slot{
-      width: 95px;
+      width: 100%;
       background:var(--bg);border:1px solid var(--border);border-radius:12px;
       padding:12px 0;text-align:center;cursor:pointer;transition:var(--tr);
-      font-size:.9rem;font-weight:600;color:var(--base);
+      font-size:clamp(0.8rem, 2.5vw, 0.9rem);font-weight:600;color:var(--base);
     }
+    @media(min-width: 480px){ #times-grid{grid-template-columns:repeat(auto-fill, minmax(95px, 1fr));gap:10px} }
     .time-slot:hover:not(.disabled){border-color:var(--gold);color:var(--gold)}
     .time-slot.selected{background:var(--gold);border-color:var(--gold);color:#0F0F0F}
     .time-slot.covered{background:rgba(201,168,76,.15);border-color:rgba(201,168,76,.4);color:var(--gold)}
@@ -182,7 +183,7 @@
     
     /* Responsive Alignment for Mobile */
     @media (max-width: 768px) {
-      .dates-scroll, #barbers-grid, #times-grid {
+      .dates-scroll, #barbers-grid {
         justify-content: center;
       }
     }
