@@ -85,6 +85,29 @@
     }
     .cal-day.empty { background: transparent; cursor: default; }
     .cal-day.empty:hover { background: transparent; }
+    .cal-day.cerrado { 
+      color: #555; 
+      background: rgba(255,255,255,0.02); 
+      cursor: not-allowed; 
+      text-decoration: line-through;
+    }
+    .cal-day.cerrado:hover { background: rgba(255,255,255,0.02); }
+    .cal-day.hoy {
+      border: 2px solid var(--gold);
+      color: var(--gold);
+      font-weight: 800;
+    }
+    .cal-day.con_citas_futuras {
+      background: var(--green-bg);
+      border: 1px solid var(--green);
+      color: var(--green);
+      font-weight: 700;
+    }
+    .cal-day.con_citas_pasadas {
+      background: rgba(39, 174, 96, 0.05);
+      border: 1px dashed rgba(39, 174, 96, 0.4);
+      color: rgba(39, 174, 96, 0.8);
+    }
     .cal-day.selected {
       background: var(--gradient-gold);
       color: #111;
@@ -549,26 +572,43 @@
       loadCalendarMonth(currentCalMonth, currentCalYear);
     }
 
-    function loadCalendarMonth(m, a) {
+    async function loadCalendarMonth(m, a) {
       const grid = document.getElementById('cal-days-grid');
       const title = document.getElementById('cal-month-year');
       const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
       
       title.textContent = `${meses[m-1]} ${a}`;
-      grid.innerHTML = '';
+      grid.innerHTML = '<div style="grid-column:1/-1; padding:20px; color:var(--muted);">Cargando...</div>';
       
-      const firstDay = new Date(`${a}-${String(m).padStart(2,'0')}-01T12:00:00Z`).getUTCDay();
-      const daysInMonth = new Date(a, m, 0).getDate();
-      
-      for (let i = 0; i < firstDay; i++) {
-        grid.innerHTML += `<div class="cal-day empty"></div>`;
-      }
+      try {
+        const res = await fetch(`${API}/calendario_staff.php?mes=${m}&anio=${a}&barbero_id=${BARBERO_ID}`);
+        const json = await res.json();
+        
+        if (!json.success) throw new Error('Error de API');
+        
+        grid.innerHTML = '';
+        
+        const firstDay = new Date(`${a}-${String(m).padStart(2,'0')}-01T12:00:00Z`).getUTCDay();
+        
+        for (let i = 0; i < firstDay; i++) {
+          grid.innerHTML += `<div class="cal-day empty"></div>`;
+        }
 
-      for (let d = 1; d <= daysInMonth; d++) {
-        const dateISO = `${a}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-        let cls = 'cal-day';
-        if (selectedDate === dateISO) cls += ' selected';
-        grid.innerHTML += `<div class="${cls}" onclick="handleSelectDate('${dateISO}')">${d}</div>`;
+        json.data.forEach(dia => {
+          const d = dia.dia;
+          let cls = 'cal-day ' + dia.estado;
+          
+          if (selectedDate === dia.fecha) cls += ' selected';
+          
+          let onclick = '';
+          if (dia.estado !== 'cerrado') {
+             onclick = `onclick="handleSelectDate('${dia.fecha}')"`;
+          }
+          
+          grid.innerHTML += `<div class="${cls}" ${onclick}>${d}</div>`;
+        });
+      } catch(e) {
+        grid.innerHTML = '<div style="grid-column:1/-1; color:var(--red);">Error cargando fechas</div>';
       }
     }
 
