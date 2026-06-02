@@ -374,7 +374,7 @@
       padding-bottom: 8px; scrollbar-width: none;
     }
     .svc-grid::-webkit-scrollbar { display:none; }
-    .svc-grid > * { scroll-snap-align: start; flex-shrink: 0; min-width: clamp(200px, 60vw, 250px); }
+    .svc-grid > * { scroll-snap-align: start; flex-shrink: 0; width: clamp(180px, 65vw, 240px); }
 
     .svc-card {
       position: relative; border-radius:20px; overflow:hidden;
@@ -422,7 +422,7 @@
       padding-bottom: 8px; scrollbar-width: none;
     }
     .gal-grid::-webkit-scrollbar { display:none; }
-    .gal-grid > * { scroll-snap-align: start; flex-shrink: 0; min-width: clamp(180px, 35vw, 280px); }
+    .gal-grid > * { scroll-snap-align: start; flex-shrink: 0; width: clamp(160px, 50vw, 260px); }
 
     .gi {
       position:relative; border-radius:16px; overflow:hidden;
@@ -458,7 +458,7 @@
     .t-card {
       background:var(--s2); border:1px solid var(--border);
       border-radius:20px; overflow:hidden;
-      min-width: clamp(200px,45vw,280px); /* ancho mínimo en scroll móvil */
+      width: clamp(200px,65vw,260px); /* Strict width to prevent flex item expansion */
       flex-shrink: 0;
       transition: var(--ease);
     }
