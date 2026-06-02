@@ -91,7 +91,12 @@ $tabla = [];
 if ($res_tabla) {
     while ($row = mysqli_fetch_assoc($res_tabla)) {
         $s_nombres = [];
-        $ids = json_decode($row['servicios_ids'], true);
+        $raw_json = $row['servicios_ids'];
+        $ids = json_decode($raw_json, true);
+        if ($ids === null && !empty($raw_json)) {
+            $ids = json_decode(stripslashes($raw_json), true);
+        }
+        
         if (is_array($ids)) {
             foreach($ids as $sid) {
                 if(isset($serv_map[$sid])) $s_nombres[] = $serv_map[$sid];

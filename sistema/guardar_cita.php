@@ -73,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $hora_inicio_format = date('H:i:s', strtotime($hora_inicio));
     $hora_fin_format = date('H:i:s', strtotime("+$duracion_total minutes", strtotime($fecha . ' ' . $hora_inicio)));
     
-    $servicios_json = mysqli_real_escape_string($conexion, json_encode($servicios));
+    $servicios_json = json_encode($servicios);
     $nombre = mysqli_real_escape_string($conexion, $nombre);
     $telefono = mysqli_real_escape_string($conexion, $telefono);
     $fecha_hora = mysqli_real_escape_string($conexion, $fecha . ' ' . $hora_inicio);
