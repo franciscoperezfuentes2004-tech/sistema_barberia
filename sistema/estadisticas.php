@@ -72,17 +72,33 @@ for ($t = $start_time; $t <= $end_time; $t += 86400) {
 }
 
 // 4. Tabla Detallada
-$q_tabla = "SELECT c.id, c.cliente_nombre, c.fecha_hora, c.estado, c.precio_total, 
-                   b.nombre as barbero_nombre, s.nombre as servicio_nombre
+$q_servs = mysqli_query($conexion, "SELECT id, nombre FROM servicios");
+$serv_map = [];
+if ($q_servs) {
+    while ($s = mysqli_fetch_assoc($q_servs)) {
+        $serv_map[$s['id']] = $s['nombre'];
+    }
+}
+
+$q_tabla = "SELECT c.id, c.cliente_nombre, c.fecha_hora, c.estado, c.precio_total, c.servicios_ids,
+                   b.nombre as barbero_nombre
             FROM citas c
             LEFT JOIN barberos b ON c.barbero_id = b.id
-            LEFT JOIN servicios s ON c.servicio_id = s.id
             WHERE $where_dates
             ORDER BY c.fecha_hora DESC";
 $res_tabla = mysqli_query($conexion, $q_tabla);
 $tabla = [];
 if ($res_tabla) {
     while ($row = mysqli_fetch_assoc($res_tabla)) {
+        $s_nombres = [];
+        $ids = json_decode($row['servicios_ids'], true);
+        if (is_array($ids)) {
+            foreach($ids as $sid) {
+                if(isset($serv_map[$sid])) $s_nombres[] = $serv_map[$sid];
+            }
+        }
+        $servicio_nombre = count($s_nombres) > 0 ? implode(', ', $s_nombres) : 'N/A';
+        
         $tabla[] = [
             "id" => $row['id'],
             "cliente" => $row['cliente_nombre'],
@@ -90,7 +106,7 @@ if ($res_tabla) {
             "estado" => $row['estado'],
             "precio" => (float)$row['precio_total'],
             "barbero" => $row['barbero_nombre'],
-            "servicio" => $row['servicio_nombre']
+            "servicio" => $servicio_nombre
         ];
     }
 }
