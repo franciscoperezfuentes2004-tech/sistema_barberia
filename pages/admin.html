@@ -1147,6 +1147,33 @@
       // ⎯⎯⎯ AUTH CHECK ⎯⎯⎯
       window.b64Files = {};
 
+      window.setFileButtonSuccess = function(id) {
+        const inputEl = document.getElementById(id);
+        if (inputEl) {
+           const btnEl = inputEl.previousElementSibling;
+           if (btnEl && btnEl.classList.contains('btn')) {
+              btnEl.dataset.originalText = btnEl.dataset.originalText || btnEl.textContent;
+              btnEl.textContent = '✅ Imagen Lista (¡Guarda!)';
+              btnEl.style.backgroundColor = 'rgba(39, 174, 96, 0.15)';
+              btnEl.style.borderColor = 'var(--green)';
+              btnEl.style.color = 'var(--green)';
+           }
+        }
+      };
+
+      window.resetFileButtonState = function(id) {
+        const inputEl = document.getElementById(id);
+        if (inputEl) {
+           const btnEl = inputEl.previousElementSibling;
+           if (btnEl && btnEl.classList.contains('btn') && btnEl.dataset.originalText) {
+              btnEl.textContent = btnEl.dataset.originalText;
+              btnEl.style.backgroundColor = '';
+              btnEl.style.borderColor = '';
+              btnEl.style.color = '';
+           }
+        }
+      };
+
       // Comprime una imagen Base64 usando un canvas para no exceder los 4.5MB de Vercel
       function compressImage(base64Str, maxWidth = 1200, quality = 0.75) {
         return new Promise((resolve, reject) => {
@@ -1227,6 +1254,7 @@
         let result = canvas.toDataURL('image/jpeg', 0.85); 
         
         window.b64Files[currentCropId] = result;
+        window.setFileButtonSuccess(currentCropId);
         
         if (currentCropId === 'cms-logo') document.getElementById('cms-logo-preview').src = result;
         if (currentCropId === 'cms-hero-bg') document.getElementById('cms-hero-preview').src = result;
@@ -1521,6 +1549,8 @@
             showToast('\u2705 Ajustes web actualizados');
             delete window.b64Files['cms-logo'];
             delete window.b64Files['cms-hero-bg'];
+            window.resetFileButtonState('cms-logo');
+            window.resetFileButtonState('cms-hero-bg');
             loadCMS();
           } else {
             alert(json.error || json.message || 'Error al guardar');
@@ -1632,6 +1662,7 @@
             showToast('\u2705 Imagen añadida');
             fileInput.value = '';
             delete window.b64Files['new-gal-file'];
+            window.resetFileButtonState('new-gal-file');
             titleInput.value = '';
             loadGallery();
           } else {
@@ -2008,6 +2039,7 @@
         const form = document.getElementById('barber-form');
         const title = document.getElementById('modal-title');
         form.reset();
+        window.resetFileButtonState('b-foto');
 
         if (id) {
           title.textContent = 'Editar Barbero';
@@ -2162,6 +2194,7 @@
         document.getElementById('s-id').value = '';
         document.getElementById('service-form').reset();
         delete window.b64Files['s-imagen'];
+        window.resetFileButtonState('s-imagen');
         document.getElementById('s-modal-title').textContent = 'Nuevo Servicio';
         document.getElementById('service-modal').classList.add('show');
       };
@@ -2173,6 +2206,7 @@
       window.editService = (id) => {
         const s = serviciosList.find(x => x.id == id);
         if(!s) return;
+        window.resetFileButtonState('s-imagen');
         document.getElementById('s-id').value = s.id;
         document.getElementById('s-nombre').value = s.nombre;
         document.getElementById('s-descripcion').value = s.descripcion || '';
