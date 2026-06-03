@@ -528,6 +528,11 @@
       th, td { padding: 8px 4px !important; font-size: 0.75rem !important; } 
       .col-avatar { width: 32px; height: 32px; }
       .btn { margin-bottom: 8px; display: block; width: 100%; text-align: center; white-space: nowrap; }
+      
+      .resenas-top-bar { align-items: flex-start !important; }
+      .resenas-left { flex-direction: column; align-items: flex-start !important; gap: 8px !important; }
+      .resenas-right { flex-direction: column; align-items: flex-end !important; gap: 8px !important; }
+      .resenas-right .btn { width: auto !important; margin-bottom: 0 !important; }
       .status-badge { padding: 3px 6px; font-size: 0.65rem; }
       /* Prevent price and duration from wrapping */
       td:nth-child(3), td:nth-child(4) { white-space: nowrap; }
@@ -736,22 +741,25 @@
 
       <section id="resenas" class="section">
         <div class="card">
-          <div class="card-title" style="justify-content:space-between">
+          <div class="card-title">
             <span>Control de Reseñas</span>
-            <div>
-              <button class="btn btn-secondary" style="color:var(--red);border-color:var(--red);margin-right:8px;" onclick="deleteAllResenas()">Eliminar Todas</button>
-              <button class="btn btn-primary" style="background:var(--red);color:#fff;" onclick="deleteSelectedResenas()">Eliminar Seleccionadas</button>
-            </div>
           </div>
           
-          <div style="display:flex;gap:12px;margin-bottom:20px;align-items:center;">
-            <select id="resenas-filter" onchange="renderResenasAdmin()" style="padding:10px 16px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--bright);outline:none;">
-              <option value="newest">Más Recientes</option>
-              <option value="oldest">Más Antiguas</option>
-              <option value="best">Mejor Calificadas (5★)</option>
-              <option value="worst">Peor Calificadas (1-3★)</option>
-            </select>
-            <span style="color:var(--muted);font-size:0.85rem;" id="resenas-count">Cargando...</span>
+          <div class="resenas-top-bar" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; margin-bottom:20px;">
+            <div class="resenas-left" style="display:flex; align-items:center; gap:12px;">
+              <select id="resenas-filter" onchange="renderResenasAdmin()" style="padding:10px 16px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--bright);outline:none;">
+                <option value="newest">Más Recientes</option>
+                <option value="oldest">Más Antiguas</option>
+                <option value="best">Mejor Calificadas (5★)</option>
+                <option value="worst">Peor Calificadas (1-3★)</option>
+              </select>
+              <span style="color:var(--muted);font-size:0.85rem;" id="resenas-count">Cargando...</span>
+            </div>
+            
+            <div class="resenas-right" style="display:flex; align-items:center; gap:8px;">
+              <button class="btn btn-secondary" style="color:var(--red);border-color:var(--red);" onclick="deleteAllResenas()">Eliminar Todas</button>
+              <button class="btn btn-primary" style="background:var(--red);color:#fff;" onclick="deleteSelectedResenas()">Eliminar Seleccionadas</button>
+            </div>
           </div>
 
           <div class="table-wrapper">
