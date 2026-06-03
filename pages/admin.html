@@ -1160,7 +1160,8 @@
         let ratio = NaN; // Libre
         if (id === 'b-foto' || id === 'cms-logo') ratio = 1;
         if (id === 'cms-hero-bg') ratio = 16 / 9;
-        if (id === 's-imagen' || id === 'new-gal-file') ratio = 3 / 4;
+        if (id === 's-imagen') ratio = 4 / 3; // En index.html la tarjeta de servicio usa 4/3 (Horizontal)
+        if (id === 'new-gal-file') ratio = 4 / 5; // En index.html la galería usa 4/5 (Retrato)
 
         currentCropId = id;
         image.src = imgSrc;
