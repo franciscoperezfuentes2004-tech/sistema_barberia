@@ -404,9 +404,10 @@
       .table-wrapper td:last-child .btn {
         display: block;
         width: 100%;
-        padding: 6px 8px !important;
-        font-size: 0.7rem !important;
+        padding: 10px 12px !important;
+        font-size: 0.75rem !important;
         margin: 0 0 8px 0 !important;
+        white-space: nowrap !important;
       }
       .table-wrapper td:last-child .btn:last-child {
         margin-bottom: 0 !important;
@@ -527,7 +528,7 @@
     @media(max-width:768px){ 
       th, td { padding: 8px 4px !important; font-size: 0.75rem !important; } 
       .col-avatar { width: 32px; height: 32px; }
-      .btn { margin-bottom: 4px; display: block; width: 100%; text-align: center; }
+      .btn { margin-bottom: 8px; display: block; width: 100%; text-align: center; white-space: nowrap; }
       .status-badge { padding: 3px 6px; font-size: 0.65rem; }
       /* Prevent price and duration from wrapping */
       td:nth-child(3), td:nth-child(4) { white-space: nowrap; }
@@ -658,7 +659,9 @@
               <option value="4">Semana 4 (Días 22-Fin)</option>
             </select>
           </div>
-          <canvas id="statChart" height="80"></canvas>
+          <div style="height: 250px; width: 100%; position: relative;">
+            <canvas id="statChart"></canvas>
+          </div>
         </div>
 
         <div class="card">
@@ -1670,6 +1673,7 @@
           },
           options: {
             responsive: true,
+            maintainAspectRatio: false,
             scales: {
               y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { stepSize: 1 } },
               x: { grid: { color: 'rgba(255,255,255,0.05)' } }
