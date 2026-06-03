@@ -31,16 +31,19 @@ $ultimo_dia_num = (int)date('t', strtotime($primer_dia));
 
 // Cargar horario global (barbero_id = 0)
 $horario_global = [];
-$res_h = mysqli_query($conexion, "SELECT dia_semana, activo FROM horarios WHERE barbero_id = 0");
+$hora_fin_global = [];
+$res_h = mysqli_query($conexion, "SELECT dia_semana, activo, hora_fin FROM horarios WHERE barbero_id = 0");
 if ($res_h) {
     while ($row = mysqli_fetch_assoc($res_h)) {
         $horario_global[(int)$row['dia_semana']] = (int)$row['activo'];
+        $hora_fin_global[(int)$row['dia_semana']] = $row['hora_fin'];
     }
 }
 // Si no hay horario global configurado, por defecto asumimos todo abierto (1)
 for ($i = 0; $i <= 6; $i++) {
     if (!isset($horario_global[$i])) {
         $horario_global[$i] = 1; 
+        $hora_fin_global[$i] = '20:00:00';
     }
 }
 
@@ -62,7 +65,13 @@ for ($d = 1; $d <= $ultimo_dia_num; $d++) {
     } elseif (!$esta_abierto) {
         $estado = 'cerrado';
     } elseif ($fecha_actual === $hoy_ymd) {
-        $estado = 'hoy';
+        // Validar si ya pasó la hora de cierre
+        $hora_actual = date('H:i:s');
+        if ($hora_actual > $hora_fin_global[$dia_semana]) {
+            $estado = 'lleno';
+        } else {
+            $estado = 'hoy';
+        }
     } else {
         $estado = 'disponible';
     }
