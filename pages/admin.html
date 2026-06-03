@@ -939,8 +939,8 @@
                 <img id="cms-logo-preview" src="../assets/img/hero-bg.png" style="width: 80px; height: 80px; min-width: 80px; object-fit: cover; background: #fff; border-radius: 12px; border: 1px solid var(--border);" alt="Logo">
                 <div style="flex:1;">
                   <div style="width:100%; max-width:200px;">
-                    <input type="file" id="cms-logo" accept="image/*" class="input-file-seguro">
-                    <label for="cms-logo" class="btn btn-secondary" style="width:100%; text-align:center; padding:8px 12px; margin:0; font-size:0.8rem; display:block;">Cambiar Logo</label>
+                    <input type="file" id="cms-logo" accept="image/*" style="display:none;">
+                    <button type="button" class="btn btn-secondary" style="width:100%; text-align:center; padding:8px 12px; margin:0; font-size:0.8rem; display:block;" onclick="document.getElementById('cms-logo').click()">Cambiar Logo</button>
                   </div>
                   <div style="font-size:0.7rem; color:var(--muted); margin-top: 6px;">Se recomienda PNG transparente o imagen cuadrada.</div>
                 </div>
@@ -967,8 +967,8 @@
                 <img id="cms-hero-preview" src="../assets/img/hero-bg.png" style="width: 140px; height: 80px; min-width: 140px; object-fit: cover; background: #000; border-radius: 8px; border: 1px solid var(--border);" alt="Portada">
                 <div style="flex:1;">
                   <div style="width:100%; max-width:200px;">
-                    <input type="file" id="cms-hero-bg" accept="image/*" class="input-file-seguro">
-                    <label for="cms-hero-bg" class="btn btn-secondary" style="width:100%; text-align:center; padding:8px 12px; margin:0; font-size:0.8rem; display:block;">Cambiar Portada</label>
+                    <input type="file" id="cms-hero-bg" accept="image/*" style="display:none;">
+                    <button type="button" class="btn btn-secondary" style="width:100%; text-align:center; padding:8px 12px; margin:0; font-size:0.8rem; display:block;" onclick="document.getElementById('cms-hero-bg').click()">Cambiar Portada</button>
                   </div>
                   <div style="font-size:0.7rem; color:var(--muted); margin-top: 6px;">Se recomienda imagen oscura y horizontal (ej. 1920x1080).</div>
                 </div>
@@ -988,8 +988,8 @@
               <div class="upload-row" style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
                 <input type="text" id="new-gal-title" placeholder="Título (ej. Skin Fade)" style="flex:1; min-width:150px; padding:10px 14px; background:var(--bg); border:1px solid var(--border); border-radius:8px; color:var(--bright); font-family:var(--sans); outline:none;">
                 <div style="flex:1; min-width:120px;">
-                  <input type="file" id="new-gal-file" accept="image/*" class="input-file-seguro">
-                  <label for="new-gal-file" class="btn btn-secondary" style="width:100%; text-align:center; padding:10px 14px; margin:0; display:block; box-sizing:border-box;">Elegir Foto</label>
+                  <input type="file" id="new-gal-file" accept="image/*" style="display:none;">
+                  <button type="button" class="btn btn-secondary" style="width:100%; text-align:center; padding:10px 14px; margin:0; display:block; box-sizing:border-box;" onclick="document.getElementById('new-gal-file').click()">Elegir Foto</button>
                 </div>
                 <button class="btn btn-primary" onclick="addGalleryImage()">Subir</button>
               </div>
@@ -1039,8 +1039,8 @@
         <div class="form-group">
           <label>Foto de Perfil</label>
           <div style="width:100%;">
-            <input type="file" id="b-foto" accept="image/*" class="input-file-seguro">
-            <label for="b-foto" class="btn btn-secondary" style="width:100%; text-align:center; margin:0; display:block; box-sizing:border-box;">Toca para seleccionar foto...</label>
+            <input type="file" id="b-foto" accept="image/*" style="display:none;">
+            <button type="button" class="btn btn-secondary" style="width:100%; text-align:center; margin:0; display:block; box-sizing:border-box;" onclick="document.getElementById('b-foto').click()">Toca para seleccionar foto...</button>
           </div>
           <small style="color:var(--muted);font-size:0.7rem;margin-top:4px">Opcional. Se recomienda una imagen cuadrada.</small>
         </div>
@@ -1102,8 +1102,8 @@
         <div class="form-group">
           <label>Imagen de Referencia</label>
           <div style="width:100%;">
-            <input type="file" id="s-imagen" accept="image/*" class="input-file-seguro">
-            <label for="s-imagen" class="btn btn-secondary" style="width:100%; text-align:center; margin:0; display:block; box-sizing:border-box;">Toca para seleccionar foto...</label>
+            <input type="file" id="s-imagen" accept="image/*" style="display:none;">
+            <button type="button" class="btn btn-secondary" style="width:100%; text-align:center; margin:0; display:block; box-sizing:border-box;" onclick="document.getElementById('s-imagen').click()">Toca para seleccionar foto...</button>
           </div>
           <small style="color:var(--muted);font-size:0.7rem;margin-top:4px">Opcional. Se ajustará automáticamente a formato horizontal.</small>
         </div>
