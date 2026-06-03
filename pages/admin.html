@@ -1171,7 +1171,11 @@
         
         globalCropper = new Cropper(image, {
           aspectRatio: ratio,
-          viewMode: 2,
+          viewMode: 1,
+          dragMode: 'move',
+          cropBoxResizable: false,
+          cropBoxMovable: false,
+          toggleDragModeOnDblclick: false,
           background: false,
           autoCropArea: 0.9,
           responsive: true
@@ -2161,6 +2165,17 @@
         document.getElementById('service-modal').classList.add('show');
       };
 
+      function dataURItoBlob(dataURI) {
+        var byteString = atob(dataURI.split(',')[1]);
+        var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+        var ab = new ArrayBuffer(byteString.length);
+        var ia = new Uint8Array(ab);
+        for (var i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+        }
+        return new Blob([ab], {type: mimeString});
+      }
+
       window.saveService = async (e) => {
         e.preventDefault();
         const id = document.getElementById('s-id').value;
@@ -2175,9 +2190,14 @@
         formData.append('precio', document.getElementById('s-precio').value);
         formData.append('duracion_min', document.getElementById('s-duracion').value);
 
-        const fileInput = document.getElementById('s-imagen');
-        if (fileInput && fileInput.files.length > 0) {
-          formData.append('imagen', fileInput.files[0]);
+        if (window.b64Files['s-imagen']) {
+          const blob = dataURItoBlob(window.b64Files['s-imagen']);
+          formData.append('imagen', blob, 'cropped.jpg');
+        } else {
+          const fileInput = document.getElementById('s-imagen');
+          if (fileInput && fileInput.files.length > 0) {
+            formData.append('imagen', fileInput.files[0]);
+          }
         }
 
         const url = `${API}/guardar_servicio.php`;
