@@ -19,7 +19,8 @@
       --serif:Arial, Helvetica, sans-serif; --sans:'Inter',system-ui,sans-serif;
       --tr:all .2s ease;
     }
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+    button:active, .btn:active, .action-btn:active { transform: scale(0.96) !important; transition: transform 0.1s !important; }
     body{font-family:var(--sans);background:var(--bg);color:var(--base);
          height:100vh;overflow:hidden;display:flex;-webkit-font-smoothing:antialiased}
     
@@ -91,7 +92,7 @@
     
     .btn{
       display:inline-flex;align-items:center;justify-content:center;gap:8px;
-      padding:10px 16px;border-radius:8px;font-size:.85rem;font-weight:600;
+      padding:12px 16px;border-radius:10px;font-size:.85rem;font-weight:600;
       cursor:pointer;transition:var(--tr);border:none;font-family:var(--sans);
     }
     .btn-primary{background:var(--gold);color:#000}
@@ -485,10 +486,10 @@
         min-width: 90px !important;
       }
 
-      /* ── Botones compactos ── */
+      /* ── Botones ── */
       .btn {
-        padding: 8px 12px !important;
-        font-size: 0.8rem !important;
+        padding: 12px 16px !important;
+        font-size: 0.85rem !important;
       }
 
       /* ── Galería más compacta ── */
@@ -526,7 +527,7 @@
     @media(max-width:768px){ 
       th, td { padding: 8px 4px !important; font-size: 0.75rem !important; } 
       .col-avatar { width: 32px; height: 32px; }
-      .btn { padding: 4px 8px !important; font-size: 0.65rem !important; margin-bottom: 4px; display: block; width: 100%; text-align: center; }
+      .btn { margin-bottom: 4px; display: block; width: 100%; text-align: center; }
       .status-badge { padding: 3px 6px; font-size: 0.65rem; }
       /* Prevent price and duration from wrapping */
       td:nth-child(3), td:nth-child(4) { white-space: nowrap; }

@@ -21,7 +21,8 @@
       --tr:all .22s cubic-bezier(.4,0,.2,1);
       --gutter:16px;
     }
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+    button:active, .btn-logout:active, .act-btn:active, .cal-day:active:not(.disabled) { transform: scale(0.96) !important; transition: transform 0.1s !important; }
     html{scroll-behavior:smooth}
     body{font-family:var(--sans);background:var(--bg);color:var(--base);
          min-height:100dvh;overflow-x:hidden;
@@ -226,8 +227,8 @@
     .appt-actions{display:flex;gap:6px;flex-wrap:wrap}
     .act-btn{
       display:inline-flex;align-items:center;gap:4px;
-      padding:7px 12px;border-radius:10px;border:none;
-      font-size:.7rem;font-weight:700;cursor:pointer;
+      padding:10px 14px;border-radius:10px;border:none;
+      font-size:.75rem;font-weight:700;cursor:pointer;
       transition:var(--tr);letter-spacing:.02em;
     }
     .act-btn:active{transform:scale(.96)}
