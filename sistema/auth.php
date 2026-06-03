@@ -36,7 +36,7 @@ if (empty($user_input) || empty($pass_input)) {
 }
 
 // Búsqueda del usuario de forma segura en 'usuarios' (Admins)
-$sql = "SELECT id, usuario, password, rol FROM `usuarios` WHERE usuario = ? LIMIT 1";
+$sql = "SELECT id, usuario, password, rol FROM `usuarios` WHERE BINARY usuario = ? LIMIT 1";
 $stmt = mysqli_prepare($conexion, $sql);
 
 if (!$stmt) {
@@ -68,7 +68,7 @@ mysqli_stmt_close($stmt);
 
 // Si no es admin, buscar en la tabla 'barberos'
 if (!$logged_in) {
-    $sql_b = "SELECT id, usuario, password, nombre, foto FROM `barberos` WHERE usuario = ? LIMIT 1";
+    $sql_b = "SELECT id, usuario, password, nombre, foto FROM `barberos` WHERE BINARY usuario = ? LIMIT 1";
     $stmt_b = mysqli_prepare($conexion, $sql_b);
     if ($stmt_b) {
         mysqli_stmt_bind_param($stmt_b, "s", $user_input);
