@@ -6,6 +6,7 @@
   <title>Admin Dashboard — Barbería Premium</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     /* ═══════════ TOKENS ═══════════ */
@@ -538,6 +539,22 @@
       /* Prevent price and duration from wrapping */
       td:nth-child(3), td:nth-child(4) { white-space: nowrap; }
     }
+
+    /* ── CROPPER MODAL ── */
+    #cropperModal {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(10,10,10,0.98); z-index: 99999;
+      display: none; flex-direction: column; align-items: center; justify-content: center;
+      padding: 20px;
+    }
+    #cropperModal.show { display: flex; }
+    .cropper-container-wrapper {
+      width: 100%; max-width: 600px; height: 60vh;
+      background: #000; border: 1px solid var(--border); border-radius: 16px;
+      overflow: hidden; margin-bottom: 24px;
+    }
+    .cropper-line, .cropper-point { background-color: var(--gold) !important; }
+    .cropper-view-box { outline-color: var(--gold) !important; }
   </style>
 </head>
 <body>
@@ -1073,6 +1090,22 @@
 
   <div class="toast" id="toast">✅ Cambios guardados correctamente</div>
 
+  <!-- MODAL CROPPER -->
+  <div id="cropperModal">
+    <div style="width:100%; max-width:600px; display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+      <h3 style="color:var(--gold); margin:0;">Ajustar Imagen</h3>
+      <button class="btn btn-secondary" onclick="closeCropper()" style="padding:6px 12px; font-size:0.8rem; border:none; background:transparent;">X</button>
+    </div>
+    <div class="cropper-container-wrapper">
+      <img id="cropper-image" src="" style="display:block; max-width:100%;">
+    </div>
+    <div style="display:flex; gap:16px; width:100%; max-width:600px;">
+      <button class="btn btn-secondary" style="flex:1;" onclick="closeCropper()">Cancelar</button>
+      <button class="btn btn-primary" style="flex:1;" onclick="confirmCrop()">Recortar y Guardar</button>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
   <script>
     (() => {
       const API = '../sistema';
@@ -1117,6 +1150,69 @@
         });
       }
       
+      let globalCropper = null;
+      let currentCropId = null;
+
+      window.openCropper = function(imgSrc, id) {
+        const image = document.getElementById('cropper-image');
+        const modal = document.getElementById('cropperModal');
+        
+        let ratio = NaN; // Libre
+        if (id === 'b-foto' || id === 'cms-logo') ratio = 1;
+        if (id === 'cms-hero-bg') ratio = 16 / 9;
+        if (id === 's-imagen' || id === 'new-gal-file') ratio = 3 / 4;
+
+        currentCropId = id;
+        image.src = imgSrc;
+        modal.classList.add('show');
+
+        if (globalCropper) globalCropper.destroy();
+        
+        globalCropper = new Cropper(image, {
+          aspectRatio: ratio,
+          viewMode: 2,
+          background: false,
+          autoCropArea: 0.9,
+          responsive: true
+        });
+      };
+
+      window.closeCropper = function() {
+        document.getElementById('cropperModal').classList.remove('show');
+        if (globalCropper) {
+          globalCropper.destroy();
+          globalCropper = null;
+        }
+        if (currentCropId) {
+          const el = document.getElementById(currentCropId);
+          if (el) el.value = '';
+        }
+        currentCropId = null;
+      };
+
+      window.confirmCrop = async function() {
+        if (!globalCropper || !currentCropId) return;
+        
+        const canvas = globalCropper.getCroppedCanvas({
+          maxWidth: 1200,
+          maxHeight: 1200
+        });
+        
+        if (!canvas) { alert('Error al recortar la imagen.'); return; }
+        
+        let result = canvas.toDataURL('image/jpeg', 0.85); 
+        
+        window.b64Files[currentCropId] = result;
+        
+        if (currentCropId === 'cms-logo') document.getElementById('cms-logo-preview').src = result;
+        if (currentCropId === 'cms-hero-bg') document.getElementById('cms-hero-preview').src = result;
+        
+        document.getElementById('cropperModal').classList.remove('show');
+        globalCropper.destroy();
+        globalCropper = null;
+        currentCropId = null;
+      };
+
       function attachFileListeners() {
         const ids = ['cms-logo', 'cms-hero-bg', 'new-gal-file', 'b-foto', 's-imagen'];
         ids.forEach(id => {
@@ -1129,14 +1225,8 @@
                 return;
               }
               const reader = new FileReader();
-              reader.onloadend = async function() {
-                let result = reader.result;
-                // Comprimir para no exceder 4.5MB de Vercel
-                try { result = await compressImage(result, 1200, 0.75); } catch(err) { /* usar original */ }
-                window.b64Files[id] = result;
-                console.log(`Imagen ${id} conectada y convertida con éxito (${(result.length / 1024).toFixed(0)} KB)`);
-                if (id === 'cms-logo') document.getElementById('cms-logo-preview').src = result;
-                if (id === 'cms-hero-bg') document.getElementById('cms-hero-preview').src = result;
+              reader.onloadend = function() {
+                openCropper(reader.result, id);
               };
               reader.readAsDataURL(file);
             });
