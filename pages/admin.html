@@ -926,7 +926,7 @@
               <div class="preview-row" style="display:flex; align-items:center; gap:16px; margin-bottom: 12px;">
                 <img id="cms-logo-preview" src="../assets/img/hero-bg.png" style="width: 80px; height: 80px; min-width: 80px; object-fit: cover; background: #fff; border-radius: 12px; border: 1px solid var(--border);" alt="Logo">
                 <div>
-                  <input type="file" id="cms-logo" accept="image/png, image/jpeg, image/webp" style="padding: 8px; background: transparent; border: none; width: 100%;">
+                  <input type="file" id="cms-logo" accept="image/*" style="padding: 8px; background: transparent; border: none; width: 100%;">
                   <div style="font-size:0.7rem; color:var(--muted); margin-top: 4px;">Se recomienda PNG transparente o imagen cuadrada.</div>
                 </div>
               </div>
@@ -951,7 +951,7 @@
               <div class="preview-row" style="display:flex; align-items:center; gap:16px; margin-bottom: 12px;">
                 <img id="cms-hero-preview" src="../assets/img/hero-bg.png" style="width: 140px; height: 80px; min-width: 140px; object-fit: cover; background: #000; border-radius: 8px; border: 1px solid var(--border);" alt="Portada">
                 <div>
-                  <input type="file" id="cms-hero-bg" accept="image/png, image/jpeg, image/webp" style="padding: 8px; background: transparent; border: none; width: 100%;">
+                  <input type="file" id="cms-hero-bg" accept="image/*" style="padding: 8px; background: transparent; border: none; width: 100%;">
                   <div style="font-size:0.7rem; color:var(--muted); margin-top: 4px;">Se recomienda imagen oscura y horizontal (ej. 1920x1080).</div>
                 </div>
               </div>
@@ -969,7 +969,7 @@
               <div style="font-weight:600; margin-bottom:12px; font-size:0.9rem; color:var(--bright)">Añadir Nueva Foto</div>
               <div class="upload-row" style="display:flex; gap:12px; align-items:center;">
                 <input type="text" id="new-gal-title" placeholder="Título (ej. Skin Fade)" style="flex:1; padding:10px 14px; background:var(--bg); border:1px solid var(--border); border-radius:8px; color:var(--bright); font-family:var(--sans); outline:none;">
-                <input type="file" id="new-gal-file" accept="image/png, image/jpeg, image/webp" style="flex:1;">
+                <input type="file" id="new-gal-file" accept="image/*" style="flex:1;">
                 <button class="btn btn-secondary" onclick="addGalleryImage()">Subir</button>
               </div>
             </div>
@@ -1017,7 +1017,7 @@
         </div>
         <div class="form-group">
           <label>Foto de Perfil</label>
-          <input type="file" id="b-foto" accept="image/png, image/jpeg, image/webp" style="padding: 8px">
+          <input type="file" id="b-foto" accept="image/*" style="padding: 8px">
           <small style="color:var(--muted);font-size:0.7rem;margin-top:4px">Opcional. Se recomienda una imagen cuadrada.</small>
         </div>
         <div class="form-group">
@@ -1077,7 +1077,7 @@
         </div>
         <div class="form-group">
           <label>Imagen de Referencia</label>
-          <input type="file" id="s-imagen" accept="image/png, image/jpeg, image/webp" style="padding: 8px">
+          <input type="file" id="s-imagen" accept="image/*" style="padding: 8px">
           <small style="color:var(--muted);font-size:0.7rem;margin-top:4px">Opcional. Se ajustará automáticamente a formato retrato.</small>
         </div>
         <div style="margin-top:24px;display:flex;gap:12px;justify-content:flex-end">

@@ -42,6 +42,11 @@ if (!in_array($tabla, $tablas_permitidas)) {
 $sql = "SELECT * FROM `" . $tabla . "` WHERE 1=1";
 
 // 2. Lógica Condicional de Filtros (Seguros: por ID o Fecha)
+if ($tabla === 'barberos') {
+    if (isset($_GET['activos']) && $_GET['activos'] == '1') {
+        $sql .= " AND activo = 1";
+    }
+}
 if ($tabla === 'horarios') {
     if (isset($_GET['global']) && $_GET['global'] == '1') {
         // Página pública: solo horarios maestros (barbero_id = 0)
