@@ -101,14 +101,14 @@
     .btn-secondary:hover{background:var(--s3);color:var(--bright)}
 
     /* ── 1. AGENDA GLOBAL ── */
-    .agenda-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;min-width:900px}
+    .agenda-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px;padding-bottom:16px}
     .agenda-col{
       background: linear-gradient(145deg, rgba(34,34,34,0.6), rgba(20,20,20,0.95));
       backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
       border: 1px solid rgba(255,255,255,0.06);
       border-top: 1px solid rgba(255,255,255,0.12);
       box-shadow: 0 10px 30px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);
-      border-radius:24px;display:flex;flex-direction:column;height:calc(100vh - 200px);
+      border-radius:24px;display:flex;flex-direction:column;height:480px;
     }
     .col-header{
       padding:16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;
@@ -365,11 +365,10 @@
       .agenda-grid {
         display: flex;
         flex-direction: column;
-        min-width: unset;
       }
       .agenda-col {
-        height: auto;
-        min-height: 300px;
+        height: 480px;
+        min-height: unset;
       }
       .table-wrapper {
         overflow-x: auto;
