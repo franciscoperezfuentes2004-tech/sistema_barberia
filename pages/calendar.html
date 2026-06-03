@@ -64,9 +64,15 @@
     .date-card.selected .date-day,.date-card.selected .date-num{color:var(--gold)}
 
     /* Barbers */
-    #barbers-grid{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:14px;}
+    #barbers-grid{
+      display:flex;flex-wrap:nowrap;justify-content:flex-start;gap:14px;
+      overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:12px;
+      scroll-behavior:smooth;-webkit-overflow-scrolling:touch;
+      width:max-content;max-width:100%;margin:0 auto;
+    }
+    #barbers-grid::-webkit-scrollbar{display:none;}
     .barber-card{
-      width: 170px;
+      width: 170px;flex-shrink:0;scroll-snap-align:center;
       background:linear-gradient(to bottom, var(--s1), var(--bg));border:1px solid var(--border);border-radius:16px;
       overflow:hidden;cursor:pointer;transition:var(--tr);text-align:center;
       opacity: 0.5; pointer-events: none;
@@ -184,7 +190,7 @@
     
     /* Responsive Alignment for Mobile */
     @media (max-width: 768px) {
-      .dates-scroll, #barbers-grid {
+      .dates-scroll {
         justify-content: center;
       }
     }
