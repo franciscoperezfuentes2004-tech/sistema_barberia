@@ -1,13 +1,14 @@
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
-  <meta name="theme-color" content="#0F0F0F"/>
-  <title>Paso 3 — Confirmar · Barbería</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<meta content="#0F0F0F" name="theme-color"/>
+<title>Paso 3 — Confirmar · Barbería</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<style>
     :root{
       --gold:#C9A84C;--gold-l:#E8C97A;--gold-d:#9A7B32;
       --bg:#0F0F0F;--s1:#181818;--s2:#222;--s3:#333;--border:#333;
@@ -112,96 +113,86 @@
     }
     .modal-btn:hover { filter: brightness(1.1); transform: translateY(-2px); }
   </style>
-  <script src="../assets/js/i18n.js"></script>
+<script src="../assets/js/i18n.js"></script>
 </head>
 <body>
-
-  <header class="app-header">
-    <div class="hdr-inner">
-      <div class="hdr-top">
-        <a href="../index.html" class="logo">
-          <div class="logo-mark">✂️</div>
-          <span class="logo-name">Barbería</span>
-        </a>
-        <a href="calendar.html" style="font-size:.78rem;color:var(--muted);text-decoration:none">← Volver</a>
-      </div>
-    <nav class="steps" aria-label="Pasos de reserva">
-      <div class="step-item">
-        <div class="step-dot done">✓</div>
-        <span class="step-label done" data-i18n="nav_services">Servicios</span>
-      </div>
-      <div class="step-line done"></div>
-      <div class="step-item">
-        <div class="step-dot done">✓</div>
-        <span class="step-label done" data-i18n="modal_step1">Fecha &amp; Barbero</span>
-      </div>
-      <div class="step-line done"></div>
-      <div class="step-item">
-        <div class="step-dot active" aria-current="step">3</div>
-        <span class="step-label active" data-i18n="modal_step3">Confirmar</span>
-      </div>
-    </nav>
-
-    <div class="confirm-wrapper">
-      <h1 class="sec-title">Resumen de tu cita</h1>
-    
-    <div class="summary-card">
-      <div class="sum-row">
-        <div class="sum-label">Servicios</div>
-        <div class="sum-val" id="sum-svc"></div>
-      </div>
-      <div class="sum-row">
-        <div class="sum-label">Barbero</div>
-        <div class="sum-val" id="sum-barber"></div>
-      </div>
-      <div class="sum-row">
-        <div class="sum-label">Fecha y Hora</div>
-        <div class="sum-val" id="sum-datetime"></div>
-      </div>
-      <div class="sum-row" style="border:none;margin-top:10px">
-        <div class="sum-label">Total a pagar<br><small style="color:var(--muted)">Al finalizar el servicio</small></div>
-        <div class="sum-val sum-total" id="sum-total"></div>
-      </div>
-    </div>
-
-    <h2 class="sec-title" style="font-size:1.15rem;margin-bottom:15px">Tus Datos</h2>
-    <form id="booking-form" onsubmit="event.preventDefault(); submitBooking();">
-      <div class="form-group">
-        <label class="form-label">Nombre Completo *</label>
-        <input type="text" id="inp-nombre" class="form-input" required placeholder="Ej. Juan Pérez" oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Teléfono (10 dígitos) *</label>
-        <input type="tel" id="inp-telefono" class="form-input" required placeholder="Ej. 5551234567" maxlength="10" minlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Correo Electrónico</label>
-        <input type="email" id="inp-email" class="form-input" placeholder="Para enviarte el recibo (Opcional)">
-      </div>
-      
-      <div id="error-msg" style="color:var(--red);font-size:.85rem;margin-top:10px;display:none"></div>
-      
-      <button type="submit" id="btn-submit" class="cta-btn">Confirmar Reserva</button>
-    </form>
-    </div>
-  </main>
-
-  <!-- Success Modal -->
-  <div id="success-modal">
-    <div class="modal-content">
-      <div class="check-circle">✓</div>
-      <h2 class="modal-title">¡Reserva Confirmada!</h2>
-      <p class="modal-desc">
-        Tu lugar está asegurado. Te esperamos el <br>
-        <span class="modal-highlight" id="succ-fecha"></span> a las <span class="modal-highlight" id="succ-hora"></span>
-      </p>
-      <div class="modal-divider"></div>
-      <p style="color:var(--muted); font-size:0.85rem; margin-bottom:24px;">Gracias por elegir nuestra Barbería.<br>Nos vemos pronto.</p>
-      <button onclick="window.location.href='../index.html'" class="modal-btn">Volver al inicio</button>
-    </div>
-  </div>
-
-  <script>
+<header class="app-header">
+<div class="hdr-inner">
+<div class="hdr-top">
+<a class="logo" href="../index.html">
+<div class="logo-mark">✂️</div>
+<span class="logo-name" data-i18n="auto_con_67">Barbería</span>
+</a>
+<a data-i18n="auto_con_68" href="calendar.html" style="font-size:.78rem;color:var(--muted);text-decoration:none">← Volver</a>
+</div>
+<nav aria-label="Pasos de reserva" class="steps">
+<div class="step-item">
+<div class="step-dot done">✓</div>
+<span class="step-label done" data-i18n="nav_services">Servicios</span>
+</div>
+<div class="step-line done"></div>
+<div class="step-item">
+<div class="step-dot done">✓</div>
+<span class="step-label done" data-i18n="modal_step1">Fecha &amp; Barbero</span>
+</div>
+<div class="step-line done"></div>
+<div class="step-item">
+<div aria-current="step" class="step-dot active">3</div>
+<span class="step-label active" data-i18n="modal_step3">Confirmar</span>
+</div>
+</nav>
+<div class="confirm-wrapper">
+<h1 class="sec-title" data-i18n="auto_con_69">Resumen de tu cita</h1>
+<div class="summary-card">
+<div class="sum-row">
+<div class="sum-label"><span data-i18n="auto_con_70">Servicios</span></div>
+<div class="sum-val" id="sum-svc"></div>
+</div>
+<div class="sum-row">
+<div class="sum-label"><span data-i18n="auto_con_71">Barbero</span></div>
+<div class="sum-val" id="sum-barber"></div>
+</div>
+<div class="sum-row">
+<div class="sum-label"><span data-i18n="auto_con_72">Fecha y Hora</span></div>
+<div class="sum-val" id="sum-datetime"></div>
+</div>
+<div class="sum-row" style="border:none;margin-top:10px">
+<div class="sum-label"><span data-i18n="auto_con_73">Total a pagar</span><br/><small style="color:var(--muted)"><span data-i18n="auto_con_74">Al finalizar el servicio</span></small></div>
+<div class="sum-val sum-total" id="sum-total"></div>
+</div>
+</div>
+<h2 class="sec-title" data-i18n="auto_con_75" style="font-size:1.15rem;margin-bottom:15px">Tus Datos</h2>
+<form id="booking-form" onsubmit="event.preventDefault(); submitBooking();">
+<div class="form-group">
+<label class="form-label" data-i18n="auto_con_76">Nombre Completo *</label>
+<input class="form-input" id="inp-nombre" oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')" placeholder="Ej. Juan Pérez" required="" type="text"/>
+</div>
+<div class="form-group">
+<label class="form-label" data-i18n="auto_con_77">Teléfono (10 dígitos) *</label>
+<input class="form-input" id="inp-telefono" maxlength="10" minlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="Ej. 5551234567" required="" type="tel"/>
+</div>
+<div class="form-group">
+<label class="form-label" data-i18n="auto_con_78">Correo Electrónico</label>
+<input class="form-input" id="inp-email" placeholder="Para enviarte el recibo (Opcional)" type="email"/>
+</div>
+<div id="error-msg" style="color:var(--red);font-size:.85rem;margin-top:10px;display:none"></div>
+<button class="cta-btn" data-i18n="auto_con_79" id="btn-submit" type="submit">Confirmar Reserva</button>
+</form>
+</div>
+<!-- Success Modal -->
+<div id="success-modal">
+<div class="modal-content">
+<div class="check-circle">✓</div>
+<h2 class="modal-title" data-i18n="auto_con_81">¡Reserva Confirmada!</h2>
+<p class="modal-desc"><span data-i18n="auto_con_82">Tu lugar está asegurado. Te esperamos el</span><br/>
+<span class="modal-highlight" id="succ-fecha"></span><span data-i18n="auto_con_83">a las</span><span class="modal-highlight" id="succ-hora"></span>
+</p>
+<div class="modal-divider"></div>
+<p style="color:var(--muted); font-size:0.85rem; margin-bottom:24px;"><span data-i18n="auto_con_84">Gracias por elegir nuestra Barbería.</span><br/><span data-i18n="auto_con_85">Nos vemos pronto.</span></p>
+<button class="modal-btn" data-i18n="auto_con_86" onclick="window.location.href='../index.html'">Volver al inicio</button>
+</div>
+</div>
+<script>
     const API = '../sistema';
 
     const step1 = JSON.parse(sessionStorage.getItem('bb_step1') || 'null');
@@ -227,7 +218,7 @@
       const btn = document.getElementById('btn-submit');
       const err = document.getElementById('error-msg');
       btn.disabled = true;
-      btn.textContent = 'Procesando...';
+      btn.textContent = window.t?window.t('processing'):'Procesando...';
       err.style.display = 'none';
 
       const nombre = document.getElementById('inp-nombre').value.trim();
@@ -235,10 +226,10 @@
       const email = document.getElementById('inp-email').value.trim();
 
       if (telefono.length !== 10) {
-        err.textContent = 'El teléfono debe tener exactamente 10 números.';
+        err.textContent = window.t?window.t('phone_err'):'El teléfono debe tener exactamente 10 números.';
         err.style.display = 'block';
         btn.disabled = false;
-        btn.textContent = 'Confirmar Reserva';
+        btn.textContent = window.t?window.t('auto_con_79'):'Confirmar Reserva';
         return;
       }
 
@@ -271,7 +262,7 @@
 
       } catch(e) {
         btn.disabled = false;
-        btn.textContent = 'Confirmar Reserva';
+        btn.textContent = window.t?window.t('auto_con_79'):'Confirmar Reserva';
         err.textContent = e.message;
         err.style.display = 'block';
       }
@@ -306,6 +297,5 @@
     }
     loadBranding();
   </script>
-</body>
+</div></header></body>
 </html>
-

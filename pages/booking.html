@@ -1,14 +1,15 @@
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
-  <meta name="theme-color" content="#0F0F0F"/>
-  <meta name="description" content="Selecciona los servicios que deseas reservar."/>
-  <title>Paso 1 — Selecciona tus Servicios · Barbería</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<meta content="#0F0F0F" name="theme-color"/>
+<meta content="Selecciona los servicios que deseas reservar." name="description"/>
+<title>Paso 1 — Selecciona tus Servicios · Barbería</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<style>
     /* ─── TOKENS ─── */
     :root{
       --gold:#C9A84C;--gold-l:#E8C97A;--gold-d:#9A7B32;
@@ -188,93 +189,83 @@
     }
     .cta-btn:disabled::after{display:none}
   </style>
-  <script src="../assets/js/i18n.js"></script>
+<script src="../assets/js/i18n.js"></script>
 </head>
 <body>
-
-  <header class="app-header" role="banner">
-    <div class="hdr-inner">
-      <!-- Top row -->
-      <div class="hdr-top">
-        <a href="../index.html" class="logo" aria-label="Barbería — Inicio">
-          <div class="logo-mark" aria-hidden="true">✂️</div>
-          <span class="logo-name">Barbería</span>
-        </a>
-        <a href="../index.html" style="font-size:.78rem;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:4px;transition:color .2s"
-           onmouseenter="this.style.color='var(--gold)'" onmouseleave="this.style.color='var(--muted)'">
+<header class="app-header" role="banner">
+<div class="hdr-inner">
+<!-- Top row -->
+<div class="hdr-top">
+<a aria-label="Barbería — Inicio" class="logo" href="../index.html">
+<div aria-hidden="true" class="logo-mark">✂️</div>
+<span class="logo-name" data-i18n="auto_boo_18">Barbería</span>
+</a>
+<a data-i18n="auto_boo_19" href="../index.html" onmouseenter="this.style.color='var(--gold)'" onmouseleave="this.style.color='var(--muted)'" style="font-size:.78rem;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:4px;transition:color .2s">
           ✖ Cancelar
         </a>
-      </div>
-    </div>
-  </header>
-
-  <main role="main" aria-labelledby="main-h">
-    <!-- Steps -->
-    <nav class="steps" aria-label="Pasos de reserva">
-      <div class="step-item">
-        <div class="step-dot active" aria-current="step">1</div>
-        <span class="step-label active" data-i18n="nav_services">Servicios</span>
-      </div>
-      <div class="step-line"></div>
-      <div class="step-item">
-        <div class="step-dot" aria-label="Paso 2 pendiente">2</div>
-        <span class="step-label" data-i18n="modal_step1">Fecha &amp; Barbero</span>
-      </div>
-      <div class="step-line"></div>
-      <div class="step-item">
-        <div class="step-dot" aria-label="Paso 3 pendiente">3</div>
-        <span class="step-label" data-i18n="modal_step3">Confirmar</span>
-      </div>
-    </nav>
-
-    <!-- Greeting -->
-    <section style="margin-bottom:28px">
-      <h1 id="main-h" style="font-family:var(--serif);font-size:1.7rem;font-weight:700;color:var(--bright);line-height:1.2;margin-bottom:5px" data-i18n="modal_title">
+</div>
+</div>
+</header>
+<main aria-labelledby="main-h" role="main">
+<!-- Steps -->
+<nav aria-label="Pasos de reserva" class="steps">
+<div class="step-item">
+<div aria-current="step" class="step-dot active">1</div>
+<span class="step-label active" data-i18n="nav_services">Servicios</span>
+</div>
+<div class="step-line"></div>
+<div class="step-item">
+<div aria-label="Paso 2 pendiente" class="step-dot">2</div>
+<span class="step-label" data-i18n="modal_step1">Fecha &amp; Barbero</span>
+</div>
+<div class="step-line"></div>
+<div class="step-item">
+<div aria-label="Paso 3 pendiente" class="step-dot">3</div>
+<span class="step-label" data-i18n="modal_step3">Confirmar</span>
+</div>
+</nav>
+<!-- Greeting -->
+<section style="margin-bottom:28px">
+<h1 data-i18n="modal_title" id="main-h" style="font-family:var(--serif);font-size:1.7rem;font-weight:700;color:var(--bright);line-height:1.2;margin-bottom:5px">
         Reserva tu Silla
       </h1>
-      <p style="font-size:.82rem;color:var(--muted)" data-i18n="modal_step2">Selecciona el Servicio</p>
-    </section>
-
-    <!-- Services -->
-    <section aria-labelledby="svc-heading">
-      <div class="sec-title-row">
-        <h2 id="svc-heading" class="sec-title">Servicios</h2>
-        <span class="badge-multi">Selección múltiple</span>
-      </div>
-      <div class="divider-line">Menú</div>
-
-      <div id="services-grid" role="group" aria-label="Selecciona los servicios">
-        <!-- Skeletons mientras carga -->
-        <div class="skeleton" style="height:88px"></div>
-        <div class="skeleton" style="height:88px;opacity:.7"></div>
-        <div class="skeleton" style="height:88px;opacity:.5"></div>
-        <div class="skeleton" style="height:88px;opacity:.4"></div>
-        <div class="skeleton" style="height:88px;opacity:.3"></div>
-        <div class="skeleton" style="height:88px;opacity:.2"></div>
-      </div>
-    </section>
-  </main>
-
-  <!-- Bottom fade overlay -->
-  <div class="bottom-fade" aria-hidden="true"></div>
-
-  <!-- Sticky bottom CTA -->
-  <div class="bottom-cta" role="complementary" aria-label="Resumen y continuar">
-    <div class="bottom-inner">
-      <div class="pills" role="status" aria-live="polite">
-        <div class="pill">🛍️ <strong id="pill-count">—</strong></div>
-        <div class="pill">⏱️ <strong id="pill-dur">0 min</strong></div>
-        <div class="pill">💰 <strong id="pill-price">$0 MXN</strong></div>
-      </div>
-      <button id="btn-continuar" class="cta-btn" onclick="goToStep2()"
-              disabled aria-disabled="true" aria-label="Continuar al paso 2">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        <span id="cta-label">Elige al menos un servicio</span>
-      </button>
-    </div>
-  </div>
-
-  <script>
+<p data-i18n="modal_step2" style="font-size:.82rem;color:var(--muted)">Selecciona el Servicio</p>
+</section>
+<!-- Services -->
+<section aria-labelledby="svc-heading">
+<div class="sec-title-row">
+<h2 class="sec-title" data-i18n="auto_boo_23" id="svc-heading">Servicios</h2>
+<span class="badge-multi" data-i18n="auto_boo_24">Selección múltiple</span>
+</div>
+<div class="divider-line"><span data-i18n="auto_boo_25">Menú</span></div>
+<div aria-label="Selecciona los servicios" id="services-grid" role="group">
+<!-- Skeletons mientras carga -->
+<div class="skeleton" style="height:88px"></div>
+<div class="skeleton" style="height:88px;opacity:.7"></div>
+<div class="skeleton" style="height:88px;opacity:.5"></div>
+<div class="skeleton" style="height:88px;opacity:.4"></div>
+<div class="skeleton" style="height:88px;opacity:.3"></div>
+<div class="skeleton" style="height:88px;opacity:.2"></div>
+</div>
+</section>
+</main>
+<!-- Bottom fade overlay -->
+<div aria-hidden="true" class="bottom-fade"></div>
+<!-- Sticky bottom CTA -->
+<div aria-label="Resumen y continuar" class="bottom-cta" role="complementary">
+<div class="bottom-inner">
+<div aria-live="polite" class="pills" role="status">
+<div class="pill">🛍️ <strong id="pill-count">—</strong></div>
+<div class="pill">⏱️ <strong data-i18n="auto_boo_29" id="pill-dur">0 min</strong></div>
+<div class="pill">💰 <strong id="pill-price">$0 MXN</strong></div>
+</div>
+<button aria-disabled="true" aria-label="Continuar al paso 2" class="cta-btn" disabled="" id="btn-continuar" onclick="goToStep2()">
+<svg aria-hidden="true" fill="none" height="18" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24" width="18"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+<span data-i18n="auto_boo_30" id="cta-label">Elige al menos un servicio</span>
+</button>
+</div>
+</div>
+<script>
   'use strict';
   const API = '../sistema';
 
@@ -416,4 +407,3 @@
   </script>
 </body>
 </html>
-

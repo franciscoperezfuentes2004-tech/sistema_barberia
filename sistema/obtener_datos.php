@@ -174,6 +174,7 @@ if ($tabla === 'ajustes' && count($datos) > 0) {
         'stat_exp'       => $row['stat_exp'] ?? '',
         'stat_clientes'  => $row['stat_clientes'] ?? '',
         'site_hero_bg'   => $row['site_hero_bg'] ?? '',
+        'site_lang'      => $row['site_lang'] ?? 'es',
         'horario_apertura' => $row['horario_apertura'] ?? '09:00:00',
         'horario_cierre'   => $row['horario_cierre'] ?? '20:00:00'
     ];

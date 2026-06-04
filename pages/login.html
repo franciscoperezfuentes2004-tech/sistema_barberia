@@ -1,14 +1,15 @@
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#0F0F0F">
-  <title>Iniciar Sesión — Barbería Premium</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<meta content="#0F0F0F" name="theme-color"/>
+<title>Iniciar Sesión — Barbería Premium</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<style>
     /* ── Reset & Base ──────────────────────────────── */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -504,91 +505,62 @@
       transition: background-color 5000s ease-in-out 0s;
     }
   </style>
-  <script src="../assets/js/i18n.js"></script>
+<script src="../assets/js/i18n.js"></script>
 </head>
 <body>
-
-  <div class="login-container">
-
-    <!-- Barber Pole -->
-    <div class="barber-pole-wrapper" aria-hidden="true">
-      <div class="barber-pole"></div>
-    </div>
-
-    <!-- Logo -->
-    <div class="logo" aria-hidden="true">✂️</div>
-
-    <!-- Title -->
-    <h1 class="title">Barbería</h1>
-    <p class="subtitle">Portal del Equipo</p>
-
-    <!-- Login Form -->
-    <form class="login-form" id="loginForm" autocomplete="on" novalidate>
-
-      <!-- Error Message -->
-      <div class="error-message" id="errorMessage" role="alert"></div>
-
-      <!-- Username -->
-      <div class="input-group">
-        <input
-          type="text"
-          id="username"
-          name="username"
-          placeholder="Usuario"
-          data-i18n="login_user"
-          autocomplete="username"
-          required
-          spellcheck="false"
-        >
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-          <circle cx="12" cy="7" r="4"/>
-        </svg>
-      </div>
-
-      <!-- Password -->
-      <div class="input-group">
-        <input
-          type="password"
-          id="password"
-          name="password"
-          placeholder="Contraseña"
-          data-i18n="login_pass"
-          autocomplete="current-password"
-          required
-        >
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-        </svg>
-        <button type="button" class="toggle-password" id="togglePassword" aria-label="Mostrar contraseña" tabindex="-1">
-          <!-- Eye On -->
-          <svg class="eye-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-            <circle cx="12" cy="12" r="3"/>
-          </svg>
-          <!-- Eye Off -->
-          <svg class="eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
-            <line x1="1" y1="1" x2="23" y2="23"/>
-          </svg>
-        </button>
-      </div>
-
-      <!-- Submit Button -->
-      <button type="submit" class="btn-submit" id="btnSubmit">
-        <span class="btn-text" data-i18n="login_btn">Iniciar Sesión</span>
-        <span class="spinner"></span>
-      </button>
-    </form>
-
-    <!-- Divider & Footer -->
-    <div class="divider"></div>
-    <p class="footer">© 2026 Barbería Premium · Panel de Staff</p>
-
-  </div>
-
-  <script>
+<div class="login-container">
+<!-- Barber Pole -->
+<div aria-hidden="true" class="barber-pole-wrapper">
+<div class="barber-pole"></div>
+</div>
+<!-- Logo -->
+<div aria-hidden="true" class="logo">✂️</div>
+<!-- Title -->
+<h1 class="title" data-i18n="auto_log_5">Barbería</h1>
+<p class="subtitle" data-i18n="auto_log_6">Portal del Equipo</p>
+<!-- Login Form -->
+<form autocomplete="on" class="login-form" id="loginForm" novalidate="">
+<!-- Error Message -->
+<div class="error-message" id="errorMessage" role="alert"></div>
+<span data-i18n="auto_log_9">Username</span>
+<div class="input-group">
+<input autocomplete="username" data-i18n="login_user" id="username" name="username" placeholder="Usuario" required="" spellcheck="false" type="text"/>
+<svg class="icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+<circle cx="12" cy="7" r="4"></circle>
+</svg>
+</div>
+<span data-i18n="auto_log_10">Password</span>
+<div class="input-group">
+<input autocomplete="current-password" data-i18n="login_pass" id="password" name="password" placeholder="Contraseña" required="" type="password"/>
+<svg class="icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24">
+<rect height="11" rx="2" ry="2" width="18" x="3" y="11"></rect>
+<path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+</svg>
+<button aria-label="Mostrar contraseña" class="toggle-password" id="togglePassword" tabindex="-1" type="button">
+<!-- Eye On -->
+<svg class="eye-on" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+<circle cx="12" cy="12" r="3"></circle>
+</svg>
+<!-- Eye Off -->
+<svg class="eye-off" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24">
+<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+<line x1="1" x2="23" y1="1" y2="23"></line>
+</svg>
+</button>
+</div>
+<span data-i18n="auto_log_13">Submit Button</span>
+<button class="btn-submit" id="btnSubmit" type="submit">
+<span class="btn-text" data-i18n="login_btn">Iniciar Sesión</span>
+<span class="spinner"></span>
+</button>
+</form>
+<!-- Divider & Footer -->
+<div class="divider"></div>
+<p class="footer" data-i18n="auto_log_15">© 2026 Barbería Premium · Panel de Staff</p>
+</div>
+<script>
     (() => {
       // ── API Base URL ───────────────────────────
       const API = '../sistema';
@@ -729,7 +701,5 @@
       });
     })();
   </script>
-
 </body>
 </html>
-
