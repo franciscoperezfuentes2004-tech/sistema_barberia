@@ -560,6 +560,42 @@
     }
     .cropper-line, .cropper-point { background-color: var(--gold) !important; }
     .cropper-view-box { outline-color: var(--gold) !important; }
+  
+    /* --- i18n RESPONSIVE FIXES --- */
+    .btn, button {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    table th, table td {
+      word-break: break-word;
+    }
+    .topbar-title {
+      font-size: clamp(1rem, 4vw, 1.5rem);
+      white-space: normal;
+      line-height: 1.2;
+    }
+    .stat-card h3 {
+      font-size: clamp(0.75rem, 3vw, 0.9rem);
+    }
+    .action-cell {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+    .modal-content {
+      width: 95%;
+      max-width: 500px;
+      margin: 10px auto;
+    }
+    @media (max-width: 768px) {
+      .btn { padding: 8px 10px; font-size: 0.8rem; }
+      .barber-grid { grid-template-columns: 1fr; }
+      .table-responsive { overflow-x: auto; }
+      .stat-grid { grid-template-columns: 1fr 1fr; }
+    }
+
   </style>
 <script src="../assets/js/i18n.js"></script>
 </head>
@@ -620,7 +656,7 @@
 <button aria-label="Menú" class="mobile-nav-toggle" id="mobile-nav-toggle">
 <svg fill="none" height="24" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="24"><line x1="3" x2="21" y1="12" y2="12"></line><line x1="3" x2="21" y1="6" y2="6"></line><line x1="3" x2="21" y1="18" y2="18"></line></svg>
 </button>
-<h2 class="topbar-title" data-i18n="admin_title" id="topbar-title">Control de Citas</h2>
+<h2 class="topbar-title" data-i18n="admin_auto_v2_8" id="topbar-title">Control de Citas</h2>
 </div>
 <div style="display:flex;gap:12px;align-items:center">
 <span id="current-date" style="color:var(--muted);font-size:.85rem"></span>
@@ -1277,7 +1313,7 @@
 
         // Set date
         const d = new Date();
-        document.getElementById('current-date').textContent = d.toLocaleDateString('es-ES', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
+        document.getElementById('current-date').textContent = d.toLocaleDateString(window.currentLang === 'en' ? 'en-US' : 'es-ES', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
         
         loadAgenda();
         setInterval(loadAgenda, 30000); // Refresco cada 30 seg
@@ -1328,7 +1364,7 @@
             <td style="padding:12px;"><strong>${r.cliente_nombre || 'Cliente Anónimo'}</strong></td>
             <td style="color:var(--gold);padding:12px;font-size:1.1rem;">${'★'.repeat(r.calificacion)}${'☆'.repeat(5-r.calificacion)}</td>
             <td style="font-size:0.85rem;color:var(--base);max-width:300px;white-space:normal;padding:12px;">${r.comentario}</td>
-            <td style="font-size:0.8rem;color:var(--muted);padding:12px;">${new Date(r.creado_en).toLocaleDateString()}</td>
+            <td style="font-size:0.8rem;color:var(--muted);padding:12px;">${new Date(r.creado_en).toLocaleDateString(window.currentLang === 'en' ? 'en-US' : 'es-ES')}</td>
           </tr>
         `).join('');
       };
@@ -1822,7 +1858,7 @@
             // Actually, Date constructor works perfectly in modern browsers. Let's keep it robust:
             const parsed = new Date(c.fecha_hora);
             const finalStr = !isNaN(parsed) 
-              ? parsed.toLocaleDateString() + ' ' + parsed.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+              ? parsed.toLocaleDateString(window.currentLang === 'en' ? 'en-US' : 'es-ES') + ' ' + parsed.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
               : c.fecha_hora;
               
             tbody.innerHTML += `
@@ -1859,9 +1895,8 @@
           const ahoraStr = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
           
           const dObj = new Date(hoyISO + 'T12:00:00Z');
-          const dias = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
-          const meses = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
-          document.getElementById('current-date').textContent = `${dias[dObj.getDay()]}, ${dObj.getDate()} de ${meses[dObj.getMonth()]} de ${dObj.getFullYear()}`;
+                    const lang = window.currentLang === 'en' ? 'en-US' : 'es-ES';
+          document.getElementById('current-date').textContent = dObj.toLocaleDateString(lang, {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'});
           
           // 3. Fetch citas and render
           let html = '';

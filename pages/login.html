@@ -504,6 +504,23 @@
       border-color: var(--border);
       transition: background-color 5000s ease-in-out 0s;
     }
+  
+    /* --- i18n RESPONSIVE FIXES --- */
+    button, .btn, .cta-btn, .modal-btn {
+      white-space: normal;
+      word-break: break-word;
+      line-height: 1.2;
+    }
+    .service-card h3, .barber-card h3 {
+      font-size: clamp(0.9rem, 4vw, 1.1rem);
+    }
+    @media (max-width: 480px) {
+      body { padding: 10px; }
+      .container { padding: 15px; }
+      .cal-grid { gap: 2px; }
+      .cal-day { font-size: 0.8rem; padding: 10px 0; }
+    }
+
   </style>
 <script src="../assets/js/i18n.js"></script>
 </head>
