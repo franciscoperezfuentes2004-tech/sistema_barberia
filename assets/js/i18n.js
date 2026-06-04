@@ -62,6 +62,10 @@ const i18nDict = {
         admin_tab_team: "Personal",
         admin_tab_stats: "Estadísticas",
         admin_tab_reviews: "Reseñas",
+        
+        login_user: "Usuario",
+        login_pass: "Contraseña",
+        login_btn: "Ingresar",
         admin_logout: "Cerrar Sesión",
         
         admin_agenda_title: "Agenda Global",
@@ -176,6 +180,10 @@ const i18nDict = {
         admin_tab_team: "Staff",
         admin_tab_stats: "Statistics",
         admin_tab_reviews: "Reviews",
+        
+        login_user: "Username",
+        login_pass: "Password",
+        login_btn: "Log In",
         admin_logout: "Log Out",
         
         admin_agenda_title: "Global Schedule",

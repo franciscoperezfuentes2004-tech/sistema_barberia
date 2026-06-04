@@ -205,6 +205,7 @@
     .cta-btn { background: var(--gradient-gold); border: none; color: #111; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; transition: transform 0.2s, box-shadow 0.2s; }
     .cta-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(225,178,74,0.4); }
   </style>
+  <script src="../assets/js/i18n.js"></script>
 </head>
 <body>
 
@@ -221,22 +222,22 @@
   </header>
 
   <main>
-      <nav class="steps">
-        <div class="step-item">
-          <div class="step-dot done">✓</div>
-          <span class="step-label done">Servicios</span>
-        </div>
-        <div class="step-line done"></div>
-        <div class="step-item">
-          <div class="step-dot active">2</div>
-          <span class="step-label active">Fecha &amp; Barbero</span>
-        </div>
-        <div class="step-line"></div>
-        <div class="step-item">
-          <div class="step-dot">3</div>
-          <span class="step-label">Confirmar</span>
-        </div>
-      </nav>
+    <nav class="steps" aria-label="Pasos de reserva">
+      <div class="step-item">
+        <div class="step-dot done">✓</div>
+        <span class="step-label done" data-i18n="nav_services">Servicios</span>
+      </div>
+      <div class="step-line done"></div>
+      <div class="step-item">
+        <div class="step-dot active" aria-current="step">2</div>
+        <span class="step-label active" data-i18n="modal_step1">Fecha &amp; Barbero</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step-item">
+        <div class="step-dot" aria-label="Paso 3 pendiente">3</div>
+        <span class="step-label" data-i18n="modal_step3">Confirmar</span>
+      </div>
+    </nav>
 
     <style>
       .booking-layout {
@@ -711,6 +712,10 @@
         const json = await res.json();
         if (json.success && json.data) {
           const d = json.data;
+          if (d.site_lang) {
+             window.currentLang = d.site_lang;
+             if(window.applyTranslations) window.applyTranslations(window.currentLang);
+          }
           if (d.site_name) {
             const currentTitle = document.title;
             const stepPrefix = currentTitle.split('·')[0].trim();

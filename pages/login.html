@@ -504,6 +504,7 @@
       transition: background-color 5000s ease-in-out 0s;
     }
   </style>
+  <script src="../assets/js/i18n.js"></script>
 </head>
 <body>
 
@@ -534,6 +535,7 @@
           id="username"
           name="username"
           placeholder="Usuario"
+          data-i18n="login_user"
           autocomplete="username"
           required
           spellcheck="false"
@@ -551,6 +553,7 @@
           id="password"
           name="password"
           placeholder="Contraseña"
+          data-i18n="login_pass"
           autocomplete="current-password"
           required
         >
@@ -574,7 +577,7 @@
 
       <!-- Submit Button -->
       <button type="submit" class="btn-submit" id="btnSubmit">
-        <span class="btn-text">Iniciar Sesión</span>
+        <span class="btn-text" data-i18n="login_btn">Iniciar Sesión</span>
         <span class="spinner"></span>
       </button>
     </form>
@@ -597,6 +600,10 @@
           const json = await res.json();
           if (json.success && json.data) {
             const data = json.data;
+            if (data.site_lang) {
+               window.currentLang = data.site_lang;
+               if(window.applyTranslations) window.applyTranslations(window.currentLang);
+            }
             if (data.site_name) {
               document.title = `Iniciar Sesión — ${data.site_name}`;
               const titleEl = document.querySelector('.title');

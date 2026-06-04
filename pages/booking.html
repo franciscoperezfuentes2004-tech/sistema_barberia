@@ -188,6 +188,7 @@
     }
     .cta-btn:disabled::after{display:none}
   </style>
+  <script src="../assets/js/i18n.js"></script>
 </head>
 <body>
 
@@ -212,28 +213,26 @@
     <nav class="steps" aria-label="Pasos de reserva">
       <div class="step-item">
         <div class="step-dot active" aria-current="step">1</div>
-        <span class="step-label active">Servicios</span>
+        <span class="step-label active" data-i18n="nav_services">Servicios</span>
       </div>
       <div class="step-line"></div>
       <div class="step-item">
         <div class="step-dot" aria-label="Paso 2 pendiente">2</div>
-        <span class="step-label">Fecha &amp; Barbero</span>
+        <span class="step-label" data-i18n="modal_step1">Fecha &amp; Barbero</span>
       </div>
       <div class="step-line"></div>
       <div class="step-item">
         <div class="step-dot" aria-label="Paso 3 pendiente">3</div>
-        <span class="step-label">Confirmar</span>
+        <span class="step-label" data-i18n="modal_step3">Confirmar</span>
       </div>
     </nav>
 
     <!-- Greeting -->
     <section style="margin-bottom:28px">
-      <p id="greeting-time" style="font-size:.75rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px">Buenos días 👋</p>
-      <h1 id="main-h" style="font-family:var(--serif);font-size:1.7rem;font-weight:700;color:var(--bright);line-height:1.2;margin-bottom:5px">
-        ¿Qué te hacemos
-        <span style="background:linear-gradient(135deg,var(--gold-l),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">hoy?</span>
+      <h1 id="main-h" style="font-family:var(--serif);font-size:1.7rem;font-weight:700;color:var(--bright);line-height:1.2;margin-bottom:5px" data-i18n="modal_title">
+        Reserva tu Silla
       </h1>
-      <p style="font-size:.82rem;color:var(--muted)">Elige uno o más servicios. Después eliges fecha y barbero.</p>
+      <p style="font-size:.82rem;color:var(--muted)" data-i18n="modal_step2">Selecciona el Servicio</p>
     </section>
 
     <!-- Services -->
@@ -390,6 +389,10 @@
       const json = await res.json();
       if (json.success && json.data) {
         const d = json.data;
+        if (d.site_lang) {
+           window.currentLang = d.site_lang;
+           if(window.applyTranslations) window.applyTranslations(window.currentLang);
+        }
         if (d.site_name) {
           const currentTitle = document.title;
           const stepPrefix = currentTitle.split('·')[0].trim();
