@@ -1998,12 +1998,13 @@
                 <td><span class="status-badge ${statusClass}">${statusText}</span></td>
                 <td>
                   <button class="btn btn-secondary" style="padding:6px 12px;font-size:.75rem;margin-right:4px;" onclick="openModal('${b.id}')">${window.t ? window.t('edit') : 'Editar'}</button>
-                  <button class="btn btn-secondary" style="padding:6px 12px;font-size:.75rem;color:var(--red);border-color:rgba(239,68,68,0.2);background:rgba(239,68,68,0.05);" onclick="deleteBarber('${b.id}', '${b.nombre.replace(/'/g, "\\'")}')">Borrar</button>
+                  <button class="btn btn-secondary" style="padding:6px 12px;font-size:.75rem;color:var(--red);border-color:rgba(239,68,68,0.2);background:rgba(239,68,68,0.05);" onclick="deleteBarber('${b.id}', '${b.nombre.replace(/'/g, "\\'")}')" data-i18n="delete">${window.t?window.t("delete"):"Borrar"}</button>
                 </td>
               </tr>
             `;
           });
           tbody.innerHTML = html;
+            if(window.applyTranslations) window.applyTranslations(window.currentLang);
         } catch(e) {
           tbody.innerHTML = '<tr><td colspan="4" style="color:var(--red);text-align:center">Error al cargar equipo</td></tr>';
         }
@@ -2159,6 +2160,7 @@
             `;
           });
           tbody.innerHTML = html;
+            if(window.applyTranslations) window.applyTranslations(window.currentLang);
         } catch(e) {
           console.error(e);
           tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--red)">Error al cargar servicios</td></tr>';
@@ -2298,6 +2300,7 @@
           `;
         }
         container.innerHTML = html;
+            if(window.applyTranslations) window.applyTranslations(window.currentLang);
       }
 
       window.toggleScheduleRow = (prefix, dayIndex) => {
