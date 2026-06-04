@@ -560,6 +560,7 @@
     .cropper-line, .cropper-point { background-color: var(--gold) !important; }
     .cropper-view-box { outline-color: var(--gold) !important; }
   </style>
+  <script src="../assets/js/i18n.js"></script>
 </head>
 <body>
 
@@ -943,10 +944,19 @@
           </div>
           
           <div class="cms-right-col" style="display: flex; flex-direction: column; gap: 24px; height:100%;">
+            <div class="card" style="display:flex; flex-direction:column; padding-bottom: 24px;">
+              <div class="card-title" data-i18n="admin_cms_lang_label">Idioma del Sistema (Global)</div>
+              <p style="font-size:0.85rem;color:var(--muted);margin-top:-8px;margin-bottom:14px;">Elige el idioma oficial para la página principal y este panel.</p>
+              <select id="cms-lang" style="width:100%;padding:12px;border-radius:12px;background:var(--s2);color:var(--bright);border:1px solid var(--border);font-family:inherit;font-size:1rem;appearance:none;cursor:pointer;" onchange="if(window.applyTranslations) window.applyTranslations(this.value);">
+                <option value="es">Español (ES)</option>
+                <option value="en">English (EN)</option>
+              </select>
+            </div>
+
             <div class="card" style="display:flex; flex-direction:column;">
-              <div class="card-title">Diseño de Portada (Hero)</div>
+              <div class="card-title" data-i18n="admin_cms_hero">Diseño de Portada (Hero)</div>
             <div class="form-group">
-              <label>Eslogan Principal</label>
+              <label data-i18n="admin_cms_slogan_label">Eslogan Principal</label>
               <input type="text" id="cms-slogan" placeholder="Ej. El estilo que te define.">
             </div>
             <div class="form-group">
@@ -1153,7 +1163,7 @@
            const btnEl = inputEl.previousElementSibling;
            if (btnEl && btnEl.classList.contains('btn')) {
               btnEl.dataset.originalText = btnEl.dataset.originalText || btnEl.textContent;
-              btnEl.textContent = '✅ Imagen Lista (¡Guarda!)';
+              btnEl.textContent = '✅ Imagen Lista';
               btnEl.style.backgroundColor = 'rgba(39, 174, 96, 0.15)';
               btnEl.style.borderColor = 'var(--green)';
               btnEl.style.color = 'var(--green)';
@@ -1425,6 +1435,12 @@
             document.getElementById('cms-tiktok').value = data.site_tiktok || '';
             document.getElementById('cms-slogan').value = data.site_slogan || '';
             document.getElementById('cms-hero-desc').value = data.site_hero_desc || '';
+            document.getElementById('cms-lang').value = data.site_lang || 'es';
+            
+            // Aplicar traducciones
+            window.currentLang = data.site_lang || 'es';
+            if(window.applyTranslations) window.applyTranslations(window.currentLang);
+
             document.getElementById('cms-stat-exp').value = data.stat_exp || '';
             document.getElementById('cms-stat-clientes').value = data.stat_clientes || '';
             const srcLogo = data.site_logo || '../assets/img/logo.png';
@@ -1527,6 +1543,7 @@
           site_tiktok: document.getElementById('cms-tiktok').value,
           site_slogan: document.getElementById('cms-slogan').value,
           site_hero_desc: document.getElementById('cms-hero-desc').value,
+          site_lang: document.getElementById('cms-lang').value,
           stat_exp: document.getElementById('cms-stat-exp').value,
           stat_clientes: document.getElementById('cms-stat-clientes').value
         };

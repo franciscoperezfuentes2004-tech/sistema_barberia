@@ -687,6 +687,7 @@
     }
     .soc-btn:hover { border-color:var(--gold-d); transform:translateY(-2px); }
   </style>
+  <script src="assets/js/i18n.js"></script>
 </head>
 
 <body>
@@ -704,16 +705,16 @@
     </a>
 
     <ul class="nav-menu" role="list">
-      <li><a href="#servicios">Servicios</a></li>
-      <li><a href="#galeria">Galería</a></li>
-      <li><a href="#equipo">Equipo</a></li>
-      <li><a href="#resenas">Reseñas</a></li>
-      <li><a href="#contacto">Contacto</a></li>
+      <li><a href="#servicios" data-i18n="nav_services">Servicios</a></li>
+      <li><a href="#galeria" data-i18n="nav_gallery">Galería</a></li>
+      <li><a href="#equipo" data-i18n="nav_team">Equipo</a></li>
+      <li><a href="#resenas" data-i18n="nav_reviews">Reseñas</a></li>
+      <li><a href="#contacto" data-i18n="nav_contact">Contacto</a></li>
     </ul>
 
     <a href="pages/booking.html" class="nav-cta" id="nav-reservar">
-      <span class="desktop-text">Reservar cita</span>
-      <span class="mobile-text">Agendar</span>
+      <span class="desktop-text" data-i18n="btn_book">Reservar cita</span>
+      <span class="mobile-text" data-i18n="btn_book_mobile">Agendar</span>
     </a>
   </nav>
 
@@ -772,19 +773,19 @@
   <div class="stats" aria-label="Nuestros números">
     <div class="stat rv">
       <p class="stat-n" id="stat-exp">+15</p>
-      <p class="stat-l">Años de experiencia</p>
+      <p class="stat-l" data-i18n="stat_years">Años de experiencia</p>
     </div>
     <div class="stat rv" style="transition-delay:.08s">
       <p class="stat-n" id="stat-clientes">+8K</p>
-      <p class="stat-l">Clientes satisfechos</p>
+      <p class="stat-l" data-i18n="stat_clients">Clientes satisfechos</p>
     </div>
     <div class="stat rv" style="transition-delay:.16s">
       <p class="stat-n" id="stat-rating">4.9★</p>
-      <p class="stat-l">Rating promedio</p>
+      <p class="stat-l" data-i18n="stat_rating">Rating promedio</p>
     </div>
     <div class="stat stat-hide rv" style="transition-delay:.24s">
       <p class="stat-n" id="stat-barberos">3</p>
-      <p class="stat-l">Maestros barberos</p>
+      <p class="stat-l" data-i18n="stat_barbers">Maestros barberos</p>
     </div>
   </div>
 
@@ -795,8 +796,8 @@
 
     <div class="sec-hdr rv">
       <div>
-        <span class="eyebrow">Lo que hacemos mejor</span>
-        <h2 id="svc-h" class="sec-title">Nuestros Servicios</h2>
+        <span class="eyebrow" data-i18n="section_svc_eyebrow">Lo que hacemos mejor</span>
+        <h2 id="svc-h" class="sec-title" data-i18n="section_svc_title">Nuestros Servicios</h2>
         <p class="sec-sub">Cada servicio ejecutado con navaja, tijera y años de oficio.</p>
       </div>
       <a href="pages/booking.html" class="btn-outline" id="link-all-svc" style="flex-shrink:0">
@@ -818,8 +819,8 @@
 
     <div class="sec-hdr rv">
       <div>
-        <span class="eyebrow">Nuestro trabajo</span>
-        <h2 id="gal-h" class="sec-title">Galería de Estilos</h2>
+        <span class="eyebrow" data-i18n="section_gal_eyebrow">Nuestro trabajo</span>
+        <h2 id="gal-h" class="sec-title" data-i18n="section_gal_title">Galería de Estilos</h2>
         <p class="sec-sub">Cada corte es una obra. Inspírate en nuestros trabajos más recientes.</p>
       </div>
     </div>
@@ -837,8 +838,8 @@
 
     <div class="sec-hdr rv">
       <div>
-        <span class="eyebrow">Conoce al equipo</span>
-        <h2 id="eq-h" class="sec-title">Nuestros Maestros</h2>
+        <span class="eyebrow" data-i18n="section_team_eyebrow">Conoce al equipo</span>
+        <h2 id="eq-h" class="sec-title" data-i18n="section_team_title">Nuestros Maestros</h2>
         <p class="sec-sub">Años de experiencia, manos expertas y pasión por el detalle.</p>
       </div>
       <a href="pages/booking.html" class="btn-outline" id="link-eq-bk" style="flex-shrink:0">
@@ -861,8 +862,8 @@
 
     <div class="sec-hdr rv">
       <div>
-        <span class="eyebrow">Lo que dicen nuestros clientes</span>
-        <h2 id="rev-h" class="sec-title">Reseñas Reales</h2>
+        <span class="eyebrow" data-i18n="section_rev_eyebrow">Lo que dicen nuestros clientes</span>
+        <h2 id="rev-h" class="sec-title" data-i18n="section_rev_title">Reseñas Reales</h2>
       </div>
       <button class="btn-outline" onclick="document.getElementById('reviewModal').classList.add('active')" style="flex-shrink:0">
         Dejar Reseña
@@ -881,8 +882,8 @@
 
     <div class="sec-hdr rv">
       <div>
-        <span class="eyebrow">Encuéntranos</span>
-        <h2 id="ct-h" class="sec-title">Horarios &amp; Contacto</h2>
+        <span class="eyebrow" data-i18n="section_contact_eyebrow">Encuéntranos</span>
+        <h2 id="ct-h" class="sec-title" data-i18n="section_contact_title">Horarios &amp; Contacto</h2>
         <p class="sec-sub">Estamos aquí para ti. Sin esperas, sin complicaciones.</p>
       </div>
     </div>
@@ -1373,6 +1374,12 @@
 
         // ── HORARIOS ──
         loadHorarios();
+
+        // ── IDIOMA GLOBAL ──
+        if (json.data && json.data.site_lang) {
+            window.currentLang = json.data.site_lang;
+            if(window.applyTranslations) window.applyTranslations(window.currentLang);
+        }
 
       } catch(e) { console.error('Error fetching CMS settings:', e); }
     }

@@ -32,7 +32,8 @@ $campos = [
     'site_slogan' => trim($_POST['site_slogan'] ?? $data_json['site_slogan'] ?? ''),
     'site_hero_desc' => trim($_POST['site_hero_desc'] ?? $data_json['site_hero_desc'] ?? ''),
     'stat_exp' => trim($_POST['stat_exp'] ?? $data_json['stat_exp'] ?? ''),
-    'stat_clientes' => trim($_POST['stat_clientes'] ?? $data_json['stat_clientes'] ?? '')
+    'stat_clientes' => trim($_POST['stat_clientes'] ?? $data_json['stat_clientes'] ?? ''),
+    'site_lang' => trim($_POST['site_lang'] ?? $data_json['site_lang'] ?? 'es')
 ];
 
 // Opcionales (Base64 largos)
