@@ -1,9 +1,10 @@
-<span data-i18n="admin_auto_v2_1">html</span>
+<!DOCTYPE html>
+
 <html lang="es">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
-<title><span data-i18n="admin_auto_v2_2">Admin Dashboard — Barbería Premium</span></title>
+<title>Admin Dashboard — Barbería Premium</title>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&amp;family=Playfair+Display:wght@600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css" rel="stylesheet"/>
@@ -563,14 +564,14 @@
 <script src="../assets/js/i18n.js"></script>
 </head>
 <body>
-<span data-i18n="admin_auto_v2_3">SIDEBAR</span>
+<!-- SIDEBAR -->
 <aside class="sidebar">
 <div class="brand">
 <img alt="Logo" id="admin-custom-logo" src="" style="display:none; height:48px; width:48px; object-fit:cover; border-radius:12px;"/>
 <div class="brand-icon" id="admin-default-icon">✂️ </div>
 <div>
-<div class="brand-text" id="admin-site-name"><span data-i18n="admin_auto_v2_4">Barbería</span></div>
-<div class="brand-sub"><span data-i18n="admin_auto_v2_5">Admin Panel</span></div>
+<div class="brand-text" id="admin-site-name">Barbería</div>
+<div class="brand-sub">Admin Panel</div>
 </div>
 </div>
 <nav class="nav">
@@ -583,7 +584,9 @@
 <span data-i18n="admin_tab_stats">Estadísticas</span>
 </a>
 <a class="nav-item" data-target="perfil">
-<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg><span data-i18n="admin_auto_v2_6">Mi Perfil</span></a>
+<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        Mi Perfil
+      </a>
 <a class="nav-item" data-target="equipo">
 <svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
 <span data-i18n="admin_tab_team">Personal</span>
@@ -612,7 +615,7 @@
 </button>
 </div>
 </aside>
-<span data-i18n="admin_auto_v2_7">MAIN</span>
+<!-- MAIN -->
 <main class="main">
 <header class="topbar">
 <div style="display:flex;align-items:center;gap:12px">
@@ -626,22 +629,24 @@
 </div>
 </header>
 <div class="content-area">
-<span data-i18n="admin_auto_v2_8">1. AGENDA</span>
+<!-- 1. AGENDA -->
 <section class="section active" id="agenda">
 <div style="overflow-x:auto;padding-bottom:12px">
 <div class="agenda-grid" id="agenda-grid">
-<div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--muted);"><span data-i18n="admin_auto_v2_9">Cargando agenda global...</span></div>
+<div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--muted);">
+              Cargando agenda global...
+            </div>
 </div>
 </div>
 </section>
-<span data-i18n="admin_auto_v2_10">1.5 ESTADISTICAS</span>
+<!-- 1.5 ESTADISTICAS -->
 <section class="section" id="estadisticas">
 <div style="display:flex; gap:16px; margin-bottom:24px; align-items:flex-end; flex-wrap:wrap;">
 <div class="form-group" style="margin-bottom:0;">
 <label data-i18n="admin_sel_month">Seleccionar Mes</label>
 <div style="position:relative;">
 <button id="btn-month-picker" onclick="openMonthPicker()" style="background:var(--s2); border:1px solid var(--border); padding:10px 16px; border-radius:8px; color:var(--bright); cursor:pointer; min-width:180px; text-align:left; display:flex; justify-content:space-between; align-items:center; transition:var(--tr);">
-<span data-i18n="admin_auto_v2_11" id="month-picker-label">Cargando...</span>
+<span data-i18n="admin_auto_3" id="month-picker-label">Cargando...</span>
 <svg fill="none" height="16" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="16"><rect height="18" rx="2" ry="2" width="18" x="3" y="4"></rect><line x1="16" x2="16" y1="2" y2="6"></line><line x1="8" x2="8" y1="2" y2="6"></line><line x1="3" x2="21" y1="10" y2="10"></line></svg>
 </button>
 </div>
@@ -650,27 +655,27 @@
 </div>
 <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:24px; margin-bottom:32px;">
 <div class="card" style="text-align:center; padding:24px;">
-<div style="font-size:0.9rem; color:var(--muted); margin-bottom:8px;"><span data-i18n="admin_auto_v2_12">Citas Completadas</span></div>
+<div style="font-size:0.9rem; color:var(--muted); margin-bottom:8px;">Citas Completadas</div>
 <div id="stat-total-citas" style="font-size:2.5rem; font-weight:800; color:var(--gold);">-</div>
 </div>
 <div class="card" style="text-align:center; padding:24px;">
-<div style="font-size:0.9rem; color:var(--muted); margin-bottom:8px;"><span data-i18n="admin_auto_v2_13">Ingresos Totales</span></div>
+<div style="font-size:0.9rem; color:var(--muted); margin-bottom:8px;">Ingresos Totales</div>
 <div id="stat-ingresos" style="font-size:2.5rem; font-weight:800; color:var(--green);">-</div>
 </div>
 <div class="card" style="text-align:center; padding:24px;">
-<div style="font-size:0.9rem; color:var(--muted); margin-bottom:8px;"><span data-i18n="admin_auto_v2_14">Mejor Barbero</span></div>
+<div style="font-size:0.9rem; color:var(--muted); margin-bottom:8px;">Mejor Barbero</div>
 <div id="stat-mejor-barbero" style="font-size:1.3rem; font-weight:800; color:var(--blue); margin-top:8px;">-</div>
 </div>
 </div>
 <div class="card" style="margin-bottom:32px; padding:24px;">
 <div class="card-title" style="display:flex; justify-content:space-between; align-items:center;">
-<span data-i18n="admin_auto_v2_15">Citas por Día</span>
+<span data-i18n="admin_auto_4">Citas por Día</span>
 <select id="chart-week-filter" onchange="updateChartWeek()" style="background:var(--s2); border:1px solid var(--border); color:var(--bright); padding:6px 12px; border-radius:8px; font-size:0.85rem; outline:none;">
-<option data-i18n="admin_auto_v2_16" value="all">Todo el Mes</option>
-<option data-i18n="admin_auto_v2_17" value="1">Semana 1 (Días 1-7)</option>
-<option data-i18n="admin_auto_v2_18" value="2">Semana 2 (Días 8-14)</option>
-<option data-i18n="admin_auto_v2_19" value="3">Semana 3 (Días 15-21)</option>
-<option data-i18n="admin_auto_v2_20" value="4">Semana 4 (Días 22-Fin)</option>
+<option data-i18n="admin_auto_10" value="all">Todo el Mes</option>
+<option data-i18n="admin_auto_11" value="1">Semana 1 (Días 1-7)</option>
+<option data-i18n="admin_auto_12" value="2">Semana 2 (Días 8-14)</option>
+<option data-i18n="admin_auto_13" value="3">Semana 3 (Días 15-21)</option>
+<option data-i18n="admin_auto_14" value="4">Semana 4 (Días 22-Fin)</option>
 </select>
 </div>
 <div style="height: 250px; width: calc(100% + 16px); margin: 0 -8px; position: relative;">
@@ -696,11 +701,11 @@
 </div>
 </div>
 </section>
-<span data-i18n="admin_auto_v2_21">2. EQUIPO</span>
+<!-- 2. EQUIPO -->
 <section class="section" id="equipo">
 <div class="card">
 <div class="card-title" style="justify-content:space-between">
-<span data-i18n="admin_auto_v2_22">Gestión de Personal</span>
+<span data-i18n="admin_auto_5">Gestión de Personal</span>
 <button class="btn btn-primary" data-i18n="admin_btn_new_barber" onclick="openModal()">+ Nuevo Barbero</button>
 </div>
 <div class="table-wrapper">
@@ -714,17 +719,17 @@
 </tr>
 </thead>
 <tbody id="team-tbody">
-<tr><td colspan="4" style="text-align:center;padding:20px;color:var(--muted)"><span data-i18n="admin_auto_v2_23">Cargando equipo...</span></td></tr>
+<tr><td colspan="4" style="text-align:center;padding:20px;color:var(--muted)">Cargando equipo...</td></tr>
 </tbody>
 </table>
 </div>
 </div>
 </section>
-<span data-i18n="admin_auto_v2_24">2.5 SERVICIOS</span>
+<!-- 2.5 SERVICIOS -->
 <section class="section" id="servicios">
 <div class="card">
 <div class="card-title" style="justify-content:space-between">
-<span data-i18n="admin_auto_v2_25">Catálogo de Servicios</span>
+<span data-i18n="admin_auto_6">Catálogo de Servicios</span>
 <button class="btn btn-primary" data-i18n="admin_btn_new_svc" onclick="openServiceModal()">+ Nuevo Servicio</button>
 </div>
 <div class="table-wrapper">
@@ -739,7 +744,7 @@
 </tr>
 </thead>
 <tbody id="servicios-tbody">
-<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--muted)"><span data-i18n="admin_auto_v2_26">Cargando servicios...</span></td></tr>
+<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--muted)">Cargando servicios...</td></tr>
 </tbody>
 </table>
 </div>
@@ -748,17 +753,17 @@
 <section class="section" id="resenas">
 <div class="card">
 <div class="card-title">
-<span data-i18n="admin_auto_v2_27">Control de Reseñas</span>
+<span data-i18n="admin_auto_7">Control de Reseñas</span>
 </div>
 <div class="resenas-top-bar" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; margin-bottom:20px;">
 <div class="resenas-left" style="display:flex; align-items:center; gap:12px;">
 <select id="resenas-filter" onchange="renderResenasAdmin()" style="padding:10px 16px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--bright);outline:none;">
-<option data-i18n="admin_auto_v2_28" value="newest">Más Recientes</option>
-<option data-i18n="admin_auto_v2_29" value="oldest">Más Antiguas</option>
-<option data-i18n="admin_auto_v2_30" value="best">Mejor Calificadas (5★)</option>
-<option data-i18n="admin_auto_v2_31" value="worst">Peor Calificadas (1-3★)</option>
+<option data-i18n="admin_auto_15" value="newest">Más Recientes</option>
+<option data-i18n="admin_auto_16" value="oldest">Más Antiguas</option>
+<option data-i18n="admin_auto_17" value="best">Mejor Calificadas (5★)</option>
+<option data-i18n="admin_auto_18" value="worst">Peor Calificadas (1-3★)</option>
 </select>
-<span data-i18n="admin_auto_v2_32" id="resenas-count" style="color:var(--muted);font-size:0.85rem;">Cargando...</span>
+<span data-i18n="admin_auto_8" id="resenas-count" style="color:var(--muted);font-size:0.85rem;">Cargando...</span>
 </div>
 <div class="resenas-right" style="display:flex; align-items:center; gap:8px;">
 <button class="btn btn-secondary" data-i18n="admin_btn_del_all" onclick="deleteAllResenas()" style="color:var(--red);border-color:var(--red);">Eliminar Todas</button>
@@ -779,17 +784,17 @@
 </tr>
 </thead>
 <tbody id="resenas-tbody">
-<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--muted)"><span data-i18n="admin_auto_v2_33">Cargando reseñas...</span></td></tr>
+<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--muted)">Cargando reseñas...</td></tr>
 </tbody>
 </table>
 </div>
 </div>
 </section>
-<span data-i18n="admin_auto_v2_34">2.7 MI PERFIL</span>
+<!-- 2.7 MI PERFIL -->
 <section class="section" id="perfil">
 <div class="card" style="max-width:500px;">
-<div class="card-title"><span data-i18n="admin_auto_v2_35">Mis Credenciales</span></div>
-<p data-i18n="admin_auto_v2_36" style="font-size:0.85rem;color:var(--muted);margin-top:-10px;margin-bottom:20px">
+<div class="card-title" data-i18n="admin_auto_22">Mis Credenciales</div>
+<p data-i18n="admin_auto_25" style="font-size:0.85rem;color:var(--muted);margin-top:-10px;margin-bottom:20px">
             Actualiza el usuario y contraseña del administrador. Al cambiar, deberás iniciar sesión nuevamente.
           </p>
 <div class="form-group">
@@ -803,48 +808,52 @@
 <button class="btn btn-primary" data-i18n="admin_btn_save_cred" onclick="updateAdminCredentials()" style="margin-top:24px;width:100%">Guardar Credenciales</button>
 </div>
 </section>
-<span data-i18n="admin_auto_v2_37">2.7 HORARIOS</span>
+<!-- 2.7 HORARIOS -->
 <section class="section" id="horarios">
 <div class="cms-grid">
-<span data-i18n="admin_auto_v2_38">Horario Global</span>
+<!-- Horario Global -->
 <div class="card">
-<div class="card-title"><span data-i18n="admin_auto_v2_39">Horario del Local (Global)</span></div>
-<p data-i18n="admin_auto_v2_40" style="font-size:0.85rem;color:var(--muted);margin-top:-10px;margin-bottom:20px">
+<div class="card-title" data-i18n="admin_auto_23">
+              Horario del Local (Global)
+            </div>
+<p data-i18n="admin_auto_26" style="font-size:0.85rem;color:var(--muted);margin-top:-10px;margin-bottom:20px">
               Establece el horario por defecto. Si desmarcas un día, la barbería aparecerá como cerrada.
             </p>
 <div id="global-schedule-container">
-<span data-i18n="admin_auto_v2_41">Render via JS</span>
+<!-- Render via JS -->
 </div>
 <div class="form-group" style="margin-top:20px">
 <div style="display:flex; gap:8px; align-items:center; margin-bottom:12px; background:var(--s2); padding:12px; border-radius:8px;">
 <input id="sync-all-barbers" style="width:auto;margin:0" type="checkbox"/>
-<label data-i18n="admin_auto_v2_42" for="sync-all-barbers" style="margin:0;font-size:0.85rem;cursor:pointer;color:var(--gold)">
+<label data-i18n="admin_auto_28" for="sync-all-barbers" style="margin:0;font-size:0.85rem;cursor:pointer;color:var(--gold)">
                   Sobrescribir los horarios de TODOS los barberos con este horario global.
                 </label>
 </div>
 <button class="btn btn-primary" data-i18n="admin_btn_save_shop_hrs" onclick="saveGlobalSchedule()" style="width:100%">Guardar Horario del Local</button>
 </div>
 </div>
-<span data-i18n="admin_auto_v2_43">Horario por Barbero</span>
+<!-- Horario por Barbero -->
 <div class="card">
-<div class="card-title"><span data-i18n="admin_auto_v2_44">Horario Personalizado por Barbero</span></div>
-<p data-i18n="admin_auto_v2_45" style="font-size:0.85rem;color:var(--muted);margin-top:-10px;margin-bottom:20px">
+<div class="card-title" data-i18n="admin_auto_24">
+              Horario Personalizado por Barbero
+            </div>
+<p data-i18n="admin_auto_27" style="font-size:0.85rem;color:var(--muted);margin-top:-10px;margin-bottom:20px">
               Personaliza el horario, descansos o jornadas reducidas de un barbero específico.
             </p>
 <div class="form-group">
 <label data-i18n="admin_sel_barber">Seleccionar Barbero</label>
 <select id="horario-barbero-select" onchange="loadBarberSchedule()" style="width:100%;padding:12px;border-radius:12px;background:var(--s2);color:var(--bright);border:1px solid var(--border);">
-<option data-i18n="admin_auto_v2_46" value="">Selecciona un barbero...</option>
+<option data-i18n="admin_auto_19" value="">Selecciona un barbero...</option>
 </select>
 </div>
 <div id="barber-schedule-container" style="display:none">
-<span data-i18n="admin_auto_v2_47">Render via JS</span>
+<!-- Render via JS -->
 <button class="btn btn-primary" data-i18n="admin_btn_save_barber_hrs" onclick="saveBarberSchedule()" style="width:100%;margin-top:20px">Guardar Horario del Barbero</button>
 </div>
 </div>
 </div>
 </section>
-<span data-i18n="admin_auto_v2_48">3. CMS</span>
+<!-- 3. CMS -->
 <section class="section" id="cms">
 <div class="cms-grid">
 <div class="card" style="display:flex; flex-direction:column; height:100%;">
@@ -864,9 +873,9 @@
 <div class="form-group">
 <label data-i18n="admin_shop_address">Dirección de la Barbería</label>
 <input id="cms-address" oninput="if(window.updateAdminMapPreview) window.updateAdminMapPreview()" placeholder="Ej. Av. Insurgentes Sur 123, CDMX" type="text"/>
-<small style="color:var(--muted);font-size:0.75rem;margin-top:4px;display:block"><span data-i18n="admin_auto_v2_49">Esta dirección se mostrará en texto y generará el mapa interactivo automáticamente.</span></small>
+<small style="color:var(--muted);font-size:0.75rem;margin-top:4px;display:block">Esta dirección se mostrará en texto y generará el mapa interactivo automáticamente.</small>
 <div id="cms-map-preview-container" style="margin-top:12px; border-radius:12px; overflow:hidden; border:1px solid var(--border); height:200px; background:var(--s2); display:flex; justify-content:center; align-items:center; position:relative;">
-<span data-i18n="admin_auto_v2_50" id="cms-map-preview-fallback" style="color:var(--muted); font-size:0.85rem; padding:0 10px; text-align:center;">Escribe una dirección para ver la vista previa del mapa</span>
+<span data-i18n="admin_auto_9" id="cms-map-preview-fallback" style="color:var(--muted); font-size:0.85rem; padding:0 10px; text-align:center;">Escribe una dirección para ver la vista previa del mapa</span>
 </div>
 </div>
 <div class="form-group">
@@ -885,15 +894,15 @@
 <label data-i18n="admin_shop_stats">Estadísticas de la Barra Principal</label>
 <div style="display:flex; gap:12px; margin-bottom: 8px;">
 <div style="flex:1;">
-<small style="color:var(--muted); display:block; margin-bottom:4px;"><span data-i18n="admin_auto_v2_51">Años de exp.</span></small>
+<small style="color:var(--muted); display:block; margin-bottom:4px;">Años de exp.</small>
 <input id="cms-stat-exp" placeholder="+15" type="text"/>
 </div>
 <div style="flex:1;">
-<small style="color:var(--muted); display:block; margin-bottom:4px;"><span data-i18n="admin_auto_v2_52">Clientes</span></small>
+<small style="color:var(--muted); display:block; margin-bottom:4px;">Clientes</small>
 <input id="cms-stat-clientes" placeholder="+8K" type="text"/>
 </div>
 </div>
-<small style="color:var(--muted); font-size:0.75rem;"><span data-i18n="admin_auto_v2_53">(El Rating y los Maestros Barberos se calculan automáticamente)</span></small>
+<small style="color:var(--muted); font-size:0.75rem;">(El Rating y los Maestros Barberos se calculan automáticamente)</small>
 </div>
 <div class="form-group" style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border);">
 <label data-i18n="admin_shop_logo">Logo del Sitio Web</label>
@@ -901,10 +910,10 @@
 <img alt="Logo" id="cms-logo-preview" src="../assets/img/hero-bg.png" style="width: 80px; height: 80px; min-width: 80px; object-fit: cover; background: #fff; border-radius: 12px; border: 1px solid var(--border);"/>
 <div style="flex:1;">
 <div style="position:relative; width:100%; max-width:200px; display:block;">
-<div class="btn btn-secondary" style="width:100%; text-align:center; padding:8px 12px; margin:0; font-size:0.8rem; display:block; pointer-events:none;"><span data-i18n="admin_auto_v2_54">Cambiar Logo</span></div>
+<div class="btn btn-secondary" style="width:100%; text-align:center; padding:8px 12px; margin:0; font-size:0.8rem; display:block; pointer-events:none;">Cambiar Logo</div>
 <input accept="image/*" id="cms-logo" style="position:absolute !important; top:0 !important; left:0 !important; width:100% !important; height:100% !important; opacity:0 !important; cursor:pointer !important; z-index:10 !important; margin:0 !important; padding:0 !important; display:block !important;" type="file"/>
 </div>
-<div style="font-size:0.7rem; color:var(--muted); margin-top: 6px;"><span data-i18n="admin_auto_v2_55">Se recomienda PNG transparente o imagen cuadrada.</span></div>
+<div style="font-size:0.7rem; color:var(--muted); margin-top: 6px;">Se recomienda PNG transparente o imagen cuadrada.</div>
 </div>
 </div>
 </div>
@@ -915,8 +924,8 @@
 <div class="card-title" data-i18n="admin_cms_lang_label">Idioma del Sistema (Global)</div>
 <p data-i18n="admin_cms_lang_desc" style="font-size:0.85rem;color:var(--muted);margin-top:-8px;margin-bottom:14px;">Elige el idioma oficial para la página principal y este panel.</p>
 <select id="cms-lang" onchange="if(window.applyTranslations) window.applyTranslations(this.value);" style="width:100%;padding:12px;border-radius:12px;background:var(--s2);color:var(--bright);border:1px solid var(--border);font-family:inherit;font-size:1rem;appearance:none;cursor:pointer;">
-<option data-i18n="admin_auto_v2_56" value="es">Español (ES)</option>
-<option data-i18n="admin_auto_v2_57" value="en">English (EN)</option>
+<option data-i18n="admin_auto_20" value="es">Español (ES)</option>
+<option data-i18n="admin_auto_21" value="en">English (EN)</option>
 </select>
 </div>
 <div class="card" style="display:flex; flex-direction:column;">
@@ -935,10 +944,10 @@
 <img alt="Portada" id="cms-hero-preview" src="../assets/img/hero-bg.png" style="width: 140px; height: 80px; min-width: 140px; object-fit: cover; background: #000; border-radius: 8px; border: 1px solid var(--border);"/>
 <div style="flex:1;">
 <div style="position:relative; width:100%; max-width:200px; display:block;">
-<div class="btn btn-secondary" style="width:100%; text-align:center; padding:8px 12px; margin:0; font-size:0.8rem; display:block; pointer-events:none;"><span data-i18n="admin_auto_v2_58">Cambiar Portada</span></div>
+<div class="btn btn-secondary" style="width:100%; text-align:center; padding:8px 12px; margin:0; font-size:0.8rem; display:block; pointer-events:none;">Cambiar Portada</div>
 <input accept="image/*" id="cms-hero-bg" style="position:absolute !important; top:0 !important; left:0 !important; width:100% !important; height:100% !important; opacity:0 !important; cursor:pointer !important; z-index:10 !important; margin:0 !important; padding:0 !important; display:block !important;" type="file"/>
 </div>
-<div style="font-size:0.7rem; color:var(--muted); margin-top: 6px;"><span data-i18n="admin_auto_v2_59">Se recomienda imagen oscura y horizontal (ej. 1920x1080).</span></div>
+<div style="font-size:0.7rem; color:var(--muted); margin-top: 6px;">Se recomienda imagen oscura y horizontal (ej. 1920x1080).</div>
 </div>
 </div>
 </div>
@@ -947,14 +956,14 @@
 <div class="card" style="display:flex; flex-direction:column; flex:1;">
 <div class="card-title" data-i18n="admin_cms_gal">Galería de Estilos</div>
 <div class="gallery-grid" id="cms-gallery">
-<span data-i18n="admin_auto_v2_60">Rendered via JS</span>
+<!-- Rendered via JS -->
 </div>
 <div style="margin-top:auto; padding-top:24px; border-top:1px solid var(--border)">
-<div style="font-weight:600; margin-bottom:12px; font-size:0.9rem; color:var(--bright)"><span data-i18n="admin_auto_v2_61">Añadir Nueva Foto</span></div>
+<div style="font-weight:600; margin-bottom:12px; font-size:0.9rem; color:var(--bright)">Añadir Nueva Foto</div>
 <div class="upload-row" style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
 <input id="new-gal-title" placeholder="Título (ej. Skin Fade)" style="flex:1; min-width:150px; padding:10px 14px; background:var(--bg); border:1px solid var(--border); border-radius:8px; color:var(--bright); font-family:var(--sans); outline:none;" type="text"/>
 <div style="position:relative; flex:1; min-width:120px; display:block;">
-<div class="btn btn-secondary" style="width:100%; text-align:center; padding:10px 14px; margin:0; display:block; box-sizing:border-box; pointer-events:none;"><span data-i18n="admin_auto_v2_62">Elegir Foto</span></div>
+<div class="btn btn-secondary" style="width:100%; text-align:center; padding:10px 14px; margin:0; display:block; box-sizing:border-box; pointer-events:none;">Elegir Foto</div>
 <input accept="image/*" id="new-gal-file" style="position:absolute !important; top:0 !important; left:0 !important; width:100% !important; height:100% !important; opacity:0 !important; cursor:pointer !important; z-index:10 !important; margin:0 !important; padding:0 !important; display:block !important;" type="file"/>
 </div>
 <button class="btn btn-primary" data-i18n="admin_cms_gal_btn" onclick="addGalleryImage()">Subir</button>
@@ -966,25 +975,25 @@
 </section>
 </div>
 </main>
-<span data-i18n="admin_auto_v2_63">MODAL GALERIA</span>
+<!-- MODAL GALERIA -->
 <div class="modal-overlay" id="gallery-modal">
 <div class="modal" style="max-width:600px; width:95%;">
 <div class="modal-header">
-<h2 class="modal-title" data-i18n="admin_auto_v2_64">Todas las fotos de la Galería</h2>
+<h2 class="modal-title" data-i18n="admin_auto_1">Todas las fotos de la Galería</h2>
 <button class="btn-close" onclick="document.getElementById('gallery-modal').classList.remove('show')">
 <svg fill="none" height="24" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="24"><path d="M18 6L6 18M6 6l12 12"></path></svg>
 </button>
 </div>
 <div class="gallery-grid" id="full-cms-gallery" style="max-height: 60vh; overflow-y: auto; padding-right: 10px;">
-<span data-i18n="admin_auto_v2_65">Todas las imagenes se renderizan aqui</span>
+<!-- Todas las imagenes se renderizan aqui -->
 </div>
 </div>
 </div>
-<span data-i18n="admin_auto_v2_66">MODAL BARBERO</span>
+<!-- MODAL BARBERO -->
 <div class="modal-overlay" id="barber-modal">
 <div class="modal">
 <div class="modal-header">
-<div class="modal-title" id="modal-title"><span data-i18n="admin_auto_v2_67">Nuevo Barbero</span></div>
+<div class="modal-title" id="modal-title">Nuevo Barbero</div>
 <button class="btn-close" onclick="closeModal()">
 <svg fill="none" height="24" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="24"><path d="M18 6L6 18M6 6l12 12"></path></svg>
 </button>
@@ -1002,10 +1011,10 @@
 <div class="form-group">
 <label data-i18n="admin_lbl_avatar">Foto de Perfil</label>
 <div style="position:relative; width:100%; display:block;">
-<div class="btn btn-secondary" style="width:100%; text-align:center; margin:0; display:block; box-sizing:border-box; pointer-events:none;"><span data-i18n="admin_auto_v2_68">Toca para seleccionar foto...</span></div>
+<div class="btn btn-secondary" style="width:100%; text-align:center; margin:0; display:block; box-sizing:border-box; pointer-events:none;">Toca para seleccionar foto...</div>
 <input accept="image/*" id="b-foto" style="position:absolute !important; top:0 !important; left:0 !important; width:100% !important; height:100% !important; opacity:0 !important; cursor:pointer !important; z-index:10 !important; margin:0 !important; padding:0 !important; display:block !important;" type="file"/>
 </div>
-<small style="color:var(--muted);font-size:0.7rem;margin-top:4px"><span data-i18n="admin_auto_v2_69">Opcional. Se recomienda una imagen cuadrada.</span></small>
+<small style="color:var(--muted);font-size:0.7rem;margin-top:4px">Opcional. Se recomienda una imagen cuadrada.</small>
 </div>
 <div class="form-group">
 <label data-i18n="admin_lbl_specialty">Especialidad</label>
@@ -1014,16 +1023,16 @@
 <div class="form-group">
 <label data-i18n="admin_lbl_username">Usuario (Login)</label>
 <input id="b-username" placeholder="Nombre de usuario" type="text"/>
-<small id="help-username" style="display:none;color:var(--muted);font-size:0.7rem;margin-top:4px"><span data-i18n="admin_auto_v2_70">Si lo dejas en blanco, el sistema generará uno automáticamente.</span></small>
+<small id="help-username" style="display:none;color:var(--muted);font-size:0.7rem;margin-top:4px">Si lo dejas en blanco, el sistema generará uno automáticamente.</small>
 </div>
 <div class="form-group">
-<label data-i18n="admin_auto_v2_71" id="lbl-password">Contraseña</label>
+<label data-i18n="admin_auto_29" id="lbl-password">Contraseña</label>
 <input id="b-password" placeholder="Contraseña de acceso" type="password"/>
-<small id="help-password" style="display:none;color:var(--muted);font-size:0.7rem;margin-top:4px"><span data-i18n="admin_auto_v2_72">Déjalo en blanco si no quieres cambiarla.</span></small>
+<small id="help-password" style="display:none;color:var(--muted);font-size:0.7rem;margin-top:4px">Déjalo en blanco si no quieres cambiarla.</small>
 </div>
 <div class="form-group" id="group-activo" style="display:none; align-items:center; gap:8px;">
 <input id="b-activo" style="width:auto;margin:0;" type="checkbox"/>
-<label data-i18n="admin_auto_v2_73" for="b-activo" style="margin:0;color:var(--bright);cursor:pointer">Barbero Activo (Mostrar en página web y sistema)</label>
+<label data-i18n="admin_auto_30" for="b-activo" style="margin:0;color:var(--bright);cursor:pointer">Barbero Activo (Mostrar en página web y sistema)</label>
 </div>
 <div style="margin-top:24px;display:flex;gap:12px;justify-content:flex-end">
 <button class="btn btn-secondary" data-i18n="admin_btn_cancel" onclick="closeModal()" type="button">Cancelar</button>
@@ -1032,11 +1041,11 @@
 </form>
 </div>
 </div>
-<span data-i18n="admin_auto_v2_74">MODAL SERVICIO</span>
+<!-- MODAL SERVICIO -->
 <div class="modal-overlay" id="service-modal">
 <div class="modal">
 <div class="modal-header">
-<div class="modal-title" id="s-modal-title"><span data-i18n="admin_auto_v2_75">Nuevo Servicio</span></div>
+<div class="modal-title" id="s-modal-title">Nuevo Servicio</div>
 <button class="btn-close" onclick="closeServiceModal()">
 <svg fill="none" height="24" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="24"><path d="M18 6L6 18M6 6l12 12"></path></svg>
 </button>
@@ -1064,10 +1073,10 @@
 <div class="form-group">
 <label data-i18n="admin_lbl_svc_img">Imagen de Referencia</label>
 <div style="position:relative; width:100%; display:block;">
-<div class="btn btn-secondary" style="width:100%; text-align:center; margin:0; display:block; box-sizing:border-box; pointer-events:none;"><span data-i18n="admin_auto_v2_76">Toca para seleccionar foto...</span></div>
+<div class="btn btn-secondary" style="width:100%; text-align:center; margin:0; display:block; box-sizing:border-box; pointer-events:none;">Toca para seleccionar foto...</div>
 <input accept="image/*" id="s-imagen" style="position:absolute !important; top:0 !important; left:0 !important; width:100% !important; height:100% !important; opacity:0 !important; cursor:pointer !important; z-index:10 !important; margin:0 !important; padding:0 !important; display:block !important;" type="file"/>
 </div>
-<small style="color:var(--muted);font-size:0.7rem;margin-top:4px"><span data-i18n="admin_auto_v2_77">Opcional. Se ajustará automáticamente a formato horizontal.</span></small>
+<small style="color:var(--muted);font-size:0.7rem;margin-top:4px">Opcional. Se ajustará automáticamente a formato horizontal.</small>
 </div>
 <div style="margin-top:24px;display:flex;gap:12px;justify-content:flex-end">
 <button class="btn btn-secondary" data-i18n="admin_btn_cancel" onclick="closeServiceModal()" type="button">Cancelar</button>
@@ -1076,11 +1085,11 @@
 </form>
 </div>
 </div>
-<div class="toast" id="toast"><span data-i18n="admin_auto_v2_78">✅ Cambios guardados correctamente</span></div>
-<span data-i18n="admin_auto_v2_79">MODAL CROPPER</span>
+<div class="toast" id="toast">✅ Cambios guardados correctamente</div>
+<!-- MODAL CROPPER -->
 <div id="cropperModal">
 <div style="width:100%; max-width:600px; display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-<h3 data-i18n="admin_auto_v2_80" style="color:var(--gold); margin:0;">Ajustar Imagen</h3>
+<h3 data-i18n="admin_auto_2" style="color:var(--gold); margin:0;">Ajustar Imagen</h3>
 <button class="btn btn-secondary" onclick="closeCropper()" style="padding:6px 12px; font-size:0.8rem; border:none; background:transparent;">X</button>
 </div>
 <div class="cropper-container-wrapper">
@@ -2574,7 +2583,7 @@
       });
 
     </script>
-<span data-i18n="admin_auto_v2_81">Modal Custom Range Picker para Estadísticas</span>
+<!-- Modal Custom Range Picker para Estadísticas -->
 <div class="modal-overlay" id="stat-picker-modal" style="z-index:9999; display:none;">
 <div class="modal-content modal-glass" style="border-radius:24px; width:100%; max-width:350px; padding:28px; position:relative;">
 <button onclick="closeMonthPicker()" onmouseout="this.style.background='var(--s2)'; this.style.color='var(--bright)'" onmouseover="this.style.background='var(--gold)'; this.style.color='#111'" style="position:absolute; top:-16px; right:-16px; background:var(--s2); border:2px solid var(--border); color:var(--bright); width:36px; height:36px; border-radius:50%; font-size:1.2rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:var(--tr); box-shadow:0 4px 12px rgba(0,0,0,0.5); z-index:10;">×</button>
@@ -2588,7 +2597,7 @@
 </button>
 </div>
 <div id="stat-months-grid" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px;">
-<span data-i18n="admin_auto_v2_82">Renderizado por JS</span>
+<!-- Renderizado por JS -->
 </div>
 </div>
 </div>
