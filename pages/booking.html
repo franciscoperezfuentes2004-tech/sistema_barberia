@@ -298,7 +298,7 @@
   async function loadServicios() {
     const grid = document.getElementById('services-grid');
     try {
-      const r    = await fetch(`${API}/obtener_datos.php?tabla=servicios`, { cache: 'no-store' });
+      const r    = await fetch(`${API}/obtener_datos.php?tabla=servicios&_t=${Date.now()}`, { cache: 'no-store' });
       const json = await r.json();
       state.servicios = json.data || [];
       renderServicios(grid);
@@ -393,7 +393,7 @@
   // Cargar branding dinámico
   async function loadBranding() {
     try {
-      const res = await fetch(`${API}/obtener_datos.php?tabla=ajustes`, { cache: 'no-store' });
+      const res = await fetch(`${API}/obtener_datos.php?tabla=ajustes&_t=${Date.now()}`, { cache: 'no-store' });
       const json = await res.json();
       if (json.success && json.data) {
         const d = json.data;
