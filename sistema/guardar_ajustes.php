@@ -31,8 +31,8 @@ $campos = [
     'site_tiktok' => trim($_POST['site_tiktok'] ?? $data_json['site_tiktok'] ?? ''),
     'site_slogan' => trim($_POST['site_slogan'] ?? $data_json['site_slogan'] ?? ''),
     'site_hero_desc' => trim($_POST['site_hero_desc'] ?? $data_json['site_hero_desc'] ?? ''),
-    'stat_exp' => trim($_POST['stat_exp'] ?? $data_json['stat_exp'] ?? ''),
-    'stat_clientes' => trim($_POST['stat_clientes'] ?? $data_json['stat_clientes'] ?? ''),
+    'stat_exp' => (int)trim($_POST['stat_exp'] ?? $data_json['stat_exp'] ?? '0'),
+    'stat_clientes' => (int)trim($_POST['stat_clientes'] ?? $data_json['stat_clientes'] ?? '0'),
     'site_lang' => trim($_POST['site_lang'] ?? $data_json['site_lang'] ?? 'es')
 ];
 
