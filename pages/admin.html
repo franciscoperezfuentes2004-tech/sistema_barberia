@@ -649,7 +649,7 @@
       <section id="estadisticas" class="section">
         <div style="display:flex; gap:16px; margin-bottom:24px; align-items:flex-end; flex-wrap:wrap;">
           <div class="form-group" style="margin-bottom:0;">
-            <label>Seleccionar Mes</label>
+            <label data-i18n="admin_sel_month">Seleccionar Mes</label>
             <div style="position:relative;">
                <button id="btn-month-picker" onclick="openMonthPicker()" style="background:var(--s2); border:1px solid var(--border); padding:10px 16px; border-radius:8px; color:var(--bright); cursor:pointer; min-width:180px; text-align:left; display:flex; justify-content:space-between; align-items:center; transition:var(--tr);">
                  <span id="month-picker-label">Cargando...</span>
@@ -657,7 +657,7 @@
                </button>
             </div>
           </div>
-          <button class="btn btn-primary" onclick="loadEstadisticas()" style="height:42px; padding:0 24px;">Filtrar Mes</button>
+          <button class="btn btn-primary" onclick="loadEstadisticas()" style="height:42px; padding:0 24px;" data-i18n="admin_btn_filter_month">Filtrar Mes</button>
         </div>
 
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:24px; margin-bottom:32px;">
@@ -697,11 +697,11 @@
             <table>
               <thead>
                 <tr>
-                  <th style="width:20%">Fecha</th>
-                  <th style="width:25%">Cliente</th>
-                  <th style="width:20%">Barbero</th>
-                  <th style="width:20%">Servicio</th>
-                  <th style="width:15%">Ingreso</th>
+                  <th style="width:20%" data-i18n="admin_th_date">Fecha</th>
+                  <th style="width:25%" data-i18n="admin_th_client">Cliente</th>
+                  <th style="width:20%" data-i18n="admin_th_barber">Barbero</th>
+                  <th style="width:20%" data-i18n="admin_th_svc">Servicio</th>
+                  <th style="width:15%" data-i18n="admin_th_income">Ingreso</th>
                 </tr>
               </thead>
               <tbody id="stat-table-body">
@@ -716,16 +716,16 @@
         <div class="card">
           <div class="card-title" style="justify-content:space-between">
             <span>Gestión de Personal</span>
-            <button class="btn btn-primary" onclick="openModal()">+ Nuevo Barbero</button>
+            <button class="btn btn-primary" onclick="openModal()" data-i18n="admin_btn_new_barber">+ Nuevo Barbero</button>
           </div>
           <div class="table-wrapper">
             <table>
               <thead>
                 <tr>
-                  <th style="width: 38%;">Barbero</th>
-                  <th style="width: 22%;">Especialidad</th>
-                  <th style="width: 15%;">Estado</th>
-                  <th style="width: 25%;">Acciones</th>
+                  <th style="width: 38%;" data-i18n="admin_th_barber">Barbero</th>
+                  <th style="width: 22%;" data-i18n="admin_th_spec">Especialidad</th>
+                  <th style="width: 15%;" data-i18n="admin_th_status">Estado</th>
+                  <th style="width: 25%;" data-i18n="admin_th_actions">Acciones</th>
                 </tr>
               </thead>
               <tbody id="team-tbody">
@@ -741,17 +741,17 @@
         <div class="card">
           <div class="card-title" style="justify-content:space-between">
             <span>Catálogo de Servicios</span>
-            <button class="btn btn-primary" onclick="openServiceModal()">+ Nuevo Servicio</button>
+            <button class="btn btn-primary" onclick="openServiceModal()" data-i18n="admin_btn_new_svc">+ Nuevo Servicio</button>
           </div>
           <div class="table-wrapper">
             <table>
               <thead>
                 <tr>
-                  <th style="width: 60px;">Imagen</th>
-                  <th style="width: 25%;">Servicio</th>
-                  <th style="width: 20%;">Precio</th>
-                  <th style="width: 20%;">Duración</th>
-                  <th>Acciones</th>
+                  <th style="width: 60px;" data-i18n="admin_th_img">Imagen</th>
+                  <th style="width: 25%;" data-i18n="admin_th_svc">Servicio</th>
+                  <th style="width: 20%;" data-i18n="admin_th_price">Precio</th>
+                  <th style="width: 20%;" data-i18n="admin_th_dur">Duración</th>
+                  <th data-i18n="admin_th_actions">Acciones</th>
                 </tr>
               </thead>
               <tbody id="servicios-tbody">
@@ -780,8 +780,8 @@
             </div>
             
             <div class="resenas-right" style="display:flex; align-items:center; gap:8px;">
-              <button class="btn btn-secondary" style="color:var(--red);border-color:var(--red);" onclick="deleteAllResenas()">Eliminar Todas</button>
-              <button class="btn btn-primary" style="background:var(--red);color:#fff;" onclick="deleteSelectedResenas()">Eliminar Seleccionadas</button>
+              <button class="btn btn-secondary" style="color:var(--red);border-color:var(--red);" onclick="deleteAllResenas()" data-i18n="admin_btn_del_all">Eliminar Todas</button>
+              <button class="btn btn-primary" style="background:var(--red);color:#fff;" onclick="deleteSelectedResenas()" data-i18n="admin_btn_del_sel">Eliminar Seleccionadas</button>
             </div>
           </div>
 
@@ -792,10 +792,10 @@
                   <th style="width: 50px; text-align:center;">
                     <input type="checkbox" id="resenas-select-all" onchange="toggleAllResenas(this)">
                   </th>
-                  <th style="width: 20%;">Cliente</th>
-                  <th style="width: 15%;">Calificación</th>
-                  <th style="width: 45%;">Comentario</th>
-                  <th style="width: 15%;">Fecha</th>
+                  <th style="width: 20%;" data-i18n="admin_th_client">Cliente</th>
+                  <th style="width: 15%;" data-i18n="admin_th_rating">Calificación</th>
+                  <th style="width: 45%;" data-i18n="admin_th_comment">Comentario</th>
+                  <th style="width: 15%;" data-i18n="admin_th_date">Fecha</th>
                 </tr>
               </thead>
               <tbody id="resenas-tbody">
@@ -814,14 +814,14 @@
             Actualiza el usuario y contraseña del administrador. Al cambiar, deberás iniciar sesión nuevamente.
           </p>
           <div class="form-group">
-            <label>Nuevo Usuario</label>
+            <label data-i18n="admin_new_user">Nuevo Usuario</label>
             <input type="text" id="admin-user" placeholder="Ej: paco_admin" autocomplete="off">
           </div>
           <div class="form-group" style="margin-top:16px;">
-            <label>Nueva Contraseña</label>
+            <label data-i18n="admin_new_pass">Nueva Contraseña</label>
             <input type="password" id="admin-pass" placeholder="Mínimo 6 caracteres" autocomplete="new-password">
           </div>
-          <button class="btn btn-primary" style="margin-top:24px;width:100%" onclick="updateAdminCredentials()">Guardar Credenciales</button>
+          <button class="btn btn-primary" style="margin-top:24px;width:100%" onclick="updateAdminCredentials()" data-i18n="admin_btn_save_cred">Guardar Credenciales</button>
         </div>
       </section>
 
@@ -847,7 +847,7 @@
                   Sobrescribir los horarios de TODOS los barberos con este horario global.
                 </label>
               </div>
-              <button class="btn btn-primary" style="width:100%" onclick="saveGlobalSchedule()">Guardar Horario del Local</button>
+              <button class="btn btn-primary" style="width:100%" onclick="saveGlobalSchedule()" data-i18n="admin_btn_save_shop_hrs">Guardar Horario del Local</button>
             </div>
           </div>
 
@@ -860,14 +860,14 @@
               Personaliza el horario, descansos o jornadas reducidas de un barbero específico.
             </p>
             <div class="form-group">
-              <label>Seleccionar Barbero</label>
+              <label data-i18n="admin_sel_barber">Seleccionar Barbero</label>
               <select id="horario-barbero-select" style="width:100%;padding:12px;border-radius:12px;background:var(--s2);color:var(--bright);border:1px solid var(--border);" onchange="loadBarberSchedule()">
                 <option value="">Selecciona un barbero...</option>
               </select>
             </div>
             <div id="barber-schedule-container" style="display:none">
               <!-- Render via JS -->
-              <button class="btn btn-primary" style="width:100%;margin-top:20px" onclick="saveBarberSchedule()">Guardar Horario del Barbero</button>
+              <button class="btn btn-primary" style="width:100%;margin-top:20px" onclick="saveBarberSchedule()" data-i18n="admin_btn_save_barber_hrs">Guardar Horario del Barbero</button>
             </div>
           </div>
 
@@ -880,19 +880,19 @@
           <div class="card" style="display:flex; flex-direction:column; height:100%;">
             <div class="card-title" data-i18n="admin_cms_contact">Información de la Barbería</div>
             <div class="form-group">
-              <label>Nombre Comercial</label>
-              <input type="text" id="cms-name" placeholder="Ej. Barbería Premium">
+              <label data-i18n="admin_shop_name">Nombre Comercial</label>
+              <input type="text" id="cms-name" placeholder="Ej. Barbería Premium" data-i18n="admin_ph_shop">
             </div>
             <div class="form-group">
-              <label>Teléfono de Contacto (WhatsApp)</label>
-              <input type="text" id="cms-phone" placeholder="Ej. 55 1234 5678">
+              <label data-i18n="admin_shop_phone">Teléfono de Contacto (WhatsApp)</label>
+              <input type="text" id="cms-phone" placeholder="Ej. 55 1234 5678" data-i18n="admin_ph_phone">
             </div>
             <div class="form-group">
-              <label>Correo Electrónico</label>
-              <input type="email" id="cms-email" placeholder="Ej. contacto@barberia.com">
+              <label data-i18n="admin_shop_email">Correo Electrónico</label>
+              <input type="email" id="cms-email" placeholder="Ej. contacto@barberia.com" data-i18n="admin_ph_email">
             </div>
             <div class="form-group">
-              <label>Dirección de la Barbería</label>
+              <label data-i18n="admin_shop_address">Dirección de la Barbería</label>
               <input type="text" id="cms-address" placeholder="Ej. Av. Insurgentes Sur 123, CDMX" oninput="if(window.updateAdminMapPreview) window.updateAdminMapPreview()">
               <small style="color:var(--muted);font-size:0.75rem;margin-top:4px;display:block">Esta dirección se mostrará en texto y generará el mapa interactivo automáticamente.</small>
               <div style="margin-top:12px; border-radius:12px; overflow:hidden; border:1px solid var(--border); height:200px; background:var(--s2); display:flex; justify-content:center; align-items:center; position:relative;" id="cms-map-preview-container">
@@ -900,19 +900,19 @@
               </div>
             </div>
             <div class="form-group">
-              <label>Enlace de Instagram</label>
+              <label data-i18n="admin_shop_ig">Enlace de Instagram</label>
               <input type="text" id="cms-instagram" placeholder="https://instagram.com/...">
             </div>
             <div class="form-group">
-              <label>Enlace de Facebook</label>
+              <label data-i18n="admin_shop_fb">Enlace de Facebook</label>
               <input type="text" id="cms-facebook" placeholder="https://facebook.com/...">
             </div>
             <div class="form-group">
-              <label>Enlace de TikTok</label>
+              <label data-i18n="admin_shop_tk">Enlace de TikTok</label>
               <input type="text" id="cms-tiktok" placeholder="https://tiktok.com/@...">
             </div>
             <div class="form-group" style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border);">
-              <label>Estadísticas de la Barra Principal</label>
+              <label data-i18n="admin_shop_stats">Estadísticas de la Barra Principal</label>
               <div style="display:flex; gap:12px; margin-bottom: 8px;">
                 <div style="flex:1;">
                   <small style="color:var(--muted); display:block; margin-bottom:4px;">Años de exp.</small>
@@ -927,7 +927,7 @@
             </div>
             
             <div class="form-group" style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border);">
-              <label>Logo del Sitio Web</label>
+              <label data-i18n="admin_shop_logo">Logo del Sitio Web</label>
               <div class="preview-row" style="display:flex; align-items:center; gap:16px; margin-bottom: 12px;">
                 <img id="cms-logo-preview" src="../assets/img/hero-bg.png" style="width: 80px; height: 80px; min-width: 80px; object-fit: cover; background: #fff; border-radius: 12px; border: 1px solid var(--border);" alt="Logo">
                 <div style="flex:1;">
@@ -940,13 +940,13 @@
               </div>
             </div>
 
-            <button class="btn btn-primary" style="width: 100%; margin-top: auto;" onclick="saveCMS()">Guardar Todos los Cambios</button>
+            <button class="btn btn-primary" style="width: 100%; margin-top: auto;" onclick="saveCMS()" data-i18n="admin_cms_btn_save">Guardar Todos los Cambios</button>
           </div>
           
           <div class="cms-right-col" style="display: flex; flex-direction: column; gap: 24px; height:100%;">
             <div class="card" style="display:flex; flex-direction:column; padding-bottom: 24px;">
               <div class="card-title" data-i18n="admin_cms_lang_label">Idioma del Sistema (Global)</div>
-              <p style="font-size:0.85rem;color:var(--muted);margin-top:-8px;margin-bottom:14px;">Elige el idioma oficial para la página principal y este panel.</p>
+              <p style="font-size:0.85rem;color:var(--muted);margin-top:-8px;margin-bottom:14px;" data-i18n="admin_cms_lang_desc">Elige el idioma oficial para la página principal y este panel.</p>
               <select id="cms-lang" style="width:100%;padding:12px;border-radius:12px;background:var(--s2);color:var(--bright);border:1px solid var(--border);font-family:inherit;font-size:1rem;appearance:none;cursor:pointer;" onchange="if(window.applyTranslations) window.applyTranslations(this.value);">
                 <option value="es">Español (ES)</option>
                 <option value="en">English (EN)</option>
@@ -957,14 +957,14 @@
               <div class="card-title" data-i18n="admin_cms_hero">Diseño de Portada (Hero)</div>
             <div class="form-group">
               <label data-i18n="admin_cms_slogan_label">Eslogan Principal</label>
-              <input type="text" id="cms-slogan" placeholder="Ej. El estilo que te define.">
+              <input type="text" id="cms-slogan" placeholder="Ej. El estilo que te define." data-i18n="admin_ph_slogan">
             </div>
             <div class="form-group">
-              <label>Descripción Corta</label>
-              <textarea id="cms-hero-desc" placeholder="Cortes de precisión, barbas esculpidas..." style="width:100%;padding:12px;border-radius:12px;background:var(--s2);color:var(--bright);border:1px solid var(--border);resize:none;min-height:80px;font-family:inherit;"></textarea>
+              <label data-i18n="admin_hero_desc">Descripción Corta</label>
+              <textarea id="cms-hero-desc" placeholder="Cortes de precisión, barbas esculpidas..." data-i18n="admin_ph_desc" style="width:100%;padding:12px;border-radius:12px;background:var(--s2);color:var(--bright);border:1px solid var(--border);resize:none;min-height:80px;font-family:inherit;"></textarea>
             </div>
             <div class="form-group" style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border);">
-              <label>Imagen de Fondo de Portada</label>
+              <label data-i18n="admin_hero_bg">Imagen de Fondo de Portada</label>
               <div class="preview-row" style="display:flex; align-items:center; gap:16px; margin-bottom: 12px;">
                 <img id="cms-hero-preview" src="../assets/img/hero-bg.png" style="width: 140px; height: 80px; min-width: 140px; object-fit: cover; background: #000; border-radius: 8px; border: 1px solid var(--border);" alt="Portada">
                 <div style="flex:1;">
@@ -976,7 +976,7 @@
                 </div>
               </div>
             </div>
-            <button class="btn btn-primary" style="width: 100%; margin-top: auto;" onclick="saveCMS()">Guardar Todos los Cambios</button>
+            <button class="btn btn-primary" style="width: 100%; margin-top: auto;" onclick="saveCMS()" data-i18n="admin_cms_btn_save">Guardar Todos los Cambios</button>
           </div>
 
           <div class="card" style="display:flex; flex-direction:column; flex:1;">
@@ -993,7 +993,7 @@
                   <div class="btn btn-secondary" style="width:100%; text-align:center; padding:10px 14px; margin:0; display:block; box-sizing:border-box; pointer-events:none;">Elegir Foto</div>
                   <input type="file" id="new-gal-file" accept="image/*" style="position:absolute !important; top:0 !important; left:0 !important; width:100% !important; height:100% !important; opacity:0 !important; cursor:pointer !important; z-index:10 !important; margin:0 !important; padding:0 !important; display:block !important;">
                 </div>
-                <button class="btn btn-primary" onclick="addGalleryImage()">Subir</button>
+                <button class="btn btn-primary" onclick="addGalleryImage()" data-i18n="admin_cms_gal_btn">Subir</button>
               </div>
             </div>
           </div>
@@ -1031,15 +1031,15 @@
       <form id="barber-form" onsubmit="saveBarber(event)">
         <input type="hidden" id="b-id">
         <div class="form-group">
-          <label>Nombre</label>
+          <label data-i18n="admin_lbl_name">Nombre</label>
           <input type="text" id="b-nombre" required>
         </div>
         <div class="form-group">
-          <label>Apellido</label>
+          <label data-i18n="admin_lbl_lastname">Apellido</label>
           <input type="text" id="b-apellido" required>
         </div>
         <div class="form-group">
-          <label>Foto de Perfil</label>
+          <label data-i18n="admin_lbl_avatar">Foto de Perfil</label>
           <div style="position:relative; width:100%; display:block;">
             <div class="btn btn-secondary" style="width:100%; text-align:center; margin:0; display:block; box-sizing:border-box; pointer-events:none;">Toca para seleccionar foto...</div>
             <input type="file" id="b-foto" accept="image/*" style="position:absolute !important; top:0 !important; left:0 !important; width:100% !important; height:100% !important; opacity:0 !important; cursor:pointer !important; z-index:10 !important; margin:0 !important; padding:0 !important; display:block !important;">
@@ -1047,11 +1047,11 @@
           <small style="color:var(--muted);font-size:0.7rem;margin-top:4px">Opcional. Se recomienda una imagen cuadrada.</small>
         </div>
         <div class="form-group">
-          <label>Especialidad</label>
+          <label data-i18n="admin_lbl_specialty">Especialidad</label>
           <input type="text" id="b-esp" placeholder="Ej. Fades & Clásicos">
         </div>
         <div class="form-group">
-          <label>Usuario (Login)</label>
+          <label data-i18n="admin_lbl_username">Usuario (Login)</label>
           <input type="text" id="b-username" placeholder="Nombre de usuario">
           <small id="help-username" style="display:none;color:var(--muted);font-size:0.7rem;margin-top:4px">Si lo dejas en blanco, el sistema generará uno automáticamente.</small>
         </div>
@@ -1065,8 +1065,8 @@
           <label style="margin:0;color:var(--bright);cursor:pointer" for="b-activo">Barbero Activo (Mostrar en página web y sistema)</label>
         </div>
         <div style="margin-top:24px;display:flex;gap:12px;justify-content:flex-end">
-          <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
-          <button type="submit" class="btn btn-primary">Guardar</button>
+          <button type="button" class="btn btn-secondary" onclick="closeModal()" data-i18n="admin_btn_cancel">Cancelar</button>
+          <button type="submit" class="btn btn-primary" data-i18n="admin_btn_save">Guardar</button>
         </div>
       </form>
     </div>
@@ -1084,25 +1084,25 @@
       <form id="service-form" onsubmit="saveService(event)">
         <input type="hidden" id="s-id">
         <div class="form-group">
-          <label>Nombre del Servicio</label>
+          <label data-i18n="admin_lbl_svc_name">Nombre del Servicio</label>
           <input type="text" id="s-nombre" required placeholder="Ej. Fade & Taper">
         </div>
         <div class="form-group">
-          <label>Descripción Breve</label>
+          <label data-i18n="admin_lbl_svc_desc">Descripción Breve</label>
           <input type="text" id="s-descripcion" placeholder="Ej. Degradado preciso con navaja">
         </div>
         <div style="display:flex; gap:16px;">
           <div class="form-group" style="flex:1">
-            <label>Precio ($)</label>
+            <label data-i18n="admin_lbl_svc_price">Precio ($)</label>
             <input type="number" id="s-precio" required min="0" step="0.01" placeholder="Ej. 150">
           </div>
           <div class="form-group" style="flex:1">
-            <label>Duración (Minutos)</label>
+            <label data-i18n="admin_lbl_svc_dur">Duración (Minutos)</label>
             <input type="number" id="s-duracion" required min="1" placeholder="Ej. 40">
           </div>
         </div>
         <div class="form-group">
-          <label>Imagen de Referencia</label>
+          <label data-i18n="admin_lbl_svc_img">Imagen de Referencia</label>
           <div style="position:relative; width:100%; display:block;">
             <div class="btn btn-secondary" style="width:100%; text-align:center; margin:0; display:block; box-sizing:border-box; pointer-events:none;">Toca para seleccionar foto...</div>
             <input type="file" id="s-imagen" accept="image/*" style="position:absolute !important; top:0 !important; left:0 !important; width:100% !important; height:100% !important; opacity:0 !important; cursor:pointer !important; z-index:10 !important; margin:0 !important; padding:0 !important; display:block !important;">
@@ -1110,8 +1110,8 @@
           <small style="color:var(--muted);font-size:0.7rem;margin-top:4px">Opcional. Se ajustará automáticamente a formato horizontal.</small>
         </div>
         <div style="margin-top:24px;display:flex;gap:12px;justify-content:flex-end">
-          <button type="button" class="btn btn-secondary" onclick="closeServiceModal()">Cancelar</button>
-          <button type="submit" class="btn btn-primary">Guardar</button>
+          <button type="button" class="btn btn-secondary" onclick="closeServiceModal()" data-i18n="admin_btn_cancel">Cancelar</button>
+          <button type="submit" class="btn btn-primary" data-i18n="admin_btn_save">Guardar</button>
         </div>
       </form>
     </div>
@@ -1129,8 +1129,8 @@
       <img id="cropper-image" src="" style="display:block; max-width:100%;">
     </div>
     <div style="display:flex; gap:16px; width:100%; max-width:600px;">
-      <button class="btn btn-secondary" style="flex:1;" onclick="closeCropper()">Cancelar</button>
-      <button class="btn btn-primary" style="flex:1;" onclick="confirmCrop()">Recortar y Guardar</button>
+      <button class="btn btn-secondary" style="flex:1;" onclick="closeCropper()" data-i18n="admin_btn_cancel">Cancelar</button>
+      <button class="btn btn-primary" style="flex:1;" onclick="confirmCrop()" data-i18n="admin_btn_crop_save">Recortar y Guardar</button>
     </div>
   </div>
 
@@ -2334,7 +2334,7 @@
                 <input type="time" id="${prefix}_in_${i}" value="${row.hora_inicio}" style="padding:8px; flex:1;" ${checked ? '' : 'disabled'}>
                 <span style="color:var(--muted)">a</span>
                 <input type="time" id="${prefix}_out_${i}" value="${row.hora_fin}" style="padding:8px; flex:1;" ${checked ? '' : 'disabled'}>
-                <button type="button" class="btn btn-secondary" style="padding:6px 10px;font-size:0.75rem;margin-left:auto" onclick="copyScheduleRow('${prefix}', ${i})" title="Copiar este horario a los demás días activos">Copiar a todos</button>
+                <button type="button" class="btn btn-secondary" style="padding:6px 10px;font-size:0.75rem;margin-left:auto" onclick="copyScheduleRow('${prefix}', ${i})" title="Copiar este horario a los demás días activos" data-i18n="admin_btn_copy_all">Copiar a todos</button>
               </div>
             </div>
           `;

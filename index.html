@@ -705,15 +705,15 @@
     </a>
 
     <ul class="nav-menu" role="list">
-      <li><a href="#servicios" data-i18n="nav_services">Servicios</a></li>
-      <li><a href="#galeria" data-i18n="nav_gallery">Galería</a></li>
+      <li><a href="#servicios" data-i18n="nav_services" data-i18n="idx_ft_svc">Servicios</a></li>
+      <li><a href="#galeria" data-i18n="nav_gallery" data-i18n="idx_ft_gal">Galería</a></li>
       <li><a href="#equipo" data-i18n="nav_team">Equipo</a></li>
-      <li><a href="#resenas" data-i18n="nav_reviews">Reseñas</a></li>
-      <li><a href="#contacto" data-i18n="nav_contact">Contacto</a></li>
+      <li><a href="#resenas" data-i18n="nav_reviews" data-i18n="idx_ft_rev">Reseñas</a></li>
+      <li><a href="#contacto" data-i18n="nav_contact" data-i18n="idx_ft_contact">Contacto</a></li>
     </ul>
 
     <a href="pages/booking.html" class="nav-cta" id="nav-reservar">
-      <span class="desktop-text" data-i18n="btn_book">Reservar cita</span>
+      <span class="desktop-text" data-i18n="btn_book" data-i18n="idx_ft_book">Reservar cita</span>
       <span class="mobile-text" data-i18n="btn_book_mobile">Agendar</span>
     </a>
   </nav>
@@ -931,8 +931,8 @@
   <div class="cta-band">
     <div class="cta-inner">
       <div class="rv">
-        <p class="cta-title">¿Listo para tu <span class="grad">próximo look?</span></p>
-        <p style="font-size:.88rem;color:var(--muted)">Agenda en segundos. Sin llamadas, sin esperas.</p>
+        <p class="cta-title"><span data-i18n="idx_cta_title">¿Listo para tu </span><span class="grad" data-i18n="idx_cta_title_grad">próximo look?</span></p>
+        <p style="font-size:.88rem;color:var(--muted)" data-i18n="idx_cta_desc">Agenda en segundos. Sin llamadas, sin esperas.</p>
       </div>
       <a href="pages/booking.html" class="btn-gold rv" id="btn-footer-bk" role="button"
          style="font-size:1rem;padding:18px 40px;transition-delay:.1s">
@@ -948,8 +948,8 @@
   <div id="reviewModal" class="modal">
     <div class="modal-content">
       <button class="modal-close" onclick="document.getElementById('reviewModal').classList.remove('active')">✖</button>
-      <h3 style="color:var(--bright);margin-bottom:10px;font-family:var(--serif);font-size:1.6rem">Tu Experiencia</h3>
-      <p style="color:var(--muted);font-size:0.85rem;margin-bottom:15px">Agradecemos mucho tus comentarios.</p>
+      <h3 style="color:var(--bright);margin-bottom:10px;font-family:var(--serif);font-size:1.6rem" data-i18n="idx_rev_title">Tu Experiencia</h3>
+      <p style="color:var(--muted);font-size:0.85rem;margin-bottom:15px" data-i18n="idx_rev_desc">Agradecemos mucho tus comentarios.</p>
       
       <form id="formResena" onsubmit="submitReview(event)">
         <div class="star-rating">
@@ -963,7 +963,7 @@
         <input type="text" id="revName" class="modal-input" placeholder="Tu Nombre" required />
         <textarea id="revComment" class="modal-input" placeholder="¿Qué te pareció el servicio?" rows="3" required></textarea>
         
-        <button type="submit" class="btn-gold" style="width:100%;margin-top:10px" id="btnSubmitReview">Publicar Reseña</button>
+        <button type="submit" class="btn-gold" style="width:100%;margin-top:10px" id="btnSubmitReview" data-i18n="idx_rev_btn">Publicar Reseña</button>
       </form>
     </div>
   </div>
@@ -976,7 +976,7 @@
       <button class="modal-close" onclick="document.getElementById('allReviewsModal').classList.remove('active')">✖</button>
       
       <div style="text-align: center; margin-bottom: 25px;">
-        <h3 style="color:var(--bright);font-family:var(--serif);font-size:1.8rem;margin-bottom:12px;">Experiencia de Clientes</h3>
+        <h3 style="color:var(--bright);font-family:var(--serif);font-size:1.8rem;margin-bottom:12px;" data-i18n="idx_rev_all_title">Experiencia de Clientes</h3>
         
         <!-- Creative Separator -->
         <div style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 12px;">
@@ -985,7 +985,7 @@
           <div style="height: 1px; background: linear-gradient(270deg, transparent, var(--gold)); width: 80px;"></div>
         </div>
         
-        <p id="all-reviews-subtitle" style="color:var(--muted);font-size:0.85rem;margin:0;">Cargando reseñas...</p>
+        <p id="all-reviews-subtitle" style="color:var(--muted);font-size:0.85rem;margin:0;" data-i18n="idx_rev_loading">Cargando reseñas...</p>
       </div>
 
       <div id="all-reviews-container" style="display:flex; flex-direction:column; gap:15px; max-height:55vh; overflow-y:auto; padding-right:10px;">
@@ -1015,19 +1015,19 @@
       </div>
 
       <div>
-        <p style="font-size:.7rem;color:var(--gold);text-transform:uppercase;letter-spacing:.12em;font-weight:600;margin-bottom:14px">Navegación</p>
+        <p style="font-size:.7rem;color:var(--gold);text-transform:uppercase;letter-spacing:.12em;font-weight:600;margin-bottom:14px" data-i18n="idx_ft_nav">Navegación</p>
         <ul class="ft-links" role="list">
-          <li><a href="#servicios">Servicios</a></li>
-          <li><a href="#galeria">Galería</a></li>
-          <li><a href="#equipo">Nuestro equipo</a></li>
-          <li><a href="#resenas">Reseñas</a></li>
-          <li><a href="#contacto">Contacto</a></li>
-          <li><a href="pages/booking.html">Reservar cita</a></li>
+          <li><a href="#servicios" data-i18n="idx_ft_svc">Servicios</a></li>
+          <li><a href="#galeria" data-i18n="idx_ft_gal">Galería</a></li>
+          <li><a href="#equipo" data-i18n="idx_ft_team">Nuestro equipo</a></li>
+          <li><a href="#resenas" data-i18n="idx_ft_rev">Reseñas</a></li>
+          <li><a href="#contacto" data-i18n="idx_ft_contact">Contacto</a></li>
+          <li><a href="pages/booking.html" data-i18n="idx_ft_book">Reservar cita</a></li>
         </ul>
       </div>
 
       <div>
-        <p style="font-size:.7rem;color:var(--gold);text-transform:uppercase;letter-spacing:.12em;font-weight:600;margin-bottom:14px">Contacto</p>
+        <p style="font-size:.7rem;color:var(--gold);text-transform:uppercase;letter-spacing:.12em;font-weight:600;margin-bottom:14px" data-i18n="idx_ft_contact">Contacto</p>
         <ul class="ft-links" role="list">
           <li><a href="tel:+521234567890" id="footer-phone-link">📞 <span class="cms-site-phone">+52 123 456 7890</span></a></li>
           <li><a href="mailto:contacto@barberia.com" id="footer-email-link">✉️ <span id="footer-email-text">contacto@barberia.com</span></a></li>
@@ -1038,10 +1038,10 @@
     </div>
 
     <div class="ft-bottom">
-      <p>© 2026 Barbería Premium. Todos los derechos reservados.</p>
+      <p>© 2026 Barbería Premium. <span data-i18n="idx_ft_copy">Todos los derechos reservados.</span></p>
       <div style="display:flex;gap:20px">
-        <a href="#" style="color:var(--muted);text-decoration:none;transition:color .2s" onmouseenter="this.style.color='var(--gold)'" onmouseleave="this.style.color='var(--muted)'">Privacidad</a>
-        <a href="#" style="color:var(--muted);text-decoration:none;transition:color .2s" onmouseenter="this.style.color='var(--gold)'" onmouseleave="this.style.color='var(--muted)'">Términos</a>
+        <a href="#" style="color:var(--muted);text-decoration:none;transition:color .2s" onmouseenter="this.style.color='var(--gold)'" onmouseleave="this.style.color='var(--muted)'" data-i18n="idx_ft_priv">Privacidad</a>
+        <a href="#" style="color:var(--muted);text-decoration:none;transition:color .2s" onmouseenter="this.style.color='var(--gold)'" onmouseleave="this.style.color='var(--muted)'" data-i18n="idx_ft_terms">Términos</a>
       </div>
     </div>
   </footer>
@@ -1323,8 +1323,8 @@
               
               const isAvailable = barber.disponible_hoy;
               const badgeHtml = isAvailable 
-                ? '<span class="badge"><span class="dot"></span> Disponible hoy</span>'
-                : '<span class="badge" style="color:var(--muted);border-color:var(--border);background:transparent">Sin turno hoy</span>';
+                ? '<span class="badge"><span class="dot"></span> <span data-i18n="idx_barber_avail">Disponible hoy</span></span>'
+                : '<span class="badge" style="color:var(--muted);border-color:var(--border);background:transparent"><span data-i18n="idx_barber_unavail">Sin turno hoy</span></span>';
                 
               const imgSrc = barber.foto || barber.imagen_url || 'assets/img/barbers/carlos.png';
               
@@ -1409,8 +1409,8 @@
             allRevContainer.innerHTML = '';
             
             if (json.data.length === 0) {
-              revContainer.innerHTML = '<p style="color:var(--muted)">Aún no hay reseñas. ¡Sé el primero en dejar una!</p>';
-              allRevContainer.innerHTML = '<p style="color:var(--muted)">No hay reseñas.</p>';
+              revContainer.innerHTML = '<p style="color:var(--muted)"><span data-i18n="idx_no_rev">Aún no hay reseñas. ¡Sé el primero en dejar una!</span></p>';
+              allRevContainer.innerHTML = '<p style="color:var(--muted)"><span data-i18n="idx_no_rev2">No hay reseñas.</span></p>';
               return;
             }
             
@@ -1524,7 +1524,7 @@
               const hOut = dia.hora_fin.substring(0, 5);
               statusHtml = `
                 <div style="display:flex;align-items:center">
-                  ${isToday ? '<span class="today-b" style="display:inline-block;margin-right:8px">Hoy</span>' : ''}
+                  ${isToday ? '<span class="today-b" style="display:inline-block;margin-right:8px" data-i18n="idx_today">Hoy</span>' : ''}
                   <span style="color:var(--bright);font-weight:500">${hIn} — ${hOut}</span>
                 </div>
               `;
@@ -1540,8 +1540,8 @@
             } else {
               statusHtml = `
                 <div style="display:flex;align-items:center">
-                  ${isToday ? '<span class="today-b" style="display:inline-block;margin-right:8px">Hoy</span>' : ''}
-                  <span style="color:var(--red);font-weight:500">Cerrado</span>
+                  ${isToday ? '<span class="today-b" style="display:inline-block;margin-right:8px" data-i18n="idx_today">Hoy</span>' : ''}
+                  <span style="color:var(--red);font-weight:500" data-i18n="idx_closed">Cerrado</span>
                 </div>
               `;
               currentGroup = null; // Break the group
