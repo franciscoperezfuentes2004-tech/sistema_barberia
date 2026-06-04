@@ -279,6 +279,15 @@ const i18nDict = {
         admin_auto_v2_77: "Opcional. Se ajustará automáticamente a formato horizontal.",
         admin_auto_v2_80: "Ajustar Imagen",
 
+        admin_auto_v2_8: "Control de Citas",
+        admin_auto_v2_10: "Historial y Analíticas",
+        admin_auto_v2_21: "Gestión de Personal",
+        admin_auto_v2_24: "Catálogo de Servicios",
+        admin_auto_v2_37: "Configuración de Horarios",
+        admin_auto_v2_48: "Personalización Web",
+        admin_auto_v2_27: "Control de Reseñas",
+        admin_auto_v2_34: "Mi Perfil",
+
         // Login
         auto_log_5: "Barbería",
         auto_log_6: "Portal del Equipo",
@@ -626,6 +635,15 @@ const i18nDict = {
         admin_auto_v2_75: "New Service",
         admin_auto_v2_77: "Optional. Will be automatically adjusted to horizontal format.",
         admin_auto_v2_80: "Adjust Image",
+
+        admin_auto_v2_8: "Appointment Management",
+        admin_auto_v2_10: "History & Analytics",
+        admin_auto_v2_21: "Staff Management",
+        admin_auto_v2_24: "Service Catalog",
+        admin_auto_v2_37: "Schedule Configuration",
+        admin_auto_v2_48: "Web Customization",
+        admin_auto_v2_27: "Reviews Management",
+        admin_auto_v2_34: "My Profile",
 
         // Login
         auto_log_5: "Barbershop",
