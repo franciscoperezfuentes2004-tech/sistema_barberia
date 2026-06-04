@@ -1118,7 +1118,7 @@
 
     async function initCMS() {
       try {
-        const res = await fetch('sistema/obtener_datos.php?tabla=ajustes');
+        const res = await fetch('sistema/obtener_datos.php?tabla=ajustes', { cache: 'no-store' });
         const json = await res.json();
         if (json.success && json.data) {
           const d = json.data;
@@ -1273,7 +1273,7 @@
         }
         
         // ── SERVICIOS ──
-        const resSvc = await fetch('sistema/obtener_datos.php?tabla=servicios');
+        const resSvc = await fetch('sistema/obtener_datos.php?tabla=servicios', { cache: 'no-store' });
         const jsonSvc = await resSvc.json();
         if (jsonSvc.success && jsonSvc.data) {
           const svcContainer = document.getElementById('public-services');
@@ -1308,7 +1308,7 @@
         }
         
         // ── EQUIPO ──
-        const resTeam = await fetch('sistema/obtener_datos.php?tabla=barberos&activos=1');
+        const resTeam = await fetch('sistema/obtener_datos.php?tabla=barberos&activos=1', { cache: 'no-store' });
         const jsonTeam = await resTeam.json();
         if (jsonTeam.success && jsonTeam.data) {
           const teamContainer = document.querySelector('.team-wrap');
@@ -1344,7 +1344,7 @@
         }
         
         // ── GALERIA ──
-        const resGal = await fetch('sistema/obtener_datos.php?tabla=galeria');
+        const resGal = await fetch('sistema/obtener_datos.php?tabla=galeria', { cache: 'no-store' });
         const jsonGal = await resGal.json();
         if (jsonGal.success && jsonGal.data) {
           const galContainer = document.getElementById('public-gallery');
@@ -1386,7 +1386,7 @@
 
     async function loadReviews() {
       try {
-        const res = await fetch('sistema/obtener_datos.php?tabla=resenas');
+        const res = await fetch('sistema/obtener_datos.php?tabla=resenas', { cache: 'no-store' });
         const json = await res.json();
         if (json.success && json.data) {
           // Calcular rating promedio dinámicamente
@@ -1500,7 +1500,7 @@
 
     async function loadHorarios() {
       try {
-        const res = await fetch('sistema/obtener_datos.php?tabla=horarios&global=1');
+        const res = await fetch('sistema/obtener_datos.php?tabla=horarios&global=1', { cache: 'no-store' });
         const json = await res.json();
         if (json.success && json.data) {
           const container = document.getElementById('public-horarios');
@@ -1608,7 +1608,7 @@
 
     async function loadStats() {
       try {
-        const resAjustes = await fetch('sistema/obtener_datos.php?tabla=ajustes');
+        const resAjustes = await fetch('sistema/obtener_datos.php?tabla=ajustes', { cache: 'no-store' });
         const jsonAjustes = await resAjustes.json();
         if (jsonAjustes.success && jsonAjustes.data) {
           const d = jsonAjustes.data;
@@ -1616,7 +1616,7 @@
           if (d.stat_clientes) document.getElementById('stat-clientes').textContent = d.stat_clientes;
         }
 
-        const resBarberos = await fetch('sistema/obtener_datos.php?tabla=barberos&activos=1');
+        const resBarberos = await fetch('sistema/obtener_datos.php?tabla=barberos&activos=1', { cache: 'no-store' });
         const jsonBarberos = await resBarberos.json();
         if (jsonBarberos.success && jsonBarberos.data && jsonBarberos.data.length > 0) {
           const statBarberos = document.getElementById('stat-barberos');

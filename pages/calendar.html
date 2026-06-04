@@ -566,7 +566,7 @@
       const grid = document.getElementById('barbers-grid');
       grid.innerHTML = `<div style="color:var(--muted);font-size:.85rem">${window.t?window.t('loading'):'Cargando barberos...'}</div>`;
       try {
-        const res = await fetch(`${API}/obtener_datos.php?tabla=barberos&activos=1&fecha=${state.fecha}&duracion=${state.duracion}`);
+        const res = await fetch(`${API}/obtener_datos.php?tabla=barberos&activos=1&fecha=${state.fecha}&duracion=${state.duracion}`, { cache: 'no-store' });
         const json = await res.json();
         renderBarberos(json.data || []);
       } catch(e) {
@@ -737,7 +737,7 @@
     // Cargar branding dinámico
     async function loadBranding() {
       try {
-        const res = await fetch(`${API}/obtener_datos.php?tabla=ajustes`);
+        const res = await fetch(`${API}/obtener_datos.php?tabla=ajustes`, { cache: 'no-store' });
         const json = await res.json();
         if (json.success && json.data) {
           const d = json.data;

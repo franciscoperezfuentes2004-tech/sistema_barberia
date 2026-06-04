@@ -1331,7 +1331,7 @@
       let adminResenas = [];
       window.loadResenasAdmin = async () => {
         try {
-          const res = await fetch(`${API}/obtener_datos.php?tabla=resenas`);
+          const res = await fetch(`${API}/obtener_datos.php?tabla=resenas`, { cache: 'no-store' });
           const json = await res.json();
           if (json.success) {
             adminResenas = json.data || [];
@@ -1413,7 +1413,7 @@
       // ⎯⎯⎯ CMS AJUSTES GLOBALES ⎯⎯⎯
       async function loadCMS() {
         try {
-          const res = await fetch(`${API}/obtener_datos.php?tabla=ajustes`);
+          const res = await fetch(`${API}/obtener_datos.php?tabla=ajustes`, { cache: 'no-store' });
           const json = await res.json();
           if (json.success && json.data) {
             const data = json.data;
@@ -1575,7 +1575,7 @@
       // ⎯⎯⎯ GALERIA ⎯⎯⎯
       window.loadGallery = async () => {
         try {
-          const res = await fetch(`${API}/obtener_datos.php?tabla=galeria`);
+          const res = await fetch(`${API}/obtener_datos.php?tabla=galeria`, { cache: 'no-store' });
           const json = await res.json();
           const grid = document.getElementById('cms-gallery');
           const fullGrid = document.getElementById('full-cms-gallery');
@@ -1880,7 +1880,7 @@
         
         try {
           // 1. Fetch barberos
-          const resB = await fetch(`${API}/obtener_datos.php?tabla=barberos`);
+          const resB = await fetch(`${API}/obtener_datos.php?tabla=barberos`, { cache: 'no-store' });
           const jsonB = await resB.json();
           const barberos = jsonB.data || [];
           
@@ -1901,7 +1901,7 @@
           // 3. Fetch citas and render
           let html = '';
           for (const barbero of barberos) {
-            const resC = await fetch(`${API}/obtener_datos.php?tabla=citas&barbero_id=${barbero.id}&fecha=${hoyISO}`);
+            const resC = await fetch(`${API}/obtener_datos.php?tabla=citas&barbero_id=${barbero.id}&fecha=${hoyISO}`, { cache: 'no-store' });
             const jsonC = await resC.json();
             const citas = jsonC.data || [];
             
@@ -2006,7 +2006,7 @@
       async function loadEquipo() {
         const tbody = document.getElementById('team-tbody');
         try {
-          const res = await fetch(`${API}/obtener_datos.php?tabla=barberos`);
+          const res = await fetch(`${API}/obtener_datos.php?tabla=barberos`, { cache: 'no-store' });
           const json = await res.json();
           barberosList = json.data || [];
           
@@ -2164,7 +2164,7 @@
         const tbody = document.getElementById('servicios-tbody');
         if(!tbody) return;
         try {
-          const res = await fetch(`${API}/obtener_datos.php?tabla=servicios`);
+          const res = await fetch(`${API}/obtener_datos.php?tabla=servicios`, { cache: 'no-store' });
           const json = await res.json();
           serviciosList = json.data || [];
           
@@ -2387,7 +2387,7 @@
 
       window.loadGlobalSchedule = async () => {
         try {
-          const res = await fetch(`${API}/obtener_datos.php?tabla=horarios&global=1`);
+          const res = await fetch(`${API}/obtener_datos.php?tabla=horarios&global=1`, { cache: 'no-store' });
           const json = await res.json();
           if (json.success) {
             renderScheduleEditor('global-schedule-container', json.data, 'glb');
@@ -2425,7 +2425,7 @@
 
       window.populateBarberSelect = async () => {
         try {
-          const res = await fetch(`${API}/obtener_datos.php?tabla=barberos`);
+          const res = await fetch(`${API}/obtener_datos.php?tabla=barberos`, { cache: 'no-store' });
           const json = await res.json();
           const select = document.getElementById('horario-barbero-select');
           if (!select) return;
@@ -2453,12 +2453,12 @@
         }
         
         try {
-          const res = await fetch(`${API}/obtener_datos.php?tabla=horarios&barbero_id=${barberoId}`);
+          const res = await fetch(`${API}/obtener_datos.php?tabla=horarios&barbero_id=${barberoId}`, { cache: 'no-store' });
           const json = await res.json();
           if (json.success) {
             let scheduleData = json.data;
             if (!scheduleData || scheduleData.length === 0) {
-              const resGlob = await fetch(`${API}/obtener_datos.php?tabla=horarios&global=1`);
+              const resGlob = await fetch(`${API}/obtener_datos.php?tabla=horarios&global=1`, { cache: 'no-store' });
               const jsonGlob = await resGlob.json();
               if (jsonGlob.success && jsonGlob.data && jsonGlob.data.length > 0) {
                 scheduleData = jsonGlob.data;
@@ -2505,16 +2505,15 @@
       const sections = document.querySelectorAll('.section');
       const titleEl = document.getElementById('topbar-title');
       
-      const titles = {
-        agenda: 'Control de Citas',
-        estadisticas: 'Historial y Analíticas',
-        equipo: 'Gestión de Personal',
-        servicios: 'Catálogo de Servicios',
-        horarios: 'Configuración de Horarios',
-        cms: 'Personalización Web',
-        resenas: 'Control de Reseñas',
-        perfil: 'Mi Perfil'
-      };
+      const titleKeys = {
+        agenda: 'admin_auto_v2_8',
+        estadisticas: 'admin_auto_v2_10',
+        equipo: 'admin_auto_v2_21',
+        servicios: 'admin_auto_v2_24',
+        horarios: 'admin_auto_v2_37',
+        cms: 'admin_auto_v2_48',
+        resenas: 'admin_auto_v2_27',
+        perfil: 'admin_auto_v2_34'};
 
       navItems.forEach(item => {
         item.addEventListener('click', () => {
@@ -2525,7 +2524,9 @@
           sections.forEach(s => s.classList.remove('active'));
           document.getElementById(target).classList.add('active');
           
-          titleEl.textContent = titles[target] || 'Admin Panel';
+          titleEl.setAttribute('data-i18n', titleKeys[target] || 'admin_auto_v2_5');
+          titleEl.textContent = window.t ? window.t(titleKeys[target] || 'admin_auto_v2_5') : 'Admin Panel';
+          if(window.applyTranslations) window.applyTranslations(window.currentLang);
 
           if (target === 'estadisticas') {
             updateMonthLabel();

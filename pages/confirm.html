@@ -288,7 +288,7 @@
     // Cargar branding dinámico
     async function loadBranding() {
       try {
-        const res = await fetch(`${API}/obtener_datos.php?tabla=ajustes`);
+        const res = await fetch(`${API}/obtener_datos.php?tabla=ajustes`, { cache: 'no-store' });
         const json = await res.json();
         if (json.success && json.data) {
           const d = json.data;
