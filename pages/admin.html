@@ -951,7 +951,7 @@
 <div class="card" style="display:flex; flex-direction:column; padding-bottom: 24px;">
 <div class="card-title" data-i18n="admin_cms_lang_label">Idioma del Sistema (Global)</div>
 <p data-i18n="admin_cms_lang_desc" style="font-size:0.85rem;color:var(--muted);margin-top:-8px;margin-bottom:14px;">Elige el idioma oficial para la página principal y este panel.</p>
-<select id="cms-lang" onchange="if(window.applyTranslations) window.applyTranslations(this.value);" style="width:100%;padding:12px;border-radius:12px;background:var(--s2);color:var(--bright);border:1px solid var(--border);font-family:inherit;font-size:1rem;appearance:none;cursor:pointer;">
+<select id="cms-lang" onchange="window.currentLang = this.value; if(window.applyTranslations) window.applyTranslations(this.value);" style="width:100%;padding:12px;border-radius:12px;background:var(--s2);color:var(--bright);border:1px solid var(--border);font-family:inherit;font-size:1rem;appearance:none;cursor:pointer;">
 <option data-i18n="admin_auto_v2_56" value="es">Español (ES)</option>
 <option data-i18n="admin_auto_v2_57" value="en">English (EN)</option>
 </select>
