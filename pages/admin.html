@@ -883,6 +883,18 @@
 
       <!-- 3. CMS -->
       <section id="cms" class="section">
+        <script>
+          function actualizarLadaAdmin() {
+            const select = document.getElementById('cms-phone-lada');
+            const input = document.getElementById('cms-phone');
+            const selected = select.options[select.selectedIndex];
+            const max = selected.getAttribute('data-max');
+            const min = selected.getAttribute('data-min');
+            input.maxLength = max;
+            input.setAttribute('minlength', min);
+            input.placeholder = 'Ej. 555' + '0'.repeat(max - 3);
+          }
+        </script>
         <div class="cms-grid">
           <div class="card" style="display:flex; flex-direction:column; height:100%;">
             <div class="card-title">Información de la Barbería</div>
@@ -893,14 +905,27 @@
             <div class="form-group">
               <label>Teléfono de Contacto (WhatsApp)</label>
               <div style="display: flex; gap: 8px;">
-                <select id="cms-phone-lada" style="width: 110px; background: var(--s2); border: 1px solid var(--border); color: var(--bright); border-radius: 8px; padding: 12px; font-family: var(--sans);">
-                  <option value="+52">🇲🇽 +52</option>
-                  <option value="+1">🇺🇸 +1</option>
-                  <option value="+34">🇪🇸 +34</option>
-                  <option value="+54">🇦🇷 +54</option>
-                  <option value="+57">🇨🇴 +57</option>
-                  <option value="+56">🇨🇱 +56</option>
-                  <option value="+51">🇵🇪 +51</option>
+                <select id="cms-phone-lada" onchange="actualizarLadaAdmin()" style="width: 110px; background: var(--s2); border: 1px solid var(--border); color: var(--bright); border-radius: 8px; padding: 12px; font-family: var(--sans); text-overflow: ellipsis;">
+                  <option value="+52" data-min="10" data-max="10">🇲🇽 +52 (MX)</option>
+                  <option value="+1" data-min="10" data-max="10">🇺🇸/🇨🇦 +1 (US/CA)</option>
+                  <option value="+34" data-min="9" data-max="9">🇪🇸 +34 (ES)</option>
+                  <option value="+54" data-min="10" data-max="10">🇦🇷 +54 (AR)</option>
+                  <option value="+57" data-min="10" data-max="10">🇨🇴 +57 (CO)</option>
+                  <option value="+56" data-min="9" data-max="9">🇨🇱 +56 (CL)</option>
+                  <option value="+51" data-min="9" data-max="9">🇵🇪 +51 (PE)</option>
+                  <option value="+593" data-min="9" data-max="9">🇪🇨 +593 (EC)</option>
+                  <option value="+58" data-min="10" data-max="10">🇻🇪 +58 (VE)</option>
+                  <option value="+55" data-min="10" data-max="11">🇧🇷 +55 (BR)</option>
+                  <option value="+502" data-min="8" data-max="8">🇬🇹 +502 (GT)</option>
+                  <option value="+503" data-min="8" data-max="8">🇸🇻 +503 (SV)</option>
+                  <option value="+504" data-min="8" data-max="8">🇭🇳 +504 (HN)</option>
+                  <option value="+505" data-min="8" data-max="8">🇳🇮 +505 (NI)</option>
+                  <option value="+506" data-min="8" data-max="8">🇨🇷 +506 (CR)</option>
+                  <option value="+507" data-min="7" data-max="8">🇵🇦 +507 (PA)</option>
+                  <option value="+598" data-min="8" data-max="8">🇺🇾 +598 (UY)</option>
+                  <option value="+595" data-min="9" data-max="9">🇵🇾 +595 (PY)</option>
+                  <option value="+591" data-min="8" data-max="8">🇧🇴 +591 (BO)</option>
+                  <option value="+1809" data-min="10" data-max="10">🇩🇴 +1 809 (DO)</option>
                 </select>
                 <input type="tel" id="cms-phone" placeholder="Ej. 55 1234 5678" maxlength="15" oninput="this.value = this.value.replace(/[^0-9\s-]/g, '')" style="flex: 1;">
               </div>
@@ -1442,12 +1467,15 @@
                  }
                  if(ladaExists) {
                      select.value = lada;
-                     document.getElementById('cms-phone').value = number;
+                     document.getElementById('cms-phone').value = number.replace(/[^0-9]/g, '');
+                     setTimeout(window.actualizarLadaAdmin, 100);
                  } else {
-                     document.getElementById('cms-phone').value = fullPhone;
+                     document.getElementById('cms-phone').value = fullPhone.replace(/[^0-9]/g, '');
+                     setTimeout(window.actualizarLadaAdmin, 100);
                  }
               } else {
-                 document.getElementById('cms-phone').value = fullPhone;
+                 document.getElementById('cms-phone').value = fullPhone.replace(/[^0-9]/g, '');
+                 setTimeout(window.actualizarLadaAdmin, 100);
               }
             }
             if (data.site_email) document.getElementById('cms-email').value = data.site_email;
@@ -2653,6 +2681,23 @@
           }
         }
       });
+
+      window.actualizarLadaAdmin = function() {
+        const selLada = document.getElementById('cms-phone-lada');
+        const opt = selLada.options[selLada.selectedIndex];
+        const maxL = opt.getAttribute('data-max');
+        const minL = opt.getAttribute('data-min');
+        const inp = document.getElementById('cms-phone');
+        inp.maxLength = maxL;
+        inp.minLength = minL;
+        inp.placeholder = "Ej. " + "1".repeat(maxL);
+        const val = inp.value.replace(/[^0-9]/g, '');
+        if (val.length > maxL) {
+          inp.value = val.substring(0, maxL);
+        } else {
+          inp.value = val;
+        }
+      };
     </script>
     
     <!-- Modal Custom Range Picker para Estadísticas -->

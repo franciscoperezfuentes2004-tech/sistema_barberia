@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
 }
 
 require_once __DIR__ . '/auth_middleware.php';
-verificarJWT();
+verificarJWT(['admin', 'barbero']);
 
 require_once __DIR__ . "/conexion.php";
 

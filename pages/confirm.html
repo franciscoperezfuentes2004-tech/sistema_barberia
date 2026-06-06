@@ -168,18 +168,31 @@
         <input type="text" id="inp-nombre" class="form-input" required placeholder="Ej. Juan Pérez" oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '')">
       </div>
         <div class="form-group">
-          <label class="form-label">Teléfono (10 dígitos) *</label>
+          <label class="form-label">Teléfono *</label>
           <div style="display: flex; gap: 8px;">
-            <select id="inp-lada" style="background: var(--s2); border: 1px solid var(--border); color: var(--bright); border-radius: 12px; padding: 14px; font-family: inherit;">
-              <option value="+52">🇲🇽 +52</option>
-              <option value="+1">🇺🇸 +1</option>
-              <option value="+34">🇪🇸 +34</option>
-              <option value="+54">🇦🇷 +54</option>
-              <option value="+57">🇨🇴 +57</option>
-              <option value="+56">🇨🇱 +56</option>
-              <option value="+51">🇵🇪 +51</option>
+            <select id="inp-lada" onchange="actualizarLada()" style="background: var(--s2); border: 1px solid var(--border); color: var(--bright); border-radius: 12px; padding: 14px; font-family: inherit; min-width: 130px; width: 140px; text-overflow: ellipsis;">
+              <option value="+52" data-min="10" data-max="10">🇲🇽 +52 (MX)</option>
+              <option value="+1" data-min="10" data-max="10">🇺🇸/🇨🇦 +1 (US/CA)</option>
+              <option value="+34" data-min="9" data-max="9">🇪🇸 +34 (ES)</option>
+              <option value="+54" data-min="10" data-max="10">🇦🇷 +54 (AR)</option>
+              <option value="+57" data-min="10" data-max="10">🇨🇴 +57 (CO)</option>
+              <option value="+56" data-min="9" data-max="9">🇨🇱 +56 (CL)</option>
+              <option value="+51" data-min="9" data-max="9">🇵🇪 +51 (PE)</option>
+              <option value="+593" data-min="9" data-max="9">🇪🇨 +593 (EC)</option>
+              <option value="+58" data-min="10" data-max="10">🇻🇪 +58 (VE)</option>
+              <option value="+55" data-min="10" data-max="11">🇧🇷 +55 (BR)</option>
+              <option value="+502" data-min="8" data-max="8">🇬🇹 +502 (GT)</option>
+              <option value="+503" data-min="8" data-max="8">🇸🇻 +503 (SV)</option>
+              <option value="+504" data-min="8" data-max="8">🇭🇳 +504 (HN)</option>
+              <option value="+505" data-min="8" data-max="8">🇳🇮 +505 (NI)</option>
+              <option value="+506" data-min="8" data-max="8">🇨🇷 +506 (CR)</option>
+              <option value="+507" data-min="7" data-max="8">🇵🇦 +507 (PA)</option>
+              <option value="+598" data-min="8" data-max="8">🇺🇾 +598 (UY)</option>
+              <option value="+595" data-min="9" data-max="9">🇵🇾 +595 (PY)</option>
+              <option value="+591" data-min="8" data-max="8">🇧🇴 +591 (BO)</option>
+              <option value="+1809" data-min="10" data-max="10">🇩🇴 +1 809 (DO)</option>
             </select>
-            <input type="tel" id="inp-telefono" class="form-input" required placeholder="Ej. 5551234567" maxlength="15" minlength="10" oninput="this.value = this.value.replace(/[^0-9\s-]/g, '')" style="flex: 1;">
+            <input type="tel" id="inp-telefono" class="form-input" required placeholder="Ej. 5551234567" maxlength="10" minlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '')" style="flex: 1;">
           </div>
         </div>
       <div class="form-group">
@@ -239,12 +252,18 @@
       err.style.display = 'none';
 
       const nombre = document.getElementById('inp-nombre').value.trim();
-      const lada = document.getElementById('inp-lada').value;
-      const telefonoNum = document.getElementById('inp-telefono').value.trim();
+      const selLada = document.getElementById('inp-lada');
+      const opt = selLada.options[selLada.selectedIndex];
+      const lada = opt.value;
+      const minL = parseInt(opt.getAttribute('data-min'));
+      const maxL = parseInt(opt.getAttribute('data-max'));
+      const telefonoNum = document.getElementById('inp-telefono').value.replace(/[^0-9]/g, '');
       const email = document.getElementById('inp-email').value.trim();
 
-      if (telefonoNum.length < 10) {
-        err.textContent = 'El teléfono debe tener al menos 10 dígitos.';
+      if (telefonoNum.length < minL || telefonoNum.length > maxL) {
+        let msg = `El teléfono debe tener ${minL} dígitos para esta región.`;
+        if (minL !== maxL) msg = `El teléfono debe tener entre ${minL} y ${maxL} dígitos para esta región.`;
+        err.textContent = msg;
         err.style.display = 'block';
         btn.disabled = false;
         btn.textContent = 'Confirmar Reserva';
@@ -312,6 +331,26 @@
       }
     }
     loadBranding();
+  </script>
+  <script>
+    function actualizarLada() {
+      const selLada = document.getElementById('inp-lada');
+      const opt = selLada.options[selLada.selectedIndex];
+      const maxL = opt.getAttribute('data-max');
+      const minL = opt.getAttribute('data-min');
+      const inp = document.getElementById('inp-telefono');
+      inp.maxLength = maxL;
+      inp.minLength = minL;
+      inp.placeholder = "Ej. " + "1".repeat(maxL);
+      // Recortar si ya tenía un valor más largo
+      const val = inp.value.replace(/[^0-9]/g, '');
+      if (val.length > maxL) {
+        inp.value = val.substring(0, maxL);
+      } else {
+        inp.value = val;
+      }
+    }
+    document.addEventListener('DOMContentLoaded', actualizarLada);
   </script>
 </body>
 </html>
