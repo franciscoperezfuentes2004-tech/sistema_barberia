@@ -892,7 +892,18 @@
             </div>
             <div class="form-group">
               <label>Teléfono de Contacto (WhatsApp)</label>
-              <input type="text" id="cms-phone" placeholder="Ej. 55 1234 5678">
+              <div style="display: flex; gap: 8px;">
+                <select id="cms-phone-lada" style="width: 110px; background: var(--s2); border: 1px solid var(--border); color: var(--bright); border-radius: 8px; padding: 12px; font-family: var(--sans);">
+                  <option value="+52">🇲🇽 +52</option>
+                  <option value="+1">🇺🇸 +1</option>
+                  <option value="+34">🇪🇸 +34</option>
+                  <option value="+54">🇦🇷 +54</option>
+                  <option value="+57">🇨🇴 +57</option>
+                  <option value="+56">🇨🇱 +56</option>
+                  <option value="+51">🇵🇪 +51</option>
+                </select>
+                <input type="tel" id="cms-phone" placeholder="Ej. 55 1234 5678" maxlength="15" oninput="this.value = this.value.replace(/[^0-9\s-]/g, '')" style="flex: 1;">
+              </div>
             </div>
             <div class="form-group">
               <label>Correo Electrónico</label>
@@ -1415,7 +1426,30 @@
           if (json.success && json.data) {
             const data = json.data;
             if (data.site_name) document.getElementById('cms-name').value = data.site_name;
-            if (data.site_phone) document.getElementById('cms-phone').value = data.site_phone;
+            if (data.site_phone) {
+              const fullPhone = data.site_phone;
+              const ladaMatch = fullPhone.match(/^(\+\d{1,3})\s*(.*)$/);
+              if (ladaMatch) {
+                 const lada = ladaMatch[1];
+                 const number = ladaMatch[2];
+                 const select = document.getElementById('cms-phone-lada');
+                 let ladaExists = false;
+                 for(let i=0; i < select.options.length; i++) {
+                     if(select.options[i].value === lada) {
+                         ladaExists = true;
+                         break;
+                     }
+                 }
+                 if(ladaExists) {
+                     select.value = lada;
+                     document.getElementById('cms-phone').value = number;
+                 } else {
+                     document.getElementById('cms-phone').value = fullPhone;
+                 }
+              } else {
+                 document.getElementById('cms-phone').value = fullPhone;
+              }
+            }
             if (data.site_email) document.getElementById('cms-email').value = data.site_email;
             if (data.site_map || data.site_address) {
               document.getElementById('cms-address').value = data.site_map || data.site_address;
@@ -1519,7 +1553,7 @@
 
         const payload = {
           site_name: document.getElementById('cms-name').value,
-          site_phone: document.getElementById('cms-phone').value,
+          site_phone: document.getElementById('cms-phone-lada').value + ' ' + document.getElementById('cms-phone').value.trim(),
           site_email: document.getElementById('cms-email').value,
           site_address: displayAddress,
           site_map: addr,
@@ -2594,6 +2628,31 @@
         });
       });
 
+      // Feedback visual global para inputs de archivo (imágenes)
+      document.addEventListener('change', function(e) {
+        if (e.target && e.target.type === 'file') {
+          const file = e.target.files[0];
+          if (file) {
+            const label = document.querySelector(`label[for="${e.target.id}"]`);
+            if (label) {
+              if (!label.hasAttribute('data-original-text')) {
+                label.setAttribute('data-original-text', label.innerHTML);
+              }
+              label.innerHTML = `✅ Foto Seleccionada`;
+              label.style.backgroundColor = 'var(--accent)';
+              label.style.color = '#fff';
+            }
+          } else {
+             // Si el usuario cancela la selección, regresamos al texto original
+             const label = document.querySelector(`label[for="${e.target.id}"]`);
+             if (label && label.hasAttribute('data-original-text')) {
+                label.innerHTML = label.getAttribute('data-original-text');
+                label.style.backgroundColor = '';
+                label.style.color = '';
+             }
+          }
+        }
+      });
     </script>
     
     <!-- Modal Custom Range Picker para Estadísticas -->
