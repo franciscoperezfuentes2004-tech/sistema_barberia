@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Admin Dashboard — Barbería Premium</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&family=Noto+Color+Emoji&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
@@ -905,7 +905,7 @@
             <div class="form-group">
               <label>Teléfono de Contacto (WhatsApp)</label>
               <div style="display: flex; gap: 8px;">
-                <select id="cms-phone-lada" onchange="actualizarLadaAdmin()" style="width: 110px; background: var(--s2); border: 1px solid var(--border); color: var(--bright); border-radius: 8px; padding: 12px; font-family: var(--sans); text-overflow: ellipsis;">
+                <select id="cms-phone-lada" onchange="actualizarLadaAdmin()" style="width: 110px; background: var(--s2); border: 1px solid var(--border); color: var(--bright); border-radius: 8px; padding: 12px; font-family: 'Noto Color Emoji', var(--sans); text-overflow: ellipsis;">
                   <option value="+52" data-min="10" data-max="10">🇲🇽 +52 (MX)</option>
                   <option value="+1" data-min="10" data-max="10">🇺🇸/🇨🇦 +1 (US/CA)</option>
                   <option value="+34" data-min="9" data-max="9">🇪🇸 +34 (ES)</option>
@@ -1612,6 +1612,7 @@
             showToast('\u2705 Ajustes web actualizados');
             delete window.b64Files['cms-logo'];
             delete window.b64Files['cms-hero-bg'];
+            if (window.resetUploadLabels) window.resetUploadLabels();
             loadCMS();
           } else {
             alert(json.error || json.message || 'Error al guardar');
@@ -1724,6 +1725,7 @@
             fileInput.value = '';
             delete window.b64Files['new-gal-file'];
             titleInput.value = '';
+            if (window.resetUploadLabels) window.resetUploadLabels();
             loadGallery();
           } else {
             alert(json.error || json.message || 'Error al subir');
@@ -2134,6 +2136,7 @@
 
       window.closeModal = () => {
         document.getElementById('barber-modal').classList.remove('show');
+        if (window.resetUploadLabels) window.resetUploadLabels();
       };
 
       window.saveBarber = async (e) => {
@@ -2259,6 +2262,7 @@
 
       window.closeServiceModal = () => {
         document.getElementById('service-modal').classList.remove('show');
+        if (window.resetUploadLabels) window.resetUploadLabels();
       };
 
       window.editService = (id) => {
@@ -2655,6 +2659,16 @@
           }
         });
       });
+
+      window.resetUploadLabels = function() {
+        document.querySelectorAll('label[data-original-text]').forEach(label => {
+          label.innerHTML = label.getAttribute('data-original-text');
+          label.style.backgroundColor = '';
+          label.style.color = '';
+          label.removeAttribute('data-original-text');
+        });
+        document.querySelectorAll('.input-file-seguro').forEach(i => i.value = '');
+      };
 
       // Feedback visual global para inputs de archivo (imágenes)
       document.addEventListener('change', function(e) {
