@@ -3,7 +3,12 @@
 ob_start();
 
 header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Origin: *");
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+if ($origin !== '') {
+    header("Access-Control-Allow-Origin: $origin");
+} else {
+    header("Access-Control-Allow-Origin: *");
+}
 header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 
@@ -104,7 +109,9 @@ if ($logged_in) {
         'id' => $user_data['id'], 
         'usuario' => $user_data['usuario'], 
         'rol' => $user_data['rol'],
-        'nombre' => $user_data['nombre'] ?? ''
+        'nombre' => $user_data['nombre'] ?? '',
+        'iat' => time(),
+        'exp' => time() + (8 * 3600) // 8 hours
     ]);
     
     $base64UrlHeader = base64UrlEncode($header);

@@ -4,13 +4,22 @@ ini_set('display_errors', 0);
 ob_start();
 
 header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Origin: *");
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+if ($origin !== '') {
+    header("Access-Control-Allow-Origin: $origin");
+} else {
+    header("Access-Control-Allow-Origin: *");
+}
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
     ob_clean();
     http_response_code(200);
     exit;
 }
+
+require_once __DIR__ . '/auth_middleware.php';
+verificarJWT();
 
 require_once __DIR__ . "/conexion.php";
 
@@ -36,28 +45,42 @@ if ($res_h) {
 
 $horario_personal = [];
 if ($barbero_id > 0) {
-    $res_hp = mysqli_query($conexion, "SELECT dia_semana, activo FROM horarios WHERE barbero_id = $barbero_id");
+    $stmt_hp = mysqli_prepare($conexion, "SELECT dia_semana, activo FROM horarios WHERE barbero_id = ?");
+    mysqli_stmt_bind_param($stmt_hp, "i", $barbero_id);
+    mysqli_stmt_execute($stmt_hp);
+    $res_hp = mysqli_stmt_get_result($stmt_hp);
     if ($res_hp && mysqli_num_rows($res_hp) > 0) {
         while ($row = mysqli_fetch_assoc($res_hp)) {
             $horario_personal[(int)$row['dia_semana']] = (int)$row['activo'];
         }
     }
+    mysqli_stmt_close($stmt_hp);
 }
 
 // 2. Cargar citas del mes para este barbero (o todos si es 0)
 $citas_por_dia = [];
-$q_cond = $barbero_id > 0 ? "barbero_id = $barbero_id AND" : "";
+$q_cond = $barbero_id > 0 ? "barbero_id = ? AND" : "";
 $q_citas = "SELECT DATE(fecha_hora) as fecha_cita, COUNT(*) as total FROM citas 
             WHERE $q_cond 
-            DATE(fecha_hora) >= '$primer_dia' AND DATE(fecha_hora) <= '$ultimo_dia'
+            DATE(fecha_hora) >= ? AND DATE(fecha_hora) <= ?
             AND estado != 'cancelada'
             GROUP BY DATE(fecha_hora)";
-$res_c = mysqli_query($conexion, $q_citas);
+$stmt_c = mysqli_prepare($conexion, $q_citas);
+
+if ($barbero_id > 0) {
+    mysqli_stmt_bind_param($stmt_c, "iss", $barbero_id, $primer_dia, $ultimo_dia);
+} else {
+    mysqli_stmt_bind_param($stmt_c, "ss", $primer_dia, $ultimo_dia);
+}
+
+mysqli_stmt_execute($stmt_c);
+$res_c = mysqli_stmt_get_result($stmt_c);
 if ($res_c) {
     while ($row = mysqli_fetch_assoc($res_c)) {
         $citas_por_dia[$row['fecha_cita']] = (int)$row['total'];
     }
 }
+mysqli_stmt_close($stmt_c);
 
 $data = [];
 for ($d = 1; $d <= $ultimo_dia_num; $d++) {

@@ -4,7 +4,9 @@ ini_set('display_errors', 0);
 ob_start();
 
 header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Origin: *");
+$allowed_origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '*';
+header("Access-Control-Allow-Origin: " . $allowed_origin);
+header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Methods: GET, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 
@@ -25,17 +27,25 @@ $dia_semana = (int)date('w', $ts_fecha);
 
 // 1. Obtener horario global
 $horario_global = ['activo' => 1, 'hora_inicio' => '09:00:00', 'hora_fin' => '20:00:00'];
-$resG = mysqli_query($conexion, "SELECT activo, hora_inicio, hora_fin FROM horarios WHERE barbero_id = 0 AND dia_semana = $dia_semana");
+$stmtG = mysqli_prepare($conexion, "SELECT activo, hora_inicio, hora_fin FROM horarios WHERE barbero_id = 0 AND dia_semana = ?");
+mysqli_stmt_bind_param($stmtG, "i", $dia_semana);
+mysqli_stmt_execute($stmtG);
+$resG = mysqli_stmt_get_result($stmtG);
 if ($rowG = mysqli_fetch_assoc($resG)) {
     $horario_global = $rowG;
 }
+mysqli_stmt_close($stmtG);
 
 // 2. Obtener horario del barbero
 $horario_barbero = $horario_global;
-$resB = mysqli_query($conexion, "SELECT activo, hora_inicio, hora_fin FROM horarios WHERE barbero_id = $barbero_id AND dia_semana = $dia_semana");
+$stmtB = mysqli_prepare($conexion, "SELECT activo, hora_inicio, hora_fin FROM horarios WHERE barbero_id = ? AND dia_semana = ?");
+mysqli_stmt_bind_param($stmtB, "ii", $barbero_id, $dia_semana);
+mysqli_stmt_execute($stmtB);
+$resB = mysqli_stmt_get_result($stmtB);
 if ($rowB = mysqli_fetch_assoc($resB)) {
     $horario_barbero = $rowB;
 }
+mysqli_stmt_close($stmtB);
 
 if ((int)$horario_barbero['activo'] === 0) {
     ob_clean();
@@ -45,12 +55,16 @@ if ((int)$horario_barbero['activo'] === 0) {
 
 // 3. Obtener citas del barbero para ese día
 $citas = [];
-$resC = mysqli_query($conexion, "SELECT hora_inicio, hora_fin FROM citas WHERE barbero_id = $barbero_id AND DATE(fecha_hora) = '$fecha' AND estado NOT IN ('cancelada', 'no_asistio')");
+$stmtC = mysqli_prepare($conexion, "SELECT hora_inicio, hora_fin FROM citas WHERE barbero_id = ? AND DATE(fecha_hora) = ? AND estado NOT IN ('cancelada', 'no_asistio')");
+mysqli_stmt_bind_param($stmtC, "is", $barbero_id, $fecha);
+mysqli_stmt_execute($stmtC);
+$resC = mysqli_stmt_get_result($stmtC);
 if ($resC) {
     while ($rowC = mysqli_fetch_assoc($resC)) {
         $citas[] = $rowC;
     }
 }
+mysqli_stmt_close($stmtC);
 
 // 4. Generar slots cada 30 min
 $slots = [];

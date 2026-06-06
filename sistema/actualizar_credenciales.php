@@ -8,6 +8,8 @@ header('Content-Type: application/json; charset=utf-8');
 require_once 'conexion.php';
 /** @var mysqli $conexion */
 
+require_once 'auth_middleware.php';
+
 // Validar método POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
@@ -15,35 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-// 1. Extraer JWT (Misma lógica simple de auth.php)
-$headers = apache_request_headers();
-$authHeader = $headers['Authorization'] ?? '';
-if (empty($authHeader) && isset($_SERVER['HTTP_AUTHORIZATION'])) {
-    $authHeader = $_SERVER['HTTP_AUTHORIZATION'];
-}
-
-if (!preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
-    http_response_code(401);
-    echo json_encode(["success" => false, "message" => "Token no proporcionado"]);
-    exit;
-}
-
-$token = $matches[1];
-
-// Simulación de decodificación básica del JWT (solo para propósitos de verificación si es admin)
-$tokenParts = explode('.', $token);
-if (count($tokenParts) !== 3) {
-    http_response_code(401);
-    echo json_encode(["success" => false, "message" => "Token inválido"]);
-    exit;
-}
-
-$payload = json_decode(base64_decode($tokenParts[1]), true);
-if (!$payload || !isset($payload['rol']) || $payload['rol'] !== 'admin') {
-    http_response_code(403);
-    echo json_encode(["success" => false, "message" => "Acceso denegado. Se requiere rol de administrador."]);
-    exit;
-}
+// PROTECCIÓN DE ENDPOINT (Componente 2)
+// Verificar JWT y requerir rol de administrador
+$payload = verificarJWT(['admin']);
 
 // 2. Leer datos POST JSON
 $input = file_get_contents('php://input');

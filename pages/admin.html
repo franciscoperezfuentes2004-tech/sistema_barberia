@@ -1137,6 +1137,27 @@
     (() => {
       const API = '../sistema';
 
+      // ═══ OWASP A01: JWT Auth Helper ═══
+      function getAuthHeaders(extra = {}) {
+        const token = localStorage.getItem('mi_token_jwt') || '';
+        return { 'Authorization': 'Bearer ' + token, ...extra };
+      }
+      function authFetch(url, options = {}) {
+        const token = localStorage.getItem('mi_token_jwt') || '';
+        if (!options.headers) options.headers = {};
+        if (typeof options.headers === 'object' && !(options.headers instanceof Headers)) {
+          options.headers['Authorization'] = 'Bearer ' + token;
+        }
+        return fetch(url, options).then(res => {
+          if (res.status === 401 || res.status === 403) {
+            showToast('⚠️ Sesión expirada o inválida. Redirigiendo al login...');
+            setTimeout(() => { localStorage.removeItem('mi_token_jwt'); window.location.href = 'login.html'; }, 1500);
+            throw new Error('Unauthorized');
+          }
+          return res;
+        });
+      }
+
       // 🛡️ Interceptor Global de Fetch para Inyectar JWT
       const originalFetch = window.fetch;
       window.fetch = async function() {
@@ -1355,7 +1376,7 @@
         if(!confirm(`¿Seguro que deseas eliminar ${checked.length} reseña(s)?`)) return;
 
         try {
-          const res = await fetch(`${API}/eliminar.php?tabla=resenas&ids=${checked.join(',')}`, { method: 'DELETE' });
+          const res = await authFetch(`${API}/eliminar.php?tabla=resenas&ids=${checked.join(',')}`, { method: 'DELETE' });
           const json = await res.json();
           if(json.success) {
             showToast('\u2705 Reseñas eliminadas correctamente');
@@ -1373,7 +1394,7 @@
         if(!confirm(`¿Seguro que deseas eliminar TODAS las reseñas de forma permanente?`)) return;
         const allIds = adminResenas.map(r => r.id).join(',');
         try {
-          const res = await fetch(`${API}/eliminar.php?tabla=resenas&ids=${allIds}`, { method: 'DELETE' });
+          const res = await authFetch(`${API}/eliminar.php?tabla=resenas&ids=${allIds}`, { method: 'DELETE' });
           const json = await res.json();
           if(json.success) {
             showToast('\u2705 Todas las reseñas han sido eliminadas');
@@ -1519,7 +1540,7 @@
         }
 
         try {
-          const res = await fetch(`${API}/guardar_ajustes.php`, {
+          const res = await authFetch(`${API}/guardar_ajustes.php`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
@@ -1603,7 +1624,7 @@
       window.deleteGalleryImage = async (id) => {
         if (!confirm('¿Seguro que deseas eliminar esta imagen de la galería?')) return;
         try {
-          const res = await fetch(`${API}/eliminar.php?tabla=galeria&id=${id}`, { method: 'DELETE' });
+          const res = await authFetch(`${API}/eliminar.php?tabla=galeria&id=${id}`, { method: 'DELETE' });
           const json = await res.json();
           if (json.success) {
             showToast('\u2705 Imagen eliminada');
@@ -1627,7 +1648,7 @@
         try { b64 = await compressImage(b64, 1200, 0.8); } catch(e) { /* usar original */ }
 
         try {
-          const res = await fetch(`${API}/guardar_galeria.php`, {
+          const res = await authFetch(`${API}/guardar_galeria.php`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -1732,7 +1753,7 @@
         let url = `${API}/estadisticas.php?desde=${dDesde}&hasta=${dHasta}`;
 
         try {
-          const res = await fetch(url);
+          const res = await authFetch(url);
           const json = await res.json();
           if (!json.success) return alert('Error cargando estadísticas');
 
@@ -2084,7 +2105,7 @@
         const method = id ? 'PUT' : 'POST';
 
         try {
-          const res = await fetch(url, {
+          const res = await authFetch(url, {
             method,
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
@@ -2108,7 +2129,7 @@
           return;
         }
         try {
-          const res = await fetch(`${API}/eliminar.php?tabla=barberos&id=${id}`, { method: 'DELETE' });
+          const res = await authFetch(`${API}/eliminar.php?tabla=barberos&id=${id}`, { method: 'DELETE' });
           const json = await res.json();
           if (json.success) {
             showToast('\u2705 Barbero eliminado');
@@ -2230,7 +2251,7 @@
         const url = `${API}/guardar_servicio.php`;
 
         try {
-          const res = await fetch(url, {
+          const res = await authFetch(url, {
             method: 'POST',
             body: formData
           });
@@ -2254,7 +2275,7 @@
       window.deleteService = async (id, nombre) => {
         if (!confirm(`¿Estás seguro que deseas eliminar el servicio "${nombre}"?`)) return;
         try {
-          const res = await fetch(`${API}/eliminar.php?tabla=servicios&id=${id}`, { method: 'DELETE' });
+          const res = await authFetch(`${API}/eliminar.php?tabla=servicios&id=${id}`, { method: 'DELETE' });
           const json = await res.json();
           if (json.success) {
             showToast('\u2705 Servicio eliminado');
@@ -2363,7 +2384,7 @@
         const syncAll = document.getElementById('sync-all-barbers').checked;
         
         try {
-          const res = await fetch(`${API}/guardar_horarios.php?global=1`, {
+          const res = await authFetch(`${API}/guardar_horarios.php?global=1`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ horario: scheduleData, sync_all: syncAll })
@@ -2445,7 +2466,7 @@
         const scheduleData = extractScheduleData('brb');
         
         try {
-          const res = await fetch(`${API}/guardar_horarios.php?barbero_id=${barberoId}`, {
+          const res = await authFetch(`${API}/guardar_horarios.php?barbero_id=${barberoId}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ horario: scheduleData })
@@ -2524,7 +2545,7 @@
         }
 
         try {
-          const res = await fetch(`${API}/actualizar_credenciales.php`, {
+          const res = await authFetch(`${API}/actualizar_credenciales.php`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ usuario: user, password: pass })

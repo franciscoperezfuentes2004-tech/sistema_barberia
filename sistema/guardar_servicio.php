@@ -4,9 +4,14 @@ ini_set('display_errors', 0);
 ob_start();
 
 header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Origin: *");
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+if ($origin !== '') {
+    header("Access-Control-Allow-Origin: $origin");
+} else {
+    header("Access-Control-Allow-Origin: *");
+}
 header("Access-Control-Allow-Methods: POST, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
     ob_clean();
@@ -14,12 +19,15 @@ if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
     exit;
 }
 
+require_once __DIR__ . '/auth_middleware.php';
+verificarJWT();
+
 require_once __DIR__ . "/conexion.php";
 
 // El frontend envía FormData (multipart), así que usamos $_POST y $_FILES
 $id           = $_POST['id'] ?? '';
-$nombre       = trim($_POST['nombre'] ?? '');
-$descripcion  = trim($_POST['descripcion'] ?? '');
+$nombre       = htmlspecialchars(trim($_POST['nombre'] ?? ''), ENT_QUOTES, 'UTF-8');
+$descripcion  = htmlspecialchars(trim($_POST['descripcion'] ?? ''), ENT_QUOTES, 'UTF-8');
 $precio       = trim($_POST['precio'] ?? '');
 $duracion_min = trim($_POST['duracion_min'] ?? '');
 

@@ -4,7 +4,9 @@ ini_set('display_errors', 0);
 
 // Cabeceras estrictas JSON y CORS
 header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Origin: *");
+$allowed_origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '*';
+header("Access-Control-Allow-Origin: " . $allowed_origin);
+header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 
@@ -23,9 +25,9 @@ require_once __DIR__ . "/conexion.php";
 
 $data_json = json_decode(file_get_contents("php://input"), true);
 
-$nombre = trim($_POST['nombre'] ?? $data_json['nombre'] ?? '');
+$nombre = htmlspecialchars(trim($_POST['nombre'] ?? $data_json['nombre'] ?? ''), ENT_QUOTES, 'UTF-8');
 $estrellas = intval($_POST['estrellas'] ?? $data_json['estrellas'] ?? 5);
-$comentario = trim($_POST['comentario'] ?? $data_json['comentario'] ?? '');
+$comentario = htmlspecialchars(trim($_POST['comentario'] ?? $data_json['comentario'] ?? ''), ENT_QUOTES, 'UTF-8');
 
 if (empty($nombre) || empty($comentario)) {
     http_response_code(400);
