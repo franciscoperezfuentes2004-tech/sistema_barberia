@@ -1190,15 +1190,19 @@
           // Phone & WA
           if (d.site_phone) {
             document.querySelectorAll('.cms-site-phone').forEach(el => el.textContent = d.site_phone);
-            const telLinkStr = 'tel:' + d.site_phone.replace(/\D/g, '');
-            const waLinkStr = 'https://wa.me/52' + d.site_phone.replace(/\D/g, '') + '?text=Hola';
+            const cleanPhone = d.site_phone.replace(/\D/g, '');
+            const waLinkStr = 'https://wa.me/' + cleanPhone + '?text=Hola%2C%20me%20gustar%C3%ADa%20agendar%20una%20cita.';
             const linkTel = document.getElementById('link-tel');
-            if (linkTel) linkTel.href = telLinkStr;
+            if (linkTel) linkTel.href = waLinkStr;
             const linkFooterPhone = document.getElementById('footer-phone-link');
-            if (linkFooterPhone) linkFooterPhone.href = telLinkStr;
+            if (linkFooterPhone) {
+              linkFooterPhone.href = waLinkStr;
+              linkFooterPhone.target = '_blank';
+            }
             const btnWa = document.getElementById('btn-wa');
             if (btnWa) {
               btnWa.href = waLinkStr;
+              btnWa.target = '_blank';
               btnWa.style.display = 'flex';
             }
           } else {
