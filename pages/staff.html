@@ -77,8 +77,8 @@
 
     /* ——————————— DATE SELECTOR ——————————— */
     .cal-day {
-      width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;
-      border-radius: 12px; font-size: 0.95rem; margin: 0 auto; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      width: 100%; aspect-ratio: 1; max-width: 38px; height: auto; display: flex; align-items: center; justify-content: center;
+      border-radius: 12px; font-size: clamp(0.75rem, 4vw, 0.95rem); margin: 0 auto; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       font-weight: 500; color: var(--bright);
     }
     .cal-day:hover {
@@ -355,6 +355,14 @@
   (() => {
     /* ——— Config ——— */
     const API = '../sistema';
+
+    function escapeHTML(str) {
+      if (!str) return '';
+      return String(str).replace(/[&<>'"]/g, function(tag) {
+        const charsToReplace = { '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' };
+        return charsToReplace[tag] || tag;
+      });
+    }
 
     // 🛡️ Interceptor Global de Fetch para Inyectar JWT
     const originalFetch = window.fetch;
@@ -896,7 +904,7 @@
         <div class="appt-card st-${st}" data-id="${cita.id}">
           <div class="appt-top">
             <div>
-              <div class="appt-client">${cita.cliente_nombre}</div>
+              <div class="appt-client">${escapeHTML(cita.cliente_nombre)}</div>
               <div class="appt-time">${cita.hora_inicio.substring(0,5)} — ${cita.hora_fin.substring(0,5)}</div>
             </div>
             <span class="appt-status st-${st}">${displayStatus}</span>
@@ -935,14 +943,14 @@
           const [icon, msg] = msgs[nuevoEstado] || ['ℹ️','Estado actualizado'];
           showToast(icon, msg);
         } else {
-          showToast('âš ï¸', json.message || 'Error al actualizar');
+          showToast('⚠️', json.message || 'Error al actualizar');
         }
       } catch(e) {
-        showToast('âš ï¸', 'Error de conexión');
+        showToast('⚠️', 'Error de conexión');
       }
     }
 
-    /* â”€â”€â”€ Toast â”€â”€â”€ */
+    /* ——— Toast ——— */
     function showToast(icon, msg) {
       const el = document.getElementById('toast');
       el.querySelector('.toast-icon').textContent = icon;
@@ -951,7 +959,7 @@
       setTimeout(() => el.classList.remove('show'), 2800);
     }
 
-    /* â”€â”€â”€ Logout â”€â”€â”€ */
+    /* ——— Logout ——— */
     async function logout() {
       sessionStorage.removeItem('tab_auth');
       sessionStorage.removeItem('tab_auth');

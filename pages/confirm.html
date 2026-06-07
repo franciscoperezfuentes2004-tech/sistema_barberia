@@ -224,6 +224,13 @@
 
   <script>
     const API = '../sistema';
+    function escapeHTML(str) {
+      if (!str) return '';
+      return String(str).replace(/[&<>'"]/g, function(tag) {
+        const charsToReplace = { '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' };
+        return charsToReplace[tag] || tag;
+      });
+    }
 
     const step1 = JSON.parse(sessionStorage.getItem('bb_step1') || 'null');
     const step2 = JSON.parse(sessionStorage.getItem('bb_step2') || 'null');
@@ -231,7 +238,7 @@
     if(!step1 || !step2) window.location.href = 'booking.html';
 
     // Rellenar resumen
-    document.getElementById('sum-svc').innerHTML = step1.servicios.map(s => s.nombre).join('<br>');
+    document.getElementById('sum-svc').innerHTML = step1.servicios.map(s => escapeHTML(s.nombre)).join('<br>');
     document.getElementById('sum-barber').textContent = step2.barberoNombre;
     
     // Formatear fecha

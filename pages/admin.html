@@ -122,8 +122,8 @@
 
     /* ——————————— DATE SELECTOR ——————————— */
     .cal-day {
-      width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;
-      border-radius: 12px; font-size: 0.95rem; margin: 0 auto; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      width: 100%; aspect-ratio: 1; max-width: 38px; height: auto; display: flex; align-items: center; justify-content: center;
+      border-radius: 12px; font-size: clamp(0.75rem, 4vw, 0.95rem); margin: 0 auto; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       font-weight: 500; color: var(--bright);
     }
     .cal-day:hover {
@@ -542,8 +542,8 @@
       .col-avatar { width: 32px; height: 32px; }
       .btn { margin-bottom: 8px; display: block; width: 100%; text-align: center; white-space: nowrap; }
       
-      .resenas-top-bar { align-items: flex-start !important; flex-wrap: nowrap !important; gap: 8px !important; }
-      .resenas-left { flex-direction: column; align-items: flex-start !important; gap: 8px !important; flex: 1; min-width: 0; }
+      .resenas-top-bar { flex-direction: column !important; align-items: stretch !important; flex-wrap: wrap !important; }
+      .resenas-left, .resenas-right { width: 100%; }
       .resenas-left select { max-width: 100%; font-size: 0.8rem; }
       .resenas-right { flex-direction: column; align-items: stretch !important; gap: 8px !important; flex: 1; min-width: 0; }
       .resenas-right .btn { width: 100% !important; margin-bottom: 0 !important; font-size: 0.7rem !important; padding: 10px 8px !important; white-space: normal !important; text-align: center; }
@@ -2019,7 +2019,7 @@
                       <span style="text-transform:uppercase;font-size:.6rem;color:${borderColor};font-weight:600">${displaySt}</span>
                     </div>
                     <div style="display:flex; justify-content:space-between; align-items:center;">
-                      <div class="mock-appt-client">${cita.cliente_nombre}</div>
+                      <div class="mock-appt-client">${escapeHTML(cita.cliente_nombre)}</div>
                       <div style="font-size:.75rem; color:var(--bright); font-weight:600;">$${cita.precio_total || 0}</div>
                     </div>
                     <div style="font-size:.7rem;color:var(--muted);margin-top:4px">${serviciosStr}</div>
@@ -2035,7 +2035,7 @@
                 <div class="col-header">
                   <img src="${fotoSrc}" class="col-avatar" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' viewBox=\\'0 0 100 100\\'%3E%3Crect width=\\'100\\' height=\\'100\\' fill=\\'%23181818\\'/%3E%3C/svg%3E'">
                   <div style="flex:1">
-                    <div class="col-name">${barbero.nombre} ${barbero.apellido.charAt(0)}.</div>
+                    <div class="col-name">${escapeHTML(barbero.nombre)} ${escapeHTML(barbero.apellido).charAt(0)}.</div>
                     ${statusHtml}
                   </div>
                 </div>
@@ -2074,7 +2074,7 @@
                   <div class="user-cell">
                     <img src="${fotoSrc}" class="col-avatar" style="border-radius:50%" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' viewBox=\\'0 0 100 100\\'%3E%3Crect width=\\'100\\' height=\\'100\\' fill=\\'%23181818\\'/%3E%3C/svg%3E'">
                     <div>
-                      <div style="font-weight:600;color:var(--bright)">${b.nombre} ${b.apellido}</div>
+                      <div style="font-weight:600;color:var(--bright)">${escapeHTML(b.nombre)} ${escapeHTML(b.apellido)}</div>
                       <div style="font-size:.75rem;color:var(--muted)">Usuario: ${b.usuario || 'N/A'}</div>
                     </div>
                   </div>
@@ -2085,7 +2085,7 @@
                 <td><span class="status-badge ${statusClass}">${statusText}</span></td>
                 <td>
                   <button class="btn btn-secondary" style="padding:6px 12px;font-size:.75rem;margin-right:4px;" onclick="openModal('${b.id}')">Editar</button>
-                  <button class="btn btn-secondary" style="padding:6px 12px;font-size:.75rem;color:var(--red);border-color:rgba(239,68,68,0.2);background:rgba(239,68,68,0.05);" onclick="deleteBarber('${b.id}', '${b.nombre.replace(/'/g, "\\'")}')">Borrar</button>
+                  <button class="btn btn-secondary" style="padding:6px 12px;font-size:.75rem;color:var(--red);border-color:rgba(239,68,68,0.2);background:rgba(239,68,68,0.05);" onclick="deleteBarber('${b.id}', '${escapeHTML(b.nombre).replace(/'/g, "\\'")}')">Borrar</button>
                 </td>
               </tr>
             `;
@@ -2233,14 +2233,14 @@
               <tr style="opacity: ${s.activo ? 1 : 0.5}">
                 <td><img src="${imgSrc}" style="width:40px;height:40px;object-fit:cover;border-radius:8px" onerror="this.src='../assets/img/hero-bg.png'"></td>
                 <td>
-                  <div style="font-weight:600;color:var(--bright)">${s.nombre}</div>
-                  <div class="service-desc" style="font-size:0.8rem;color:var(--muted)">${s.descripcion || ''}</div>
+                  <div style="font-weight:600;color:var(--bright)">${escapeHTML(s.nombre)}</div>
+                  <div class="service-desc" style="font-size:0.8rem;color:var(--muted)">${escapeHTML(s.descripcion) || ''}</div>
                 </td>
                 <td>$${parseFloat(s.precio).toFixed(2)}</td>
                 <td>${s.duracion_min} min</td>
                 <td>
                   <button class="btn btn-secondary" style="padding:6px 12px;font-size:0.8rem" onclick="editService('${s.id}')">Editar</button>
-                  <button class="btn btn-secondary" style="padding:6px 12px;font-size:0.8rem;color:var(--red);border-color:var(--red)" onclick="deleteService('${s.id}', '${s.nombre}')">Borrar</button>
+                  <button class="btn btn-secondary" style="padding:6px 12px;font-size:0.8rem;color:var(--red);border-color:var(--red)" onclick="deleteService('${s.id}', '${escapeHTML(s.nombre).replace(/'/g, "\\'")}')">Borrar</button>
                 </td>
               </tr>
             `;
@@ -2485,7 +2485,7 @@
           let html = '<option value="">Selecciona un barbero...</option>';
           if (json.success && json.data) {
             json.data.forEach(b => {
-              html += `<option value="${b.id}">${b.nombre} ${b.apellido}</option>`;
+              html += `<option value="${b.id}">${escapeHTML(b.nombre)} ${escapeHTML(b.apellido)}</option>`;
             });
           }
           select.innerHTML = html;
@@ -2673,6 +2673,20 @@
         });
         document.querySelectorAll('.input-file-seguro').forEach(i => i.value = '');
       };
+
+      function escapeHTML(str) {
+        if (!str) return '';
+        return String(str).replace(/[&<>'"]/g, function(tag) {
+          const charsToReplace = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            "'": '&#39;',
+            '"': '&quot;'
+          };
+          return charsToReplace[tag] || tag;
+        });
+      }
 
       // Feedback visual global para inputs de archivo (imágenes)
       document.addEventListener('change', function(e) {

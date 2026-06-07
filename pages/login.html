@@ -524,7 +524,7 @@
     <p class="subtitle">Portal del Equipo</p>
 
     <!-- Login Form -->
-    <form class="login-form" id="loginForm" autocomplete="on" novalidate>
+    <form class="login-form" id="loginForm" autocomplete="off" novalidate>
 
       <!-- Error Message -->
       <div class="error-message" id="errorMessage" role="alert"></div>
@@ -589,7 +589,27 @@
 
   <script>
     (() => {
-      // ── API Base URL ───────────────────────────
+      // 🔒 Prevenir que al hacer "Atrás" se restaure el estado y redirigir al index
+      window.addEventListener('pageshow', function(event) {
+        const isBackNavigation = event.persisted || 
+          (window.performance && window.performance.getEntriesByType("navigation").length > 0 && window.performance.getEntriesByType("navigation")[0].type === "back_forward");
+          
+        if (isBackNavigation) {
+          // Destruir sesión y limpiar campos
+          localStorage.removeItem('token');
+          document.getElementById('username').value = '';
+          document.getElementById('password').value = '';
+          window.location.replace('../index.html');
+        }
+      });
+
+      // 🛠️ Limpiar campos al cargar
+      document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById('username').value = '';
+        document.getElementById('password').value = '';
+      });
+
+      // ⚙️ API Base URL ━━━━━━━━━━━━━━━━━━━━━━━━━━
       const API = '../sistema';
 
       // ── Dynamic Branding ───────────────────────────

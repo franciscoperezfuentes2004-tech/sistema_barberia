@@ -118,7 +118,8 @@ if ($logged_in) {
     $base64UrlPayload = base64UrlEncode($payload);
     
     // Creamos la firma con nuestra clave secreta
-    $signature = hash_hmac('sha256', $base64UrlHeader . "." . $base64UrlPayload, 'clave_secreta_barberia', true);
+    $clave = getenv('JWT_SECRET') ?: 'clave_secreta_barberia';
+    $signature = hash_hmac('sha256', $base64UrlHeader . "." . $base64UrlPayload, $clave, true);
     $base64UrlSignature = base64UrlEncode($signature);
     
     // Concatenamos el token completo

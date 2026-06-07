@@ -28,6 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "GET") {
 }
 
 require_once __DIR__ . "/conexion.php";
+require_once __DIR__ . "/auth_middleware.php";
 
 $tablas_permitidas = ['servicios', 'usuarios', 'citas', 'galeria', 'ajustes', 'barberos', 'horarios', 'resenas'];
 $tabla = $_GET["tabla"] ?? "";
@@ -39,11 +40,23 @@ if (!in_array($tabla, $tablas_permitidas)) {
     exit;
 }
 
+$es_publico = false;
+if (in_array($tabla, ['ajustes', 'servicios', 'galeria', 'resenas', 'horarios'])) {
+    $es_publico = true;
+} else if ($tabla === 'barberos' && isset($_GET['activos']) && $_GET['activos'] == '1') {
+    $es_publico = true;
+}
+
+if (!$es_publico) {
+    verificarJWT();
+}
+
 // 1. Consulta puramente limpia y robusta. 
 // SE ELIMINAN todos los filtros conflictivos como "AND activo = 1" para evitar fallos de base de datos.
 $sql = "SELECT * FROM `" . $tabla . "` WHERE 1=1";
+$params = [];
+$types = "";
 
-// 2. Lógica Condicional de Filtros (Seguros: por ID o Fecha)
 if ($tabla === 'barberos') {
     if (isset($_GET['activos']) && $_GET['activos'] == '1') {
         $sql .= " AND activo = 1";
@@ -51,32 +64,37 @@ if ($tabla === 'barberos') {
 }
 if ($tabla === 'horarios') {
     if (isset($_GET['global']) && $_GET['global'] == '1') {
-        // Página pública: solo horarios maestros (barbero_id = 0)
         $sql .= " AND barbero_id = 0";
     } elseif (isset($_GET['barbero_id']) && trim($_GET['barbero_id']) !== '') {
-        $barbero_id = intval($_GET['barbero_id']);
-        $sql .= " AND barbero_id = $barbero_id";
+        $sql .= " AND barbero_id = ?";
+        $params[] = intval($_GET['barbero_id']);
+        $types .= "i";
     }
 }
 
 if ($tabla === 'citas') {
     if (isset($_GET['barbero_id']) && trim($_GET['barbero_id']) !== '') {
-        $barbero_id = intval($_GET['barbero_id']);
-        $sql .= " AND barbero_id = $barbero_id";
+        $sql .= " AND barbero_id = ?";
+        $params[] = intval($_GET['barbero_id']);
+        $types .= "i";
     }
     if (isset($_GET['fecha']) && trim($_GET['fecha']) !== '') {
-        $fecha = mysqli_real_escape_string($conexion, trim($_GET['fecha']));
-        // DATE(fecha_hora) extrae estrictamente YYYY-MM-DD
-        $sql .= " AND DATE(fecha_hora) = '$fecha'";
+        $sql .= " AND DATE(fecha_hora) = ?";
+        $params[] = trim($_GET['fecha']);
+        $types .= "s";
     }
 }
 
-// Ordenamiento descendente para que lo más reciente aparezca primero en la Interfaz.
 if ($tabla !== 'ajustes' && $tabla !== 'horarios') {
     $sql .= " ORDER BY id DESC";
 }
 
-$resultado = mysqli_query($conexion, $sql);
+$stmt = mysqli_prepare($conexion, $sql);
+if ($types !== "") {
+    mysqli_stmt_bind_param($stmt, $types, ...$params);
+}
+mysqli_stmt_execute($stmt);
+$resultado = mysqli_stmt_get_result($stmt);
 
 $datos = [];
 if ($resultado) {

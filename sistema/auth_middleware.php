@@ -47,7 +47,7 @@ function verificarJWT($roles_permitidos = ['admin']) {
     list($header64, $payload64, $signature64) = $tokenParts;
 
     // Verificar firma HMAC-SHA256
-    $clave_secreta = 'clave_secreta_barberia'; // Debe coincidir con auth.php
+    $clave_secreta = getenv('JWT_SECRET') ?: 'clave_secreta_barberia'; // Fallback a la clave por defecto
     $signature_check = hash_hmac('sha256', $header64 . "." . $payload64, $clave_secreta, true);
     $signature_check64 = base64UrlEncodeMiddleware($signature_check);
 

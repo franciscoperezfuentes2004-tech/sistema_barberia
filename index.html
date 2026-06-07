@@ -333,7 +333,7 @@
     @media (min-width: 768px) { .stats { grid-template-columns: repeat(4, 1fr); } }
 
     .stat {
-      padding: clamp(18px,3vw,32px) var(--gutter);
+      padding: clamp(12px, 3vw, 32px) clamp(4px, 1.5vw, 20px);
       text-align: center;
       border-right: 1px solid var(--border);
     }
@@ -625,9 +625,13 @@
       border: 1px solid rgba(255,255,255,0.06);
       border-top: 1px solid rgba(255,255,255,0.12);
       box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05);
-      border-radius: 24px; width: 100%; max-width: 400px;
-      padding: 30px; position: relative; text-align: center;
+      border-radius: 20px;
+      padding: clamp(20px, 6vw, 30px);
+      width: 100%; max-width: 480px; position: relative;
+      transform: translateY(20px) scale(0.95); opacity: 0;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
+    .modal.active .modal-content { transform: translateY(0) scale(1); opacity: 1; }
     .modal-close {
       position: absolute; top: 15px; right: 15px; background: transparent;
       border: none; color: var(--muted); font-size: 1.2rem; cursor: pointer;
@@ -635,11 +639,12 @@
     .modal-close:hover { color: var(--bright); }
     .star-rating {
       display: flex; flex-direction: row-reverse; justify-content: center;
-      gap: 10px; margin: 20px 0;
+      gap: clamp(4px, 2vw, 10px); margin: 20px 0;
     }
     .star-rating input { display: none; }
     .star-rating label {
-      font-size: 2.5rem; color: var(--border); cursor: pointer; transition: color 0.2s;
+      font-size: clamp(1.8rem, 8vw, 2.5rem); color: var(--border); cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .star-rating label:hover,
     .star-rating label:hover ~ label,
@@ -1049,6 +1054,13 @@
        SCRIPTS
   ════════════════════════════════════════════ -->
   <script>
+    function escapeHTML(str) {
+      if (!str) return '';
+      return String(str).replace(/[&<>'"]/g, function(tag) {
+        const charsToReplace = { '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' };
+        return charsToReplace[tag] || tag;
+      });
+    }
     'use strict';
 
     /* Nav scroll */
@@ -1087,22 +1099,18 @@
     /* CMS Fetch */
     function extractAddrFromMapUrl(mapStr) {
       if (!mapStr) return '';
-      // Si no contiene http ni iframe, ya es texto puro
       if (!mapStr.includes('http') && !mapStr.includes('<iframe')) return mapStr;
       
-      // Intentar extraer de ?q= o &q=
       let match = mapStr.match(/[?&]q=([^&"]+)/);
       if (match) {
         let addr = decodeURIComponent(match[1].replace(/\+/g, ' '));
         return addr;
       }
-      // Intentar extraer de /place/
       match = mapStr.match(/\/place\/([^\/\?]+)/);
       if (match) {
         let addr = decodeURIComponent(match[1].replace(/\+/g, ' '));
         return addr;
       }
-      // Intentar extraer la cadena más larga de !2s (nombre del lugar en el embed de Google)
       let matches = mapStr.match(/!2s([^!&"]+)/g);
       if (matches) {
         let longest = '';
@@ -1122,7 +1130,6 @@
         if (json.success && json.data) {
           const d = json.data;
           
-          // Name
           if (d.site_name) {
             document.title = d.site_name + ' — Estilo que habla por ti';
             document.querySelectorAll('.cms-site-name').forEach(el => el.textContent = d.site_name);
@@ -1130,7 +1137,6 @@
             if (copy) copy.textContent = '© ' + new Date().getFullYear() + ' ' + d.site_name + '. Todos los derechos reservados.';
           }
           
-          // Hero (Portada)
           if (d.site_slogan) {
             const h1 = document.getElementById('hero-h1');
             if (h1) {
@@ -1156,23 +1162,19 @@
              img.src = heroBgStr;
           }
 
-          // Address + Map
           if (d.site_map || d.site_address) {
             const rawMap = (d.site_map || '').trim();
             let displayAddr = d.site_address || '';
 
-            // Si la dirección guardada es genérica o vacía, extraer del enlace del mapa
             if (!displayAddr || displayAddr === 'Dirección en Mapa' || displayAddr === 'Dirección de la Barbería') {
               displayAddr = extractAddrFromMapUrl(rawMap);
             }
 
-            // Mostrar dirección en todos los elementos .cms-site-address
             if (!displayAddr) {
               displayAddr = 'Ubicación en el mapa';
             }
             document.querySelectorAll('.cms-site-address').forEach(el => el.textContent = displayAddr);
 
-            // Renderizar mapa
             const mapContainer = document.getElementById('map-container');
             if (mapContainer) {
               let mapCode = rawMap;
@@ -1187,13 +1189,10 @@
             }
           }
           
-          // Phone & WA
           if (d.site_phone) {
             document.querySelectorAll('.cms-site-phone').forEach(el => el.textContent = d.site_phone);
             const cleanPhone = d.site_phone.replace(/\D/g, '');
             const waLinkStr = 'https://wa.me/' + cleanPhone + '?text=Hola%2C%20me%20gustar%C3%ADa%20agendar%20una%20cita.';
-            const linkTel = document.getElementById('link-tel');
-            if (linkTel) linkTel.href = waLinkStr;
             const linkFooterPhone = document.getElementById('footer-phone-link');
             if (linkFooterPhone) {
               linkFooterPhone.href = waLinkStr;
@@ -1212,7 +1211,6 @@
             if (btnWa) btnWa.style.display = 'none';
           }
           
-          // Email
           if (d.site_email) {
             const mailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${d.site_email}`;
             const linkMail = document.getElementById('link-mail');
@@ -1235,7 +1233,6 @@
             if (footerEmailLink) footerEmailLink.parentElement.style.display = 'none';
           }
           
-          // Redes Sociales
           const linkIg = document.getElementById('link-ig');
           if (linkIg) {
             if (d.site_instagram) { linkIg.href = d.site_instagram; linkIg.style.display = 'flex'; }
@@ -1254,7 +1251,6 @@
             else { linkTt.style.display = 'none'; }
           }
           
-          // Logo Fallback
           const logoSrc = d.site_logo || 'assets/img/logo.png';
           const cNav = document.getElementById('nav-custom-logo');
           const dNav = document.getElementById('nav-default-icon');
@@ -1272,36 +1268,31 @@
             cFoot.style.display = 'block';
             dFoot.style.display = 'none';
           }
-          
         }
         
-        // ── SERVICIOS ──
         const resSvc = await fetch('sistema/obtener_datos.php?tabla=servicios');
         const jsonSvc = await resSvc.json();
         if (jsonSvc.success && jsonSvc.data) {
           const svcContainer = document.getElementById('public-services');
           if (svcContainer) {
             svcContainer.innerHTML = '';
-            // Solo mostrar activos
             const activos = jsonSvc.data.filter(s => s.activo == 1);
             activos.forEach((svc, idx) => {
               const delay = 0.05 * (idx + 1);
               const el = document.createElement('article');
               el.className = 'svc-card rv';
               el.style.transitionDelay = `${delay}s`;
-              el.onclick = () => window.location.href = 'pages/booking.html'; // Redirigir a reserva
-              
+              el.onclick = () => window.location.href = 'pages/booking.html';
               const imgSrc = svc.imagen_b64 || svc.imagen_url || svc.imagen || 'assets/img/services/fade.png';
-              
               el.innerHTML = `
-                <div class="svc-img"><img src="${imgSrc}" alt="${svc.nombre}" loading="lazy" onerror="this.src='assets/img/services/fade.png'"/></div>
+                <div class="svc-img"><img src="${imgSrc}" alt="${escapeHTML(svc.nombre)}" loading="lazy" onerror="this.src='assets/img/services/fade.png'"/></div>
                 <span class="svc-price">$${parseFloat(svc.precio).toFixed(2)} MXN</span>
                 <div class="svc-body">
                   <div style="display:flex;align-items:center;justify-content:space-between">
-                    <h3 class="svc-name">${svc.nombre}</h3>
+                    <h3 class="svc-name">${escapeHTML(svc.nombre)}</h3>
                     <span class="chip">⏱️ ${svc.duracion_min} min</span>
                   </div>
-                  <p class="svc-desc">${svc.descripcion || ''}</p>
+                  <p class="svc-desc">${escapeHTML(svc.descripcion || '')}</p>
                 </div>
               `;
               svcContainer.appendChild(el);
@@ -1310,7 +1301,6 @@
           }
         }
         
-        // ── EQUIPO ──
         const resTeam = await fetch('sistema/obtener_datos.php?tabla=barberos&activos=1');
         const jsonTeam = await resTeam.json();
         if (jsonTeam.success && jsonTeam.data) {
