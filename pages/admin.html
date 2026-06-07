@@ -2361,9 +2361,11 @@
         const container = document.getElementById(containerId);
         if (!container) return;
         
+        const dataArr = Array.isArray(scheduleData) ? scheduleData : [];
+        
         let html = '';
         for (let i = 0; i <= 6; i++) {
-          const row = scheduleData.find(d => parseInt(d.dia_semana) === i) || { dia_semana: i, activo: 0, hora_inicio: '09:00', hora_fin: '20:00' };
+          const row = dataArr.find(d => parseInt(d.dia_semana) === i) || { dia_semana: i, activo: 0, hora_inicio: '09:00', hora_fin: '20:00' };
           const checked = parseInt(row.activo) === 1 ? 'checked' : '';
           
           html += `
