@@ -2396,10 +2396,12 @@
         
         if (chk.checked) {
           timesDiv.style.opacity = '1';
+          timesDiv.style.pointerEvents = 'auto';
           inInput.disabled = false;
           outInput.disabled = false;
         } else {
           timesDiv.style.opacity = '0.5';
+          timesDiv.style.pointerEvents = 'none';
           inInput.disabled = true;
           outInput.disabled = true;
         }
