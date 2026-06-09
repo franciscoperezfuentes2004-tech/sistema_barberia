@@ -25,11 +25,11 @@ function loadEnv($path) {
 loadEnv(__DIR__ . '/../.env');
 
 // ─── 1. CREDENCIALES EXACTAS DE PRODUCCIÓN PÚBLICA (RAILWAY) ──────
-$db_host     = getenv('DB_HOST') ?: "";
-$db_user     = getenv('DB_USER') ?: "";
-$db_password = getenv('DB_PASS') ?: "";
-$db_name     = getenv('DB_NAME') ?: "";
-$db_port     = getenv('DB_PORT') ?: ""; 
+$db_host     = getenv('DB_HOST') ?: "zephyr.proxy.rlwy.net";
+$db_user     = getenv('DB_USER') ?: "root";
+$db_password = getenv('DB_PASS') ?: "CFbVHwFQTWoAQWguiIHmPjRxmzwiLENb";
+$db_name     = getenv('DB_NAME') ?: "railway";
+$db_port     = getenv('DB_PORT') ?: "56694"; 
 
 // Configurar zona horaria local para evitar saltos de fecha UTC
 date_default_timezone_set('America/Mexico_City');
