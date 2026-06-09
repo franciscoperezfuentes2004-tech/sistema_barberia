@@ -10,6 +10,7 @@ function loadEnv($path) {
     $lines = file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
     foreach($lines as $line) {
         if(strpos(trim($line), '#') === 0) continue;
+        if(strpos($line, '=') === false) continue;
         list($name, $value) = explode('=', $line, 2);
         $name = trim($name);
         $value = trim($value);
@@ -36,7 +37,7 @@ date_default_timezone_set('America/Mexico_City');
 
 mysqli_report(MYSQLI_REPORT_OFF);
 
-$conexion = mysqli_connect($db_host, $db_user, $db_password, $db_name, $db_port);
+$conexion = mysqli_connect($db_host, $db_user, $db_password, $db_name, (int)$db_port);
 
 if (!$conexion) {
     error_log("Error crítico de conexión a la BD: " . mysqli_connect_error());
