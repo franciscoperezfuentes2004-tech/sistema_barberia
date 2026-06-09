@@ -26,10 +26,10 @@ function loadEnv($path) {
 loadEnv(__DIR__ . '/../.env');
 
 // ─── 1. CREDENCIALES EXACTAS DE PRODUCCIÓN PÚBLICA 
-$db_host     = getenv('DB_HOST') ?: "localhost";
-$db_user     = getenv('DB_USER') ?: "tu_usuario";
-$db_password = getenv('DB_PASS') ?: "tu_contraseña";
-$db_name     = getenv('DB_NAME') ?: "nombre_de_tu_base_de_datos";
+$db_host     = getenv('DB_HOST') ?: "mysql.railway.internal";
+$db_user     = getenv('DB_USER') ?: "root";
+$db_password = getenv('DB_PASS') ?: "CFbVHwFQTWoAQWguiIHmPjRxmzwiLENb";
+$db_name     = getenv('DB_NAME') ?: "railway";
 $db_port     = getenv('DB_PORT') ?: "3306"; 
 
 // Configurar zona horaria local para evitar saltos de fecha UTC
