@@ -917,9 +917,20 @@
         </div>`;
     }
 
-    /* ——— Change State ——— */
+    /* ——— Change State (Optimistic UI) ——— */
     async function changeState(citaId, nuevoEstado) {
+      // Encontrar la cita y guardar estado anterior por si falla
+      const cita = citasDelDia.find(c => c.id === citaId);
+      if (!cita) return;
+      const oldEstado = cita.estado;
+      
+      // 1. Actualización visual inmediata (Optimistic UI)
+      cita.estado = nuevoEstado;
+      renderTimeline();
+      updatePills();
+
       try {
+        // 2. Enviar petición al servidor en segundo plano
         const res = await fetch(`${API}/guardar_cita.php`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
@@ -928,10 +939,6 @@
         const json = await res.json();
 
         if (json.success) {
-          // Update local data
-          const cita = citasDelDia.find(c => c.id === citaId);
-          if (cita) cita.estado = nuevoEstado;
-
           renderTimeline();
           updatePills();
 
