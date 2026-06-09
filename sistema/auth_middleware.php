@@ -21,11 +21,8 @@ function base64UrlEncodeMiddleware($data) {
  * @return array Payload decodificado
  */
 function verificarJWT($roles_permitidos = ['admin']) {
-    $authHeader = '';
-    if (function_exists('apache_request_headers')) {
-        $headers = apache_request_headers();
-        $authHeader = $headers['Authorization'] ?? '';
-    }
+    $headers = apache_request_headers();
+    $authHeader = $headers['Authorization'] ?? '';
     if (empty($authHeader) && isset($_SERVER['HTTP_AUTHORIZATION'])) {
         $authHeader = $_SERVER['HTTP_AUTHORIZATION'];
     }

@@ -10,7 +10,6 @@ function loadEnv($path) {
     $lines = file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
     foreach($lines as $line) {
         if(strpos(trim($line), '#') === 0) continue;
-        if(strpos($line, '=') === false) continue;
         list($name, $value) = explode('=', $line, 2);
         $name = trim($name);
         $value = trim($value);
@@ -25,19 +24,19 @@ function loadEnv($path) {
 // Load .env from project root
 loadEnv(__DIR__ . '/../.env');
 
-// ─── 1. CREDENCIALES EXACTAS DE PRODUCCIÓN PÚBLICA 
-$db_host     = getenv('DB_HOST') ?: "mysql.railway.internal";
+// ─── 1. CREDENCIALES EXACTAS DE PRODUCCIÓN PÚBLICA (RAILWAY) ──────
+$db_host     = getenv('DB_HOST') ?: "zephyr.proxy.rlwy.net";
 $db_user     = getenv('DB_USER') ?: "root";
 $db_password = getenv('DB_PASS') ?: "CFbVHwFQTWoAQWguiIHmPjRxmzwiLENb";
 $db_name     = getenv('DB_NAME') ?: "railway";
-$db_port     = getenv('DB_PORT') ?: "3306"; 
+$db_port     = getenv('DB_PORT') ?: "56694"; 
 
 // Configurar zona horaria local para evitar saltos de fecha UTC
 date_default_timezone_set('America/Mexico_City');
 
 mysqli_report(MYSQLI_REPORT_OFF);
 
-$conexion = mysqli_connect($db_host, $db_user, $db_password, $db_name, (int)$db_port);
+$conexion = mysqli_connect($db_host, $db_user, $db_password, $db_name, $db_port);
 
 if (!$conexion) {
     error_log("Error crítico de conexión a la BD: " . mysqli_connect_error());

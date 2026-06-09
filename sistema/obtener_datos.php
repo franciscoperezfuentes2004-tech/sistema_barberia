@@ -48,7 +48,7 @@ if (in_array($tabla, ['ajustes', 'servicios', 'galeria', 'resenas', 'horarios'])
 }
 
 if (!$es_publico) {
-    verificarJWT(['admin', 'barbero']);
+    verificarJWT();
 }
 
 // 1. Consulta puramente limpia y robusta. 
